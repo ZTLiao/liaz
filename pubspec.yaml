@@ -13,6 +13,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   logger: ^2.0.2+1
   get: ^4.6.6
+  remixicon: ^1.0.0
+  easy_refresh: ^3.3.2+4
+  flutter_smart_dialog: ^4.9.5+1
+  lottie: ^2.7.0
+  flutter_swiper_view: ^1.1.8
+  extended_image: ^8.2.0
 
 dev_dependencies:
   flutter_test:
@@ -21,3 +27,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/lotties/
+    - assets/images/

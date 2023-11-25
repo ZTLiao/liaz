@@ -1,5 +1,6 @@
 class StrUtil {
-  static const DASHED = '-';
-  static const COMMA = ',';
-  static const DOT = '.';
+  static const dashed = '-';
+  static const comma = ',';
+  static const dot = '.';
+  static const empty = '';
 }

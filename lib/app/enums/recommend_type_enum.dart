@@ -1,0 +1,4 @@
+enum RecommendTypeEnum {
+  /// banner
+  banner;
+}

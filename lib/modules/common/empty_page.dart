@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:liaz/app/app_color.dart';
-import 'package:liaz/app/app_string.dart';
+import 'package:liaz/app/constants/app_color.dart';
+import 'package:liaz/app/constants/app_string.dart';
 
 class EmptyPage extends StatelessWidget {
-  const EmptyPage({Key? key}) : super(key: key);
+  const EmptyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class EmptyPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Text(AppString.appName,
-            style: TextStyle(color: AppColor.gray19)),
+            style: TextStyle(color: AppColor.black33)),
       ),
     );
   }

@@ -6,7 +6,7 @@ class VersionUtil {
     if (version.isEmpty) {
       return 0;
     }
-    return int.parse(version.replaceAll(StrUtil.DOT, String.fromCharCode(0)));
+    return int.parse(version.replaceAll(StrUtil.dot, String.fromCharCode(0)));
   }
 
 }
