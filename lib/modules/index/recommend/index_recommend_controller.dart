@@ -1,6 +1,8 @@
 import 'package:liaz/app/controller/base_page_controller.dart';
+import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/recommend_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
+import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/models/recommend/recommend_item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 
@@ -11,7 +13,9 @@ class IndexRecommendController extends BasePageController<RecommendModel> {
       RecommendModel(
         recommendId: 1,
         title: 'BANNER',
-        type: RecommendTypeEnum.banner.index,
+        showType: RecommendTypeEnum.banner.index,
+        showTitle: YesOrNo.no,
+        optType: OptTypeEnum.refresh.index,
         items: [
           RecommendItemModel(
             recommendItemId: 1,

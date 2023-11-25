@@ -2,7 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:liaz/app/constants/app_style.dart';
 
-class ImageWidget extends StatefulWidget {
+class NetImage extends StatefulWidget {
   final String url;
   final double? width;
   final double? height;
@@ -21,7 +21,7 @@ class ImageWidget extends StatefulWidget {
     ),
   );
 
-  ImageWidget(this.url,
+  NetImage(this.url,
       {this.width,
       this.height,
       this.fit = BoxFit.cover,
@@ -30,10 +30,10 @@ class ImageWidget extends StatefulWidget {
       super.key});
 
   @override
-  State<StatefulWidget> createState() => _ImageWidgetState();
+  State<StatefulWidget> createState() => _NetImageState();
 }
 
-class _ImageWidgetState extends State<ImageWidget>
+class _NetImageState extends State<NetImage>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
 

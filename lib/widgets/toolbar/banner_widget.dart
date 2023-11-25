@@ -4,7 +4,7 @@ import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/models/banner/banner_model.dart';
-import 'package:liaz/widgets/toolbar/image_widget.dart';
+import 'package:liaz/widgets/toolbar/net_image.dart';
 
 class BannerWidget extends StatelessWidget {
 
@@ -31,7 +31,7 @@ class BannerWidget extends StatelessWidget {
             itemCount: banners.length,
             itemBuilder: (_, i) => Stack(
               children: [
-                ImageWidget(
+                NetImage(
                   banners[i].url,
                   width: _width,
                   height: _height,

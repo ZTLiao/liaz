@@ -10,6 +10,7 @@ class AppString {
   static const rank = '排行';
   static const empty = '空';
   static const refresh = '刷新';
+  static const more = '更多';
   static const copy = '复制详细信息';
   static const copeid = '已复制详细信息';
   static const alreadyCopeid = '已复制到剪切板';
