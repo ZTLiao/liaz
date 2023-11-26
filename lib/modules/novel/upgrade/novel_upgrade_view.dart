@@ -20,9 +20,7 @@ class NovelUpgradeView extends StatelessWidget {
     return KeepAliveWrapper(
       child: PageListView(
           pageController: controller,
-          isFirstRefresh: true,
           isLoadMore: true,
-          isShowPageLoading: false,
           separatorBuilder: (context, i) => Divider(
                 endIndent: 12,
                 indent: 12,

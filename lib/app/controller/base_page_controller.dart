@@ -17,6 +17,12 @@ class BasePageController<T> extends BaseController {
   /// 数据
   var list = RxList<T>([]);
 
+  @override
+  void onInit() {
+    onRefresh();
+    super.onInit();
+  }
+
   Future<void> onRefresh() async {
     this.currentPage = 1;
     this.list.clear();

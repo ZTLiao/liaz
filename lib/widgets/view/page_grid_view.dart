@@ -36,9 +36,9 @@ class PageGridView extends StatelessWidget {
       () => Stack(
         children: [
           EasyRefresh(
-            header: const MaterialHeader(),
+            header: const CupertinoHeader(),
             footer: isLoadMore
-                ? const MaterialFooter(
+                ? const CupertinoFooter(
                     clamping: false, infiniteOffset: 70, triggerOffset: 70)
                 : null,
             controller: pageController.easyRefreshController,
