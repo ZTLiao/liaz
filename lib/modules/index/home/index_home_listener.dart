@@ -15,5 +15,8 @@ class IndexHomeListener extends AppEventListener<IndexEvent> {
     }
     var tabIndex = Get.find<IndexHomeController>().tabController.index;
     Log.i("tabIndex : $tabIndex");
+    if (tabIndex == 0) {
+    } else if (tabIndex == 1) {
+    } else if (tabIndex == 2) {}
   }
 }

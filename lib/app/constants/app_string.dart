@@ -3,7 +3,7 @@ class AppString {
   static const appName = 'LIAZ';
   static const home = '首页';
   static const comic = '漫画';
-  static const novel = '小说';
+  static const novel = '轻小说';
   static const mine = '我的';
   static const recommend = '推荐';
   static const upgrade = '更新';

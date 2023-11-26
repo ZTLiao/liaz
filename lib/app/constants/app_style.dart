@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_color.dart';
 
 class AppStyle {
@@ -23,6 +24,9 @@ class AppStyle {
     scaffoldBackgroundColor: Colors.black,
   );
 
+  static const vGap2 = SizedBox(
+    height: 2,
+  );
   static const vGap4 = SizedBox(
     height: 4,
   );
@@ -51,7 +55,6 @@ class AppStyle {
   static const hGap16 = SizedBox(
     width: 16,
   );
-
   static const hGap24 = SizedBox(
     width: 24,
   );
@@ -103,4 +106,7 @@ class AppStyle {
   static BorderRadius radius24 = BorderRadius.circular(24);
   static BorderRadius radius32 = BorderRadius.circular(32);
   static BorderRadius radius48 = BorderRadius.circular(48);
+
+  /// 顶部状态栏的高度
+  static double get statusBarHeight => MediaQuery.of(Get.context!).padding.top;
 }
