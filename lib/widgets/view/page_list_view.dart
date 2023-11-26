@@ -1,5 +1,4 @@
 import 'package:easy_refresh/easy_refresh.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/controller/base_page_controller.dart';
@@ -7,12 +6,10 @@ import 'package:liaz/widgets/status/app_empty_widget.dart';
 import 'package:liaz/widgets/status/app_error_widget.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 
-typedef IndexedWidgetBuild = Widget Function(BuildContext context, int index);
-
 class PageListView extends StatelessWidget {
   final BasePageController pageController;
-  final IndexedWidgetBuilder itemBuilder;
-  final IndexedWidgetBuilder? separatorBuilder;
+  final Widget Function(BuildContext context, int index) itemBuilder;
+  final Widget Function(BuildContext context, int index)? separatorBuilder;
   final EdgeInsets? padding;
   final bool isFirstRefresh;
   final bool isShowPageLoading;

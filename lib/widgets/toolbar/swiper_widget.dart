@@ -3,17 +3,16 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/models/banner/banner_model.dart';
+import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
 
-class BannerWidget extends StatelessWidget {
-
+class SwiperWidget extends StatelessWidget {
   final double _width = 750;
   final double _height = 300;
 
-  final List<BannerModel> banners;
+  final List<ItemModel> items;
 
-  const BannerWidget({required this.banners, super.key});
+  const SwiperWidget({required this.items, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +27,11 @@ class BannerWidget extends StatelessWidget {
             itemHeight: _height,
             duration: 1000,
             autoplay: true,
-            itemCount: banners.length,
+            itemCount: items.length,
             itemBuilder: (_, i) => Stack(
               children: [
                 NetImage(
-                  banners[i].url,
+                  items[i].showValue,
                   width: _width,
                   height: _height,
                 ),
@@ -42,7 +41,7 @@ class BannerWidget extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       child: Text(
-                        banners[i].title,
+                        items[i].title,
                         style: const TextStyle(
                           color: Colors.white,
                           shadows: [
@@ -57,7 +56,7 @@ class BannerWidget extends StatelessWidget {
               ],
             ),
             onTap: (i) {
-              onOpen(banners[i]);
+              onOpen(items[i]);
             },
             pagination: const SwiperPagination(
                 margin: AppStyle.edgeInsetsA8,
@@ -69,7 +68,7 @@ class BannerWidget extends StatelessWidget {
     );
   }
 
-  void onOpen(BannerModel banner) {
+  void onOpen(ItemModel item) {
     SmartDialog.showToast(AppString.skipError);
   }
 }

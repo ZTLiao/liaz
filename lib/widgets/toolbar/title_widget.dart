@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
-import 'package:liaz/models/recommend/recommend_model.dart';
+import 'package:liaz/models/dto/title_model.dart';
 import 'package:remixicon/remixicon.dart';
 
-class RecommendWidget extends StatelessWidget {
-  final RecommendModel recommend;
+class TitleWidget extends StatelessWidget {
+  final TitleModel item;
   final Widget child;
   final Function()? onRefresh;
   final Function()? onMore;
 
-  const RecommendWidget(
-      {required this.recommend,
+  const TitleWidget(
+      {required this.item,
       required this.child,
       this.onRefresh,
       this.onMore,
@@ -21,12 +20,12 @@ class RecommendWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var showTitle = recommend.showTitle;
+    var showTitle = item.showTitle;
     if (showTitle == YesOrNo.no) {
       return child;
     }
-    var title = recommend.title;
-    var optType = recommend.optType;
+    var title = item.title;
+    var optType = item.optType;
     var childrens = <Widget>[
       Expanded(
         child: Text(
@@ -50,11 +49,6 @@ class RecommendWidget extends StatelessWidget {
           child: const Row(
             children: [
               Icon(Remix.refresh_line, size: 18, color: Colors.grey),
-              AppStyle.hGap4,
-              Text(
-                AppString.refresh,
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              ),
             ],
           ),
         ),
@@ -68,10 +62,6 @@ class RecommendWidget extends StatelessWidget {
           onTap: onMore,
           child: const Row(
             children: [
-              Text(
-                AppString.more,
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-              ),
               Icon(Icons.read_more, size: 18, color: Colors.grey),
             ],
           ),
