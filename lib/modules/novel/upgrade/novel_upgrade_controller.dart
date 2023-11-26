@@ -1,11 +1,11 @@
 import 'package:liaz/app/controller/base_page_controller.dart';
-import 'package:liaz/models/upgrade/novel_upgrade_model.dart';
+import 'package:liaz/models/novel/novel_item_model.dart';
 
-class NovelUpgradeController extends BasePageController<NovelUpgradeModel> {
+class NovelUpgradeController extends BasePageController<NovelItemModel> {
   @override
-  Future<List<NovelUpgradeModel>> getData(int currentPage, int pageSize) {
-    var list = <NovelUpgradeModel>[
-      NovelUpgradeModel(
+  Future<List<NovelItemModel>> getData(int currentPage, int pageSize) {
+    var list = <NovelItemModel>[
+      NovelItemModel(
         novelId: 1,
         title: '堤亚穆帝国物语',
         cover:
@@ -16,7 +16,7 @@ class NovelUpgradeController extends BasePageController<NovelUpgradeModel> {
         updated: 1700755200000,
         novelChapterId: 1,
       ),
-      NovelUpgradeModel(
+      NovelItemModel(
         novelId: 1,
         title: '堤亚穆帝国物语',
         cover:
@@ -27,7 +27,7 @@ class NovelUpgradeController extends BasePageController<NovelUpgradeModel> {
         updated: 1700755200000,
         novelChapterId: 1,
       ),
-      NovelUpgradeModel(
+      NovelItemModel(
         novelId: 1,
         title: '堤亚穆帝国物语',
         cover:
@@ -38,7 +38,7 @@ class NovelUpgradeController extends BasePageController<NovelUpgradeModel> {
         updated: 1700755200000,
         novelChapterId: 1,
       ),
-      NovelUpgradeModel(
+      NovelItemModel(
         novelId: 1,
         title: '堤亚穆帝国物语',
         cover:
@@ -49,7 +49,7 @@ class NovelUpgradeController extends BasePageController<NovelUpgradeModel> {
         updated: 1700755200000,
         novelChapterId: 1,
       ),
-      NovelUpgradeModel(
+      NovelItemModel(
         novelId: 1,
         title: '堤亚穆帝国物语',
         cover:
@@ -60,7 +60,7 @@ class NovelUpgradeController extends BasePageController<NovelUpgradeModel> {
         updated: 1700755200000,
         novelChapterId: 1,
       ),
-      NovelUpgradeModel(
+      NovelItemModel(
         novelId: 1,
         title: '堤亚穆帝国物语',
         cover:
@@ -71,7 +71,7 @@ class NovelUpgradeController extends BasePageController<NovelUpgradeModel> {
         updated: 1700755200000,
         novelChapterId: 1,
       ),
-      NovelUpgradeModel(
+      NovelItemModel(
         novelId: 1,
         title: '堤亚穆帝国物语',
         cover:

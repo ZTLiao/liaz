@@ -15,4 +15,11 @@ class AppString {
   static const copeid = '已复制详细信息';
   static const alreadyCopeid = '已复制到剪切板';
   static const skipError = '无法跳转';
+  static const popular = '人气榜';
+  static const discuss = '吐槽榜';
+  static const subscribe = '订阅榜';
+  static const dayRank = '日榜';
+  static const weekRank = '周榜';
+  static const monthRank = '月榜';
+  static const totalRank = '总榜';
 }

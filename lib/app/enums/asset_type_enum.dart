@@ -1,6 +1,4 @@
-enum CardTypeEnum {
-  /// 无
-  none,
+enum AssetTypeEnum {
 
   /// 漫画
   comic,

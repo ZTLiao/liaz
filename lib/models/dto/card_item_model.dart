@@ -1,4 +1,4 @@
-class CardModel {
+class CardItemModel {
   int cardId;
   String title;
   String cover;
@@ -9,7 +9,7 @@ class CardModel {
   String updateTime;
   int objId;
 
-  CardModel({
+  CardItemModel({
     required this.cardId,
     required this.title,
     required this.cover,

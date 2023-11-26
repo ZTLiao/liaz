@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/modules/index/home/index_home_controller.dart';
+import 'package:liaz/modules/index/rank/index_rank_view.dart';
 import 'package:liaz/modules/index/recommend/index_recommend_view.dart';
 import 'package:liaz/modules/index/upgrade/index_upgrade_view.dart';
 
@@ -32,7 +33,7 @@ class IndexHomePage extends GetView<IndexHomeController> {
               children: [
                 IndexRecommendView(),
                 IndexUpgradeView(),
-                Icon(Icons.directions_bike),
+                IndexRankView(),
               ],
             ),
           ),

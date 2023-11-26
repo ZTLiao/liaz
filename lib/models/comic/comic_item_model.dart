@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:liaz/app/utils/convert_util.dart';
 
-class ComicUpgradeModel {
+class ComicItemModel {
   int comicId;
   String title;
   String cover;
@@ -12,7 +12,7 @@ class ComicUpgradeModel {
   int updated;
   int comicChapterId;
 
-  ComicUpgradeModel({
+  ComicItemModel({
     required this.comicId,
     required this.title,
     required this.cover,
@@ -23,7 +23,7 @@ class ComicUpgradeModel {
     required this.comicChapterId,
   });
 
-  factory ComicUpgradeModel.fromJson(Map<String, dynamic> json) {
+  factory ComicItemModel.fromJson(Map<String, dynamic> json) {
     final List<String>? types = json['types'] is List ? <String>[] : null;
     if (types != null && types.isNotEmpty) {
       for (final String type in json['types']!) {
@@ -36,7 +36,7 @@ class ComicUpgradeModel {
         authors.add(author);
       }
     }
-    return ComicUpgradeModel(
+    return ComicItemModel(
         comicId: ConvertUtil.asT<int>(json['comicId'])!,
         title: ConvertUtil.asT<String>(json['title'])!,
         cover: ConvertUtil.asT<String>(json['cover'])!,

@@ -3,14 +3,14 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/utils/str_util.dart';
-import 'package:liaz/models/dto/card_model.dart';
+import 'package:liaz/models/dto/card_item_model.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
 import 'package:remixicon/remixicon.dart';
 
-class CardWidget extends StatelessWidget {
-  final CardModel card;
+class CardItemWidget extends StatelessWidget {
+  final CardItemModel card;
 
-  const CardWidget({required this.card, super.key});
+  const CardItemWidget({required this.card, super.key});
 
   @override
   Widget build(BuildContext context) {

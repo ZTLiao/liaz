@@ -30,6 +30,7 @@ class BasePageController<T> extends BaseController {
     }
     try {
       error = null;
+      isLoading = true;
       isPageError.value = false;
       isPageEmpty.value = false;
       //页面开始更新
