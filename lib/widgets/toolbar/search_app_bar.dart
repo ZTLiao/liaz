@@ -5,9 +5,18 @@ import 'package:remixicon/remixicon.dart';
 
 class SearchAppBar extends StatelessWidget {
   final String hintText;
+  final bool readOnly;
+  final bool autofocus;
+  final TextEditingController? controller;
   final Function()? onTap;
 
-  const SearchAppBar({this.hintText = StrUtil.empty, this.onTap, super.key});
+  const SearchAppBar(
+      {this.hintText = StrUtil.empty,
+      this.readOnly = true,
+      this.autofocus = false,
+      this.controller,
+      this.onTap,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +39,10 @@ class SearchAppBar extends StatelessWidget {
           ),
           Expanded(
             child: TextField(
-              readOnly: true, //只读不可编辑，点击搜索框直接跳转搜索页
+              readOnly: readOnly,
+              //只读不可编辑，点击搜索框直接跳转搜索页
+              controller: controller,
+              autofocus: autofocus,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: hintText, //搜索提示词

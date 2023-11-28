@@ -22,4 +22,5 @@ class AppString {
   static const monthRank = '月榜';
   static const totalRank = '总榜';
   static const all = '全部';
+  static const searchAlert = '搜索 漫画/小说';
 }

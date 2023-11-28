@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/routes/app_route.dart';
 
 class AppNavigator {
@@ -29,8 +28,8 @@ class AppNavigator {
     }
   }
 
-  /// 打开漫画搜索
-  static void toComicSearch({String keyword = StrUtil.empty}) {
-    toContentPage(AppRoute.kComicSearch, arg: {'keyword': keyword});
+  /// 打开搜索
+  static void toSearch() {
+    toContentPage(AppRoute.kSearch);
   }
 }

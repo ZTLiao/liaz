@@ -5,6 +5,6 @@ class AppRoute {
   /// 首页
   static const kIndex = '/index';
 
-  /// 漫画搜索
-  static const kComicSearch = '/comic/search';
+  /// 搜索
+  static const kSearch = '/search';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:remixicon/remixicon.dart';
 
 class RankItemWidget extends StatelessWidget {
@@ -22,7 +23,7 @@ class RankItemWidget extends StatelessWidget {
       color = const Color.fromRGBO(186, 110, 64, 1);
     } else {
       icon = Remix.checkbox_blank_circle_fill;
-      color = Colors.black26;
+      color = Get.isDarkMode ? Colors.white24 : Colors.black26;
     }
     return Row(
       children: [

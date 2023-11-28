@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:liaz/modules/bookshelf/home/bookshelf_home_controller.dart';
 import 'package:liaz/modules/category/home/category_home_controller.dart';
-import 'package:liaz/modules/comic/search/comic_search_page.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/index/home/index_home_controller.dart';
 import 'package:liaz/modules/index/index_controller.dart';
 import 'package:liaz/modules/index/index_page.dart';
+import 'package:liaz/modules/search/home/search_home_page.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/routes/app_route.dart';
 
@@ -29,8 +29,8 @@ class AppRouter {
       ],
     ),
     GetPage(
-      name: AppRoute.kComicSearch,
-      page: () => const ComicSearchPage(),
+      name: AppRoute.kSearch,
+      page: () => SearchHomePage(),
     ),
   ];
 }

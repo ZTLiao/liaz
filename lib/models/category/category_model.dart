@@ -1,0 +1,52 @@
+import 'dart:convert';
+
+import 'package:liaz/app/utils/convert_util.dart';
+
+class CategoryModel {
+  int categoryId;
+  int assetType;
+  String title;
+  String cover;
+  List<String> authors;
+  int objId;
+
+  CategoryModel({
+    required this.categoryId,
+    required this.assetType,
+    required this.title,
+    required this.cover,
+    required this.authors,
+    required this.objId,
+  });
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    final List<String>? authors = json['authors'] is List ? <String>[] : null;
+    if (authors != null && authors.isNotEmpty) {
+      for (final String author in json['authors']!) {
+        authors.add(author);
+      }
+    }
+    return CategoryModel(
+      categoryId: ConvertUtil.asT<int>(json['categoryId'])!,
+      assetType: ConvertUtil.asT<int>(json['assetType'])!,
+      title: ConvertUtil.asT<String>(json['title'])!,
+      cover: ConvertUtil.asT<String>(json['cover'])!,
+      authors: authors ?? [],
+      objId: ConvertUtil.asT<int>(json['objId'])!,
+    );
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'categoryId': categoryId,
+        'assetType': assetType,
+        'title': title,
+        'cover': cover,
+        'authors': authors,
+        'objId': objId,
+      };
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+}
