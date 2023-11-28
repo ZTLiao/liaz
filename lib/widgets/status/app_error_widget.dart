@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_asset.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/utils/dialog_util.dart';
@@ -28,7 +29,7 @@ class AppErrorWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               LottieBuilder.asset(
-                'assets/lotties/error.json',
+                AppAsset.lottiesError,
                 width: 260,
                 repeat: false,
               ),

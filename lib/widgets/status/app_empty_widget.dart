@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liaz/app/constants/app_asset.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
@@ -22,7 +23,7 @@ class AppEmptyWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               LottieBuilder.asset(
-                'assets/lotties/empty.json',
+                AppAsset.lottiesEmpty,
                 width: 200,
                 height: 200,
                 repeat: false,

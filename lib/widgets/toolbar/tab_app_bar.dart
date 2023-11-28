@@ -8,12 +8,18 @@ class TabAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TabController? controller;
   final Widget? action;
   final bool isScrollable;
+  final TabAlignment? tabAlignment;
+  final double selectedSize;
+  final double unselectedSize;
 
   const TabAppBar(
       {required this.tabs,
       this.controller,
       this.action,
+      this.tabAlignment,
       this.isScrollable = true,
+      this.selectedSize = 12,
+      this.unselectedSize = 12,
       super.key});
 
   @override
@@ -27,6 +33,7 @@ class TabAppBar extends StatelessWidget implements PreferredSizeWidget {
               systemNavigationBarColor: Colors.transparent,
             ),
       child: Container(
+        alignment: Alignment.centerLeft,
         padding:
             EdgeInsets.only(top: MediaQuery.of(context).padding.top, right: 4),
         height: 56 + MediaQuery.of(context).padding.top,
@@ -34,17 +41,18 @@ class TabAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             Expanded(
               child: TabBar(
+                tabAlignment: tabAlignment,
                 isScrollable: isScrollable,
                 controller: controller,
                 labelColor: Theme.of(context).colorScheme.primary,
                 unselectedLabelColor:
                     Get.isDarkMode ? Colors.white70 : Colors.black87,
-                labelStyle: const TextStyle(
-                  fontSize: 12,
+                labelStyle: TextStyle(
+                  fontSize: selectedSize,
                   fontWeight: FontWeight.bold,
                 ),
-                unselectedLabelStyle: const TextStyle(
-                  fontSize: 12,
+                unselectedLabelStyle: TextStyle(
+                  fontSize: unselectedSize,
                   fontWeight: FontWeight.bold,
                 ),
                 labelPadding: AppStyle.edgeInsetsH12,

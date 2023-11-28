@@ -25,7 +25,6 @@ class IndexRecommendView extends StatelessWidget {
       child: PageListView(
         pageController: controller,
         padding: AppStyle.edgeInsetsH12,
-        isShowPageLoading: true,
         itemBuilder: (context, i) {
           var recommend = controller.list[i];
           var showType = recommend.showType;

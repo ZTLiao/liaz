@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liaz/app/constants/app_asset.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:lottie/lottie.dart';
 
@@ -11,7 +12,7 @@ class AppLoadingWidget extends StatelessWidget {
       child: Padding(
         padding: AppStyle.edgeInsetsA12,
         child: LottieBuilder.asset(
-          'assets/lotties/loading.json',
+          AppAsset.lottiesLoading,
           width: 200,
         ),
       ),

@@ -7,11 +7,13 @@ class EmptyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
-        child: Text(AppString.appName,
-            style: TextStyle(color: AppColor.black33)),
+        child: Image.asset(
+          "assets/images/logo.png",
+          height: 80,
+        ),
       ),
     );
   }
