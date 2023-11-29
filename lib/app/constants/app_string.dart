@@ -23,4 +23,6 @@ class AppString {
   static const totalRank = '总榜';
   static const all = '全部';
   static const searchAlert = '搜索 漫画/小说';
+  static const hotSearch = '热门搜索';
+  static const historySearch = '历史搜索';
 }

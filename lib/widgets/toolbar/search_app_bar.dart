@@ -34,7 +34,7 @@ class SearchAppBar extends StatelessWidget {
             child: Icon(
               Remix.search_line,
               size: 16,
-              color: Color(0xFF999999),
+              color: AppColor.grey99,
             ), //搜索框图标
           ),
           Expanded(
@@ -48,7 +48,7 @@ class SearchAppBar extends StatelessWidget {
                 hintText: hintText, //搜索提示词
                 hintStyle: const TextStyle(
                   fontSize: 13,
-                  color: Color(0xFF999999),
+                  color: AppColor.grey99,
                 ), //搜索框文字样式
               ),
               onTap: onTap, //onTap

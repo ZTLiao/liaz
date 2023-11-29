@@ -81,7 +81,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
                             style: TextStyle(
                               color: controller.categoryId.value == i
                                   ? Colors.cyan
-                                  : Colors.white70,
+                                  : Get.isDarkMode ? Colors.white70 : Colors.black54,
                             ),
                           ),
                         ),
