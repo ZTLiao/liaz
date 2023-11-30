@@ -25,4 +25,9 @@ class AppString {
   static const searchAlert = '搜索 漫画/小说';
   static const hotSearch = '热门搜索';
   static const historySearch = '历史搜索';
+  static const bookshelf = '我的书架';
+  static const operate = '操作';
+  static const updateSort = '按更新时间排序';
+  static const subscribeSort = '按订阅时间排序';
+  static const readSort = '按阅读时间排序';
 }

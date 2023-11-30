@@ -3,6 +3,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
+import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -109,6 +110,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
       child: PageListView(
           pageController: controller,
           isLoadMore: true,
+          padding: AppStyle.edgeInsetsH12.copyWith(bottom: 12),
           itemBuilder: (context, i) {
             var list = controller.list[i];
             List<ItemModel> items = [];
