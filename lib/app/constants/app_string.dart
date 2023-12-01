@@ -30,4 +30,15 @@ class AppString {
   static const updateSort = '按更新时间排序';
   static const subscribeSort = '按订阅时间排序';
   static const readSort = '按阅读时间排序';
+  static const notLogin = '未登录';
+  static const toLogin = '点击前往登录';
+  static const browse = '浏览记录';
+  static const comment = '我的评论';
+  static const localComic = '本地漫画';
+  static const download = '本机下载';
+  static const settings = '更多设置';
+  static const messageBoard = '留言板块';
+  static const disclaimer = '免责声明';
+  static const checkUpdate = '检查更新';
+  static const aboutAPP = '关于APP';
 }
