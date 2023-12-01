@@ -32,4 +32,10 @@ class AppNavigator {
   static void toSearch() {
     toContentPage(AppRoute.kSearch);
   }
+
+  static void toComicDetail(int comicId) {
+    toContentPage(AppRoute.kComicDetail, arg: {
+      'id': comicId,
+    });
+  }
 }

@@ -7,4 +7,7 @@ class AppRoute {
 
   /// 搜索
   static const kSearch = '/search';
+
+  /// 漫画详情
+  static const kComicDetail = '/comic/detail';
 }

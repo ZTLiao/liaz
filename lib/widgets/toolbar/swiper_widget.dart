@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
-import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
@@ -11,8 +9,9 @@ class SwiperWidget extends StatelessWidget {
   final double _height = 300;
 
   final List<ItemModel> items;
+  final Function(ItemModel item)? onTop;
 
-  const SwiperWidget({required this.items, super.key});
+  const SwiperWidget({required this.items, this.onTop, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +54,7 @@ class SwiperWidget extends StatelessWidget {
                     ))
               ],
             ),
-            onTap: (i) {
-              onOpen(items[i]);
-            },
+            onTap: (i) => onTop!(items[i]),
             pagination: const SwiperPagination(
                 margin: AppStyle.edgeInsetsA8,
                 alignment: Alignment.bottomRight,
@@ -66,9 +63,5 @@ class SwiperWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void onOpen(ItemModel item) {
-    SmartDialog.showToast(AppString.skipError);
   }
 }

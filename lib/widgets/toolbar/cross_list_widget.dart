@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
@@ -12,9 +10,14 @@ class CrossListWidget extends StatelessWidget {
   final List<ItemModel> items;
   final Function()? onRefresh;
   final Function()? onMore;
+  final Function(ItemModel item)? onTop;
 
   const CrossListWidget(
-      {required this.items, this.onRefresh, this.onMore, super.key});
+      {required this.items,
+      this.onRefresh,
+      this.onMore,
+      this.onTop,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +38,10 @@ class CrossListWidget extends StatelessWidget {
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: items.length,
-              itemBuilder: (_, index) {
-                var item = items[index];
+              itemBuilder: (_, i) {
+                var item = items[i];
                 return InkWell(
-                  onTap: () => onOpen(item),
+                  onTap: () => onTop!(item),
                   borderRadius: AppStyle.radius4,
                   child: Row(
                     children: [
@@ -92,9 +95,5 @@ class CrossListWidget extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  void onOpen(ItemModel item) {
-    SmartDialog.showToast(AppString.skipError);
   }
 }

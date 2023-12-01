@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:liaz/modules/bookshelf/home/bookshelf_home_controller.dart';
 import 'package:liaz/modules/category/home/category_home_controller.dart';
+import 'package:liaz/modules/comic/detail/comic_detail_controller.dart';
+import 'package:liaz/modules/comic/detail/comic_detail_page.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/index/home/index_home_controller.dart';
 import 'package:liaz/modules/index/index_controller.dart';
@@ -31,6 +33,15 @@ class AppRouter {
     GetPage(
       name: AppRoute.kSearch,
       page: () => SearchHomePage(),
+    ),
+    GetPage(
+      name: AppRoute.kComicDetail,
+      page: () => ComicDetailPage(),
+      binding: BindingsBuilder.put(
+        () => ComicDetailController(
+          comicId: Get.arguments['id'],
+        ),
+      ),
     ),
   ];
 }

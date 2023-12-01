@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
@@ -12,8 +10,9 @@ class ThreeBoxGridWidget extends StatelessWidget {
   final double _height = 360;
 
   final List<ItemModel> items;
+  final Function(ItemModel item)? onTop;
 
-  const ThreeBoxGridWidget({required this.items, super.key});
+  const ThreeBoxGridWidget({required this.items, this.onTop, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class ThreeBoxGridWidget extends StatelessWidget {
       itemBuilder: (_, i) {
         var item = items[i];
         return InkWell(
-          onTap: () => onOpen(item),
+          onTap: () => onTop!(item),
           borderRadius: AppStyle.radius4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,9 +66,5 @@ class ThreeBoxGridWidget extends StatelessWidget {
         );
       },
     );
-  }
-
-  void onOpen(ItemModel item) {
-    SmartDialog.showToast(AppString.skipError);
   }
 }
