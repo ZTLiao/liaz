@@ -60,6 +60,7 @@ class IndexRecommendView extends StatelessWidget {
             );
           } else if (showType == ShowTypeEnum.twoGrid.index) {
             return TitleWidget(
+              icon: Icons.read_more,
               item: title,
               child: TwoBoxGridWidget(
                 items: items,
@@ -68,6 +69,7 @@ class IndexRecommendView extends StatelessWidget {
             );
           } else if (showType == ShowTypeEnum.threeGrid.index) {
             return TitleWidget(
+              icon: Icons.refresh,
               item: title,
               child: ThreeBoxGridWidget(
                 items: items,
@@ -76,6 +78,7 @@ class IndexRecommendView extends StatelessWidget {
             );
           }
           return TitleWidget(
+            icon: Icons.refresh,
             item: title,
             child: CrossListWidget(
               items: items,

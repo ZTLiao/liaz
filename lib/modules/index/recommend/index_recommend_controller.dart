@@ -277,7 +277,6 @@ class IndexRecommendController extends BasePageController<RecommendModel> {
           ),
         ],
       ),
-
     ];
     return Future(() => list);
   }

@@ -2,11 +2,26 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/constants/yes_or_no.dart';
+import 'package:liaz/app/enums/opt_type_enum.dart';
+import 'package:liaz/app/enums/show_type_enum.dart';
+import 'package:liaz/app/enums/skip_type_enum.dart';
+import 'package:liaz/models/dto/item_model.dart';
+import 'package:liaz/models/dto/title_model.dart';
+import 'package:liaz/models/recommend/recommend_item_model.dart';
+import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_controller.dart';
+import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/widgets/toolbar/cross_list_widget.dart';
 import 'package:liaz/widgets/toolbar/icon_item_widget.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
+import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
+import 'package:liaz/widgets/toolbar/title_widget.dart';
+import 'package:liaz/widgets/toolbar/two_box_grid_widget.dart';
 import 'package:remixicon/remixicon.dart';
 
 class ComicDetailPage extends GetView<ComicDetailController> {
@@ -150,54 +165,127 @@ class ComicDetailPage extends GetView<ComicDetailController> {
           ],
         ),
       ),
-      body: Stack(
-        children: [
-          Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: AppStyle.edgeInsetsH8,
+          child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(
-                            Size(MediaQuery.of(context).size.width / 5, 40)),
-                        shape: MaterialStateProperty.all(
-                          const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,
-                          ),
-                        ),
-                      ),
-                      child: Text(
-                        "相关推荐",
-                        style: TextStyle(
-                          color:
-                              Get.isDarkMode ? Colors.white70 : Colors.black54,
-                        ),
-                      ),
+              _buildDescription(context),
+              _buildChapter(context),
+              _buildRecommend(context),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: SpeedDial(
+        overlayColor: Colors.black,
+        overlayOpacity: 0,
+        icon: Icons.rocket,
+        elevation: 4.0,
+        buttonSize: const Size(50, 50),
+        childrenButtonSize: const Size(50, 50),
+        activeIcon: Icons.rocket_launch,
+        direction: SpeedDialDirection.up,
+        spaceBetweenChildren: 4.0,
+        spacing: 4.0,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.download),
+            backgroundColor: Colors.blue[300],
+            foregroundColor: Colors.white,
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDescription(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  controller.isRelateRecommend.value = true;
+                },
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                      Size(MediaQuery.of(context).size.width / 5, 40)),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
                     ),
                   ),
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
-                        minimumSize:
-                            Size(MediaQuery.of(context).size.width / 5, 40),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      ),
-                      child: Text(
-                        "开始阅读",
-                      ),
-                    ),
+                  foregroundColor: MaterialStateProperty.resolveWith(
+                    (states) {
+                      return Get.isDarkMode ? Colors.blue : Colors.white;
+                    },
                   ),
-                ],
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.cyan;
+                    }
+                    return Get.isDarkMode ? Colors.black : Colors.white;
+                  }),
+                ),
+                child: Text(
+                  AppString.relateRecommend,
+                  style: TextStyle(
+                    color: Get.isDarkMode ? Colors.white : Colors.black54,
+                  ),
+                ),
               ),
-              AppStyle.vGap12,
-              Obx(
-                () => GestureDetector(
+            ),
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  controller.isRelateRecommend.value = false;
+                },
+                style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(
+                      Size(MediaQuery.of(context).size.width / 5, 40)),
+                  shape: MaterialStateProperty.all(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                  ),
+                  foregroundColor: MaterialStateProperty.resolveWith(
+                    (states) {
+                      return Get.isDarkMode ? Colors.black : Colors.white;
+                    },
+                  ),
+                  //背景颜色
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Colors.cyan;
+                    }
+                    return Get.isDarkMode ? Colors.black : Colors.white;
+                  }),
+                ),
+                child: Text(
+                  AppString.startReading,
+                  style: TextStyle(
+                    color: Colors.cyan,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Divider(
+          color: Colors.grey.withOpacity(.2),
+          height: 1.0,
+        ),
+        AppStyle.vGap12,
+        Obx(
+          () => Offstage(
+            offstage: controller.isRelateRecommend.value,
+            child: Column(
+              children: [
+                GestureDetector(
                   onTap: () {
                     controller.isExpandDescription.value =
                         !controller.isExpandDescription.value;
@@ -217,37 +305,380 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              ),
-              AppStyle.vGap12,
-              Divider(
-                color: Colors.grey.withOpacity(.2),
-                height: 1.0,
-              ),
-            ],
+                controller.isExpandDescription.value
+                    ? const SizedBox()
+                    : AppStyle.vGap12,
+                Divider(
+                  color: Colors.grey.withOpacity(.2),
+                  height: 1.0,
+                ),
+              ],
+            ),
           ),
-        ],
-      ),
-      floatingActionButton: SpeedDial(
-        overlayColor: Colors.black,
-        overlayOpacity: 0,
-        icon: Icons.rocket,
-        elevation: 4.0,
-        buttonSize: Size(50, 50),
-        childrenButtonSize: Size(50, 50),
-        //animationAngle: -3.14 / 4,
-        activeIcon: Icons.rocket_launch,
-        direction: SpeedDialDirection.up,
-        spaceBetweenChildren: 4.0,
-        spacing: 4.0,
-        children: [
-          SpeedDialChild(
-            child: const Icon(Icons.download),
-            backgroundColor: Colors.blue[300],
-            foregroundColor: Colors.white,
-            onTap: () {},
-          ),
-        ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildChapter(BuildContext context) {
+    return Obx(
+      () => Offstage(
+        offstage: controller.isRelateRecommend.value,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '连载（共100话）',
+                  ),
+                ),
+                TextButton.icon(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 14),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  onPressed: () {},
+                  icon: const Icon(
+                    Remix.sort_asc,
+                    size: 20,
+                  ),
+                  label: const Text('升序'),
+                ),
+              ],
+            ),
+            LayoutBuilder(
+              builder: (ctx, constraints) {
+                var count = constraints.maxWidth ~/ 160;
+                if (count < 3) count = 3;
+                return MasonryGridView.count(
+                  crossAxisCount: count,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 15,
+                  itemBuilder: (context, i) {
+                    return Tooltip(
+                      message: "展开全部章节",
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: i == 0 ? Colors.cyan : Colors.grey,
+                          backgroundColor: Colors.white,
+                          textStyle: const TextStyle(fontSize: 14),
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          minimumSize: const Size.fromHeight(40),
+                          side: BorderSide(
+                            color: i == 0
+                                ? Colors.cyan
+                                : Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.black,
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: Text('第 ${i + 1} 话'),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _buildRecommend(BuildContext context) {
+    var list = [
+      RecommendModel(
+        recommendId: 1,
+        title: '最近更新',
+        showType: ShowTypeEnum.none.index,
+        showTitle: YesOrNo.yes,
+        optType: OptTypeEnum.none.index,
+        items: [
+          RecommendItemModel(
+            recommendItemId: 4,
+            title: '最弱的我用“穿墙bug”变强',
+            subTitle: '作者:畑优以/北川ニキタ',
+            showValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 4,
+            title: '最弱的我用“穿墙bug”变强',
+            subTitle: '作者:畑优以/北川ニキタ',
+            showValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 4,
+            title: '最弱的我用“穿墙bug”变强',
+            subTitle: '作者:畑优以/北川ニキタ',
+            showValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 4,
+            title: '最弱的我用“穿墙bug”变强',
+            subTitle: '作者:畑优以/北川ニキタ',
+            showValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 4,
+            title: '最弱的我用“穿墙bug”变强',
+            subTitle: '作者:畑优以/北川ニキタ',
+            showValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 4,
+            title: '最弱的我用“穿墙bug”变强',
+            subTitle: '作者:畑优以/北川ニキタ',
+            showValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+          ),
+        ],
+      ),
+      RecommendModel(
+        recommendId: 3,
+        title: '恋爱四格',
+        showType: ShowTypeEnum.none.index,
+        showTitle: YesOrNo.yes,
+        optType: OptTypeEnum.none.index,
+        items: [
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '恋爱四格小剧场',
+            showValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '恋爱四格小剧场',
+            showValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '恋爱四格小剧场',
+            showValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '恋爱四格小剧场',
+            showValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '恋爱四格小剧场',
+            showValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+          ),
+        ],
+      ),
+      RecommendModel(
+        recommendId: 2,
+        title: '热门连载',
+        showType: ShowTypeEnum.none.index,
+        showTitle: YesOrNo.yes,
+        optType: OptTypeEnum.none.index,
+        items: [
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '天才魔女没魔了',
+            subTitle: '作者:辻岛もと',
+            showValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '天才魔女没魔了',
+            subTitle: '作者:辻岛もと',
+            showValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '天才魔女没魔了',
+            subTitle: '作者:辻岛もと',
+            showValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '天才魔女没魔了',
+            subTitle: '作者:辻岛もと',
+            showValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '天才魔女没魔了',
+            subTitle: '作者:辻岛もと',
+            showValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '天才魔女没魔了',
+            subTitle: '作者:辻岛もと',
+            showValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '天才魔女没魔了',
+            subTitle: '作者:辻岛もと',
+            showValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '天才魔女没魔了',
+            subTitle: '作者:辻岛もと',
+            showValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+          ),
+          RecommendItemModel(
+            recommendItemId: 1,
+            title: '天才魔女没魔了',
+            subTitle: '作者:辻岛もと',
+            showValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+            skipType: SkipTypeEnum.h5.index,
+            skipValue:
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+          ),
+        ],
+      ),
+    ];
+    var childrens = <Widget>[];
+    for (RecommendModel recommend in list) {
+      var showType = recommend.showType;
+      var title = TitleModel(
+        titleId: recommend.recommendId,
+        title: recommend.title,
+        showType: recommend.showType,
+        showTitle: recommend.showTitle,
+        optType: recommend.optType,
+        optValue: recommend.optValue,
+      );
+      var items = <ItemModel>[];
+      for (var i = 0; i < recommend.items.length; i++) {
+        var item = recommend.items[i];
+        items.add(ItemModel(
+          itemId: item.recommendItemId,
+          title: item.title,
+          subTitle: item.subTitle,
+          showValue: item.showValue,
+          skipType: item.skipType,
+          skipValue: item.skipValue,
+          objId: item.objId,
+        ));
+      }
+      Widget widget;
+      if (showType == ShowTypeEnum.twoGrid.index) {
+        widget = TitleWidget(
+          icon: Icons.chevron_right,
+          color: Colors.grey,
+          item: title,
+          child: TwoBoxGridWidget(
+            items: items,
+            onTop: (item) => AppNavigator.toComicDetail(1),
+          ),
+        );
+      } else if (showType == ShowTypeEnum.threeGrid.index) {
+        widget = TitleWidget(
+          icon: Icons.chevron_right,
+          color: Colors.grey,
+          item: title,
+          child: ThreeBoxGridWidget(
+            items: items,
+            onTop: (item) => AppNavigator.toComicDetail(1),
+          ),
+        );
+      } else {
+        widget = TitleWidget(
+          icon: Icons.chevron_right,
+          color: Colors.grey,
+          item: title,
+          child: CrossListWidget(
+            items: items,
+            onTop: (item) => AppNavigator.toComicDetail(1),
+          ),
+        );
+      }
+      childrens.add(widget);
+    }
+    return Obx(() => Offstage(
+          offstage: !controller.isRelateRecommend.value,
+          child: Column(
+            children: childrens,
+          ),
+        ));
   }
 }

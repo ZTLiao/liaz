@@ -41,4 +41,7 @@ class AppString {
   static const disclaimer = '免责声明';
   static const checkUpdate = '检查更新';
   static const aboutAPP = '关于APP';
+  static const relateRecommend = '相关推荐';
+  static const startReading = '开始阅读';
+  static const continueReading = '继续阅读';
 }
