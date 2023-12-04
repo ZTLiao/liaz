@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ComicReaderPage extends StatelessWidget {
+  const ComicReaderPage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return const SizedBox();
   }
 }
