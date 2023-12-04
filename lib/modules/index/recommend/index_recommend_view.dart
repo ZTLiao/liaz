@@ -82,7 +82,7 @@ class IndexRecommendView extends StatelessWidget {
             item: title,
             child: CrossListWidget(
               items: items,
-              onTop: (item) => AppNavigator.toComicDetail(1),
+              onTop: (item) => AppNavigator.toNovelDetail(1),
             ),
           );
         },

@@ -7,6 +7,8 @@ import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/index/home/index_home_controller.dart';
 import 'package:liaz/modules/index/index_controller.dart';
 import 'package:liaz/modules/index/index_page.dart';
+import 'package:liaz/modules/novel/detail/novel_detail_controller.dart';
+import 'package:liaz/modules/novel/detail/novel_detail_page.dart';
 import 'package:liaz/modules/search/home/search_home_page.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/routes/app_route.dart';
@@ -36,10 +38,19 @@ class AppRouter {
     ),
     GetPage(
       name: AppRoute.kComicDetail,
-      page: () => ComicDetailPage(),
+      page: () => const ComicDetailPage(),
       binding: BindingsBuilder.put(
         () => ComicDetailController(
-          comicId: Get.arguments['id'],
+          id: Get.arguments['id'],
+        ),
+      ),
+    ),
+    GetPage(
+      name: AppRoute.kNovelDetail,
+      page: () => const NovelDetailPage(),
+      binding: BindingsBuilder.put(
+        () => NovelDetailController(
+          id: Get.arguments['id'],
         ),
       ),
     ),

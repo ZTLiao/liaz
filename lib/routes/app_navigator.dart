@@ -38,4 +38,10 @@ class AppNavigator {
       'id': comicId,
     });
   }
+
+  static void toNovelDetail(int novelId) {
+    toContentPage(AppRoute.kNovelDetail, arg: {
+      'id': novelId,
+    });
+  }
 }

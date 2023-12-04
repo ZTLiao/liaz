@@ -25,7 +25,7 @@ import 'package:liaz/widgets/toolbar/two_box_grid_widget.dart';
 import 'package:remixicon/remixicon.dart';
 
 class ComicDetailPage extends GetView<ComicDetailController> {
-  ComicDetailPage({super.key});
+  const ComicDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
