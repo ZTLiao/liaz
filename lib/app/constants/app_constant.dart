@@ -5,6 +5,9 @@ class AppConstant {
   /// 首页tab数量
   static const int kTabSize = 3;
 
+  static const String channelName =
+      String.fromEnvironment('CHANNEL', defaultValue: 'develop');
+
   static const String authorization = "Authorization";
   static const String userAgent = "User-Agent";
   static const String timestamp = "X-Timestamp";

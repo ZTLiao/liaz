@@ -11,11 +11,11 @@ class DeviceInfoUtil {
   static late AndroidDeviceInfo _androidDeviceInfo;
 
   static Future<DeviceInfo> getDeviceInfo() async {
-    String deviceId = const Uuid().v4();
     String os = Platform.operatingSystem;
     String osVersion = Platform.operatingSystemVersion;
     String model = StrUtil.empty;
     String imei = StrUtil.empty;
+    String deviceId = StrUtil.empty;
     if (Platform.isIOS) {
       _iosDeviceInfo = await _deviceInfoPlugin.iosInfo;
       var identifierForVendor = _iosDeviceInfo.identifierForVendor;
@@ -27,13 +27,14 @@ class DeviceInfoUtil {
       }
     } else if (Platform.isAndroid) {
       _androidDeviceInfo = await _deviceInfoPlugin.androidInfo;
-      if (_androidDeviceInfo.serialNumber.isNotEmpty) {
-        imei = _androidDeviceInfo.serialNumber;
-      } else {
-        imei = _androidDeviceInfo.id;
-      }
+      imei = _androidDeviceInfo.id;
       model =
           _androidDeviceInfo.board + StrUtil.space + _androidDeviceInfo.model;
+    }
+    if (imei.isNotEmpty) {
+      deviceId = const Uuid().v5(Uuid.NAMESPACE_URL, imei);
+    } else {
+      deviceId = const Uuid().v4();
     }
     return DeviceInfo(
       os: os,

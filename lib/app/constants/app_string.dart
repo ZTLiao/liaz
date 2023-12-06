@@ -44,4 +44,6 @@ class AppString {
   static const relateRecommend = '相关推荐';
   static const startReading = '开始阅读';
   static const continueReading = '继续阅读';
+  static const responseFail = '请求失败：';
+  static const serverError = '请求失败，请检查网络';
 }
