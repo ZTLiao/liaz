@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
-import 'package:liaz/app/utils/device_info_util.dart';
 import 'package:liaz/services/device_info_service.dart';
 
 class PublicInterceptor extends Interceptor {
@@ -11,8 +10,7 @@ class PublicInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) {
-    var timestamp = DateTime.now().millisecondsSinceEpoch;
-    options.extra['ts'] = timestamp;
+    options.extra['ts'] = DateTime.now().millisecondsSinceEpoch;
     var packageInfo = Global.packageInfo;
     var deviceInfo = DeviceInfoService.instance.getDeviceInfo();
     options.headers[AppConstant.app] = packageInfo.appName;
@@ -25,7 +23,6 @@ class PublicInterceptor extends Interceptor {
     options.headers[AppConstant.imei] = deviceInfo.imei;
     options.headers[AppConstant.client] = deviceInfo.os;
     options.headers[AppConstant.channel] = AppConstant.channelName;
-    options.headers[AppConstant.timestamp] = timestamp;
     super.onRequest(options, handler);
   }
 

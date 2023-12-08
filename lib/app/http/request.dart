@@ -3,12 +3,14 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/error/app_error.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/response_entity.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/http/interceptor/public_interceptor.dart';
+import 'package:liaz/app/utils/sign_util.dart';
 
 class Request {
   static const int _connectTimeout = 60;
@@ -60,15 +62,32 @@ class Request {
     }
   }
 
-  Future<T?> get<T>(
+  Future<dynamic> get(
     String path, {
     Map<String, dynamic>? queryParameters,
     String baseUrl = Global.baseUrl,
     CancelToken? cancel,
     ResponseType responseType = ResponseType.json,
   }) async {
+    //参数加密
+    Map<String, List<String>> params = {};
+    if (queryParameters != null && queryParameters.isNotEmpty) {
+      queryParameters.forEach((key, value) {
+        if (value is List) {
+          params.putIfAbsent(
+              key, () => value.map((e) => e.toString()).toList());
+        } else {
+          params.putIfAbsent(key, () => [value.toString()]);
+        }
+      });
+    }
+    //时间戳
+    var timestamp = DateTime.now().millisecondsSinceEpoch;
     Map<String, dynamic> header = {};
-    queryParameters ??= <String, dynamic>{};
+    header[AppConstant.timestamp] = timestamp;
+    //加签
+    header[AppConstant.sign] =
+        SignUtil.generateSign(params, timestamp, Global.signKey);
     try {
       var response = await dio.get(
         baseUrl + path,
@@ -80,7 +99,7 @@ class Request {
         cancelToken: cancel,
       );
       if (response.statusCode == HttpStatus.ok) {
-        var result = ResponseEntity<T>.fromJson(response.data);
+        var result = ResponseEntity.fromJson(response.data);
         if (result.code == HttpStatus.ok) {
           return result.data;
         } else {
@@ -89,8 +108,17 @@ class Request {
             code: result.code,
           );
         }
+      } else {
+        var data = response.data;
+        if (data is Map) {
+          var result = ResponseEntity.fromJson(response.data);
+          throw AppError(
+            result.message,
+            code: result.code,
+          );
+        }
+        throw AppError(response.data);
       }
-      return response.data;
     } on DioException catch (e) {
       Log.e(e.message!, e.stackTrace);
       if (e.type == DioExceptionType.cancel) {

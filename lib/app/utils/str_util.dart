@@ -5,6 +5,9 @@ class StrUtil {
   static const empty = '';
   static const space = ' ';
   static const slash = '/';
+  static const equal = '=';
+  static const delimStart = '{';
+  static const delimEnd = '}';
 
   static String listToStr(List<String> list, String separator) {
     String str = empty;

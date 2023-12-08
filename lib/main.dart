@@ -9,12 +9,12 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/global/global.dart';
-import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/device_info.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/index/index_controller.dart';
+import 'package:liaz/requests/app_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/routes/app_router.dart';
@@ -43,7 +43,7 @@ Future<void> init() async {
   await initHive();
   //初始化服务
   await initServices();
-  Request.instance.get('/client/init');
+  AppRequest().clientInit();
 }
 
 Future<void> initHive() async {

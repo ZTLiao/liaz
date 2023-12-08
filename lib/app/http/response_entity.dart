@@ -1,9 +1,11 @@
+import 'dart:convert';
+
 import 'package:liaz/app/utils/convert_util.dart';
 
-class ResponseEntity<T> {
+class ResponseEntity {
   int code;
   String message;
-  T? data;
+  Map<String, dynamic>? data;
   int timestamp;
 
   ResponseEntity({
@@ -27,9 +29,14 @@ class ResponseEntity<T> {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'code': this.code,
-        'message': this.message,
-        'data': this.data,
-        'timestamp': this.timestamp,
+        'code': code,
+        'message': message,
+        'data': data,
+        'timestamp': timestamp,
       };
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }
