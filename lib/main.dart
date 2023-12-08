@@ -11,13 +11,14 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/models/db/device_info.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/index/index_controller.dart';
-import 'package:liaz/requests/app_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/routes/app_router.dart';
+import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/device_info_service.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -43,13 +44,14 @@ Future<void> init() async {
   await initHive();
   //初始化服务
   await initServices();
-  AppRequest().clientInit();
 }
 
 Future<void> initHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(DeviceInfoAdapter());
+  Hive.registerAdapter(AppConfigAdapter());
   await Get.put(DeviceInfoService()).init();
+  await Get.put(AppConfigService()).init();
 }
 
 Future<void> initServices() async {

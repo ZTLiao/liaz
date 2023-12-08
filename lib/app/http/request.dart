@@ -83,6 +83,7 @@ class Request {
     }
     //时间戳
     var timestamp = DateTime.now().millisecondsSinceEpoch;
+    //请求头
     Map<String, dynamic> header = {};
     header[AppConstant.timestamp] = timestamp;
     //加签

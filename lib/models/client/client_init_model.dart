@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:liaz/app/utils/convert_util.dart';
+import 'package:liaz/models/db/app_config.dart';
 
 class ClientInitModel {
   KeyConfig? key;
@@ -64,23 +65,3 @@ class KeyConfig {
   }
 }
 
-class AppConfig {
-  String fileUrl;
-
-  AppConfig({
-    required this.fileUrl,
-  });
-
-  factory AppConfig.fromJson(Map<String, dynamic> json) => AppConfig(
-        fileUrl: ConvertUtil.asT<String>(json['fileUrl'])!,
-      );
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'fileUrl': fileUrl,
-      };
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-}

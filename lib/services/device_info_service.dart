@@ -6,24 +6,24 @@ import 'package:path_provider/path_provider.dart';
 
 class DeviceInfoService extends GetxService {
   static DeviceInfoService get instance => Get.find<DeviceInfoService>();
-  late Box<DeviceInfo> deviceInfoBox;
+  late Box<DeviceInfo> box;
 
   Future<void> init() async {
     var appDir = await getApplicationSupportDirectory();
-    deviceInfoBox = await Hive.openBox(
+    box = await Hive.openBox(
       "deviceInfo",
       path: appDir.path,
     );
-    if (deviceInfoBox.values.toList().isEmpty) {
+    if (box.values.toList().isEmpty) {
       putDeviceInfo(await DeviceInfoUtil.getDeviceInfo());
     }
   }
 
   Future<void> putDeviceInfo(DeviceInfo deviceInfo) async {
-    await deviceInfoBox.put(deviceInfo.deviceId, deviceInfo);
+    await box.put(deviceInfo.deviceId, deviceInfo);
   }
 
   DeviceInfo getDeviceInfo() {
-    return deviceInfoBox.values.first;
+    return box.values.first;
   }
 }

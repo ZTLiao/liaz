@@ -8,7 +8,9 @@ import 'package:liaz/app/utils/str_util.dart';
 class SignUtil {
   static String generateSign(
       Map<String, List<String>> params, int timestamp, String key) {
-    params.putIfAbsent('timestamp', () => [timestamp.toString()]);
+    if (timestamp > 0) {
+      params.putIfAbsent('timestamp', () => [timestamp.toString()]);
+    }
     var sb = StringBuffer();
     try {
       if (params.isNotEmpty) {
