@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/constants/app_string.dart';
@@ -26,9 +25,6 @@ class Request {
 
   late Dio dio;
 
-  /// 连接信息监听
-  StreamSubscription<ConnectivityResult>? connectivitySubscription;
-
   Request() {
     dio = Dio(
       BaseOptions(
@@ -44,22 +40,6 @@ class Request {
       ),
     );
     dio.interceptors.add(PublicInterceptor());
-    initConnectivity();
-  }
-
-  /// 初始化连接状态
-  void initConnectivity() async {
-    try {
-      var connectivity = Connectivity();
-      connectivitySubscription = connectivity.onConnectivityChanged
-          .listen((ConnectivityResult result) {
-        Global.netType = result.name;
-      });
-      ConnectivityResult result = await connectivity.checkConnectivity();
-      Global.netType = result.name;
-    } catch (e) {
-      Log.logPrint(e);
-    }
   }
 
   Future<dynamic> get(
@@ -67,11 +47,11 @@ class Request {
     Map<String, dynamic>? queryParameters,
     String baseUrl = Global.baseUrl,
     CancelToken? cancel,
-    ResponseType responseType = ResponseType.json,
   }) async {
+    queryParameters ??= {};
     //参数加密
     Map<String, List<String>> params = {};
-    if (queryParameters != null && queryParameters.isNotEmpty) {
+    if (queryParameters.isNotEmpty) {
       queryParameters.forEach((key, value) {
         if (value is List) {
           params.putIfAbsent(
@@ -94,8 +74,93 @@ class Request {
         baseUrl + path,
         queryParameters: queryParameters,
         options: Options(
-          responseType: responseType,
+          responseType: ResponseType.json,
           headers: header,
+        ),
+        cancelToken: cancel,
+      );
+      if (response.statusCode == HttpStatus.ok) {
+        var result = ResponseEntity.fromJson(response.data);
+        if (result.code == HttpStatus.ok) {
+          return result.data;
+        } else {
+          throw AppError(
+            result.message,
+            code: result.code,
+          );
+        }
+      } else {
+        var data = response.data;
+        if (data is Map) {
+          var result = ResponseEntity.fromJson(response.data);
+          throw AppError(
+            result.message,
+            code: result.code,
+          );
+        }
+        throw AppError(response.data);
+      }
+    } on DioException catch (e) {
+      Log.e(e.message!, e.stackTrace);
+      if (e.type == DioExceptionType.cancel) {
+        rethrow;
+      }
+      if (e.type == DioExceptionType.badResponse) {
+        return throw AppError(
+            "${AppString.responseFail}${e.response?.statusCode ?? -1}");
+      }
+      throw AppError(AppString.serverError);
+    }
+  }
+
+  Future<dynamic> post(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? data,
+    String baseUrl = Global.baseUrl,
+    CancelToken? cancel,
+  }) async {
+    queryParameters ??= {};
+    data ??= {};
+    //参数加密
+    Map<String, List<String>> params = {};
+    if (queryParameters.isNotEmpty) {
+      queryParameters.forEach((key, value) {
+        if (value is List) {
+          params.putIfAbsent(
+              key, () => value.map((e) => e.toString()).toList());
+        } else {
+          params.putIfAbsent(key, () => [value.toString()]);
+        }
+      });
+    }
+    if (data.isNotEmpty) {
+      data.forEach((key, value) {
+        if (value is List) {
+          params.putIfAbsent(
+              key, () => value.map((e) => e.toString()).toList());
+        } else {
+          params.putIfAbsent(key, () => [value.toString()]);
+        }
+      });
+    }
+    //时间戳
+    var timestamp = DateTime.now().millisecondsSinceEpoch;
+    //请求头
+    Map<String, dynamic> header = {};
+    header[AppConstant.timestamp] = timestamp;
+    //加签
+    header[AppConstant.sign] =
+        SignUtil.generateSign(params, timestamp, Global.signKey);
+    try {
+      var response = await dio.post(
+        baseUrl + path,
+        queryParameters: queryParameters,
+        data: data,
+        options: Options(
+          responseType: ResponseType.json,
+          headers: header,
+          contentType: Headers.formUrlEncodedContentType,
         ),
         cancelToken: cancel,
       );

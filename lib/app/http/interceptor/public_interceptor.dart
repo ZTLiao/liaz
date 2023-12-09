@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/global/global.dart';
@@ -5,24 +6,32 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/services/device_info_service.dart';
 
 class PublicInterceptor extends Interceptor {
+
   @override
   void onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
-  ) {
-    options.extra['ts'] = DateTime.now().millisecondsSinceEpoch;
-    var packageInfo = Global.packageInfo;
-    var deviceInfo = DeviceInfoService.instance.getDeviceInfo();
-    options.headers[AppConstant.app] = packageInfo.appName;
-    options.headers[AppConstant.appVersion] = packageInfo.version;
-    options.headers[AppConstant.deviceId] = deviceInfo.deviceId;
-    options.headers[AppConstant.os] = deviceInfo.os;
-    options.headers[AppConstant.osVersion] = deviceInfo.osVersion;
-    options.headers[AppConstant.netType] = Global.netType;
-    options.headers[AppConstant.model] = deviceInfo.model;
-    options.headers[AppConstant.imei] = deviceInfo.imei;
-    options.headers[AppConstant.client] = deviceInfo.os;
-    options.headers[AppConstant.channel] = AppConstant.channelName;
+  ) async {
+    try {
+      var connectivity = Connectivity();
+      ConnectivityResult result = await connectivity.checkConnectivity();
+      Global.netType = result.name;
+      options.extra['ts'] = DateTime.now().millisecondsSinceEpoch;
+      var packageInfo = Global.packageInfo;
+      var deviceInfo = DeviceInfoService.instance.getDeviceInfo();
+      options.headers[AppConstant.app] = packageInfo.appName;
+      options.headers[AppConstant.appVersion] = packageInfo.version;
+      options.headers[AppConstant.deviceId] = deviceInfo.deviceId;
+      options.headers[AppConstant.os] = deviceInfo.os;
+      options.headers[AppConstant.osVersion] = deviceInfo.osVersion;
+      options.headers[AppConstant.netType] = Global.netType;
+      options.headers[AppConstant.model] = deviceInfo.model;
+      options.headers[AppConstant.imei] = deviceInfo.imei;
+      options.headers[AppConstant.client] = deviceInfo.os;
+      options.headers[AppConstant.channel] = AppConstant.channelName;
+    } catch (e) {
+      Log.logPrint(e);
+    }
     super.onRequest(options, handler);
   }
 

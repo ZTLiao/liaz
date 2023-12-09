@@ -19,17 +19,19 @@ class AppConfigService extends GetxService {
     //初始化APP配置
     var appConfig = getAppConfig();
     if (appConfig == null) {
-      var model = await request.clientInit();
-      if (model.app != null) {
-        appConfig = model.app!;
-        putAppConfig(appConfig);
-        Global.appConfig = appConfig;
+      var value = await request.clientInit();
+      if (value.app != null) {
+        Global.appConfig = value.app!;
+        putAppConfig(Global.appConfig);
       }
     } else {
       Global.appConfig = appConfig;
-      request.clientInit().then((value) => {
-            if (value.app != null) {Global.appConfig = value.app!}
-          });
+      request.clientInit().then((value) {
+        if (value.app != null) {
+          Global.appConfig = value.app!;
+          putAppConfig(Global.appConfig);
+        }
+      });
     }
   }
 

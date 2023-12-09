@@ -48,14 +48,14 @@ Future<void> init() async {
 
 Future<void> initHive() async {
   await Hive.initFlutter();
+  Global.packageInfo = await PackageInfo.fromPlatform();
   Hive.registerAdapter(DeviceInfoAdapter());
   Hive.registerAdapter(AppConfigAdapter());
-  await Get.put(DeviceInfoService()).init();
-  await Get.put(AppConfigService()).init();
 }
 
 Future<void> initServices() async {
-  Global.packageInfo = await PackageInfo.fromPlatform();
+  await Get.put(DeviceInfoService()).init();
+  //await Get.put(AppConfigService()).init();
 }
 
 class AppScrollBehavior extends MaterialScrollBehavior {
