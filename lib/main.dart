@@ -55,7 +55,7 @@ Future<void> initHive() async {
 
 Future<void> initServices() async {
   await Get.put(DeviceInfoService()).init();
-  //await Get.put(AppConfigService()).init();
+  await Get.put(AppConfigService()).init();
 }
 
 class AppScrollBehavior extends MaterialScrollBehavior {

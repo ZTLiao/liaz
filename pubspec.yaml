@@ -36,6 +36,8 @@ dependencies:
   pointycastle: ^3.7.3
   crypto: ^3.0.3
   convert: ^3.1.1
+  preload_page_view: ^0.2.0
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:

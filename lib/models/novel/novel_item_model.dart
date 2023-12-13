@@ -26,14 +26,14 @@ class NovelItemModel {
   factory NovelItemModel.fromJson(Map<String, dynamic> json) {
     final List<String>? types = json['types'] is List ? <String>[] : null;
     if (types != null && types.isNotEmpty) {
-      for (final String type in json['types']!) {
-        types.add(type);
+      for (final dynamic type in json['types']!) {
+        types.add(ConvertUtil.asT<String>(type)!);
       }
     }
     final List<String>? authors = json['authors'] is List ? <String>[] : null;
     if (authors != null && authors.isNotEmpty) {
-      for (final String author in json['authors']!) {
-        authors.add(author);
+      for (final dynamic author in json['authors']!) {
+        authors.add(ConvertUtil.asT<String>(author)!);
       }
     }
     return NovelItemModel(

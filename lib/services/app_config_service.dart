@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/requests/app_request.dart';
@@ -36,7 +37,7 @@ class AppConfigService extends GetxService {
   }
 
   Future<void> putAppConfig(AppConfig appConfig) async {
-    await box.put(1, appConfig);
+    await box.put(AppString.appName, appConfig);
   }
 
   AppConfig? getAppConfig() {
