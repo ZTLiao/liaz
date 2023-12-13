@@ -10,9 +10,9 @@ class ComicChapterItemModel {
   String chapterName;
   int seqNo;
   List<String> paths;
+  int direction;
   bool isLocal;
   bool isSerializated;
-  int direction;
   bool isLong;
   bool isHide;
 
@@ -23,9 +23,9 @@ class ComicChapterItemModel {
     required this.chapterName,
     required this.seqNo,
     required this.paths,
+    required this.direction,
     this.isLocal = false,
     required this.isSerializated,
-    required this.direction,
     required this.isLong,
     required this.isHide,
   });
@@ -45,8 +45,8 @@ class ComicChapterItemModel {
       chapterName: ConvertUtil.asT<String>(json['chapterName'])!,
       seqNo: ConvertUtil.asT<int>(json['seqNo'])!,
       paths: paths ?? [],
+      direction: ConvertUtil.asT<int>(json['direction'])!,
       isSerializated: (comicFlag & ComicFlag.serializated) != 0,
-      direction: (comicFlag & ComicFlag.direction) >> 1,
       isLong: (comicFlag & ComicFlag.long) != 0,
       isHide: (comicFlag & ComicFlag.hide) != 0,
     );

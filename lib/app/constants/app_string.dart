@@ -46,4 +46,8 @@ class AppString {
   static const continueReading = '继续阅读';
   static const responseFail = '请求失败：';
   static const serverError = '请求失败，请检查网络';
+  static const settingTheme = '设置主题';
+  static const followSystem = '跟随系统';
+  static const lightTheme = '日间模式';
+  static const darkTheme = '夜间模式';
 }

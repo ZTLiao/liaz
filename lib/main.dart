@@ -19,7 +19,9 @@ import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/routes/app_router.dart';
 import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/app_settings_service.dart';
 import 'package:liaz/services/device_info_service.dart';
+import 'package:liaz/services/local_storage_service.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -54,8 +56,10 @@ Future<void> initHive() async {
 }
 
 Future<void> initServices() async {
+  await Get.put(LocalStorageService()).init();
   await Get.put(DeviceInfoService()).init();
   await Get.put(AppConfigService()).init();
+  Get.put(AppSettingsService());
 }
 
 class AppScrollBehavior extends MaterialScrollBehavior {
