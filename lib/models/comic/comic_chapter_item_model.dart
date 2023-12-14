@@ -30,6 +30,19 @@ class ComicChapterItemModel {
     required this.isHide,
   });
 
+  factory ComicChapterItemModel.empty() => ComicChapterItemModel(
+        comicChapterId: 0,
+        comicId: 0,
+        comicFlag: 0,
+        chapterName: '',
+        seqNo: 0,
+        paths: [],
+        direction: 0,
+        isSerializated: false,
+        isLong: false,
+        isHide: false,
+      );
+
   factory ComicChapterItemModel.fromJson(Map<String, dynamic> json) {
     final List<String>? paths = json['paths'] is List ? <String>[] : null;
     if (paths != null && paths.isNotEmpty) {

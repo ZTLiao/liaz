@@ -39,6 +39,9 @@ dependencies:
   preload_page_view: ^0.2.0
   scrollable_positioned_list: ^0.3.8
   path: ^1.8.3
+  battery_plus_platform_interface: ^2.0.0
+  battery_plus: ^5.0.2
+  photo_view: ^0.14.0
 
 dev_dependencies:
   flutter_test:

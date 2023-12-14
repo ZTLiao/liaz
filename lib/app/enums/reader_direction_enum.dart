@@ -1,11 +1,11 @@
 enum ReaderDirectionEnum {
   /// 左右
-  rightLeft,
+  leftToRight,
 
   /// 上下
-  upDown,
+  upToDown,
 
   /// 右左
-  leftRight,
+  rightToLeft,
   ;
 }

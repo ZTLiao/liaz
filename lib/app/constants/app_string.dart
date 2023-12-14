@@ -50,4 +50,17 @@ class AppString {
   static const followSystem = '跟随系统';
   static const lightTheme = '日间模式';
   static const darkTheme = '夜间模式';
+  static const warningFlow = '您已切换至数据网络，请注意流量消耗';
+  static const arriveLast = '已到达最后一页';
+  static const frontEmpty = '已到达最前一页';
+  static const wifi = 'WiFi';
+  static const bluetooth = '蓝牙';
+  static const computer = '有线';
+  static const baseStation = '流量';
+  static const vpn = 'VPN';
+  static const wifiOff = '无网络';
+  static const unkown = '未知';
+  static const battery = '电量';
+  static const prevPage = '上一页';
+  static const nextPage = '下一页';
 }

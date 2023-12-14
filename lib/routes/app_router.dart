@@ -3,6 +3,8 @@ import 'package:liaz/modules/bookshelf/home/bookshelf_home_controller.dart';
 import 'package:liaz/modules/category/home/category_home_controller.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_controller.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_page.dart';
+import 'package:liaz/modules/comic/reader/comic_reader_controller.dart';
+import 'package:liaz/modules/comic/reader/comic_reader_page.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/index/home/index_home_controller.dart';
 import 'package:liaz/modules/index/index_controller.dart';
@@ -31,6 +33,21 @@ class AppRouter {
         BindingsBuilder.put(() => BookshelfHomeController()),
         BindingsBuilder.put(() => UserHomeController()),
       ],
+    ),
+    GetPage(
+      name: AppRoute.kComicReader,
+      page: () => const ComicReaderPage(),
+      binding: BindingsBuilder.put(
+        () => ComicReaderController(
+          comicChapterId: Get.arguments['comicChapterId'],
+          comicId: Get.arguments['comicId'],
+          comicTitle: Get.arguments['comicTitle'],
+          comicCover: Get.arguments['comicCover'],
+          chapter: Get.arguments['chapter'],
+          chapters: Get.arguments['chapters'],
+          isLong: Get.arguments['isLong'] ?? false,
+        ),
+      ),
     ),
     GetPage(
       name: AppRoute.kSearch,

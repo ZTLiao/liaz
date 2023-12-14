@@ -109,4 +109,8 @@ class AppStyle {
 
   /// 顶部状态栏的高度
   static double get statusBarHeight => MediaQuery.of(Get.context!).padding.top;
+
+  /// 底部导航条的高度
+  static double get bottomBarHeight =>
+      MediaQuery.of(Get.context!).padding.bottom;
 }
