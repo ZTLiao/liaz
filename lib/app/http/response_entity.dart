@@ -5,7 +5,7 @@ import 'package:liaz/app/utils/convert_util.dart';
 class ResponseEntity {
   int code;
   String message;
-  Map<String, dynamic>? data;
+  dynamic data;
   int timestamp;
 
   ResponseEntity({

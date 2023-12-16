@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_asset.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/utils/dialog_util.dart';
+import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:lottie/lottie.dart';
 
@@ -48,7 +48,7 @@ class AppErrorWidget extends StatelessWidget {
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     onPressed: () {
-                      DialogUtil.copyText(
+                      ToolUtil.copyText(
                           "$errorMsg\n${error?.stackTrace?.toString()}");
                       SmartDialog.showToast(AppString.copeid);
                     },

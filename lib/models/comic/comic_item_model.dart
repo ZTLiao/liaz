@@ -25,13 +25,13 @@ class ComicItemModel {
 
   factory ComicItemModel.fromJson(Map<String, dynamic> json) {
     final List<String>? types = json['types'] is List ? <String>[] : null;
-    if (types != null && types.isNotEmpty) {
+    if (types != null) {
       for (final dynamic type in json['types']!) {
         types.add(ConvertUtil.asT<String>(type)!);
       }
     }
     final List<String>? authors = json['authors'] is List ? <String>[] : null;
-    if (authors != null && authors.isNotEmpty) {
+    if (authors != null) {
       for (final dynamic author in json['authors']!) {
         authors.add(ConvertUtil.asT<String>(author)!);
       }

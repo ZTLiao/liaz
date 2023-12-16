@@ -21,7 +21,7 @@ class CategoryModel {
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     final List<String>? authors = json['authors'] is List ? <String>[] : null;
-    if (authors != null && authors.isNotEmpty) {
+    if (authors != null) {
       for (final dynamic author in json['authors']!) {
         authors.add(ConvertUtil.asT<String>(author)!);
       }

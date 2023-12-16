@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/routes/app_route.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AppNavigator {
   static String currentRouteName = AppRoute.kRoot;
@@ -43,5 +46,16 @@ class AppNavigator {
     toContentPage(AppRoute.kNovelDetail, arg: {
       'id': novelId,
     });
+  }
+
+  static void toWebView(String url) {
+    url = url.trimRight().trimLeft();
+    if (Platform.isAndroid || Platform.isIOS) {
+      toContentPage(AppRoute.kWebView, arg: {
+        'url': url,
+      });
+    } else {
+      launchUrlString(url);
+    }
   }
 }

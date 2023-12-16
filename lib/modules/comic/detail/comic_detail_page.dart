@@ -397,7 +397,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
         recommendId: 1,
         title: '最近更新',
         showType: ShowTypeEnum.none.index,
-        showTitle: YesOrNo.yes,
+        isShowTitle: true,
         optType: OptTypeEnum.none.index,
         items: [
           RecommendItemModel(
@@ -466,7 +466,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
         recommendId: 3,
         title: '恋爱四格',
         showType: ShowTypeEnum.none.index,
-        showTitle: YesOrNo.yes,
+        isShowTitle: true,
         optType: OptTypeEnum.none.index,
         items: [
           RecommendItemModel(
@@ -520,7 +520,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
         recommendId: 2,
         title: '热门连载',
         showType: ShowTypeEnum.none.index,
-        showTitle: YesOrNo.yes,
+        isShowTitle: true,
         optType: OptTypeEnum.none.index,
         items: [
           RecommendItemModel(
@@ -623,7 +623,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
         titleId: recommend.recommendId,
         title: recommend.title,
         showType: recommend.showType,
-        showTitle: recommend.showTitle,
+        isShowTitle: recommend.isShowTitle,
         optType: recommend.optType,
         optValue: recommend.optValue,
       );

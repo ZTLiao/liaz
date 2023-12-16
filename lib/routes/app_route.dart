@@ -8,6 +8,9 @@ class AppRoute {
   /// 搜索
   static const kSearch = '/search';
 
+  /// webView
+  static const kWebView = '/web/view';
+
   /// 漫画详情
   static const kComicDetail = '/comic/detail';
 

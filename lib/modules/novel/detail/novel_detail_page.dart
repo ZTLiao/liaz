@@ -2,11 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
@@ -416,7 +414,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
         recommendId: 1,
         title: '最近更新',
         showType: ShowTypeEnum.none.index,
-        showTitle: YesOrNo.yes,
+        isShowTitle: true,
         optType: OptTypeEnum.none.index,
         items: [
           RecommendItemModel(
@@ -485,7 +483,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
         recommendId: 3,
         title: '恋爱四格',
         showType: ShowTypeEnum.none.index,
-        showTitle: YesOrNo.yes,
+        isShowTitle: true,
         optType: OptTypeEnum.none.index,
         items: [
           RecommendItemModel(
@@ -539,7 +537,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
         recommendId: 2,
         title: '热门连载',
         showType: ShowTypeEnum.none.index,
-        showTitle: YesOrNo.yes,
+        isShowTitle: true,
         optType: OptTypeEnum.none.index,
         items: [
           RecommendItemModel(
@@ -642,7 +640,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
         titleId: recommend.recommendId,
         title: recommend.title,
         showType: recommend.showType,
-        showTitle: recommend.showTitle,
+        isShowTitle: recommend.isShowTitle,
         optType: recommend.optType,
         optValue: recommend.optValue,
       );

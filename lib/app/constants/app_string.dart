@@ -63,4 +63,9 @@ class AppString {
   static const battery = '电量';
   static const prevPage = '上一页';
   static const nextPage = '下一页';
+  static const loading = '加载中';
+  static const copyLink = '复制链接';
+  static const copyTitleAndLink = '复制标题与链接';
+  static const openBrower = '浏览器打开';
+  static const shareSystem = '系统分享';
 }

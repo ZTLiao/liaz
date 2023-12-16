@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
-import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/models/dto/title_model.dart';
-import 'package:remixicon/remixicon.dart';
 
 class TitleWidget extends StatelessWidget {
   final TitleModel item;
@@ -23,8 +21,7 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var showTitle = item.showTitle;
-    if (showTitle == YesOrNo.no) {
+    if (!item.isShowTitle) {
       return child;
     }
     var title = item.title;

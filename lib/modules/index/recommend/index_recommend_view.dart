@@ -5,7 +5,6 @@ import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/modules/index/recommend/index_recommend_controller.dart';
-import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/widgets/keep_alive_wrapper.dart';
 import 'package:liaz/widgets/toolbar/swiper_widget.dart';
 import 'package:liaz/widgets/toolbar/title_widget.dart';
@@ -33,7 +32,7 @@ class IndexRecommendView extends StatelessWidget {
             titleId: recommend.recommendId,
             title: recommend.title,
             showType: recommend.showType,
-            showTitle: recommend.showTitle,
+            isShowTitle: recommend.isShowTitle,
             optType: recommend.optType,
             optValue: recommend.optValue,
           );
@@ -55,7 +54,7 @@ class IndexRecommendView extends StatelessWidget {
               item: title,
               child: SwiperWidget(
                 items: items,
-                onTop: (item) => AppNavigator.toComicDetail(1),
+                onTop: (item) => controller.onDetail(item),
               ),
             );
           } else if (showType == ShowTypeEnum.twoGrid.index) {
@@ -64,7 +63,7 @@ class IndexRecommendView extends StatelessWidget {
               item: title,
               child: TwoBoxGridWidget(
                 items: items,
-                onTop: (item) => AppNavigator.toComicDetail(1),
+                onTop: (item) => controller.onDetail(item),
               ),
             );
           } else if (showType == ShowTypeEnum.threeGrid.index) {
@@ -73,7 +72,7 @@ class IndexRecommendView extends StatelessWidget {
               item: title,
               child: ThreeBoxGridWidget(
                 items: items,
-                onTop: (item) => AppNavigator.toComicDetail(1),
+                onTop: (item) => controller.onDetail(item),
               ),
             );
           }
@@ -82,7 +81,7 @@ class IndexRecommendView extends StatelessWidget {
             item: title,
             child: CrossListWidget(
               items: items,
-              onTop: (item) => AppNavigator.toNovelDetail(1),
+              onTop: (item) => controller.onDetail(item),
             ),
           );
         },

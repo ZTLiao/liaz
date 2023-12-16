@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
-class DialogUtil {
+class ToolUtil {
   /// 复制文本
   static void copyText(String text) async {
     try {

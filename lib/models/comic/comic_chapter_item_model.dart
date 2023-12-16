@@ -45,7 +45,7 @@ class ComicChapterItemModel {
 
   factory ComicChapterItemModel.fromJson(Map<String, dynamic> json) {
     final List<String>? paths = json['paths'] is List ? <String>[] : null;
-    if (paths != null && paths.isNotEmpty) {
+    if (paths != null) {
       for (final dynamic path in json['paths']!) {
         paths.add(ConvertUtil.asT<String>(path)!);
       }

@@ -1,0 +1,5 @@
+enum RecommendPositionEnum {
+  home,
+  relate,
+  ;
+}

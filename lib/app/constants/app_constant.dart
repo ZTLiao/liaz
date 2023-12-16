@@ -25,4 +25,7 @@ class AppConstant {
   static const String client = "X-Client";
   static const String sign = "X-Sign";
   static const String userId = "X-User-Id";
+
+  static const String https = 'https';
+  static const String http = 'http';
 }

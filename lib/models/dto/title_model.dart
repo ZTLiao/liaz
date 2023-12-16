@@ -2,7 +2,7 @@ class TitleModel {
   int titleId;
   String title;
   int showType;
-  int showTitle;
+  bool isShowTitle;
   int optType;
   String? optValue;
 
@@ -10,7 +10,7 @@ class TitleModel {
     required this.titleId,
     required this.title,
     required this.showType,
-    required this.showTitle,
+    required this.isShowTitle,
     required this.optType,
     this.optValue,
   });
