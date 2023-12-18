@@ -68,7 +68,7 @@ class CardItemWidget extends StatelessWidget {
                         text: StrUtil.space,
                       ),
                       TextSpan(
-                          text: card.types,
+                          text: card.categories,
                           style:
                               const TextStyle(color: Colors.grey, fontSize: 14))
                     ]),

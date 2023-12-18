@@ -37,7 +37,7 @@ class NovelUpgradeView extends StatelessWidget {
                 title: item.title,
                 cover: item.cover,
                 cardType: AssetTypeEnum.novel.index,
-                types: types,
+                categories: types,
                 authors: authors,
                 upgradeChapter: item.upgradeChapter,
                 updateTime: updateTime,

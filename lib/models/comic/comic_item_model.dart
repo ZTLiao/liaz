@@ -6,7 +6,7 @@ class ComicItemModel {
   int comicId;
   String title;
   String cover;
-  List<String> types;
+  List<String> categories;
   List<String> authors;
   String upgradeChapter;
   int updated;
@@ -16,7 +16,7 @@ class ComicItemModel {
     required this.comicId,
     required this.title,
     required this.cover,
-    required this.types,
+    required this.categories,
     required this.authors,
     required this.upgradeChapter,
     required this.updated,
@@ -24,10 +24,10 @@ class ComicItemModel {
   });
 
   factory ComicItemModel.fromJson(Map<String, dynamic> json) {
-    final List<String>? types = json['types'] is List ? <String>[] : null;
-    if (types != null) {
-      for (final dynamic type in json['types']!) {
-        types.add(ConvertUtil.asT<String>(type)!);
+    final List<String>? categories = json['categories'] is List ? <String>[] : null;
+    if (categories != null) {
+      for (final dynamic category in json['categories']!) {
+        categories.add(ConvertUtil.asT<String>(category)!);
       }
     }
     final List<String>? authors = json['authors'] is List ? <String>[] : null;
@@ -40,7 +40,7 @@ class ComicItemModel {
         comicId: ConvertUtil.asT<int>(json['comicId'])!,
         title: ConvertUtil.asT<String>(json['title'])!,
         cover: ConvertUtil.asT<String>(json['cover'])!,
-        types: types ?? [],
+        categories: categories ?? [],
         authors: authors ?? [],
         upgradeChapter: ConvertUtil.asT<String>(json['upgradeChapter'])!,
         updated: ConvertUtil.asT<int>(json['updated'])!,
@@ -51,7 +51,7 @@ class ComicItemModel {
         'comicId': comicId,
         'title': title,
         'cover': cover,
-        'types': types,
+        'categories': categories,
         'authors': authors,
         'upgradeChapter': upgradeChapter,
         'updated': updated,

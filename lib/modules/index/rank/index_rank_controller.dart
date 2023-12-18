@@ -34,7 +34,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '消极勇者与魔王军干部',
           cover:
               'https://images.dmzj.com/webpic/6/xiaojiyongzheyumowangjunganbu_06_10_2023.jpg',
-          types: ['冒险', '欢乐向', '魔法'],
+          categories: ['冒险', '欢乐向', '魔法'],
           authors: ['ハマちょん'],
           upgradeChapter: '第29话',
           updated: 1700998213000,
@@ -45,7 +45,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '消极勇者与魔王军干部',
           cover:
               'https://images.dmzj.com/webpic/6/xiaojiyongzheyumowangjunganbu_06_10_2023.jpg',
-          types: ['冒险', '欢乐向', '魔法'],
+          categories: ['冒险', '欢乐向', '魔法'],
           authors: ['ハマちょん'],
           upgradeChapter: '第29话',
           updated: 1700998213000,
@@ -56,7 +56,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '消极勇者与魔王军干部',
           cover:
               'https://images.dmzj.com/webpic/6/xiaojiyongzheyumowangjunganbu_06_10_2023.jpg',
-          types: ['冒险', '欢乐向', '魔法'],
+          categories: ['冒险', '欢乐向', '魔法'],
           authors: ['ハマちょん'],
           upgradeChapter: '第29话',
           updated: 1700998213000,
@@ -67,7 +67,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '消极勇者与魔王军干部',
           cover:
               'https://images.dmzj.com/webpic/6/xiaojiyongzheyumowangjunganbu_06_10_2023.jpg',
-          types: ['冒险', '欢乐向', '魔法'],
+          categories: ['冒险', '欢乐向', '魔法'],
           authors: ['ハマちょん'],
           upgradeChapter: '第29话',
           updated: 1700998213000,
@@ -78,7 +78,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '消极勇者与魔王军干部',
           cover:
               'https://images.dmzj.com/webpic/6/xiaojiyongzheyumowangjunganbu_06_10_2023.jpg',
-          types: ['冒险', '欢乐向', '魔法'],
+          categories: ['冒险', '欢乐向', '魔法'],
           authors: ['ハマちょん'],
           upgradeChapter: '第29话',
           updated: 1700998213000,
@@ -89,7 +89,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '消极勇者与魔王军干部',
           cover:
               'https://images.dmzj.com/webpic/6/xiaojiyongzheyumowangjunganbu_06_10_2023.jpg',
-          types: ['冒险', '欢乐向', '魔法'],
+          categories: ['冒险', '欢乐向', '魔法'],
           authors: ['ハマちょん'],
           upgradeChapter: '第29话',
           updated: 1700998213000,
@@ -100,7 +100,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '消极勇者与魔王军干部',
           cover:
               'https://images.dmzj.com/webpic/6/xiaojiyongzheyumowangjunganbu_06_10_2023.jpg',
-          types: ['冒险', '欢乐向', '魔法'],
+          categories: ['冒险', '欢乐向', '魔法'],
           authors: ['ハマちょん'],
           upgradeChapter: '第29话',
           updated: 1700998213000,
@@ -111,7 +111,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '消极勇者与魔王军干部',
           cover:
               'https://images.dmzj.com/webpic/6/xiaojiyongzheyumowangjunganbu_06_10_2023.jpg',
-          types: ['冒险', '欢乐向', '魔法'],
+          categories: ['冒险', '欢乐向', '魔法'],
           authors: ['ハマちょん'],
           upgradeChapter: '第29话',
           updated: 1700998213000,
@@ -120,7 +120,7 @@ class IndexRankController extends BasePageController<CardItemModel>
       ];
       for (var i = 0, len = data.length; i < len; i++) {
         var item = data[i];
-        var types = StrUtil.listToStr(item.types, StrUtil.slash);
+        var categories = StrUtil.listToStr(item.categories, StrUtil.slash);
         var authors = StrUtil.listToStr(item.authors, StrUtil.slash);
         var updateTime = DateUtil.formatDate(item.updated);
         var card = CardItemModel(
@@ -128,7 +128,7 @@ class IndexRankController extends BasePageController<CardItemModel>
             title: item.title,
             cover: item.cover,
             cardType: AssetTypeEnum.comic.index,
-            types: types,
+            categories: categories,
             authors: authors,
             upgradeChapter: item.upgradeChapter,
             updateTime: updateTime,
@@ -236,7 +236,7 @@ class IndexRankController extends BasePageController<CardItemModel>
             title: item.title,
             cover: item.cover,
             cardType: AssetTypeEnum.comic.index,
-            types: types,
+            categories: types,
             authors: authors,
             upgradeChapter: item.upgradeChapter,
             updateTime: updateTime,

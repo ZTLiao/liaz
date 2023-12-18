@@ -29,7 +29,7 @@ class ComicUpgradeView extends StatelessWidget {
               ),
           itemBuilder: (context, i) {
             var item = controller.list[i];
-            var types = StrUtil.listToStr(item.types, StrUtil.slash);
+            var categories = StrUtil.listToStr(item.categories, StrUtil.slash);
             var authors = StrUtil.listToStr(item.authors, StrUtil.slash);
             var updateTime = DateUtil.formatDate(item.updated);
             var card = CardItemModel(
@@ -37,7 +37,7 @@ class ComicUpgradeView extends StatelessWidget {
                 title: item.title,
                 cover: item.cover,
                 cardType: AssetTypeEnum.comic.index,
-                types: types,
+                categories: categories,
                 authors: authors,
                 upgradeChapter: item.upgradeChapter,
                 updateTime: updateTime,

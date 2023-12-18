@@ -16,7 +16,7 @@ class IndexRecommendController extends BasePageController<RecommendModel> {
       data = await recommendRequest
           .recommendByPosition(RecommendPositionEnum.home.index);
     }
-    return Future(() => data);
+    return data;
   }
 
   void onDetail(ItemModel item) {

@@ -3,7 +3,7 @@ class CardItemModel {
   String title;
   String cover;
   int cardType;
-  String types;
+  String categories;
   String authors;
   String upgradeChapter;
   String updateTime;
@@ -14,7 +14,7 @@ class CardItemModel {
     required this.title,
     required this.cover,
     required this.cardType,
-    required this.types,
+    required this.categories,
     required this.authors,
     required this.upgradeChapter,
     required this.updateTime,
