@@ -81,7 +81,7 @@ class IndexRecommendView extends StatelessWidget {
             item: title,
             child: CrossListWidget(
               items: items,
-              onTop: (item) => controller.onDetail(item),
+              onTap: (item) => controller.onDetail(item),
             ),
           );
         },

@@ -68,4 +68,8 @@ class AppString {
   static const copyTitleAndLink = '复制标题与链接';
   static const openBrower = '浏览器打开';
   static const shareSystem = '系统分享';
+  static const popularNum = '人气';
+  static const subscribeNum = '订阅';
+  static const serializated = '连载中';
+  static const finish = '完结';
 }

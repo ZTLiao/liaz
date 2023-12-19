@@ -11,12 +11,8 @@ class IndexRecommendController extends BasePageController<RecommendModel> {
 
   @override
   Future<List<RecommendModel>> getData(int currentPage, int pageSize) async {
-    var data = <RecommendModel>[];
-    if (currentPage == 1) {
-      data = await recommendRequest
-          .recommendByPosition(RecommendPositionEnum.home.index);
-    }
-    return data;
+    return await recommendRequest
+        .recommendByPosition(RecommendPositionEnum.home.index);
   }
 
   void onDetail(ItemModel item) {

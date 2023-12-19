@@ -6,10 +6,12 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
+import 'package:liaz/app/global/global.dart';
+import 'package:liaz/app/utils/date_util.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/models/recommend/recommend_item_model.dart';
@@ -29,173 +31,182 @@ class ComicDetailPage extends GetView<ComicDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size(double.infinity, 220),
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                    'https://cdn.aqdstatic.com:966/age/20230207.jpg',
-                  ),
-                  fit: BoxFit.cover,
+    return Obx(
+      () => Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size(double.infinity, 220),
+          child: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  image: controller.detail.value.cover.isNotEmpty
+                      ? DecorationImage(
+                          image: NetworkImage(
+                            Global.appConfig.fileUrl +
+                                controller.detail.value.cover,
+                          ),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
                 ),
               ),
-            ),
-            Center(
-              child: ClipRRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                  child: Opacity(
-                    opacity: 0.1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade50,
+              Center(
+                child: ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                    child: Opacity(
+                      opacity: 0.1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade50,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            AppBar(
-              title: const Text(
-                '葬送的芙莉莲',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Remix.heart_3_line),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.share),
-                ),
-              ],
-            ),
-            Container(
-              padding: AppStyle.edgeInsetsA8,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      NetImage(
-                        "https://cdn.aqdstatic.com:966/age/20230207.jpg",
-                        width: 120,
-                        height: 160,
-                        borderRadius: 4,
-                      ),
-                    ],
+              AppBar(
+                title: Text(
+                  controller.detail.value.title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconItemWidget(
-                          children: [
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Text(
-                                '葬送的芙莉莲',
-                                maxLines: 1,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Remix.user_line,
-                          children: [
-                            Text(
-                              '山田鐘人 アベツカサ',
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Remix.price_tag_3_line,
-                          children: [
-                            Text(
-                              '冒险 奇幻',
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Remix.fire_line,
-                          children: [
-                            Text(
-                              '人气 1000000',
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Remix.heart_3_line,
-                          children: [
-                            Text(
-                              '订阅 1000000',
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Remix.time_line,
-                          children: [
-                            Text(
-                              '2023-12-02 19:00 连载中',
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                ),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Remix.heart_3_line),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.share),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: AppStyle.edgeInsetsH8,
-          child: Column(
-            children: [
-              _buildDescription(context),
-              _buildChapter(context),
-              _buildRecommend(context),
+              Container(
+                padding: AppStyle.edgeInsetsA8,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        NetImage(
+                          controller.detail.value.cover,
+                          width: 120,
+                          height: 160,
+                          borderRadius: 4,
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconItemWidget(
+                            children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Text(
+                                  controller.detail.value.title,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Remix.user_line,
+                            children: [
+                              Text(
+                                StrUtil.listToStr(
+                                    controller.detail.value.authors,
+                                    StrUtil.space),
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Remix.price_tag_3_line,
+                            children: [
+                              Text(
+                                StrUtil.listToStr(
+                                    controller.detail.value.categories,
+                                    StrUtil.space),
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Remix.fire_line,
+                            children: [
+                              Text(
+                                '${AppString.popularNum} ${controller.detail.value.hitNum}',
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Remix.heart_3_line,
+                            children: [
+                              Text(
+                                '${AppString.subscribeNum} ${controller.detail.value.subscribeNum}',
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Remix.time_line,
+                            children: [
+                              Text(
+                                '${DateUtil.formatDate(controller.detail.value.updated)} ${controller.detail.value.isSerializated ? AppString.serializated : AppString.finish}',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
-      ),
-      floatingActionButton: SpeedDial(
-        overlayColor: Colors.black,
-        overlayOpacity: 0,
-        icon: Icons.rocket,
-        elevation: 4.0,
-        buttonSize: const Size(50, 50),
-        childrenButtonSize: const Size(50, 50),
-        activeIcon: Icons.rocket_launch,
-        direction: SpeedDialDirection.up,
-        spaceBetweenChildren: 4.0,
-        spacing: 4.0,
-        children: [
-          SpeedDialChild(
-            child: const Icon(Icons.download),
-            backgroundColor: Colors.blue[300],
-            foregroundColor: Colors.white,
-            onTap: () {},
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: AppStyle.edgeInsetsH8,
+            child: Column(
+              children: [
+                _buildDescription(context),
+                _buildChapter(context),
+                _buildRecommend(context),
+              ],
+            ),
           ),
-        ],
+        ),
+        floatingActionButton: SpeedDial(
+          overlayColor: Colors.black,
+          overlayOpacity: 0,
+          icon: Icons.rocket,
+          elevation: 4.0,
+          buttonSize: const Size(50, 50),
+          childrenButtonSize: const Size(50, 50),
+          activeIcon: Icons.rocket_launch,
+          direction: SpeedDialDirection.up,
+          spaceBetweenChildren: 4.0,
+          spacing: 4.0,
+          children: [
+            SpeedDialChild(
+              child: const Icon(Icons.download),
+              backgroundColor: Colors.blue[300],
+              foregroundColor: Colors.white,
+              onTap: () {},
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -265,7 +276,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                     return Get.isDarkMode ? Colors.black : Colors.white;
                   }),
                 ),
-                child: Text(
+                child: const Text(
                   AppString.startReading,
                   style: TextStyle(
                     color: Colors.cyan,
@@ -291,12 +302,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                         !controller.isExpandDescription.value;
                   },
                   child: Text(
-                    '''
-魔法使芙莉莲与勇者辛美尔等人在长达10年的冒险中打败了魔王，给世界带来了和平。
-作为一个活了一千多年的精灵，芙莉莲约定将与辛美尔等人再会，自己则先独自旅行。
-五十年后，芙莉莲拜访了辛美尔，但辛美尔已经老了，生命已所剩无几。
-之后，芙莉莲目睹了辛美尔的死亡，她也猛地意识到自己从未“了解人类”，并后悔不已，因此她踏上了“为了了解人类”的旅途。在那段旅途中，她邂逅了各种各样的人，经历了各种各样的事。
-''',
+                    controller.detail.value.description,
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
@@ -668,7 +674,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
           item: title,
           child: CrossListWidget(
             items: items,
-            onTop: (item) => AppNavigator.toComicDetail(1),
+            onTap: (item) => AppNavigator.toComicDetail(1),
           ),
         );
       }

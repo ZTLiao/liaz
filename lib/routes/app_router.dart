@@ -65,7 +65,7 @@ class AppRouter {
       page: () => const ComicDetailPage(),
       binding: BindingsBuilder.put(
         () => ComicDetailController(
-          id: Get.arguments['id'],
+          comicId: Get.arguments['id'],
         ),
       ),
     ),

@@ -3,7 +3,6 @@ import 'package:liaz/models/comic/comic_item_model.dart';
 import 'package:liaz/requests/comic_request.dart';
 
 class ComicUpgradeController extends BasePageController<ComicItemModel> {
-
   var comicRequest = ComicRequest();
 
   @override

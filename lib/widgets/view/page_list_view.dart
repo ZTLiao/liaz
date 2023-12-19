@@ -32,9 +32,9 @@ class PageListView extends StatelessWidget {
     return Obx(() => Stack(
           children: [
             EasyRefresh(
-              header: const CupertinoHeader(),
+              header: const MaterialHeader(),
               footer: isLoadMore
-                  ? const CupertinoFooter(
+                  ? const MaterialFooter(
                       clamping: false, infiniteOffset: 70, triggerOffset: 70)
                   : null,
               controller: pageController.easyRefreshController,

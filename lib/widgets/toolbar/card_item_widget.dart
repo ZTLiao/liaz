@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/card_item_model.dart';
@@ -9,13 +7,16 @@ import 'package:remixicon/remixicon.dart';
 
 class CardItemWidget extends StatelessWidget {
   final CardItemModel card;
+  final Function(int)? onTap;
+  final Function(int)? onOpen;
 
-  const CardItemWidget({required this.card, super.key});
+  const CardItemWidget(
+      {required this.card, this.onTap, this.onOpen, super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTop,
+      onTap: () => onTap!(card.cardId),
       child: Container(
         padding: AppStyle.edgeInsetsA12,
         child: Row(
@@ -78,17 +79,17 @@ class CardItemWidget extends StatelessWidget {
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
-                            Remix.star_line,
-                            color: Colors.grey,
-                            size: 18,
-                          )),
+                        Remix.star_line,
+                        color: Colors.grey,
+                        size: 18,
+                      )),
                       const TextSpan(
                         text: StrUtil.space,
                       ),
                       TextSpan(
                           text: card.upgradeChapter,
                           style:
-                          const TextStyle(color: Colors.grey, fontSize: 14))
+                              const TextStyle(color: Colors.grey, fontSize: 14))
                     ]),
                   ),
                   AppStyle.vGap2,
@@ -117,20 +118,25 @@ class CardItemWidget extends StatelessWidget {
                 children: [
                   AppStyle.vGap12,
                   IconButton(
-                      icon: const Icon(Remix.book_open_line),
-                      onPressed: () {
-                        SmartDialog.showToast(AppString.skipError);
-                      }),
+                    icon: const Icon(Remix.book_open_line),
+                    onPressed: () {
+                      if (onOpen != null) {
+                        onOpen!(card.objId);
+                      }
+                    },
+                  ),
                   SizedBox(
                     width: 45,
-                    child: Text(
-                      card.upgradeChapter,
-                      maxLines: 1,
-                      style: const TextStyle(
-                        height: 1.2,
-                        fontSize: 14,
-                        color: Colors.grey,
-                        overflow: TextOverflow.ellipsis,
+                    child: Center(
+                      child: Text(
+                        card.upgradeChapter,
+                        maxLines: 1,
+                        style: const TextStyle(
+                          height: 1.2,
+                          fontSize: 14,
+                          color: Colors.grey,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                   ),
@@ -141,9 +147,5 @@ class CardItemWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void onTop() {
-    SmartDialog.showToast(AppString.skipError);
   }
 }

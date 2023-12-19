@@ -10,13 +10,13 @@ class CrossListWidget extends StatelessWidget {
   final List<ItemModel> items;
   final Function()? onRefresh;
   final Function()? onMore;
-  final Function(ItemModel item)? onTop;
+  final Function(ItemModel item)? onTap;
 
   const CrossListWidget(
       {required this.items,
       this.onRefresh,
       this.onMore,
-      this.onTop,
+      this.onTap,
       super.key});
 
   @override
@@ -41,7 +41,7 @@ class CrossListWidget extends StatelessWidget {
               itemBuilder: (_, i) {
                 var item = items[i];
                 return InkWell(
-                  onTap: () => onTop!(item),
+                  onTap: () => onTap!(item),
                   borderRadius: AppStyle.radius4,
                   child: Row(
                     children: [

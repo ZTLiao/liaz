@@ -685,7 +685,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           item: title,
           child: CrossListWidget(
             items: items,
-            onTop: (item) => AppNavigator.toComicDetail(1),
+            onTap: (item) => AppNavigator.toComicDetail(1),
           ),
         );
       }
