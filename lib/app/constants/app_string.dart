@@ -77,4 +77,5 @@ class AppString {
   static const chapter = '话';
   static const asc = '升序';
   static const desc = '降序';
+  static const expandAll = '展开全部章节';
 }

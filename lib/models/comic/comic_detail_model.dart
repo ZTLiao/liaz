@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:liaz/app/constants/comic_flag.dart';
 import 'package:liaz/app/utils/convert_util.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
+import 'package:liaz/models/comic/comic_chapter_type_model.dart';
 
 class ComicDetailModel {
   int comicId;
@@ -22,7 +23,7 @@ class ComicDetailModel {
   bool isLong;
   bool isHide;
   int sortType;
-  List<ComicChapterModel>? chapters;
+  List<ComicChapterTypeModel>? chapterTypes;
 
   factory ComicDetailModel.empty() => ComicDetailModel(
         comicId: 0,
@@ -42,7 +43,7 @@ class ComicDetailModel {
         isLong: false,
         isHide: false,
         sortType: 0,
-        chapters: [],
+        chapterTypes: [],
       );
 
   ComicDetailModel({
@@ -63,7 +64,7 @@ class ComicDetailModel {
     required this.isLong,
     required this.isHide,
     required this.sortType,
-    this.chapters,
+    this.chapterTypes,
   });
 
   factory ComicDetailModel.fromJson(Map<String, dynamic> json) {
@@ -92,11 +93,11 @@ class ComicDetailModel {
         categories.add(ConvertUtil.asT<String>(category)!);
       }
     }
-    final List<ComicChapterModel>? chapters =
-        json['chapters'] is List ? <ComicChapterModel>[] : null;
-    if (chapters != null) {
-      for (final dynamic chapter in json['chapters']!) {
-        chapters.add(ComicChapterModel.fromJson(chapter));
+    final List<ComicChapterTypeModel>? chapterTypes =
+        json['chapterTypes'] is List ? <ComicChapterTypeModel>[] : null;
+    if (chapterTypes != null) {
+      for (final dynamic chapterType in json['chapterTypes']!) {
+        chapterTypes.add(ComicChapterTypeModel.fromJson(chapterType));
       }
     }
     int flag = ConvertUtil.asT<int>(json['flag'])!;
@@ -118,15 +119,15 @@ class ComicDetailModel {
       isLong: (flag & ComicFlag.long) != 0,
       isHide: (flag & ComicFlag.hide) != 0,
       sortType: (flag & ComicFlag.hide) >> 3,
-      chapters: chapters,
+      chapterTypes: chapterTypes,
     );
   }
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> list = [];
-    if (chapters != null) {
-      for (final ComicChapterModel chapter in chapters!) {
-        list.add(chapter.toJson());
+    if (chapterTypes != null) {
+      for (final ComicChapterTypeModel chapterType in chapterTypes!) {
+        list.add(chapterType.toJson());
       }
     }
     return <String, dynamic>{
@@ -147,7 +148,7 @@ class ComicDetailModel {
       'isLong': isLong,
       'isHide': isHide,
       'sortType': sortType,
-      'chapters': list,
+      'chapterTypes': list,
     };
   }
 

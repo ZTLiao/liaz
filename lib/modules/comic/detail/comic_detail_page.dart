@@ -329,15 +329,16 @@ class ComicDetailPage extends GetView<ComicDetailController> {
       () => Offstage(
         offstage: controller.isRelateRecommend.value,
         child: Column(
-          children: (controller.detail.chapters != null &&
-                  controller.detail.chapters!.isNotEmpty)
-              ? controller.detail.chapters!.map((e) {
-                  var chapterType = e.chapterType;
-                  var items = e.items ?? [];
+          children: (controller.detail.chapterTypes != null &&
+                  controller.detail.chapterTypes!.isNotEmpty)
+              ? controller.detail.chapterTypes!.map((item) {
+                  var chapterType = item.chapterType;
+                  var sortType = item.sortType;
+                  var chapters = item.chapters;
                   String title = StrUtil.empty;
                   if (ChapterTypeEnum.serialize.index == chapterType) {
                     title =
-                        '${AppString.serialize} （${AppString.total}${items.length}${AppString.chapter}）';
+                        '${AppString.serialize} （${AppString.total}${chapters.length}${AppString.chapter}）';
                   } else if (ChapterTypeEnum.extra.index == chapterType) {}
                   return Column(
                     children: [
@@ -348,18 +349,39 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                               title,
                             ),
                           ),
-                          TextButton.icon(
-                            style: TextButton.styleFrom(
-                              textStyle: const TextStyle(fontSize: 14),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            onPressed: () {},
-                            icon: const Icon(
-                              Remix.sort_asc,
-                              size: 20,
-                            ),
-                            label: const Text('升序'),
-                          ),
+                          sortType.value == SortTypeEnum.desc.index
+                              ? TextButton.icon(
+                                  style: TextButton.styleFrom(
+                                    textStyle: const TextStyle(fontSize: 14),
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                  ),
+                                  onPressed: () {
+                                    sortType.value = SortTypeEnum.asc.index;
+                                    item.sort();
+                                  },
+                                  icon: const Icon(
+                                    Remix.sort_desc,
+                                    size: 20,
+                                  ),
+                                  label: const Text(AppString.desc),
+                                )
+                              : TextButton.icon(
+                                  style: TextButton.styleFrom(
+                                    textStyle: const TextStyle(fontSize: 14),
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                  ),
+                                  onPressed: () {
+                                    sortType.value = SortTypeEnum.desc.index;
+                                    item.sort();
+                                  },
+                                  icon: const Icon(
+                                    Remix.sort_asc,
+                                    size: 20,
+                                  ),
+                                  label: const Text(AppString.asc),
+                                ),
                         ],
                       ),
                       LayoutBuilder(
@@ -373,10 +395,42 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: 15,
+                            itemCount:
+                                (item.isShowMoreButton && !item.isShowAll.value)
+                                    ? 15
+                                    : item.chapters.length,
                             itemBuilder: (context, i) {
+                              if (item.isShowMoreButton &&
+                                  !item.isShowAll.value &&
+                                  i == 14) {
+                                return Tooltip(
+                                  message: AppString.expandAll,
+                                  child: OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor:
+                                          i == 0 ? Colors.cyan : Colors.grey,
+                                      backgroundColor: Colors.white,
+                                      textStyle: const TextStyle(fontSize: 14),
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      minimumSize: const Size.fromHeight(40),
+                                      side: BorderSide(
+                                        color: i == 0
+                                            ? Colors.cyan
+                                            : Get.isDarkMode
+                                                ? Colors.white
+                                                : Colors.black,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      item.isShowAll.value = true;
+                                    },
+                                    child: const Icon(Icons.arrow_drop_down),
+                                  ),
+                                );
+                              }
                               return Tooltip(
-                                message: "展开全部章节",
+                                message: item.chapters[i].chapterName,
                                 child: OutlinedButton(
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor:
@@ -395,7 +449,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                                     ),
                                   ),
                                   onPressed: () {},
-                                  child: Text('第 ${i + 1} 话'),
+                                  child: Text(item.chapters[i].chapterName),
                                 ),
                               );
                             },
