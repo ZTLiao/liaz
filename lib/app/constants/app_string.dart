@@ -72,4 +72,9 @@ class AppString {
   static const subscribeNum = '订阅';
   static const serializated = '连载中';
   static const finish = '已完结';
+  static const serialize = '连载';
+  static const total = '共';
+  static const chapter = '话';
+  static const asc = '升序';
+  static const desc = '降序';
 }

@@ -6,9 +6,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/enums/chapter_type_enum.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
+import 'package:liaz/app/enums/sort_type_enum.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -327,67 +329,83 @@ class ComicDetailPage extends GetView<ComicDetailController> {
       () => Offstage(
         offstage: controller.isRelateRecommend.value,
         child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    '连载（共100话）',
-                  ),
-                ),
-                TextButton.icon(
-                  style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 14),
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  onPressed: () {},
-                  icon: const Icon(
-                    Remix.sort_asc,
-                    size: 20,
-                  ),
-                  label: const Text('升序'),
-                ),
-              ],
-            ),
-            LayoutBuilder(
-              builder: (ctx, constraints) {
-                var count = constraints.maxWidth ~/ 160;
-                if (count < 3) count = 3;
-                return MasonryGridView.count(
-                  crossAxisCount: count,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 15,
-                  itemBuilder: (context, i) {
-                    return Tooltip(
-                      message: "展开全部章节",
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: i == 0 ? Colors.cyan : Colors.grey,
-                          backgroundColor: Colors.white,
-                          textStyle: const TextStyle(fontSize: 14),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          minimumSize: const Size.fromHeight(40),
-                          side: BorderSide(
-                            color: i == 0
-                                ? Colors.cyan
-                                : Get.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
+          children: (controller.detail.chapters != null &&
+                  controller.detail.chapters!.isNotEmpty)
+              ? controller.detail.chapters!.map((e) {
+                  var chapterType = e.chapterType;
+                  var items = e.items ?? [];
+                  String title = StrUtil.empty;
+                  if (ChapterTypeEnum.serialize.index == chapterType) {
+                    title =
+                        '${AppString.serialize} （${AppString.total}${items.length}${AppString.chapter}）';
+                  } else if (ChapterTypeEnum.extra.index == chapterType) {}
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              title,
+                            ),
                           ),
-                        ),
-                        onPressed: () {},
-                        child: Text('第 ${i + 1} 话'),
+                          TextButton.icon(
+                            style: TextButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 14),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            onPressed: () {},
+                            icon: const Icon(
+                              Remix.sort_asc,
+                              size: 20,
+                            ),
+                            label: const Text('升序'),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                );
-              },
-            ),
-          ],
+                      LayoutBuilder(
+                        builder: (ctx, constraints) {
+                          var count = constraints.maxWidth ~/ 160;
+                          if (count < 3) count = 3;
+                          return MasonryGridView.count(
+                            crossAxisCount: count,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 15,
+                            itemBuilder: (context, i) {
+                              return Tooltip(
+                                message: "展开全部章节",
+                                child: OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor:
+                                        i == 0 ? Colors.cyan : Colors.grey,
+                                    backgroundColor: Colors.white,
+                                    textStyle: const TextStyle(fontSize: 14),
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    minimumSize: const Size.fromHeight(40),
+                                    side: BorderSide(
+                                      color: i == 0
+                                          ? Colors.cyan
+                                          : Get.isDarkMode
+                                              ? Colors.white
+                                              : Colors.black,
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                  child: Text('第 ${i + 1} 话'),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                }).toList()
+              : [],
         ),
       ),
     );

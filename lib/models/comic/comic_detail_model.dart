@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:liaz/app/constants/comic_flag.dart';
-import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/convert_util.dart';
-import 'package:liaz/models/comic/comic_chapter_item_model.dart';
+import 'package:liaz/models/comic/comic_chapter_model.dart';
 
 class ComicDetailModel {
   int comicId;
@@ -22,7 +21,8 @@ class ComicDetailModel {
   bool isSerializated;
   bool isLong;
   bool isHide;
-  Map<int, List<ComicChapterItemModel>>? chapterMap;
+  int sortType;
+  List<ComicChapterModel>? chapters;
 
   factory ComicDetailModel.empty() => ComicDetailModel(
         comicId: 0,
@@ -41,7 +41,8 @@ class ComicDetailModel {
         isSerializated: false,
         isLong: false,
         isHide: false,
-        chapterMap: {},
+        sortType: 0,
+        chapters: [],
       );
 
   ComicDetailModel({
@@ -61,7 +62,8 @@ class ComicDetailModel {
     required this.isSerializated,
     required this.isLong,
     required this.isHide,
-    this.chapterMap,
+    required this.sortType,
+    this.chapters,
   });
 
   factory ComicDetailModel.fromJson(Map<String, dynamic> json) {
@@ -90,18 +92,11 @@ class ComicDetailModel {
         categories.add(ConvertUtil.asT<String>(category)!);
       }
     }
-    Map<int, List<ComicChapterItemModel>>? chapterMap = {};
-    if (json['chapterMap'] is Map) {
-      for (final dynamic element in json['chapterMap'].entries) {
-        var key = element.key;
-        var value = element.value;
-        List<ComicChapterItemModel> list = <ComicChapterItemModel>[];
-        if (value is List) {
-          for (final dynamic item in value) {
-            list.add(ComicChapterItemModel.fromJson(item));
-          }
-        }
-        chapterMap.putIfAbsent(int.parse(key.toString()), () => list);
+    final List<ComicChapterModel>? chapters =
+        json['chapters'] is List ? <ComicChapterModel>[] : null;
+    if (chapters != null) {
+      for (final dynamic chapter in json['chapters']!) {
+        chapters.add(ComicChapterModel.fromJson(chapter));
       }
     }
     int flag = ConvertUtil.asT<int>(json['flag'])!;
@@ -122,23 +117,16 @@ class ComicDetailModel {
       isSerializated: (flag & ComicFlag.serializated) != 0,
       isLong: (flag & ComicFlag.long) != 0,
       isHide: (flag & ComicFlag.hide) != 0,
-      chapterMap: chapterMap,
+      sortType: (flag & ComicFlag.hide) >> 3,
+      chapters: chapters,
     );
   }
 
   Map<String, dynamic> toJson() {
-    Map<int, List<Map<String, dynamic>>> map = {};
-    if (chapterMap != null) {
-      for (final dynamic element in chapterMap!.entries) {
-        var key = element.key;
-        var value = element.value;
-        List<Map<String, dynamic>> list = [];
-        if (value is List) {
-          for (ComicChapterItemModel item in value) {
-            list.add(item.toJson());
-          }
-        }
-        map.putIfAbsent(key, () => list);
+    List<Map<String, dynamic>> list = [];
+    if (chapters != null) {
+      for (final ComicChapterModel chapter in chapters!) {
+        list.add(chapter.toJson());
       }
     }
     return <String, dynamic>{
@@ -158,7 +146,8 @@ class ComicDetailModel {
       'isSerializated': isSerializated,
       'isLong': isLong,
       'isHide': isHide,
-      'chapterMap': map,
+      'sortType': sortType,
+      'chapters': list,
     };
   }
 
