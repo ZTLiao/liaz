@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/modules/bookshelf/home/bookshelf_home_controller.dart';
 import 'package:liaz/modules/category/home/category_home_controller.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_controller.dart';
@@ -65,7 +66,7 @@ class AppRouter {
       page: () => const ComicDetailPage(),
       binding: BindingsBuilder.put(
         () => ComicDetailController(
-          comicId: Get.arguments['id'],
+          detail: ComicDetailModel.fromJson(Get.arguments['detail']),
         ),
       ),
     ),

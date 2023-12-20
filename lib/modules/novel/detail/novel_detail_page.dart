@@ -8,6 +8,7 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
+import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/models/recommend/recommend_item_model.dart';
@@ -665,7 +666,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           item: title,
           child: TwoBoxGridWidget(
             items: items,
-            onTop: (item) => AppNavigator.toComicDetail(1),
+            onTop: (item) => AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       } else if (showType == ShowTypeEnum.threeGrid.index) {
@@ -675,7 +676,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           item: title,
           child: ThreeBoxGridWidget(
             items: items,
-            onTop: (item) => AppNavigator.toComicDetail(1),
+            onTop: (item) => AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       } else {
@@ -685,7 +686,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           item: title,
           child: CrossListWidget(
             items: items,
-            onTap: (item) => AppNavigator.toComicDetail(1),
+            onTap: (item) => AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       }

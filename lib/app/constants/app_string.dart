@@ -71,5 +71,5 @@ class AppString {
   static const popularNum = '人气';
   static const subscribeNum = '订阅';
   static const serializated = '连载中';
-  static const finish = '完结';
+  static const finish = '已完结';
 }

@@ -5,7 +5,6 @@ import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/card_item_model.dart';
 import 'package:liaz/modules/comic/upgrade/comic_upgrade_controller.dart';
-import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/widgets/keep_alive_wrapper.dart';
 import 'package:liaz/widgets/toolbar/card_item_widget.dart';
 import 'package:liaz/widgets/view/page_list_view.dart';
@@ -45,7 +44,7 @@ class ComicUpgradeView extends StatelessWidget {
                 objId: item.comicChapterId);
             return CardItemWidget(
               card: card,
-              onTap: AppNavigator.toComicDetail,
+              onTap: controller.onDetail,
             );
           }),
     );

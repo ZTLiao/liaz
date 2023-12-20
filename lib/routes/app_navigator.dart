@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -36,9 +37,9 @@ class AppNavigator {
     toContentPage(AppRoute.kSearch);
   }
 
-  static void toComicDetail(int comicId) {
+  static void toComicDetail(Map<String, dynamic> json) {
     toContentPage(AppRoute.kComicDetail, arg: {
-      'id': comicId,
+      'detail': json,
     });
   }
 

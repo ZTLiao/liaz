@@ -126,25 +126,41 @@ class ComicDetailModel {
     );
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'comicId': comicId,
-        'title': title,
-        'cover': cover,
-        'authorIds': authorIds,
-        'authors': authors,
-        'categoryIds': categoryIds,
-        'categories': categories,
-        'subscribeNum': subscribeNum,
-        'hitNum': hitNum,
-        'updated': updated,
-        'description': description,
-        'flag': flag,
-        'direction': direction,
-        'isSerializated': isSerializated,
-        'isLong': isLong,
-        'isHide': isHide,
-        'chapterMap': chapterMap,
-      };
+  Map<String, dynamic> toJson() {
+    Map<int, List<Map<String, dynamic>>> map = {};
+    if (chapterMap != null) {
+      for (final dynamic element in chapterMap!.entries) {
+        var key = element.key;
+        var value = element.value;
+        List<Map<String, dynamic>> list = [];
+        if (value is List) {
+          for (ComicChapterItemModel item in value) {
+            list.add(item.toJson());
+          }
+        }
+        map.putIfAbsent(key, () => list);
+      }
+    }
+    return <String, dynamic>{
+      'comicId': comicId,
+      'title': title,
+      'cover': cover,
+      'authorIds': authorIds,
+      'authors': authors,
+      'categoryIds': categoryIds,
+      'categories': categories,
+      'subscribeNum': subscribeNum,
+      'hitNum': hitNum,
+      'updated': updated,
+      'description': description,
+      'flag': flag,
+      'direction': direction,
+      'isSerializated': isSerializated,
+      'isLong': isLong,
+      'isHide': isHide,
+      'chapterMap': map,
+    };
+  }
 
   @override
   String toString() {

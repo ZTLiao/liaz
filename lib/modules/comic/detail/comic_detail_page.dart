@@ -12,6 +12,7 @@ import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/models/recommend/recommend_item_model.dart';
@@ -31,182 +32,177 @@ class ComicDetailPage extends GetView<ComicDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size(double.infinity, 220),
-          child: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  image: controller.detail.value.cover.isNotEmpty
-                      ? DecorationImage(
-                          image: NetworkImage(
-                            Global.appConfig.fileUrl +
-                                controller.detail.value.cover,
-                          ),
-                          fit: BoxFit.cover,
-                        )
-                      : null,
-                ),
-              ),
-              Center(
-                child: ClipRRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                    child: Opacity(
-                      opacity: 0.1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade50,
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size(double.infinity, 220),
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: controller.detail.cover.isNotEmpty
+                    ? DecorationImage(
+                        image: NetworkImage(
+                          Global.appConfig.fileUrl + controller.detail.cover,
                         ),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
+              ),
+            ),
+            Center(
+              child: ClipRRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                  child: Opacity(
+                    opacity: 0.1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade50,
                       ),
                     ),
                   ),
                 ),
               ),
-              AppBar(
-                title: Text(
-                  controller.detail.value.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+            ),
+            AppBar(
+              title: Text(
+                controller.detail.title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                actions: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Remix.heart_3_line),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.share),
-                  ),
-                ],
               ),
-              Container(
-                padding: AppStyle.edgeInsetsA8,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: Row(
-                  children: [
-                    Column(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Remix.heart_3_line),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.share),
+                ),
+              ],
+            ),
+            Container(
+              padding: AppStyle.edgeInsetsA8,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      NetImage(
+                        controller.detail.cover,
+                        width: 120,
+                        height: 160,
+                        borderRadius: 4,
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        NetImage(
-                          controller.detail.value.cover,
-                          width: 120,
-                          height: 160,
-                          borderRadius: 4,
+                        IconItemWidget(
+                          children: [
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Text(
+                                controller.detail.title,
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        IconItemWidget(
+                          iconData: Remix.user_line,
+                          children: [
+                            Text(
+                              StrUtil.listToStr(
+                                  controller.detail.authors, StrUtil.space),
+                            ),
+                          ],
+                        ),
+                        IconItemWidget(
+                          iconData: Remix.price_tag_3_line,
+                          children: [
+                            Text(
+                              StrUtil.listToStr(
+                                  controller.detail.categories, StrUtil.space),
+                            ),
+                          ],
+                        ),
+                        IconItemWidget(
+                          iconData: Remix.fire_line,
+                          children: [
+                            Text(
+                              '${AppString.popularNum} ${controller.detail.hitNum}',
+                            ),
+                          ],
+                        ),
+                        IconItemWidget(
+                          iconData: Remix.heart_3_line,
+                          children: [
+                            Text(
+                              '${AppString.subscribeNum} ${controller.detail.subscribeNum}',
+                            ),
+                          ],
+                        ),
+                        IconItemWidget(
+                          iconData: Remix.time_line,
+                          children: [
+                            Text(
+                              '${DateUtil.formatDate(controller.detail.updated)} ${controller.detail.isSerializated ? AppString.serializated : AppString.finish}',
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconItemWidget(
-                            children: [
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  controller.detail.value.title,
-                                  maxLines: 1,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Remix.user_line,
-                            children: [
-                              Text(
-                                StrUtil.listToStr(
-                                    controller.detail.value.authors,
-                                    StrUtil.space),
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Remix.price_tag_3_line,
-                            children: [
-                              Text(
-                                StrUtil.listToStr(
-                                    controller.detail.value.categories,
-                                    StrUtil.space),
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Remix.fire_line,
-                            children: [
-                              Text(
-                                '${AppString.popularNum} ${controller.detail.value.hitNum}',
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Remix.heart_3_line,
-                            children: [
-                              Text(
-                                '${AppString.subscribeNum} ${controller.detail.value.subscribeNum}',
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Remix.time_line,
-                            children: [
-                              Text(
-                                '${DateUtil.formatDate(controller.detail.value.updated)} ${controller.detail.value.isSerializated ? AppString.serializated : AppString.finish}',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: AppStyle.edgeInsetsH8,
-            child: Column(
-              children: [
-                _buildDescription(context),
-                _buildChapter(context),
-                _buildRecommend(context),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: SpeedDial(
-          overlayColor: Colors.black,
-          overlayOpacity: 0,
-          icon: Icons.rocket,
-          elevation: 4.0,
-          buttonSize: const Size(50, 50),
-          childrenButtonSize: const Size(50, 50),
-          activeIcon: Icons.rocket_launch,
-          direction: SpeedDialDirection.up,
-          spaceBetweenChildren: 4.0,
-          spacing: 4.0,
-          children: [
-            SpeedDialChild(
-              child: const Icon(Icons.download),
-              backgroundColor: Colors.blue[300],
-              foregroundColor: Colors.white,
-              onTap: () {},
             ),
           ],
         ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: AppStyle.edgeInsetsH8,
+          child: Column(
+            children: [
+              _buildDescription(context),
+              _buildChapter(context),
+              _buildRecommend(context),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: SpeedDial(
+        overlayColor: Colors.black,
+        overlayOpacity: 0,
+        icon: Icons.rocket,
+        elevation: 4.0,
+        buttonSize: const Size(50, 50),
+        childrenButtonSize: const Size(50, 50),
+        activeIcon: Icons.rocket_launch,
+        direction: SpeedDialDirection.up,
+        spaceBetweenChildren: 4.0,
+        spacing: 4.0,
+        children: [
+          SpeedDialChild(
+            child: const Icon(Icons.download),
+            backgroundColor: Colors.blue[300],
+            foregroundColor: Colors.white,
+            onTap: () {},
+          ),
+        ],
       ),
     );
   }
@@ -302,7 +298,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                         !controller.isExpandDescription.value;
                   },
                   child: Text(
-                    controller.detail.value.description,
+                    controller.detail.description,
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
@@ -654,7 +650,8 @@ class ComicDetailPage extends GetView<ComicDetailController> {
           item: title,
           child: TwoBoxGridWidget(
             items: items,
-            onTop: (item) => AppNavigator.toComicDetail(1),
+            onTop: (item) =>
+                AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       } else if (showType == ShowTypeEnum.threeGrid.index) {
@@ -664,7 +661,8 @@ class ComicDetailPage extends GetView<ComicDetailController> {
           item: title,
           child: ThreeBoxGridWidget(
             items: items,
-            onTop: (item) => AppNavigator.toComicDetail(1),
+            onTop: (item) =>
+                AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       } else {
@@ -674,7 +672,8 @@ class ComicDetailPage extends GetView<ComicDetailController> {
           item: title,
           child: CrossListWidget(
             items: items,
-            onTap: (item) => AppNavigator.toComicDetail(1),
+            onTap: (item) =>
+                AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       }
