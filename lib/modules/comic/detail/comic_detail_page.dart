@@ -431,25 +431,31 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                               }
                               return Tooltip(
                                 message: item.chapters[i].chapterName,
-                                child: OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor:
-                                        i == 0 ? Colors.cyan : Colors.grey,
-                                    backgroundColor: Colors.white,
-                                    textStyle: const TextStyle(fontSize: 14),
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    minimumSize: const Size.fromHeight(40),
-                                    side: BorderSide(
-                                      color: i == 0
-                                          ? Colors.cyan
-                                          : Get.isDarkMode
-                                              ? Colors.white
-                                              : Colors.black,
+                                child: Obx(
+                                  () => OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor:
+                                          i == 0 ? Colors.cyan : Colors.grey,
+                                      backgroundColor: Colors.white,
+                                      textStyle: const TextStyle(fontSize: 14),
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      minimumSize: const Size.fromHeight(40),
+                                      side: BorderSide(
+                                        color: i == 0
+                                            ? Colors.cyan
+                                            : Get.isDarkMode
+                                                ? Colors.white
+                                                : Colors.black,
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: Text(
+                                      item.chapters[i].chapterName,
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-                                  onPressed: () {},
-                                  child: Text(item.chapters[i].chapterName),
                                 ),
                               );
                             },
