@@ -12,6 +12,7 @@ import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/models/comic/comic_chapter_item_model.dart';
+import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -22,7 +23,7 @@ class ComicReaderController extends BaseController {
   final String comicCover;
   final bool isLong;
   final ComicChapterItemModel chapter;
-  final List<ComicChapterItemModel> chapters;
+  final List<ComicChapterModel> chapters;
 
   ComicReaderController({
     required this.comicChapterId,
@@ -33,7 +34,13 @@ class ComicReaderController extends BaseController {
     required this.chapter,
     required this.chapters,
   }) {
-    chapterIndex.value = chapters.indexOf(chapter);
+    int i = 0;
+    for (int len = chapters.length; i < len; i++) {
+      if (chapters[i].comicChapterId == chapter.comicChapterId) {
+        break;
+      }
+    }
+    chapterIndex.value = i;
   }
 
   final FocusNode focusNode = FocusNode();

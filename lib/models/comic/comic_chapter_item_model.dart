@@ -25,9 +25,9 @@ class ComicChapterItemModel {
     required this.paths,
     required this.direction,
     this.isLocal = false,
-    required this.isSerializated,
-    required this.isLong,
-    required this.isHide,
+    this.isSerializated = false,
+    this.isLong = false,
+    this.isHide = false,
   });
 
   factory ComicChapterItemModel.empty() => ComicChapterItemModel(

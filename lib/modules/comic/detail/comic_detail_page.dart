@@ -388,77 +388,83 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                         builder: (ctx, constraints) {
                           var count = constraints.maxWidth ~/ 160;
                           if (count < 3) count = 3;
-                          return MasonryGridView.count(
-                            crossAxisCount: count,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                            shrinkWrap: true,
-                            padding: EdgeInsets.zero,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount:
-                                (item.isShowMoreButton && !item.isShowAll.value)
-                                    ? 15
-                                    : item.chapters.length,
-                            itemBuilder: (context, i) {
-                              if (item.isShowMoreButton &&
-                                  !item.isShowAll.value &&
-                                  i == 14) {
+                          return Obx(
+                            () => MasonryGridView.count(
+                              crossAxisCount: count,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: (item.isShowMoreButton &&
+                                      !item.isShowAll.value)
+                                  ? 15
+                                  : item.chapters.length,
+                              itemBuilder: (context, i) {
+                                if (item.isShowMoreButton &&
+                                    !item.isShowAll.value &&
+                                    i == 14) {
+                                  return Tooltip(
+                                    message: AppString.expandAll,
+                                    child: OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        foregroundColor:
+                                            i == 0 ? Colors.cyan : Colors.grey,
+                                        backgroundColor: Colors.white,
+                                        textStyle:
+                                            const TextStyle(fontSize: 14),
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                        minimumSize: const Size.fromHeight(40),
+                                        side: BorderSide(
+                                          color: i == 0
+                                              ? Colors.cyan
+                                              : Get.isDarkMode
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        item.isShowAll.value = true;
+                                      },
+                                      child: const Icon(Icons.arrow_drop_down),
+                                    ),
+                                  );
+                                }
                                 return Tooltip(
-                                  message: AppString.expandAll,
-                                  child: OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      foregroundColor:
-                                          i == 0 ? Colors.cyan : Colors.grey,
-                                      backgroundColor: Colors.white,
-                                      textStyle: const TextStyle(fontSize: 14),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      minimumSize: const Size.fromHeight(40),
-                                      side: BorderSide(
-                                        color: i == 0
-                                            ? Colors.cyan
-                                            : Get.isDarkMode
-                                                ? Colors.white
-                                                : Colors.black,
+                                  message: item.chapters[i].chapterName,
+                                  child: Obx(
+                                    () => OutlinedButton(
+                                      style: OutlinedButton.styleFrom(
+                                        foregroundColor:
+                                            i == 0 ? Colors.cyan : Colors.grey,
+                                        backgroundColor: Colors.white,
+                                        textStyle:
+                                            const TextStyle(fontSize: 14),
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                        minimumSize: const Size.fromHeight(40),
+                                        side: BorderSide(
+                                          color: i == 0
+                                              ? Colors.cyan
+                                              : Get.isDarkMode
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        controller.onReadChapter(item.chapters[i]);
+                                      },
+                                      child: Text(
+                                        item.chapters[i].chapterName,
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    onPressed: () {
-                                      item.isShowAll.value = true;
-                                    },
-                                    child: const Icon(Icons.arrow_drop_down),
                                   ),
                                 );
-                              }
-                              return Tooltip(
-                                message: item.chapters[i].chapterName,
-                                child: Obx(
-                                  () => OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      foregroundColor:
-                                          i == 0 ? Colors.cyan : Colors.grey,
-                                      backgroundColor: Colors.white,
-                                      textStyle: const TextStyle(fontSize: 14),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      minimumSize: const Size.fromHeight(40),
-                                      side: BorderSide(
-                                        color: i == 0
-                                            ? Colors.cyan
-                                            : Get.isDarkMode
-                                                ? Colors.white
-                                                : Colors.black,
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: Text(
-                                      item.chapters[i].chapterName,
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
+                              },
+                            ),
                           );
                         },
                       ),

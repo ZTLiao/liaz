@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:liaz/app/utils/convert_util.dart';
-import 'package:liaz/models/comic/comic_chapter_item_model.dart';
 
 class ComicChapterModel {
   int comicChapterId;
