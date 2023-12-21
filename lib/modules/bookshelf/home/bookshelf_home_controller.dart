@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/controller/base_page_controller.dart';
-import 'package:liaz/models/category/category_model.dart';
+import 'package:liaz/models/category/category_item_model.dart';
 
-class BookshelfHomeController extends BasePageController<List<CategoryModel>>
+class BookshelfHomeController extends BasePageController<List<CategoryItemModel>>
     with GetSingleTickerProviderStateMixin {
   late TabController tabController;
 
@@ -14,10 +14,10 @@ class BookshelfHomeController extends BasePageController<List<CategoryModel>>
   }
 
   @override
-  Future<List<List<CategoryModel>>> getData(int currentPage, int pageSize) {
+  Future<List<List<CategoryItemModel>>> getData(int currentPage, int pageSize) {
     var list = [
       [
-        CategoryModel(
+        CategoryItemModel(
           categoryId: 1,
           assetType: 1,
           title: '海滨的鲨鱼女仆',
@@ -26,7 +26,7 @@ class BookshelfHomeController extends BasePageController<List<CategoryModel>>
           authors: ['テルヤ'],
           objId: 1,
         ),
-        CategoryModel(
+        CategoryItemModel(
           categoryId: 1,
           assetType: 1,
           title: '海滨的鲨鱼女仆',
@@ -35,36 +35,7 @@ class BookshelfHomeController extends BasePageController<List<CategoryModel>>
           authors: ['テルヤ'],
           objId: 1,
         ),
-        CategoryModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '海滨的鲨鱼女仆',
-          cover:
-          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
-          authors: ['テルヤ'],
-          objId: 1,
-        ),
-      ],
-      [
-        CategoryModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '海滨的鲨鱼女仆',
-          cover:
-          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
-          authors: ['テルヤ'],
-          objId: 1,
-        ),
-        CategoryModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '海滨的鲨鱼女仆',
-          cover:
-          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
-          authors: ['テルヤ'],
-          objId: 1,
-        ),
-        CategoryModel(
+        CategoryItemModel(
           categoryId: 1,
           assetType: 1,
           title: '海滨的鲨鱼女仆',
@@ -75,7 +46,7 @@ class BookshelfHomeController extends BasePageController<List<CategoryModel>>
         ),
       ],
       [
-        CategoryModel(
+        CategoryItemModel(
           categoryId: 1,
           assetType: 1,
           title: '海滨的鲨鱼女仆',
@@ -84,7 +55,7 @@ class BookshelfHomeController extends BasePageController<List<CategoryModel>>
           authors: ['テルヤ'],
           objId: 1,
         ),
-        CategoryModel(
+        CategoryItemModel(
           categoryId: 1,
           assetType: 1,
           title: '海滨的鲨鱼女仆',
@@ -93,36 +64,7 @@ class BookshelfHomeController extends BasePageController<List<CategoryModel>>
           authors: ['テルヤ'],
           objId: 1,
         ),
-        CategoryModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '海滨的鲨鱼女仆',
-          cover:
-          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
-          authors: ['テルヤ'],
-          objId: 1,
-        ),
-      ],
-      [
-        CategoryModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '海滨的鲨鱼女仆',
-          cover:
-          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
-          authors: ['テルヤ'],
-          objId: 1,
-        ),
-        CategoryModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '海滨的鲨鱼女仆',
-          cover:
-          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
-          authors: ['テルヤ'],
-          objId: 1,
-        ),
-        CategoryModel(
+        CategoryItemModel(
           categoryId: 1,
           assetType: 1,
           title: '海滨的鲨鱼女仆',
@@ -133,7 +75,7 @@ class BookshelfHomeController extends BasePageController<List<CategoryModel>>
         ),
       ],
       [
-        CategoryModel(
+        CategoryItemModel(
           categoryId: 1,
           assetType: 1,
           title: '海滨的鲨鱼女仆',
@@ -142,7 +84,7 @@ class BookshelfHomeController extends BasePageController<List<CategoryModel>>
           authors: ['テルヤ'],
           objId: 1,
         ),
-        CategoryModel(
+        CategoryItemModel(
           categoryId: 1,
           assetType: 1,
           title: '海滨的鲨鱼女仆',
@@ -151,7 +93,65 @@ class BookshelfHomeController extends BasePageController<List<CategoryModel>>
           authors: ['テルヤ'],
           objId: 1,
         ),
-        CategoryModel(
+        CategoryItemModel(
+          categoryId: 1,
+          assetType: 1,
+          title: '海滨的鲨鱼女仆',
+          cover:
+          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
+          authors: ['テルヤ'],
+          objId: 1,
+        ),
+      ],
+      [
+        CategoryItemModel(
+          categoryId: 1,
+          assetType: 1,
+          title: '海滨的鲨鱼女仆',
+          cover:
+          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
+          authors: ['テルヤ'],
+          objId: 1,
+        ),
+        CategoryItemModel(
+          categoryId: 1,
+          assetType: 1,
+          title: '海滨的鲨鱼女仆',
+          cover:
+          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
+          authors: ['テルヤ'],
+          objId: 1,
+        ),
+        CategoryItemModel(
+          categoryId: 1,
+          assetType: 1,
+          title: '海滨的鲨鱼女仆',
+          cover:
+          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
+          authors: ['テルヤ'],
+          objId: 1,
+        ),
+      ],
+      [
+        CategoryItemModel(
+          categoryId: 1,
+          assetType: 1,
+          title: '海滨的鲨鱼女仆',
+          cover:
+          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
+          authors: ['テルヤ'],
+          objId: 1,
+        ),
+        CategoryItemModel(
+          categoryId: 1,
+          assetType: 1,
+          title: '海滨的鲨鱼女仆',
+          cover:
+          'https://images.dmzj.com/webpic/17/haibindeshayunvpu231110.jpg',
+          authors: ['テルヤ'],
+          objId: 1,
+        ),
+        CategoryItemModel(
           categoryId: 1,
           assetType: 1,
           title: '海滨的鲨鱼女仆',

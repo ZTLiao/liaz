@@ -33,7 +33,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
         appBar: TabAppBar(
           selectedSize: 20,
           tabAlignment: TabAlignment.start,
-          tabs: controller.categories
+          tabs: controller.assetTypes
               .map((e) => Tab(
                     text: e,
                   ))
@@ -53,8 +53,9 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
                     height: 1,
                   );
                 },
-                itemCount: 50,
+                itemCount: controller.categories.value.length,
                 itemBuilder: (context, i) {
+                  var item = controller.categories.value[i];
                   return Container(
                     height: 40,
                     decoration: BoxDecoration(
@@ -63,7 +64,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
                     child: Center(
                       child: TextButton(
                         onPressed: () {
-                          controller.categoryId.value = i;
+                          controller.categoryId.value = item.categoryId;
                           Log.i("category index : ${i + 1}");
                           SmartDialog.showToast(AppString.skipError);
                         },
@@ -78,11 +79,14 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
                         ),
                         child: Obx(
                           () => Text(
-                            "类别${i + 1}",
+                            item.categoryName,
                             style: TextStyle(
-                              color: controller.categoryId.value == i
-                                  ? Colors.cyan
-                                  : Get.isDarkMode ? Colors.white70 : Colors.black54,
+                              color:
+                                  controller.categoryId.value == item.categoryId
+                                      ? Colors.cyan
+                                      : Get.isDarkMode
+                                          ? Colors.white70
+                                          : Colors.black54,
                             ),
                           ),
                         ),
@@ -96,7 +100,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
               child: TabBarView(
                 controller: controller.tabController,
                 children:
-                    controller.categories.map((e) => buildListView()).toList(),
+                    controller.assetTypes.map((e) => buildListView()).toList(),
               ),
             ),
           ],
