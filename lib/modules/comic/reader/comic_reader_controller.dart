@@ -105,7 +105,6 @@ class ComicReaderController extends BaseController {
     } else {
       direction.value = AppSettings.comicReaderDirection.value;
     }
-
     if (AppSettings.comicReaderFullScreen.value) {
       setFull();
     }
@@ -251,7 +250,19 @@ class ComicReaderController extends BaseController {
     loadDetail();
   }
 
-  void loadDetail() {}
+  void loadDetail() {
+    var chapter = chapters[chapterIndex.value];
+    detail.value = ComicChapterItemModel(
+      comicChapterId: chapter.comicChapterId,
+      comicId: chapter.comicId,
+      flag: chapter.flag,
+      chapterName: chapter.chapterName,
+      seqNo: chapter.seqNo,
+      paths: chapter.paths,
+      direction: chapter.direction,
+      isLocal: false,
+    );;
+  }
 
   void jumpToPage(int page, {bool anime = false}) {
     //竖向
