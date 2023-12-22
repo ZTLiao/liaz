@@ -8,11 +8,14 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
+import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/app/logger/log.dart';
+import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/models/comic/comic_chapter_item_model.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
+import 'package:liaz/routes/app_route.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -261,7 +264,8 @@ class ComicReaderController extends BaseController {
       paths: chapter.paths,
       direction: chapter.direction,
       isLocal: false,
-    );;
+    );
+    ;
   }
 
   void jumpToPage(int page, {bool anime = false}) {
@@ -302,5 +306,74 @@ class ComicReaderController extends BaseController {
       systemNavigationBarColor: Colors.transparent,
       systemNavigationBarIconBrightness: Brightness.light,
     ));
+  }
+
+  /// 显示目录
+  void showCatalogue() async {
+    setShowControls();
+    showModalBottomSheet(
+      context: Get.context!,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
+      constraints: const BoxConstraints(
+        maxWidth: 500,
+      ),
+      backgroundColor: AppStyle.darkTheme.scaffoldBackgroundColor,
+      builder: (context) => Theme(
+        data: AppStyle.darkTheme,
+        child: Column(
+          children: [
+            ListTile(
+              title: Text('${AppString.catalogue}(${chapters.length})'),
+              trailing: IconButton(
+                onPressed: Get.back,
+                icon: const Icon(Icons.close),
+              ),
+              contentPadding: AppStyle.edgeInsetsL12,
+            ),
+            Divider(
+              height: 1.0,
+              color: Colors.grey.withOpacity(.2),
+            ),
+            Expanded(
+              child: ScrollablePositionedList.separated(
+                initialScrollIndex: chapterIndex.value,
+                itemCount: chapters.length,
+                separatorBuilder: (_, i) => Divider(
+                  indent: 12,
+                  endIndent: 12,
+                  height: 1.0,
+                  color: Colors.grey.withOpacity(.2),
+                ),
+                itemBuilder: (_, i) {
+                  var item = chapters[i];
+                  return ListTile(
+                    selected: i == chapterIndex.value,
+                    title: Text(item.chapterName),
+                    subtitle: item.updatedAt != 0
+                        ? Text(
+                            '${AppString.updateAt}${DateUtil.formatDate(item.updatedAt)}',
+                          )
+                        : null,
+                    onTap: () {
+                      chapterIndex.value = i;
+                      loadDetail();
+                      Get.back();
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      routeSettings: const RouteSettings(
+        name: AppRoute.kModalBottomSheet,
+      ),
+    );
   }
 }

@@ -78,4 +78,6 @@ class AppString {
   static const asc = '升序';
   static const desc = '降序';
   static const expandAll = '展开全部章节';
+  static const catalogue = '目录';
+  static const updateAt = '更新于';
 }

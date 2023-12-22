@@ -82,6 +82,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
                         child: Obx(
                           () => Text(
                             item.categoryName,
+                            maxLines: 1,
                             style: TextStyle(
                               color:
                                   controller.categoryId.value == item.categoryId
@@ -89,6 +90,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
                                       : Get.isDarkMode
                                           ? Colors.white70
                                           : Colors.black54,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),

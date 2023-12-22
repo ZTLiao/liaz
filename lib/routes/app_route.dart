@@ -19,4 +19,6 @@ class AppRoute {
 
   /// 漫画阅读
   static const kComicReader = '/comic/reader';
+
+  static const kModalBottomSheet = '/modalBottomSheet';
 }

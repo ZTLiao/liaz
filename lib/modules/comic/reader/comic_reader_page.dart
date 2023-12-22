@@ -218,36 +218,16 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                                     icon: const Icon(Remix.skip_back_line),
                                   ),
                                 ),
-                                Obx(
-                                  () => Visibility(
-                                    visible: AppSettings
-                                        .comicReaderShowViewPoint.value,
-                                    child: Expanded(
-                                      child: IconButton(
-                                        onPressed: () {},
-                                        icon: Badge(
-                                          label: Text(
-                                            '',
-                                            style: const TextStyle(
-                                                color: Colors.white),
-                                          ),
-                                          child: const Icon(
-                                              Remix.chat_smile_2_line),
-                                        ),
-                                      ),
-                                    ),
+                                Expanded(
+                                  child: IconButton(
+                                    onPressed: controller.showCatalogue,
+                                    icon: const Icon(Remix.file_list_3_line),
                                   ),
                                 ),
                                 Expanded(
                                   child: IconButton(
                                     onPressed: () {},
-                                    icon: const Icon(Remix.file_list_line),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Remix.settings_line),
+                                    icon: const Icon(Remix.settings_5_line),
                                   ),
                                 ),
                                 Expanded(
@@ -324,7 +304,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         itemBuilder: (_, i) {
           var url = controller.detail.value.paths[i];
           if (i == controller.detail.value.paths.length - 1 && url == "TC") {
-            return SizedBox();
+            return const SizedBox();
           }
           return PhotoView.customChild(
             wantKeepAlive: true,
