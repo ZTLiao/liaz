@@ -107,12 +107,11 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
             List<ItemModel> items = [];
             for (var i = 0, len = list.length; i < len; i++) {
               var item = list[i];
-              var authors = StrUtil.listToStr(item.authors, StrUtil.slash);
               items.add(
                 ItemModel(
                   itemId: item.categoryId,
                   title: item.title,
-                  subTitle: authors,
+                  subTitle: item.upgradeChapter,
                   showValue: item.cover,
                   skipType: SkipTypeEnum.h5.index,
                   skipValue: item.objId.toString(),

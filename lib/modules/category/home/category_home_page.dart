@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/logger/log.dart';
-import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/modules/category/home/category_home_controller.dart';
 import 'package:liaz/routes/app_navigator.dart';
@@ -33,12 +33,13 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
         appBar: TabAppBar(
           selectedSize: 20,
           tabAlignment: TabAlignment.start,
-          tabs: controller.assetTypes
+          tabs: AssetTypeEnum.values
               .map((e) => Tab(
-                    text: e,
+                    text: e.value,
                   ))
               .toList(),
           controller: controller.tabController,
+          onTap: controller.setIndex,
         ),
         body: Row(
           children: [
@@ -65,8 +66,9 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
                       child: TextButton(
                         onPressed: () {
                           controller.categoryId.value = item.categoryId;
-                          Log.i("category index : ${i + 1}");
-                          SmartDialog.showToast(AppString.skipError);
+                          Log.i(
+                              "category index : ${i + 1}, categoryId : ${controller.categoryId.value}");
+                          controller.onRefresh();
                         },
                         style: ButtonStyle(
                           minimumSize: MaterialStateProperty.all(
@@ -99,8 +101,11 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
             Expanded(
               child: TabBarView(
                 controller: controller.tabController,
-                children:
-                    controller.assetTypes.map((e) => buildListView()).toList(),
+                children: AssetTypeEnum.values
+                    .map(
+                      (e) => buildListView(),
+                    )
+                    .toList(),
               ),
             ),
           ],
@@ -120,12 +125,11 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
             List<ItemModel> items = [];
             for (var i = 0, len = list.length; i < len; i++) {
               var item = list[i];
-              var authors = StrUtil.listToStr(item.authors, StrUtil.slash);
               items.add(
                 ItemModel(
                   itemId: item.categoryId,
                   title: item.title,
-                  subTitle: authors,
+                  subTitle: item.upgradeChapter,
                   showValue: item.cover,
                   skipType: SkipTypeEnum.h5.index,
                   skipValue: item.objId.toString(),

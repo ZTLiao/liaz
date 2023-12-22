@@ -11,6 +11,7 @@ class TabAppBar extends StatelessWidget implements PreferredSizeWidget {
   final TabAlignment? tabAlignment;
   final double selectedSize;
   final double unselectedSize;
+  final ValueChanged<int>? onTap;
 
   const TabAppBar(
       {required this.tabs,
@@ -20,6 +21,7 @@ class TabAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.isScrollable = true,
       this.selectedSize = 12,
       this.unselectedSize = 12,
+      this.onTap,
       super.key});
 
   @override
@@ -59,6 +61,7 @@ class TabAppBar extends StatelessWidget implements PreferredSizeWidget {
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicatorColor: Colors.transparent,
                 tabs: tabs,
+                onTap: onTap,
               ),
             ),
             action ?? const SizedBox(),

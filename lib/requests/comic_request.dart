@@ -26,4 +26,5 @@ class ComicRequest {
     }
     return model;
   }
+
 }

@@ -1,214 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/controller/base_page_controller.dart';
+import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/models/category/category_item_model.dart';
 import 'package:liaz/models/category/category_model.dart';
 import 'package:liaz/requests/category_request.dart';
+import 'package:liaz/requests/category_search_request.dart';
 
 class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
     with GetTickerProviderStateMixin {
   late TabController tabController;
-  var categoryId = RxInt(0);
 
-  var assetTypes = [
-    AppString.all,
-    AppString.comic,
-    AppString.novel,
-  ];
+  /// 资源
+  var assetType = RxInt(AssetTypeEnum.all.code);
+
+  /// 分类ID
+  var categoryId = RxInt(0);
 
   Rx<List<CategoryModel>> categories = Rx<List<CategoryModel>>([]);
 
   var categoryRequest = CategoryRequest();
 
+  var categorySearchRequest = CategorySearchRequest();
+
   CategoryHomeController() {
-    categoryRequest.getCategory().then((value) => categories.value.addAll(value));
+    if (categories.value.isEmpty) {
+      categoryRequest.getCategory().then((value) {
+        categories.value.addAll(value);
+        categoryId.value = categories.value[0].categoryId;
+      });
+    }
   }
 
   @override
   void onInit() {
-    tabController = TabController(length: assetTypes.length, vsync: this);
+    tabController =
+        TabController(length: AssetTypeEnum.values.length, vsync: this);
     super.onInit();
   }
 
+  void setIndex(i) {
+    assetType.value = i;
+    onRefresh();
+  }
+
   @override
-  Future<List<List<CategoryItemModel>>> getData(int currentPage, int pageSize) {
-    var list = [
-      [
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-      ],
-      [
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-      ],
-      [
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-      ],
-      [
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-      ],
-      [
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-      ],
-      [
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-        CategoryItemModel(
-          categoryId: 1,
-          assetType: 1,
-          title: '史上最垃圾伪圣女',
-          cover:
-              'https://images.dmzj.com/webpic/5/shishangzuilajiweishennv_29_03_2023.jpg',
-          authors: ['えかきびと', '壁首领大公'],
-          objId: 1,
-        ),
-      ],
-    ];
-    return Future(() => list);
+  Future<List<List<CategoryItemModel>>> getData(
+      int currentPage, int pageSize) async {
+    if (categoryId.value == 0) {
+      return [];
+    }
+    var categories = await categorySearchRequest.getContent(
+        AssetTypeEnum.values[tabController.index].index,
+        categoryId.value,
+        currentPage,
+        pageSize);
+    var data = [<CategoryItemModel>[]];
+    if (categories.isNotEmpty) {
+      for (int i = 0, len = categories.length; i < len; i += 3) {
+        var items = <CategoryItemModel>[];
+        if (i < len) {
+          items.add(categories[i]);
+        }
+        if (i + 1 < len) {
+          items.add(categories[i + 1]);
+        }
+        if (i + 2 < len) {
+          items.add(categories[i + 2]);
+        }
+        data.add(items);
+      }
+    }
+    return data;
   }
 }
