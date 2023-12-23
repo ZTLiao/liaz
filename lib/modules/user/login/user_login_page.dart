@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/modules/user/login/user_login_controller.dart';
+import 'package:remixicon/remixicon.dart';
 
 class UserLoginPage extends StatelessWidget {
   final UserLoginController controller;
@@ -29,7 +30,7 @@ class UserLoginPage extends StatelessWidget {
               const SizedBox(
                 height: 60,
               ),
-              buildEmailTextField(),
+              buildUsernameTextField(),
               const SizedBox(
                 height: 30,
               ),
@@ -79,23 +80,29 @@ class UserLoginPage extends StatelessWidget {
     return ButtonBar(
       alignment: MainAxisAlignment.center,
       children: controller.thirdLogin
-          .map((item) => Builder(builder: (context) {
+          .map(
+            (item) => Builder(
+              builder: (context) {
                 return IconButton(
-                    icon: Icon(
-                      item['icon'],
-                      color: Theme.of(context).iconTheme.color,
-                    ),
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text('${item['title']}登录'),
-                            action: SnackBarAction(
-                              label: '取消',
-                              onPressed: () {},
-                            )),
-                      );
-                    });
-              }))
+                  icon: Icon(
+                    item['icon'],
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('${item['title']}登录'),
+                        action: SnackBarAction(
+                          label: '取消',
+                          onPressed: () {},
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          )
           .toList(),
     );
   }
@@ -104,7 +111,10 @@ class UserLoginPage extends StatelessWidget {
     return const Center(
       child: Text(
         AppString.thirdLogin,
-        style: TextStyle(color: Colors.grey, fontSize: 14),
+        style: TextStyle(
+          color: Colors.grey,
+          fontSize: 14,
+        ),
       ),
     );
   }
@@ -134,13 +144,13 @@ class UserLoginPage extends StatelessWidget {
               },
             ),
           ),
+          onPressed: controller.signIn,
           child: const Text(
             AppString.login,
             style: TextStyle(
               color: Colors.white,
             ),
           ),
-          onPressed: () {},
         ),
       ),
     );
@@ -166,62 +176,80 @@ class UserLoginPage extends StatelessWidget {
   }
 
   Widget buildPasswordTextField(BuildContext context) {
-    return TextFormField(
-        obscureText: controller.isObscure, // 是否显示文字
-        onSaved: (v) => controller.password = v!,
+    return Obx(
+      () => TextFormField(
+        obscureText: controller.isShowPassword.value,
+        controller: controller.password,
         validator: (v) {
           if (v!.isEmpty) {
-            return '请输入密码';
+            return AppString.passwordEmptyError;
+          }
+          if (v.length < 6) {
+            return AppString.passwordShortError;
           }
           return null;
         },
         decoration: InputDecoration(
-            labelText: AppString.password,
-            suffixIcon: IconButton(
-              icon: const Icon(
-                Icons.remove_red_eye,
-                color: Colors.grey,
-              ),
-              onPressed: () {},
-            )));
+          labelText: AppString.password,
+          suffixIcon: IconButton(
+            icon: Icon(
+              controller.isShowPassword.value
+                  ? Remix.eye_close_line
+                  : Remix.eye_line,
+              color: Colors.grey,
+            ),
+            onPressed: () {
+              controller.isShowPassword.value =
+                  !controller.isShowPassword.value;
+            },
+          ),
+        ),
+      ),
+    );
   }
 
-  Widget buildEmailTextField() {
+  Widget buildUsernameTextField() {
     return TextFormField(
+      controller: controller.username,
       decoration: const InputDecoration(
         labelText: AppString.username,
+        hintText: AppString.usernameAlertMsg,
       ),
       validator: (v) {
+        if (v!.isEmpty) {
+          return AppString.usernameEmptyError;
+        }
         return null;
       },
-      onSaved: (v) => controller.email = v!,
     );
   }
 
   Widget buildTitleLine() {
     return Padding(
-        padding: const EdgeInsets.only(left: 12.0, top: 4.0),
-        child: Align(
-          alignment: Alignment.bottomLeft,
-          child: Container(
-            color: Colors.black,
-            width: 40,
-            height: 2,
-          ),
-        ));
+      padding: const EdgeInsets.only(left: 12.0, top: 4.0),
+      child: Align(
+        alignment: Alignment.bottomLeft,
+        child: Container(
+          color: Colors.black,
+          width: 40,
+          height: 2,
+        ),
+      ),
+    );
   }
 
   Widget buildTitle() {
     return Container(
       alignment: Alignment.topLeft,
       child: const Padding(
-          padding: AppStyle.edgeInsetsA8,
-          child: Text(
-            AppString.login,
-            style: TextStyle(
-              fontSize: 42,
-            ),
-          )),
+        padding: AppStyle.edgeInsetsA8,
+        child: Text(
+          AppString.login,
+          style: TextStyle(
+            fontSize: 42,
+          ),
+        ),
+      ),
     );
   }
 }

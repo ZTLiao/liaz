@@ -32,6 +32,10 @@ class AppNavigator {
     }
   }
 
+  static void toIndex() {
+    toContentPage(AppRoute.kIndex);
+  }
+
   /// 打开搜索
   static void toSearch() {
     toContentPage(AppRoute.kSearch);

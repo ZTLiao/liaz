@@ -88,4 +88,9 @@ class AppString {
   static const clickRegister = '点击注册';
   static const thirdLogin = '其它账号登录';
   static const forgetPassword = '忘记密码？';
+  static const usernameAlertMsg = '账号/邮箱/手机号码';
+  static const usernameEmptyError = '请输入账号';
+  static const passwordEmptyError = '请输入密码';
+  static const passwordShortError = '密码不能低于六位';
+  static const usernameOrPasswordError = '账号或密码错误';
 }

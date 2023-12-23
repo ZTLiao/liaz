@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/error/app_error.dart';
@@ -10,6 +11,7 @@ import 'package:liaz/app/http/response_entity.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/http/interceptor/public_interceptor.dart';
 import 'package:liaz/app/utils/sign_util.dart';
+import 'package:liaz/routes/app_navigator.dart';
 
 class Request {
   static const int _connectTimeout = 60;
@@ -79,27 +81,7 @@ class Request {
         ),
         cancelToken: cancel,
       );
-      if (response.statusCode == HttpStatus.ok) {
-        var result = ResponseEntity.fromJson(response.data);
-        if (result.code == HttpStatus.ok) {
-          return result.data;
-        } else {
-          throw AppError(
-            result.message,
-            code: result.code,
-          );
-        }
-      } else {
-        var data = response.data;
-        if (data is Map) {
-          var result = ResponseEntity.fromJson(response.data);
-          throw AppError(
-            result.message,
-            code: result.code,
-          );
-        }
-        throw AppError(response.data);
-      }
+      return responseBody(response);
     } on DioException catch (e) {
       Log.e(e.message!, e.stackTrace);
       if (e.type == DioExceptionType.cancel) {
@@ -164,27 +146,7 @@ class Request {
         ),
         cancelToken: cancel,
       );
-      if (response.statusCode == HttpStatus.ok) {
-        var result = ResponseEntity.fromJson(response.data);
-        if (result.code == HttpStatus.ok) {
-          return result.data;
-        } else {
-          throw AppError(
-            result.message,
-            code: result.code,
-          );
-        }
-      } else {
-        var data = response.data;
-        if (data is Map) {
-          var result = ResponseEntity.fromJson(response.data);
-          throw AppError(
-            result.message,
-            code: result.code,
-          );
-        }
-        throw AppError(response.data);
-      }
+      return responseBody(response);
     } on DioException catch (e) {
       Log.e(e.message!, e.stackTrace);
       if (e.type == DioExceptionType.cancel) {
@@ -195,6 +157,42 @@ class Request {
             "${AppString.responseFail}${e.response?.statusCode ?? -1}");
       }
       throw AppError(AppString.serverError);
+    }
+  }
+
+  dynamic responseBody(Response response) {
+    if (response.statusCode == HttpStatus.ok) {
+      var result = ResponseEntity.fromJson(response.data);
+      if (result.code == HttpStatus.ok) {
+        return result.data;
+      } else {
+        throw AppError(
+          result.message,
+          code: result.code,
+        );
+      }
+    } else {
+      var data = response.data;
+      var result = ResponseEntity(
+        code: HttpStatus.internalServerError,
+        message: AppString.serverError,
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+      );
+      if (data is Map) {
+        result = ResponseEntity.fromJson(response.data);
+      }
+      if (response.statusCode == HttpStatus.unauthorized) {
+        AppNavigator.toUserLogin();
+        return;
+      } else if (response.statusCode == HttpStatus.forbidden) {
+        SmartDialog.showToast(result.message);
+        return;
+      } else {
+        throw AppError(
+          result.message,
+          code: result.code,
+        );
+      }
     }
   }
 }
