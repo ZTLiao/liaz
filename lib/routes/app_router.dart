@@ -15,6 +15,7 @@ import 'package:liaz/modules/novel/detail/novel_detail_controller.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_page.dart';
 import 'package:liaz/modules/search/home/search_home_page.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
+import 'package:liaz/modules/user/login/user_login_page.dart';
 import 'package:liaz/routes/app_route.dart';
 
 class AppRouter {
@@ -42,11 +43,6 @@ class AppRouter {
       binding: BindingsBuilder.put(
         () => ComicReaderController(
           comicChapterId: Get.arguments['comicChapterId'],
-          comicId: Get.arguments['comicId'],
-          comicTitle: Get.arguments['comicTitle'],
-          comicCover: Get.arguments['comicCover'],
-          isLong: Get.arguments['isLong'] ?? false,
-          chapter: Get.arguments['chapter'],
           chapters: Get.arguments['chapters'],
         ),
       ),
@@ -78,6 +74,10 @@ class AppRouter {
           id: Get.arguments['id'],
         ),
       ),
+    ),
+    GetPage(
+      name: AppRoute.kUserLogin,
+      page: () => UserLoginPage(),
     ),
   ];
 }

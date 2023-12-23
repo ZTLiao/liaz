@@ -10,9 +10,9 @@ class ThreeBoxGridWidget extends StatelessWidget {
   final double _height = 360;
 
   final List<ItemModel> items;
-  final Function(ItemModel item)? onTop;
+  final Function(ItemModel item)? onTap;
 
-  const ThreeBoxGridWidget({required this.items, this.onTop, super.key});
+  const ThreeBoxGridWidget({required this.items, this.onTap, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ThreeBoxGridWidget extends StatelessWidget {
       itemBuilder: (_, i) {
         var item = items[i];
         return InkWell(
-          onTap: () => onTop!(item),
+          onTap: () => onTap!(item),
           borderRadius: AppStyle.radius4,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

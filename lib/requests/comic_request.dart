@@ -1,4 +1,5 @@
 import 'package:liaz/app/http/request.dart';
+import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/comic/comic_item_model.dart';
 
@@ -27,4 +28,17 @@ class ComicRequest {
     return model;
   }
 
+  Future<List<ComicChapterModel>> getComicCatalogue(int comicChapterId) async {
+    List<ComicChapterModel> list = [];
+    dynamic result =
+        await Request.instance.get('/api/comic/catalogue', queryParameters: {
+      'comicChapterId': comicChapterId,
+    });
+    if (result is List) {
+      for (var json in result) {
+        list.add(ComicChapterModel.fromJson(json));
+      }
+    }
+    return list;
+  }
 }

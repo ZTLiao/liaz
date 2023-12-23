@@ -676,7 +676,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           item: title,
           child: ThreeBoxGridWidget(
             items: items,
-            onTop: (item) => AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
+            onTap: (item) => AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       } else {

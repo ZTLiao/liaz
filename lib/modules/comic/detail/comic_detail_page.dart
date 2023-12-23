@@ -13,6 +13,7 @@ import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/enums/sort_type_enum.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/utils/date_util.dart';
+import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
@@ -77,11 +78,13 @@ class ComicDetailPage extends GetView<ComicDetailController> {
               elevation: 0,
               actions: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AppNavigator.toUserLogin();
+                  },
                   icon: const Icon(Remix.heart_3_line),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: controller.share,
                   icon: const Icon(Icons.share),
                 ),
               ],
@@ -267,12 +270,14 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                     },
                   ),
                   //背景颜色
-                  backgroundColor: MaterialStateProperty.resolveWith((states) {
-                    if (states.contains(MaterialState.pressed)) {
-                      return Colors.cyan;
-                    }
-                    return Get.isDarkMode ? Colors.black : Colors.white;
-                  }),
+                  backgroundColor: MaterialStateProperty.resolveWith(
+                    (states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Colors.cyan;
+                      }
+                      return Get.isDarkMode ? Colors.black : Colors.white;
+                    },
+                  ),
                 ),
                 child: const Text(
                   AppString.startReading,
@@ -453,7 +458,8 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        controller.onReadChapter(item.chapters[i]);
+                                        controller
+                                            .onReadChapter(item.chapters[i]);
                                       },
                                       child: Text(
                                         item.chapters[i].chapterName,
@@ -745,7 +751,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
           item: title,
           child: ThreeBoxGridWidget(
             items: items,
-            onTop: (item) =>
+            onTap: (item) =>
                 AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );

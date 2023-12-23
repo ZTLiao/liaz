@@ -12,7 +12,7 @@ import 'package:liaz/models/novel/novel_item_model.dart';
 class IndexRankController extends BasePageController<CardItemModel>
     with GetTickerProviderStateMixin {
   late TabController tabController;
-  var assetType = RxInt(0);
+  var assetType = RxInt(AssetTypeEnum.comic.code);
   var timeType = RxInt(0);
 
   @override

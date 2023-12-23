@@ -133,7 +133,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
                   title: item.title,
                   subTitle: item.upgradeChapter,
                   showValue: item.cover,
-                  skipType: SkipTypeEnum.h5.index,
+                  skipType: item.assetType,
                   skipValue: item.objId.toString(),
                   objId: item.objId,
                 ),
@@ -141,6 +141,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
             }
             return ThreeBoxGridWidget(
               items: items,
+              onTap: controller.onReadChapter,
             );
           }),
     );

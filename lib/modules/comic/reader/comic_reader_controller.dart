@@ -15,35 +15,29 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/models/comic/comic_chapter_item_model.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
+import 'package:liaz/requests/comic_request.dart';
+import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ComicReaderController extends BaseController {
   final int comicChapterId;
-  final int comicId;
-  final String comicTitle;
-  final String comicCover;
-  final bool isLong;
-  final ComicChapterItemModel chapter;
+
   final List<ComicChapterModel> chapters;
 
   ComicReaderController({
     required this.comicChapterId,
-    required this.comicId,
-    required this.comicTitle,
-    required this.comicCover,
-    required this.isLong,
-    required this.chapter,
     required this.chapters,
   }) {
     int i = 0;
     for (int len = chapters.length; i < len; i++) {
-      if (chapters[i].comicChapterId == chapter.comicChapterId) {
+      if (chapters[i].comicChapterId == comicChapterId) {
         break;
       }
     }
     chapterIndex.value = i;
+    loadDetail();
   }
 
   final FocusNode focusNode = FocusNode();
@@ -82,6 +76,7 @@ class ComicReaderController extends BaseController {
   /// 初始化
   var initialIndex = 0;
 
+  /// 阅读方向
   var direction = RxInt(0);
 
   bool get leftHandMode => AppSettings.comicReaderLeftHandMode.value;
@@ -99,11 +94,13 @@ class ComicReaderController extends BaseController {
   /// 显示电量
   RxBool showBattery = RxBool(true);
 
+  var comicRequest = ComicRequest();
+
   @override
   void onInit() {
     initConnectivity();
     initBattery();
-    if (isLong) {
+    if (detail.value.isLong) {
       direction.value = ReaderDirectionEnum.upToDown.index;
     } else {
       direction.value = AppSettings.comicReaderDirection.value;
@@ -112,7 +109,6 @@ class ComicReaderController extends BaseController {
       setFull();
     }
     itemPositionsListener.itemPositions.addListener(updateItemPosition);
-    loadDetail();
     super.onInit();
   }
 
@@ -254,18 +250,17 @@ class ComicReaderController extends BaseController {
   }
 
   void loadDetail() {
-    var chapter = chapters[chapterIndex.value];
+    var comicChapter = chapters[chapterIndex.value];
     detail.value = ComicChapterItemModel(
-      comicChapterId: chapter.comicChapterId,
-      comicId: chapter.comicId,
-      flag: chapter.flag,
-      chapterName: chapter.chapterName,
-      seqNo: chapter.seqNo,
-      paths: chapter.paths,
-      direction: chapter.direction,
+      comicChapterId: comicChapter.comicChapterId,
+      comicId: comicChapter.comicId,
+      flag: comicChapter.flag,
+      chapterName: comicChapter.chapterName,
+      seqNo: comicChapter.seqNo,
+      paths: comicChapter.paths,
+      direction: comicChapter.direction,
       isLocal: false,
     );
-    ;
   }
 
   void jumpToPage(int page, {bool anime = false}) {
@@ -375,5 +370,11 @@ class ComicReaderController extends BaseController {
         name: AppRoute.kModalBottomSheet,
       ),
     );
+  }
+
+  onDetail() {
+    comicRequest
+        .comicDetail(detail.value.comicId)
+        .then((value) => {AppNavigator.toComicDetail(value.toJson())});
   }
 }

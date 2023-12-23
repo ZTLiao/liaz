@@ -142,7 +142,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                             ),
                             AppStyle.hGap8,
                             Text(
-                              "${controller.currentIndex.value + 1} / ${controller.detail.value.paths.length}",
+                              "${controller.detail.value.paths.isEmpty ? 0 : controller.currentIndex.value + 1} / ${controller.detail.value.paths.length}",
                               style: const TextStyle(fontSize: 12, height: 1.0),
                             ),
                           ],
@@ -175,11 +175,28 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                         Expanded(
                           child: Obx(
                             () => Text(
-                              controller.chapters[controller.chapterIndex.value]
-                                  .chapterName,
+                              controller.detail.value.chapterName,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: <Widget>[
+                              const Text(
+                                AppString.detail,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(Remix.checkbox_blank_circle_line,),
+                                onPressed: controller.onDetail,
+                              ),
+                            ],
                           ),
                         ),
                       ],

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/controller/base_page_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
+import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/models/category/category_item_model.dart';
 import 'package:liaz/models/category/category_model.dart';
+import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/requests/category_request.dart';
 import 'package:liaz/requests/category_search_request.dart';
+import 'package:liaz/requests/comic_request.dart';
+import 'package:liaz/routes/app_navigator.dart';
 
 class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
     with GetTickerProviderStateMixin {
@@ -22,6 +26,8 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
   var categoryRequest = CategoryRequest();
 
   var categorySearchRequest = CategorySearchRequest();
+
+  var comicRequest = ComicRequest();
 
   CategoryHomeController() {
     if (categories.value.isEmpty) {
@@ -72,5 +78,20 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
       }
     }
     return data;
+  }
+
+  void onReadChapter(ItemModel item) async {
+    var skipType = item.skipType;
+    if (item.objId == null) {
+      return;
+    }
+    var objId = item.objId!;
+    if (SkipTypeEnum.comic.index == skipType) {
+      var chapters = await comicRequest.getComicCatalogue(objId);
+      AppNavigator.toComicReader(
+        comicChapterId: objId,
+        chapters: chapters,
+      );
+    }
   }
 }

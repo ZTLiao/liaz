@@ -72,7 +72,7 @@ class IndexRecommendView extends StatelessWidget {
               item: title,
               child: ThreeBoxGridWidget(
                 items: items,
-                onTop: (item) => controller.onDetail(item),
+                onTap: (item) => controller.onDetail(item),
               ),
             );
           }

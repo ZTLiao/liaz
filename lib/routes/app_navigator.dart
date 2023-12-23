@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:liaz/models/comic/comic_chapter_item_model.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
-import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -47,20 +45,10 @@ class AppNavigator {
 
   static void toComicReader({
     required int comicChapterId,
-    required int comicId,
-    required String comicTitle,
-    required String comicCover,
-    required bool isLong,
-    required ComicChapterItemModel chapter,
     required List<ComicChapterModel> chapters,
   }) async {
     await Get.toNamed(AppRoute.kComicReader, arguments: {
       'comicChapterId': comicChapterId,
-      'comicId': comicId,
-      'comicTitle': comicTitle,
-      'comicCover': comicCover,
-      'isLong': isLong,
-      'chapter': chapter,
       'chapters': chapters,
     });
   }
@@ -80,5 +68,9 @@ class AppNavigator {
     } else {
       launchUrlString(url);
     }
+  }
+
+  static void toUserLogin() {
+    toContentPage(AppRoute.kUserLogin);
   }
 }

@@ -12,8 +12,16 @@ class ComicUpgradeController extends BasePageController<ComicItemModel> {
   }
 
   void onDetail(int comicId) {
-    comicRequest.comicDetail(comicId).then((value) => {
-      AppNavigator.toComicDetail(value.toJson())
-    });
+    comicRequest
+        .comicDetail(comicId)
+        .then((value) => {AppNavigator.toComicDetail(value.toJson())});
+  }
+
+  void onReadChapter(int comicChapterId) async {
+    var chapters = await comicRequest.getComicCatalogue(comicChapterId);
+    AppNavigator.toComicReader(
+      comicChapterId: comicChapterId,
+      chapters: chapters,
+    );
   }
 }

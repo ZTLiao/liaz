@@ -27,6 +27,19 @@ class ComicChapterModel {
     required this.paths,
   });
 
+  factory ComicChapterModel.empty() => ComicChapterModel(
+        comicChapterId: 0,
+        comicId: 0,
+        flag: 0,
+        chapterName: '',
+        chapterType: 0,
+        pageNum: 0,
+        seqNo: 0,
+        direction: 0,
+        updatedAt: 0,
+        paths: [],
+      );
+
   factory ComicChapterModel.fromJson(Map<String, dynamic> json) {
     final List<String>? paths = json['paths'] is List ? <String>[] : null;
     if (paths != null) {

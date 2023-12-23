@@ -80,4 +80,12 @@ class AppString {
   static const expandAll = '展开全部章节';
   static const catalogue = '目录';
   static const updateAt = '更新于';
+  static const detail = '詳';
+  static const login = '登录';
+  static const username = '账号';
+  static const password = '密码';
+  static const noAccount = '没有账号？';
+  static const clickRegister = '点击注册';
+  static const thirdLogin = '其它账号登录';
+  static const forgetPassword = '忘记密码？';
 }

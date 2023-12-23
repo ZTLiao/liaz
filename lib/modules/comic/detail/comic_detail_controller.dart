@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:liaz/app/controller/base_controller.dart';
-import 'package:liaz/models/comic/comic_chapter_item_model.dart';
+import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/routes/app_navigator.dart';
@@ -14,16 +14,6 @@ class ComicDetailController extends BaseController {
   ComicDetailController({required this.detail});
 
   void onReadChapter(ComicChapterModel chapter) {
-    var chapterItem = ComicChapterItemModel(
-      comicChapterId: chapter.comicChapterId,
-      comicId: chapter.comicId,
-      flag: chapter.flag,
-      chapterName: chapter.chapterName,
-      seqNo: chapter.seqNo,
-      paths: chapter.paths,
-      direction: chapter.direction,
-      isLocal: false,
-    );
     var chapterTypes = detail.chapterTypes;
     if (chapterTypes == null) {
       return;
@@ -32,12 +22,17 @@ class ComicDetailController extends BaseController {
         .firstWhere((element) => element.chapterType == chapter.chapterType);
     AppNavigator.toComicReader(
       comicChapterId: chapter.comicChapterId,
-      comicId: chapter.comicId,
-      comicTitle: detail.title,
-      comicCover: detail.cover,
-      isLong: detail.isLong,
-      chapter: chapterItem,
       chapters: chapterType.chapters,
+    );
+  }
+
+  void share() {
+    if (detail.comicId == 0) {
+      return;
+    }
+    ShareUtil.share(
+      'https://www.baidu.com',
+      content: detail.title,
     );
   }
 }

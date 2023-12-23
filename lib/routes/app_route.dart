@@ -20,5 +20,9 @@ class AppRoute {
   /// 漫画阅读
   static const kComicReader = '/comic/reader';
 
+  ///
   static const kModalBottomSheet = '/modalBottomSheet';
+
+  /// 用户登录
+  static const kUserLogin = '/user/login';
 }
