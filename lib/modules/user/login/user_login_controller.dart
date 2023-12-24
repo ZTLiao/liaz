@@ -8,7 +8,6 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/enums/grant_type_enum.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/requests/user_request.dart';
-import 'package:liaz/routes/app_navigator.dart';
 import 'package:remixicon/remixicon.dart';
 
 class UserLoginController extends GetxController {
