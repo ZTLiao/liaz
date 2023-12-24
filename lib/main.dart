@@ -108,8 +108,6 @@ class AppNavigatorObserver extends NavigatorObserver {
     if (previousRoute != null) {
       var routeName = route.settings.name ?? StrUtil.empty;
       AppNavigator.currentRouteName = routeName;
-      Get.find<IndexController>().showContent.value =
-          routeName != AppRoute.kRoot;
     }
   }
 
@@ -118,6 +116,5 @@ class AppNavigatorObserver extends NavigatorObserver {
     super.didPop(route, previousRoute);
     var routeName = previousRoute?.settings.name ?? StrUtil.empty;
     AppNavigator.currentRouteName = routeName;
-    Get.find<IndexController>().showContent.value = routeName != AppRoute.kRoot;
   }
 }

@@ -77,4 +77,8 @@ class AppNavigator {
   static void toUserLogin() {
     toContentPage(AppRoute.kUserLogin);
   }
+
+  static void toUserRegister() {
+    toContentPage(AppRoute.kUserRegister);
+  }
 }

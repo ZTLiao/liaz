@@ -11,6 +11,7 @@ import 'package:liaz/app/http/response_entity.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/http/interceptor/public_interceptor.dart';
 import 'package:liaz/app/utils/sign_util.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/routes/app_navigator.dart';
 
 class Request {
@@ -166,6 +167,7 @@ class Request {
       if (result.code == HttpStatus.ok) {
         return result.data;
       } else {
+        SmartDialog.showToast(result.message);
         throw AppError(
           result.message,
           code: result.code,
@@ -193,6 +195,61 @@ class Request {
           code: result.code,
         );
       }
+    }
+  }
+
+  Future<dynamic> uploadFile(
+    String path,
+    File file, {
+    Map<String, dynamic>? data,
+    String baseUrl = Global.baseUrl,
+    CancelToken? cancel,
+  }) async {
+    data ??= {};
+    //参数加密
+    Map<String, List<String>> params = {};
+    if (data.isNotEmpty) {
+      data.forEach((key, value) {
+        if (value is List) {
+          params.putIfAbsent(
+              key, () => value.map((e) => e.toString()).toList());
+        } else {
+          params.putIfAbsent(key, () => [value.toString()]);
+        }
+      });
+    }
+    data['file'] = await MultipartFile.fromFile(file.path,
+        filename: file.path.split(StrUtil.slash).last);
+    //时间戳
+    var timestamp = DateTime.now().millisecondsSinceEpoch;
+    //请求头
+    Map<String, dynamic> header = {};
+    header[AppConstant.timestamp] = timestamp;
+    //加签
+    header[AppConstant.sign] =
+        SignUtil.generateSign(params, timestamp, Global.signKey);
+    try {
+      var response = await dio.post(
+        baseUrl + path,
+        data: FormData.fromMap(data),
+        options: Options(
+          responseType: ResponseType.json,
+          headers: header,
+          contentType: Headers.multipartFormDataContentType,
+        ),
+        cancelToken: cancel,
+      );
+      return responseBody(response);
+    } on DioException catch (e) {
+      Log.e(e.message!, e.stackTrace);
+      if (e.type == DioExceptionType.cancel) {
+        rethrow;
+      }
+      if (e.type == DioExceptionType.badResponse) {
+        return throw AppError(
+            "${AppString.responseFail}${e.response?.statusCode ?? -1}");
+      }
+      throw AppError(AppString.serverError);
     }
   }
 }

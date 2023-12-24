@@ -5,7 +5,6 @@ import 'package:liaz/app/events/event_bus.dart';
 
 class IndexController extends GetxController {
   final index = RxInt(0);
-  final showContent = RxBool(false);
   final GlobalKey indexKey = GlobalKey();
   final GlobalKey subRouterKey = GlobalKey();
 

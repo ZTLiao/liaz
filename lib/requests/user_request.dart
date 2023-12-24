@@ -23,7 +23,7 @@ class UserRequest {
   }
 
   Future<AccessTokenModel> signUp(String username, String password,
-      String nickname, int gender, String grantType) async {
+      String avatar, String nickname, int gender, String grantType) async {
     var model = AccessTokenModel(
       accessToken: '',
       tokenType: '',
@@ -34,6 +34,7 @@ class UserRequest {
     dynamic result = await Request.instance.post('/oauth/sign/up', data: {
       'username': username,
       'password': password,
+      'avatar': avatar,
       'nickname': nickname,
       'gender': gender,
       'grantType': grantType,

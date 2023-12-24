@@ -82,6 +82,9 @@ class AppString {
   static const updateAt = '更新于';
   static const detail = '詳';
   static const login = '登录';
+  static const register = '注册';
+  static const loginEn = 'Login';
+  static const registerEn = 'Register';
   static const username = '账号';
   static const password = '密码';
   static const noAccount = '没有账号？';
@@ -93,4 +96,7 @@ class AppString {
   static const passwordEmptyError = '请输入密码';
   static const passwordShortError = '密码不能低于六位';
   static const usernameOrPasswordError = '账号或密码错误';
+  static const nickname = '昵称';
+  static const nicknameEmptyError = '请输入昵称';
+
 }

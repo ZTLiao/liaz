@@ -62,13 +62,13 @@ class UserLoginPage extends StatelessWidget {
           children: [
             const Text(AppString.noAccount),
             GestureDetector(
+              onTap: controller.signUp,
               child: const Text(
                 AppString.clickRegister,
                 style: TextStyle(
                   color: Colors.cyan,
                 ),
               ),
-              onTap: () {},
             )
           ],
         ),
@@ -244,7 +244,7 @@ class UserLoginPage extends StatelessWidget {
       child: const Padding(
         padding: AppStyle.edgeInsetsA8,
         child: Text(
-          AppString.login,
+          AppString.loginEn,
           style: TextStyle(
             fontSize: 42,
           ),

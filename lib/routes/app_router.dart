@@ -16,6 +16,7 @@ import 'package:liaz/modules/novel/detail/novel_detail_page.dart';
 import 'package:liaz/modules/search/home/search_home_page.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/modules/user/login/user_login_page.dart';
+import 'package:liaz/modules/user/register/user_register_page.dart';
 import 'package:liaz/routes/app_route.dart';
 
 class AppRouter {
@@ -78,6 +79,10 @@ class AppRouter {
     GetPage(
       name: AppRoute.kUserLogin,
       page: () => UserLoginPage(),
+    ),
+    GetPage(
+      name: AppRoute.kUserRegister,
+      page: () => UserRegisterPage(),
     ),
   ];
 }

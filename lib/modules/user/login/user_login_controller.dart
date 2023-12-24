@@ -8,6 +8,7 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/enums/grant_type_enum.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/requests/user_request.dart';
+import 'package:liaz/routes/app_navigator.dart';
 import 'package:remixicon/remixicon.dart';
 
 class UserLoginController extends GetxController {
@@ -34,7 +35,7 @@ class UserLoginController extends GetxController {
       return;
     }
     var encryptPassword = md5.convert(utf8.encode(password.text)).toString();
-    Log.i("password : ${password.text}, encryptPassword : $encryptPassword");
+    Log.i('password : ${password.text}, encryptPassword : $encryptPassword');
     var token = await userRequest.signIn(
         username.text, encryptPassword, GrantTypeEnum.password.name);
     if (token.accessToken.isNotEmpty) {
@@ -42,5 +43,9 @@ class UserLoginController extends GetxController {
     } else {
       SmartDialog.showToast(AppString.usernameOrPasswordError);
     }
+  }
+
+  void signUp() {
+    AppNavigator.toUserRegister();
   }
 }
