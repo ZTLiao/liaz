@@ -1,10 +1,11 @@
 import 'package:liaz/app/http/request.dart';
-import 'package:liaz/models/oauth/access_token_model.dart';
+import 'package:liaz/models/db/oauth2_token.dart';
+import 'package:liaz/models/db/user.dart';
 
 class UserRequest {
-  Future<AccessTokenModel> signIn(
+  Future<OAuth2Token> signIn(
       String username, String password, String grantType) async {
-    var model = AccessTokenModel(
+    var model = OAuth2Token(
       accessToken: '',
       tokenType: '',
       refreshToken: '',
@@ -17,14 +18,14 @@ class UserRequest {
       'grantType': grantType,
     });
     if (result is Map) {
-      model = AccessTokenModel.fromJson(result as Map<String, dynamic>);
+      model = OAuth2Token.fromJson(result as Map<String, dynamic>);
     }
     return model;
   }
 
-  Future<AccessTokenModel> signUp(String username, String password,
-      String avatar, String nickname, int gender, String grantType) async {
-    var model = AccessTokenModel(
+  Future<OAuth2Token> signUp(String username, String password, String avatar,
+      String nickname, int gender, String grantType) async {
+    var model = OAuth2Token(
       accessToken: '',
       tokenType: '',
       refreshToken: '',
@@ -40,8 +41,19 @@ class UserRequest {
       'grantType': grantType,
     });
     if (result is Map) {
-      model = AccessTokenModel.fromJson(result as Map<String, dynamic>);
+      model = OAuth2Token.fromJson(result as Map<String, dynamic>);
     }
     return model;
+  }
+
+  Future<User?> getUser(int userId) async {
+    dynamic result =
+        await Request.instance.get('/api/user/get', queryParameters: {
+      'userId': userId,
+    });
+    if (result is Map) {
+      return User.fromJson(result as Map<String, dynamic>);
+    }
+    return null;
   }
 }

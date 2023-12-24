@@ -1,15 +1,28 @@
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
 import 'package:liaz/app/utils/convert_util.dart';
 
-class AccessTokenModel {
+part 'oauth2_token.g.dart';
+
+@HiveField(3)
+class OAuth2Token {
+  @HiveField(0)
   String accessToken;
+
+  @HiveField(1)
   String tokenType;
+
+  @HiveField(2)
   String refreshToken;
+
+  @HiveField(3)
   int expiry;
+
+  @HiveField(4)
   int userId;
 
-  AccessTokenModel({
+  OAuth2Token({
     required this.accessToken,
     required this.tokenType,
     required this.refreshToken,
@@ -17,8 +30,7 @@ class AccessTokenModel {
     required this.userId,
   });
 
-  factory AccessTokenModel.fromJson(Map<String, dynamic> json) =>
-      AccessTokenModel(
+  factory OAuth2Token.fromJson(Map<String, dynamic> json) => OAuth2Token(
         accessToken: ConvertUtil.asT<String>(json['access_token'])!,
         tokenType: ConvertUtil.asT<String>(json['token_type'])!,
         refreshToken: ConvertUtil.asT<String>(json['refresh_token'])!,

@@ -3,10 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/services/device_info_service.dart';
+import 'package:liaz/services/oauth2_token_service.dart';
 
 class PublicInterceptor extends Interceptor {
-
   @override
   void onRequest(
     RequestOptions options,
@@ -18,7 +19,7 @@ class PublicInterceptor extends Interceptor {
       Global.netType = result.name;
       options.extra['ts'] = DateTime.now().millisecondsSinceEpoch;
       var packageInfo = Global.packageInfo;
-      var deviceInfo = DeviceInfoService.instance.getDeviceInfo();
+      var deviceInfo = DeviceInfoService.instance.get();
       options.headers[AppConstant.app] = packageInfo.appName;
       options.headers[AppConstant.appVersion] = packageInfo.version;
       options.headers[AppConstant.deviceId] = deviceInfo.deviceId;
@@ -29,6 +30,13 @@ class PublicInterceptor extends Interceptor {
       options.headers[AppConstant.imei] = deviceInfo.imei;
       options.headers[AppConstant.client] = deviceInfo.os;
       options.headers[AppConstant.channel] = AppConstant.channelName;
+      //添加token
+      var oauth2Token = OAuth2TokenService.instance.get();
+      if (oauth2Token != null) {
+        options.headers[AppConstant.authorization] =
+            oauth2Token.tokenType + StrUtil.space + oauth2Token.accessToken;
+        options.headers[AppConstant.userId] = oauth2Token.userId;
+      }
     } catch (e) {
       Log.logPrint(e);
     }

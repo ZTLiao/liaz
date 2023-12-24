@@ -15,15 +15,15 @@ class DeviceInfoService extends GetxService {
       path: appDir.path,
     );
     if (box.values.toList().isEmpty) {
-      putDeviceInfo(await DeviceInfoUtil.getDeviceInfo());
+      put(await DeviceInfoUtil.getDeviceInfo());
     }
   }
 
-  Future<void> putDeviceInfo(DeviceInfo deviceInfo) async {
+  Future<void> put(DeviceInfo deviceInfo) async {
     await box.put(deviceInfo.deviceId, deviceInfo);
   }
 
-  DeviceInfo getDeviceInfo() {
+  DeviceInfo get() {
     return box.values.first;
   }
 }

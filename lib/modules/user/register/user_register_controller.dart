@@ -1,17 +1,14 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:liaz/app/constants/bucket_constant.dart';
 import 'package:liaz/app/enums/gender_enum.dart';
-import 'package:liaz/app/enums/grant_type_enum.dart';
-import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/requests/upload_request.dart';
 import 'package:liaz/requests/user_request.dart';
+import 'package:liaz/services/user_service.dart';
 
 class UserRegisterController extends GetxController {
   /// 图片
@@ -45,7 +42,8 @@ class UserRegisterController extends GetxController {
     if (pickedFile != null) {
       image.value = File(pickedFile.path);
       if (image.value != null) {
-        avatar.value = await uploadRequest.upload(BucketConstant.avatar, image.value!);
+        avatar.value =
+            await uploadRequest.upload(BucketConstant.avatar, image.value!);
       }
     }
   }
@@ -54,11 +52,9 @@ class UserRegisterController extends GetxController {
     if (password.text.isEmpty) {
       return;
     }
-    var encryptPassword = md5.convert(utf8.encode(password.text)).toString();
-    Log.i('password : ${password.text}, encryptPassword : $encryptPassword');
-    var token = await userRequest.signUp(username.text, encryptPassword,
-        avatar.value, nickname.text, gender.value, GrantTypeEnum.password.name);
-    if (token.accessToken.isNotEmpty) {
+    var isRegister = await UserService.instance.signUp(username.text,
+        password.text, avatar.value, nickname.text, gender.value);
+    if (isRegister) {
       Get.back();
     }
   }

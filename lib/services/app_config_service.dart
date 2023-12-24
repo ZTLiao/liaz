@@ -21,15 +21,15 @@ class AppConfigService extends GetxService {
     var result = await request.clientInit();
     if (result.app != null) {
       Global.appConfig = result.app!;
-      putAppConfig(Global.appConfig);
+      put(Global.appConfig);
     }
   }
 
-  Future<void> putAppConfig(AppConfig appConfig) async {
+  Future<void> put(AppConfig appConfig) async {
     await box.put(AppString.appName, appConfig);
   }
 
-  AppConfig? getAppConfig() {
+  AppConfig? get() {
     return box.values.firstOrNull;
   }
 }
