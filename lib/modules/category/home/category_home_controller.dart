@@ -34,6 +34,7 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
       categoryRequest.getCategory().then((value) {
         categories.value.addAll(value);
         categoryId.value = categories.value[0].categoryId;
+        onRefresh();
       });
     }
   }

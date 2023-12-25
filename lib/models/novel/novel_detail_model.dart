@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:liaz/app/constants/comic_flag.dart';
+import 'package:liaz/app/constants/novel_flag.dart';
 import 'package:liaz/app/utils/convert_util.dart';
-import 'package:liaz/models/comic/comic_chapter_type_model.dart';
+import 'package:liaz/models/novel/novel_chapter_model.dart';
 
-class ComicDetailModel {
-  int comicId;
+class NovelDetailModel {
+  int novelId;
   String title;
   String cover;
   List<int> authorIds;
@@ -19,13 +20,12 @@ class ComicDetailModel {
   int flag;
   int direction;
   bool isSerializated;
-  bool isLong;
   bool isHide;
   int sortType;
-  List<ComicChapterTypeModel>? chapterTypes;
+  List<NovelChapterModel>? chapters;
 
-  factory ComicDetailModel.empty() => ComicDetailModel(
-        comicId: 0,
+  factory NovelDetailModel.empty() => NovelDetailModel(
+        novelId: 0,
         title: '',
         cover: '',
         authorIds: [],
@@ -39,14 +39,13 @@ class ComicDetailModel {
         flag: 0,
         direction: 0,
         isSerializated: false,
-        isLong: false,
         isHide: false,
         sortType: 0,
-        chapterTypes: [],
+        chapters: [],
       );
 
-  ComicDetailModel({
-    required this.comicId,
+  NovelDetailModel({
+    required this.novelId,
     required this.title,
     required this.cover,
     required this.authorIds,
@@ -60,13 +59,12 @@ class ComicDetailModel {
     required this.flag,
     required this.direction,
     required this.isSerializated,
-    required this.isLong,
     required this.isHide,
     required this.sortType,
-    this.chapterTypes,
+    this.chapters,
   });
 
-  factory ComicDetailModel.fromJson(Map<String, dynamic> json) {
+  factory NovelDetailModel.fromJson(Map<String, dynamic> json) {
     final List<int>? authorIds = json['authorIds'] is List ? <int>[] : null;
     if (authorIds != null) {
       for (final dynamic authorId in json['authorIds']!) {
@@ -92,16 +90,16 @@ class ComicDetailModel {
         categories.add(ConvertUtil.asT<String>(category)!);
       }
     }
-    final List<ComicChapterTypeModel>? chapterTypes =
-        json['chapterTypes'] is List ? <ComicChapterTypeModel>[] : null;
-    if (chapterTypes != null) {
-      for (final dynamic chapterType in json['chapterTypes']!) {
-        chapterTypes.add(ComicChapterTypeModel.fromJson(chapterType));
+    final List<NovelChapterModel>? chapters =
+        json['chapters'] is List ? <NovelChapterModel>[] : null;
+    if (chapters != null) {
+      for (final dynamic chapter in json['chapters']!) {
+        chapters.add(NovelChapterModel.fromJson(chapter));
       }
     }
     int flag = ConvertUtil.asT<int>(json['flag'])!;
-    return ComicDetailModel(
-      comicId: ConvertUtil.asT<int>(json['comicId'])!,
+    return NovelDetailModel(
+      novelId: ConvertUtil.asT<int>(json['novelId'])!,
       title: ConvertUtil.asT<String>(json['title'])!,
       cover: ConvertUtil.asT<String>(json['cover'])!,
       authorIds: authorIds ?? [],
@@ -114,23 +112,22 @@ class ComicDetailModel {
       description: ConvertUtil.asT<String>(json['description'])!,
       flag: flag,
       direction: ConvertUtil.asT<int>(json['direction'])!,
-      isSerializated: (flag & ComicFlag.serializated) != 0,
-      isLong: (flag & ComicFlag.long) != 0,
-      isHide: (flag & ComicFlag.hide) != 0,
+      isSerializated: (flag & NovelFlag.serializated) != 0,
+      isHide: (flag & NovelFlag.hide) != 0,
       sortType: (flag & ComicFlag.sort) >> 3,
-      chapterTypes: chapterTypes,
+      chapters: chapters,
     );
   }
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> list = [];
-    if (chapterTypes != null) {
-      for (final ComicChapterTypeModel chapterType in chapterTypes!) {
-        list.add(chapterType.toJson());
+    if (chapters != null) {
+      for (final NovelChapterModel chapter in chapters!) {
+        list.add(chapter.toJson());
       }
     }
     return <String, dynamic>{
-      'comicId': comicId,
+      'novelId': novelId,
       'title': title,
       'cover': cover,
       'authorIds': authorIds,
@@ -144,10 +141,9 @@ class ComicDetailModel {
       'flag': flag,
       'direction': direction,
       'isSerializated': isSerializated,
-      'isLong': isLong,
       'isHide': isHide,
       'sortType': sortType,
-      'chapterTypes': list,
+      'chapters': list,
     };
   }
 

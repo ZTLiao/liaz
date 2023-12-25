@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_color.dart';
-import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
-import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/modules/category/home/category_home_controller.dart';
