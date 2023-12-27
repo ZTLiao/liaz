@@ -11,6 +11,7 @@ class NovelChapterItemModel {
   String chapterName;
   int seqNo;
   List<String> paths;
+  List<String> types;
   int direction;
   bool isLocal;
   bool isSerializated;
@@ -23,6 +24,7 @@ class NovelChapterItemModel {
     required this.chapterName,
     required this.seqNo,
     required this.paths,
+    required this.types,
     required this.direction,
     this.isLocal = false,
     this.isSerializated = false,
@@ -36,6 +38,7 @@ class NovelChapterItemModel {
         chapterName: '',
         seqNo: 0,
         paths: [],
+        types: [],
         direction: 0,
         isSerializated: false,
         isHide: false,
@@ -48,6 +51,12 @@ class NovelChapterItemModel {
         paths.add(ConvertUtil.asT<String>(path)!);
       }
     }
+    final List<String>? types = json['types'] is List ? <String>[] : null;
+    if (types != null) {
+      for (final dynamic type in json['types']!) {
+        types.add(ConvertUtil.asT<String>(type)!);
+      }
+    }
     int flag = ConvertUtil.asT<int>(json['flag'])!;
     return NovelChapterItemModel(
       novelChapterId: ConvertUtil.asT<int>(json['novelChapterId'])!,
@@ -56,6 +65,7 @@ class NovelChapterItemModel {
       chapterName: ConvertUtil.asT<String>(json['chapterName'])!,
       seqNo: ConvertUtil.asT<int>(json['seqNo'])!,
       paths: paths ?? [],
+      types: types ?? [],
       direction: ConvertUtil.asT<int>(json['direction'])!,
       isSerializated: (flag & NovelFlag.serializated) != 0,
       isHide: (flag & ComicFlag.hide) != 0,
@@ -69,6 +79,7 @@ class NovelChapterItemModel {
         'chapterName': chapterName,
         'seqNo': seqNo,
         'paths': paths,
+        'types': types,
         'isSerializated': isSerializated,
         'direction': direction,
         'isHide': isHide,

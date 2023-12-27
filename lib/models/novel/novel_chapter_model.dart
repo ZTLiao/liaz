@@ -13,6 +13,7 @@ class NovelChapterModel {
   int direction;
   int updatedAt;
   List<String> paths;
+  List<String> types;
 
   NovelChapterModel({
     required this.novelChapterId,
@@ -25,6 +26,7 @@ class NovelChapterModel {
     required this.direction,
     required this.updatedAt,
     required this.paths,
+    required this.types,
   });
 
   factory NovelChapterModel.empty() => NovelChapterModel(
@@ -38,6 +40,7 @@ class NovelChapterModel {
         direction: 0,
         updatedAt: 0,
         paths: [],
+        types: [],
       );
 
   factory NovelChapterModel.fromJson(Map<String, dynamic> json) {
@@ -45,6 +48,12 @@ class NovelChapterModel {
     if (paths != null) {
       for (final dynamic path in json['paths']!) {
         paths.add(ConvertUtil.asT<String>(path)!);
+      }
+    }
+    final List<String>? types = json['types'] is List ? <String>[] : null;
+    if (types != null) {
+      for (final dynamic type in json['types']!) {
+        types.add(ConvertUtil.asT<String>(type)!);
       }
     }
     return NovelChapterModel(
@@ -58,6 +67,7 @@ class NovelChapterModel {
       direction: ConvertUtil.asT<int>(json['direction'])!,
       updatedAt: ConvertUtil.asT<int>(json['updatedAt'])!,
       paths: paths ?? [],
+      types: types ?? [],
     );
   }
 
@@ -73,6 +83,7 @@ class NovelChapterModel {
       'direction': direction,
       'updatedAt': updatedAt,
       'paths': paths,
+      'types': types,
     };
   }
 

@@ -98,5 +98,9 @@ class AppString {
   static const usernameOrPasswordError = '账号或密码错误';
   static const nickname = '昵称';
   static const nicknameEmptyError = '请输入昵称';
-
+  static const save = '保存';
+  static const pleasePhotoPermission = '请授予相册权限';
+  static const photoSaveFail = '图片保存失败';
+  static const saveSuccess = '保存成功';
+  static const saveError = '保存成功';
 }

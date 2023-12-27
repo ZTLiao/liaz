@@ -498,7 +498,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "${AppString.battery} $battery%",
+            '${AppString.battery} $battery%',
             style: const TextStyle(fontSize: 12, height: 1.0),
           ),
           AppStyle.hGap8,
