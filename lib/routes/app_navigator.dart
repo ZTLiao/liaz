@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
+import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -60,6 +61,16 @@ class AppNavigator {
   static void toNovelDetail(int novelId) {
     toContentPage(AppRoute.kNovelDetail, arg: {
       'id': novelId,
+    });
+  }
+
+  static void toNovelReader({
+    required int novelChapterId,
+    required List<NovelChapterModel> chapters,
+  }) async {
+    await Get.toNamed(AppRoute.kNovelReader, arguments: {
+      'novelChapterId': novelChapterId,
+      'chapters': chapters,
     });
   }
 

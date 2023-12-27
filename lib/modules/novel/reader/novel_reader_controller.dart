@@ -13,9 +13,11 @@ import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 
 class NovelReaderController extends BaseController {
+  final int novelChapterId;
   final List<NovelChapterModel> chapters;
 
   NovelReaderController({
+    required this.novelChapterId,
     required this.chapters,
   });
 

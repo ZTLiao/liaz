@@ -17,8 +17,11 @@ class AppRoute {
   /// 小说详情
   static const kNovelDetail = '/novel/detail';
 
-  /// 漫画阅读
+  /// 漫画阅读器
   static const kComicReader = '/comic/reader';
+
+  /// 小说阅读器
+  static const kNovelReader = '/novel/reader';
 
   ///
   static const kModalBottomSheet = '/modalBottomSheet';

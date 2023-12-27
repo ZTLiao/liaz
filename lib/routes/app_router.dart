@@ -13,6 +13,8 @@ import 'package:liaz/modules/index/index_controller.dart';
 import 'package:liaz/modules/index/index_page.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_controller.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_page.dart';
+import 'package:liaz/modules/novel/reader/novel_reader_controller.dart';
+import 'package:liaz/modules/novel/reader/novel_reader_page.dart';
 import 'package:liaz/modules/search/home/search_home_page.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/modules/user/login/user_login_page.dart';
@@ -44,6 +46,16 @@ class AppRouter {
       binding: BindingsBuilder.put(
         () => ComicReaderController(
           comicChapterId: Get.arguments['comicChapterId'],
+          chapters: Get.arguments['chapters'],
+        ),
+      ),
+    ),
+    GetPage(
+      name: AppRoute.kNovelReader,
+      page: () => const NovelReaderPage(),
+      binding: BindingsBuilder.put(
+        () => NovelReaderController(
+          novelChapterId: Get.arguments['novelChapterId'],
           chapters: Get.arguments['chapters'],
         ),
       ),
