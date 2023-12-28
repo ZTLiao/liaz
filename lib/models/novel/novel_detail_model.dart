@@ -22,7 +22,7 @@ class NovelDetailModel {
   bool isSerializated;
   bool isHide;
   int sortType;
-  List<NovelChapterModel>? chapters;
+  List<NovelChapterModel> chapters;
 
   factory NovelDetailModel.empty() => NovelDetailModel(
         novelId: 0,
@@ -61,7 +61,7 @@ class NovelDetailModel {
     required this.isSerializated,
     required this.isHide,
     required this.sortType,
-    this.chapters,
+    required this.chapters,
   });
 
   factory NovelDetailModel.fromJson(Map<String, dynamic> json) {
@@ -90,12 +90,9 @@ class NovelDetailModel {
         categories.add(ConvertUtil.asT<String>(category)!);
       }
     }
-    final List<NovelChapterModel>? chapters =
-        json['chapters'] is List ? <NovelChapterModel>[] : null;
-    if (chapters != null) {
-      for (final dynamic chapter in json['chapters']!) {
-        chapters.add(NovelChapterModel.fromJson(chapter));
-      }
+    final List<NovelChapterModel> chapters = <NovelChapterModel>[];
+    for (final dynamic chapter in json['chapters']!) {
+      chapters.add(NovelChapterModel.fromJson(chapter));
     }
     int flag = ConvertUtil.asT<int>(json['flag'])!;
     return NovelDetailModel(
@@ -121,10 +118,8 @@ class NovelDetailModel {
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> list = [];
-    if (chapters != null) {
-      for (final NovelChapterModel chapter in chapters!) {
-        list.add(chapter.toJson());
-      }
+    for (final NovelChapterModel chapter in chapters) {
+      list.add(chapter.toJson());
     }
     return <String, dynamic>{
       'novelId': novelId,

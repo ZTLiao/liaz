@@ -8,6 +8,9 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
+import 'package:liaz/app/utils/date_util.dart';
+import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
@@ -35,12 +38,14 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           children: [
             Container(
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                    'https://www.miaocyacg.com/upload/20230423/9a3507b54cde75ea491eb54f4a9a5ec3.jpg',
-                  ),
-                  fit: BoxFit.cover,
-                ),
+                image: controller.detail.cover.isNotEmpty
+                    ? DecorationImage(
+                        image: NetworkImage(
+                          ToolUtil.toResource(controller.detail.cover),
+                        ),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
               ),
             ),
             Center(
@@ -59,9 +64,9 @@ class NovelDetailPage extends GetView<NovelDetailController> {
               ),
             ),
             AppBar(
-              title: const Text(
-                '因为不是真正的伙伴而被逐出勇者队伍，流落到边境展开慢活人生',
-                style: TextStyle(
+              title: Text(
+                controller.detail.title,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -89,14 +94,14 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       NetImage(
-                        "https://www.miaocyacg.com/upload/20230423/9a3507b54cde75ea491eb54f4a9a5ec3.jpg",
+                        controller.detail.cover,
                         width: 120,
                         height: 160,
                         borderRadius: 4,
                       ),
                     ],
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -106,9 +111,9 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                             SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Text(
-                                '因为不是真正的伙伴而被逐出勇者队伍，流落到边境展开慢活人生',
+                                controller.detail.title,
                                 maxLines: 1,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -119,7 +124,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           iconData: Remix.user_line,
                           children: [
                             Text(
-                              'ざっぽん',
+                              StrUtil.listToStr(
+                                  controller.detail.authors, StrUtil.space),
                             ),
                           ],
                         ),
@@ -127,7 +133,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           iconData: Remix.price_tag_3_line,
                           children: [
                             Text(
-                              '冒险 奇幻',
+                              StrUtil.listToStr(
+                                  controller.detail.categories, StrUtil.space),
                             ),
                           ],
                         ),
@@ -135,7 +142,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           iconData: Remix.fire_line,
                           children: [
                             Text(
-                              '人气 1000000',
+                              '${AppString.popularNum} ${controller.detail.hitNum}',
                             ),
                           ],
                         ),
@@ -143,7 +150,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           iconData: Remix.heart_3_line,
                           children: [
                             Text(
-                              '订阅 1000000',
+                              '${AppString.subscribeNum} ${controller.detail.subscribeNum}',
                             ),
                           ],
                         ),
@@ -151,7 +158,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           iconData: Remix.time_line,
                           children: [
                             Text(
-                              '2023-04-30 18:58 连载中',
+                              '${DateUtil.formatDate(controller.detail.updated)} ${controller.detail.isSerializated ? AppString.serializated : AppString.finish}',
                             ),
                           ],
                         ),
@@ -264,7 +271,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                     return Get.isDarkMode ? Colors.black : Colors.white;
                   }),
                 ),
-                child: Text(
+                child: const Text(
                   AppString.startReading,
                   style: TextStyle(
                     color: Colors.cyan,
@@ -290,20 +297,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                         !controller.isExpandDescription.value;
                   },
                   child: Text(
-                    '''
-“你不是真正的伙伴──”
-英雄雷德跟不上最前线的战斗，
-遭到队友贤者屏除在战力之外，被踢出了勇者队伍。
-“唉，那时候真够难受的啊。”
-雷德离开一事在贤者等人之间引发轩然大波，
-但他本人毫不知情，不仅搬到边境地区居住，
-还准备开一间药草店，就这样抱着兴奋期待的心情过日子……
-“我可以在这间店工作吗？顺便让我借住在这里！”
-身为昔日伙伴的公主忽然找上门来!?
-★一起过着快乐惬意的生活吧！
-★被踢出队伍的英雄，与公主一起度过幸福美满的甜蜜生活！没有得到回报的英雄将展开美好的第二人生！  
-——
-''',
+                    controller.detail.description,
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
@@ -335,7 +329,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           children: [
             ExpansionTile(
               title: Text(
-                '第一章（共20卷）',
+                '${AppString.serialize} （${AppString.total}${controller.detail.chapters.length}${AppString.chapter}）',
               ),
               tilePadding: AppStyle.edgeInsetsH4,
               children: [
@@ -343,14 +337,15 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                   shrinkWrap: true,
                   padding: EdgeInsets.zero,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 10,
+                  itemCount: controller.detail.chapters.length,
                   separatorBuilder: (_, i) => const Divider(
                     height: 1,
                   ),
                   itemBuilder: (context, i) {
+                    var item = controller.detail.chapters[i];
                     return ListTile(
                       title: Text(
-                        '第 $i 章',
+                        item.chapterName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Get.textTheme.bodyMedium!.copyWith(
@@ -666,7 +661,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           item: title,
           child: TwoBoxGridWidget(
             items: items,
-            onTop: (item) => AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
+            onTop: (item) =>
+                AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       } else if (showType == ShowTypeEnum.threeGrid.index) {
@@ -676,7 +672,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           item: title,
           child: ThreeBoxGridWidget(
             items: items,
-            onTap: (item) => AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
+            onTap: (item) =>
+                AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       } else {
@@ -686,7 +683,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           item: title,
           child: CrossListWidget(
             items: items,
-            onTap: (item) => AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
+            onTap: (item) =>
+                AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
       }

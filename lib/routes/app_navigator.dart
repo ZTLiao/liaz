@@ -58,9 +58,9 @@ class AppNavigator {
     });
   }
 
-  static void toNovelDetail(int novelId) {
+  static void toNovelDetail(Map<String, dynamic> json) {
     toContentPage(AppRoute.kNovelDetail, arg: {
-      'id': novelId,
+      'detail': json,
     });
   }
 

@@ -61,7 +61,7 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
         AssetTypeEnum.values[tabController.index].index,
         categoryId.value,
         currentPage,
-        pageSize);
+        18);
     var data = [<CategoryItemModel>[]];
     if (categories.isNotEmpty) {
       for (int i = 0, len = categories.length; i < len; i += 3) {

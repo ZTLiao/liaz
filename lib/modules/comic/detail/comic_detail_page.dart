@@ -11,10 +11,9 @@ import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/enums/sort_type_enum.dart';
-import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/utils/date_util.dart';
-import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
@@ -45,7 +44,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                 image: controller.detail.cover.isNotEmpty
                     ? DecorationImage(
                         image: NetworkImage(
-                          Global.appConfig.fileUrl + controller.detail.cover,
+                          ToolUtil.toResource(controller.detail.cover),
                         ),
                         fit: BoxFit.cover,
                       )

@@ -9,6 +9,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -148,6 +149,14 @@ class ToolUtil {
       SmartDialog.showToast(AppString.saveSuccess);
     } catch (e) {
       SmartDialog.showToast(AppString.saveError);
+    }
+  }
+
+  static String toResource(String uri) {
+    if (uri.startsWith(AppConstant.https) || uri.startsWith(AppConstant.http)) {
+      return uri;
+    } else {
+      return Global.appConfig.fileUrl + uri;
     }
   }
 }
