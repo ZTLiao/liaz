@@ -75,6 +75,7 @@ class AppString {
   static const serialize = '连载';
   static const total = '共';
   static const chapter = '话';
+  static const volume = '卷';
   static const asc = '升序';
   static const desc = '降序';
   static const expandAll = '展开全部章节';
@@ -103,4 +104,6 @@ class AppString {
   static const photoSaveFail = '图片保存失败';
   static const saveSuccess = '保存成功';
   static const saveError = '保存成功';
+  static const publish = '发布';
+  static const at = '于';
 }

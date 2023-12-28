@@ -22,7 +22,8 @@ class Log {
   }
 
   static e(String message, StackTrace stackTrace) {
-    logger.e("${DateTime.now().toString()}\n$message", time: DateTime.now(), error: null, stackTrace: stackTrace);
+    logger.e("${DateTime.now().toString()}\n$message",
+        time: DateTime.now(), error: null, stackTrace: stackTrace);
   }
 
   static w(String message) {
@@ -31,10 +32,9 @@ class Log {
 
   static void logPrint(dynamic obj) {
     if (obj is Error) {
-        Log.e(obj.toString(), obj.stackTrace ?? StackTrace.current);
+      Log.e(obj.toString(), obj.stackTrace ?? StackTrace.current);
     } else if (kDebugMode) {
       print(obj);
     }
   }
-
 }

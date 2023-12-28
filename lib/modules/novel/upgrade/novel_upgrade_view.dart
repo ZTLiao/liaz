@@ -42,7 +42,11 @@ class NovelUpgradeView extends StatelessWidget {
                 upgradeChapter: item.upgradeChapter,
                 updateTime: updateTime,
                 objId: item.novelChapterId);
-            return CardItemWidget(card: card);
+            return CardItemWidget(
+              card: card,
+              onTap: controller.onDetail,
+              onOpen: controller.onReadChapter,
+            );
           }),
     );
   }

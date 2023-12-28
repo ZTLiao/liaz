@@ -21,8 +21,10 @@ import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/routes/app_router.dart';
 import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/app_settings_service.dart';
+import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/device_info_service.dart';
 import 'package:liaz/services/local_storage_service.dart';
+import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/oauth2_token_service.dart';
 import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
@@ -40,7 +42,7 @@ void main() {
     runApp(const LiazApp());
   }, (error, stack) {
     //全局异常捕获
-    Log.e(error.toString(), stack);
+    Log.logPrint(stack);
   });
 }
 
@@ -67,6 +69,8 @@ Future<void> initServices() async {
   await Get.put(OAuth2TokenService()).init();
   await Get.put(UserService()).init();
   Get.put(AppSettingsService());
+  Get.put(ComicService());
+  Get.put(NovelService());
 }
 
 class AppScrollBehavior extends MaterialScrollBehavior {

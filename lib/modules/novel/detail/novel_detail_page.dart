@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
@@ -336,28 +337,29 @@ class NovelDetailPage extends GetView<NovelDetailController> {
       () => Offstage(
         offstage: controller.isRelateRecommend.value,
         child: Column(
-          children: (chapters.isEmpty && volumes.isNotEmpty)
-              ? volumes
-                  .map((volume) => Column(
+          children: volumes
+              .map((volume) => Column(
+                    children: [
+                      ExpansionTile(
+                        initiallyExpanded: true,
+                        title: Text(
+                          '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
+                        ),
+                        tilePadding: AppStyle.edgeInsetsH4,
                         children: [
-                          ExpansionTile(
-                            title: Text(
-                              '${AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.chapter}）',
-                            ),
-                            tilePadding: AppStyle.edgeInsetsH4,
-                            children: [
-                              ListView.separated(
-                                shrinkWrap: true,
-                                padding: EdgeInsets.zero,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: volume.chapters.length,
-                                separatorBuilder: (_, i) => const Divider(
-                                  height: 1,
-                                ),
-                                itemBuilder: (context, i) {
-                                  var item = volume.chapters[i];
-                                  return ListTile(
-                                    title: Text(
+                          ListView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: volume.chapters.length,
+                            itemBuilder: (context, i) {
+                              var item = volume.chapters[i];
+                              return ListTile(
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
                                       item.chapterName,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -365,52 +367,33 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                                         color: i == 0 ? Colors.cyan : null,
                                       ),
                                     ),
-                                    contentPadding: AppStyle.edgeInsetsA4,
-                                    visualDensity: const VisualDensity(
-                                        vertical: VisualDensity.minimumDensity),
-                                    onTap: () {},
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                          Divider(
-                            color: Colors.grey.withOpacity(.2),
-                            height: 1.0,
+                                    Text(
+                                      '${AppString.at} ${DateUtil.formatDate(item.updatedAt)} ${AppString.publish}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: AppColor.grey99,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                contentPadding: AppStyle.edgeInsetsA4,
+                                visualDensity: const VisualDensity(
+                                    vertical: VisualDensity.minimumDensity),
+                                onTap: () {},
+                              );
+                            },
                           ),
                         ],
-                      ))
-                  .toList()
-              : ((chapters.isNotEmpty && volumes.isNotEmpty)
-                  ? [
-                      ListView.separated(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: chapters.length,
-                        separatorBuilder: (_, i) => const Divider(
-                          height: 1,
-                        ),
-                        itemBuilder: (context, i) {
-                          var item = chapters[i];
-                          return ListTile(
-                            title: Text(
-                              item.chapterName,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: Get.textTheme.bodyMedium!.copyWith(
-                                color: i == 0 ? Colors.cyan : null,
-                              ),
-                            ),
-                            contentPadding: AppStyle.edgeInsetsA4,
-                            visualDensity: const VisualDensity(
-                                vertical: VisualDensity.minimumDensity),
-                            onTap: () {},
-                          );
-                        },
                       ),
-                    ]
-                  : []),
+                      Divider(
+                        color: Colors.grey.withOpacity(.2),
+                        height: 1.0,
+                      ),
+                    ],
+                  ))
+              .toList(),
         ),
       ),
     );

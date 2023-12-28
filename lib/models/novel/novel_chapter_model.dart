@@ -57,8 +57,8 @@ class NovelChapterModel {
       }
     }
     return NovelChapterModel(
-      novelChapterId: ConvertUtil.asT<int>(json['comicChapterId'])!,
-      novelId: ConvertUtil.asT<int>(json['comicId'])!,
+      novelChapterId: ConvertUtil.asT<int>(json['novelChapterId'])!,
+      novelId: ConvertUtil.asT<int>(json['novelId'])!,
       flag: ConvertUtil.asT<int>(json['flag'])!,
       chapterName: ConvertUtil.asT<String>(json['chapterName'])!,
       chapterType: ConvertUtil.asT<int>(json['chapterType'])!,

@@ -18,8 +18,10 @@ class NovelVolumeModel {
 
   factory NovelVolumeModel.fromJson(Map<String, dynamic> json) {
     final List<NovelChapterModel> chapters = <NovelChapterModel>[];
-    for (final dynamic chapter in json['chapters']!) {
-      chapters.add(NovelChapterModel.fromJson(chapter));
+    if (json['chapters'] is List) {
+      for (final dynamic chapter in json['chapters']!) {
+        chapters.add(NovelChapterModel.fromJson(chapter));
+      }
     }
     return NovelVolumeModel(
       novelVolumeId: ConvertUtil.asT<int>(json['novelVolumeId'])!,
@@ -38,7 +40,7 @@ class NovelVolumeModel {
       'novelVolumeId': novelVolumeId,
       'volumeName': volumeName,
       'seqNo': seqNo,
-      'chapters': chapters,
+      'chapters': list,
     };
   }
 
