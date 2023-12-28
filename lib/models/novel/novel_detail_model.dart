@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:liaz/app/constants/comic_flag.dart';
 import 'package:liaz/app/constants/novel_flag.dart';
 import 'package:liaz/app/utils/convert_util.dart';
-import 'package:liaz/models/novel/novel_chapter_model.dart';
+import 'package:liaz/models/novel/novel_volume_model.dart';
 
 class NovelDetailModel {
   int novelId;
@@ -22,7 +22,7 @@ class NovelDetailModel {
   bool isSerializated;
   bool isHide;
   int sortType;
-  List<NovelChapterModel> chapters;
+  List<NovelVolumeModel> volumes;
 
   factory NovelDetailModel.empty() => NovelDetailModel(
         novelId: 0,
@@ -41,7 +41,7 @@ class NovelDetailModel {
         isSerializated: false,
         isHide: false,
         sortType: 0,
-        chapters: [],
+        volumes: [],
       );
 
   NovelDetailModel({
@@ -61,7 +61,7 @@ class NovelDetailModel {
     required this.isSerializated,
     required this.isHide,
     required this.sortType,
-    required this.chapters,
+    required this.volumes,
   });
 
   factory NovelDetailModel.fromJson(Map<String, dynamic> json) {
@@ -90,9 +90,9 @@ class NovelDetailModel {
         categories.add(ConvertUtil.asT<String>(category)!);
       }
     }
-    final List<NovelChapterModel> chapters = <NovelChapterModel>[];
-    for (final dynamic chapter in json['chapters']!) {
-      chapters.add(NovelChapterModel.fromJson(chapter));
+    final List<NovelVolumeModel> volumes = <NovelVolumeModel>[];
+    for (final dynamic volume in json['volumes']!) {
+      volumes.add(NovelVolumeModel.fromJson(volume));
     }
     int flag = ConvertUtil.asT<int>(json['flag'])!;
     return NovelDetailModel(
@@ -112,14 +112,14 @@ class NovelDetailModel {
       isSerializated: (flag & NovelFlag.serializated) != 0,
       isHide: (flag & NovelFlag.hide) != 0,
       sortType: (flag & ComicFlag.sort) >> 3,
-      chapters: chapters,
+      volumes: volumes,
     );
   }
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> list = [];
-    for (final NovelChapterModel chapter in chapters) {
-      list.add(chapter.toJson());
+    for (final NovelVolumeModel volume in volumes) {
+      list.add(volume.toJson());
     }
     return <String, dynamic>{
       'novelId': novelId,
@@ -138,7 +138,7 @@ class NovelDetailModel {
       'isSerializated': isSerializated,
       'isHide': isHide,
       'sortType': sortType,
-      'chapters': list,
+      'volumes': list,
     };
   }
 

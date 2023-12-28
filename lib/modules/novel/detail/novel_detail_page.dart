@@ -14,6 +14,7 @@ import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
+import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/models/recommend/recommend_item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_controller.dart';
@@ -322,83 +323,94 @@ class NovelDetailPage extends GetView<NovelDetailController> {
   }
 
   Widget _buildChapter(BuildContext context) {
+    List<NovelChapterModel> chapters = [];
+    var volumes = controller.detail.volumes;
+    if (volumes.isNotEmpty && volumes.length == 1) {
+      var volume = volumes[0];
+      if (volume.novelVolumeId == 0 &&
+          (volume.volumeName == null || volume.volumeName!.isEmpty)) {
+        chapters = volumes[0].chapters;
+      }
+    }
     return Obx(
       () => Offstage(
         offstage: controller.isRelateRecommend.value,
         child: Column(
-          children: [
-            ExpansionTile(
-              title: Text(
-                '${AppString.serialize} （${AppString.total}${controller.detail.chapters.length}${AppString.chapter}）',
-              ),
-              tilePadding: AppStyle.edgeInsetsH4,
-              children: [
-                ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.detail.chapters.length,
-                  separatorBuilder: (_, i) => const Divider(
-                    height: 1,
-                  ),
-                  itemBuilder: (context, i) {
-                    var item = controller.detail.chapters[i];
-                    return ListTile(
-                      title: Text(
-                        item.chapterName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Get.textTheme.bodyMedium!.copyWith(
-                          color: i == 0 ? Colors.cyan : null,
+          children: (chapters.isEmpty && volumes.isNotEmpty)
+              ? volumes
+                  .map((volume) => Column(
+                        children: [
+                          ExpansionTile(
+                            title: Text(
+                              '${AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.chapter}）',
+                            ),
+                            tilePadding: AppStyle.edgeInsetsH4,
+                            children: [
+                              ListView.separated(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: volume.chapters.length,
+                                separatorBuilder: (_, i) => const Divider(
+                                  height: 1,
+                                ),
+                                itemBuilder: (context, i) {
+                                  var item = volume.chapters[i];
+                                  return ListTile(
+                                    title: Text(
+                                      item.chapterName,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Get.textTheme.bodyMedium!.copyWith(
+                                        color: i == 0 ? Colors.cyan : null,
+                                      ),
+                                    ),
+                                    contentPadding: AppStyle.edgeInsetsA4,
+                                    visualDensity: const VisualDensity(
+                                        vertical: VisualDensity.minimumDensity),
+                                    onTap: () {},
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                          Divider(
+                            color: Colors.grey.withOpacity(.2),
+                            height: 1.0,
+                          ),
+                        ],
+                      ))
+                  .toList()
+              : ((chapters.isNotEmpty && volumes.isNotEmpty)
+                  ? [
+                      ListView.separated(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: chapters.length,
+                        separatorBuilder: (_, i) => const Divider(
+                          height: 1,
                         ),
+                        itemBuilder: (context, i) {
+                          var item = chapters[i];
+                          return ListTile(
+                            title: Text(
+                              item.chapterName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Get.textTheme.bodyMedium!.copyWith(
+                                color: i == 0 ? Colors.cyan : null,
+                              ),
+                            ),
+                            contentPadding: AppStyle.edgeInsetsA4,
+                            visualDensity: const VisualDensity(
+                                vertical: VisualDensity.minimumDensity),
+                            onTap: () {},
+                          );
+                        },
                       ),
-                      contentPadding: AppStyle.edgeInsetsA4,
-                      visualDensity: const VisualDensity(
-                          vertical: VisualDensity.minimumDensity),
-                      onTap: () {},
-                    );
-                  },
-                ),
-              ],
-            ),
-            Divider(
-              color: Colors.grey.withOpacity(.2),
-              height: 1.0,
-            ),
-            ExpansionTile(
-              title: Text(
-                '第二章（共9卷）',
-              ),
-              tilePadding: AppStyle.edgeInsetsH4,
-              children: [
-                ListView.separated(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 10,
-                  separatorBuilder: (_, i) => const Divider(
-                    height: 1,
-                  ),
-                  itemBuilder: (context, i) {
-                    return ListTile(
-                      title: Text(
-                        '第 $i 章',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Get.textTheme.bodyMedium!.copyWith(
-                          color: i == 0 ? Colors.cyan : null,
-                        ),
-                      ),
-                      contentPadding: AppStyle.edgeInsetsA4,
-                      visualDensity: const VisualDensity(
-                          vertical: VisualDensity.minimumDensity),
-                      onTap: () {},
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+                    ]
+                  : []),
         ),
       ),
     );
