@@ -15,7 +15,6 @@ import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
-import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/models/recommend/recommend_item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_controller.dart';
@@ -324,15 +323,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
   }
 
   Widget _buildChapter(BuildContext context) {
-    List<NovelChapterModel> chapters = [];
     var volumes = controller.detail.volumes;
-    if (volumes.isNotEmpty && volumes.length == 1) {
-      var volume = volumes[0];
-      if (volume.novelVolumeId == 0 &&
-          (volume.volumeName == null || volume.volumeName!.isEmpty)) {
-        chapters = volumes[0].chapters;
-      }
-    }
     return Obx(
       () => Offstage(
         offstage: controller.isRelateRecommend.value,
@@ -356,24 +347,81 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                               var item = volume.chapters[i];
                               return ListTile(
                                 title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Text(
-                                      item.chapterName,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Get.textTheme.bodyMedium!.copyWith(
-                                        color: i == 0 ? Colors.cyan : null,
-                                      ),
+                                    Row(
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Text(
+                                              item.chapterName,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Get.textTheme.bodyMedium!
+                                                  .copyWith(
+                                                color:
+                                                    i == 0 ? Colors.cyan : null,
+                                              ),
+                                            ),
+                                            Text(
+                                              '${AppString.at} ${DateUtil.formatDateTimeMinute(item.updatedAt)} ${AppString.publish}',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: AppColor.grey99,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {
+                                                  var chapterIndex = controller
+                                                      .chapterIndex.value;
+                                                  if (chapterIndex != i) {
+                                                    controller.isExpandIcon
+                                                        .value = true;
+                                                  } else {
+                                                    controller.isExpandIcon
+                                                            .value =
+                                                        !controller
+                                                            .isExpandIcon.value;
+                                                  }
+                                                  controller
+                                                      .chapterIndex.value = i;
+                                                },
+                                                icon: const Icon(
+                                                  Remix.error_warning_line,
+                                                  color: AppColor.grey99,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      '${AppString.at} ${DateUtil.formatDate(item.updatedAt)} ${AppString.publish}',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: AppColor.grey99,
+                                    Obx(
+                                      () => Offstage(
+                                        offstage: !(controller
+                                                .isExpandIcon.value &&
+                                            controller.chapterIndex.value == i),
+                                        child: Text('''
+哈哈哈哈哈哈哈哈哈哈哈哈
+哈哈哈哈哈哈哈哈哈哈哈哈
+哈哈哈哈哈哈哈哈哈哈哈哈
+哈哈哈哈哈哈哈哈哈哈哈哈
+哈哈哈哈哈哈哈哈哈哈哈哈
+                                      '''),
                                       ),
                                     ),
                                   ],

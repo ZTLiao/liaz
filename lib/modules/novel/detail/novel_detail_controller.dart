@@ -9,6 +9,8 @@ class NovelDetailController extends BaseController {
   final NovelDetailModel detail;
   var isExpandDescription = RxBool(false);
   var isRelateRecommend = RxBool(false);
+  var chapterIndex = RxInt(0);
+  var isExpandIcon = RxBool(false);
 
   NovelDetailController({required this.detail});
 
