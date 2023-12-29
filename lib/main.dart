@@ -41,6 +41,7 @@ void main() {
     await init();
     runApp(const LiazApp());
   }, (error, stack) {
+    Log.e(error.toString(), stack);
     //全局异常捕获
     Log.logPrint(stack);
   });

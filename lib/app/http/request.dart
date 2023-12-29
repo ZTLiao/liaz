@@ -95,6 +95,7 @@ class Request {
     Map<String, dynamic>? queryParameters,
     String baseUrl = Global.baseUrl,
     CancelToken? cancel,
+    ResponseType responseType = ResponseType.json,
   }) async {
     queryParameters ??= {};
     //参数加密
@@ -122,7 +123,7 @@ class Request {
         baseUrl + path,
         queryParameters: queryParameters,
         options: Options(
-          responseType: ResponseType.json,
+          responseType: responseType,
           headers: header,
         ),
         cancelToken: cancel,
@@ -248,6 +249,35 @@ class Request {
         cancelToken: cancel,
       );
       return responseBody(response);
+    } on DioException catch (e) {
+      Log.e(e.message!, e.stackTrace);
+      if (e.type == DioExceptionType.cancel) {
+        rethrow;
+      }
+      if (e.type == DioExceptionType.badResponse) {
+        return throw AppError(
+            "${AppString.responseFail}${e.response?.statusCode ?? -1}");
+      }
+      throw AppError(AppString.serverError);
+    }
+  }
+
+  Future<dynamic> getText(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    String baseUrl = Global.baseUrl,
+    CancelToken? cancel,
+  }) async {
+    try {
+      var response = await dio.get(
+        baseUrl + path,
+        queryParameters: queryParameters,
+        options: Options(
+          responseType: ResponseType.plain,
+        ),
+        cancelToken: cancel,
+      );
+      return response.data;
     } on DioException catch (e) {
       Log.e(e.message!, e.stackTrace);
       if (e.type == DioExceptionType.cancel) {
