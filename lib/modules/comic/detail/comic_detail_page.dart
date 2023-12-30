@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/chapter_type_enum.dart';
@@ -56,10 +57,12 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                   child: Opacity(
-                    opacity: 0.1,
+                    opacity: 0.6,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade50,
+                        color: Get.isDarkMode
+                            ? Colors.black45
+                            : Colors.grey.shade50,
                       ),
                     ),
                   ),
@@ -80,7 +83,10 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                   onPressed: () {
                     AppNavigator.toUserLogin();
                   },
-                  icon: const Icon(Remix.heart_3_line),
+                  icon: const Icon(
+                    Remix.heart_3_fill,
+                    color: Colors.red,
+                  ),
                 ),
                 IconButton(
                   onPressed: controller.share,

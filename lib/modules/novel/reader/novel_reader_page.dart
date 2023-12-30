@@ -525,7 +525,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                   controller.direction.value !=
                           ReaderDirectionEnum.upToDown.index
                       ? Text(
-                          '${controller.currentIndex.value + 1} / ${controller.maxPage.value}',
+                          '${controller.detail.value.paths.isEmpty ? 0 : controller.currentIndex.value + 1} / ${controller.maxPage.value}',
                           style: TextStyle(
                             fontSize: 12,
                             height: 1.0,

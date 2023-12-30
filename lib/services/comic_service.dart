@@ -5,10 +5,10 @@ import 'package:liaz/routes/app_navigator.dart';
 class ComicService {
   static ComicService get instance => Get.find<ComicService>();
 
-  var comicRequest = ComicRequest();
+  final _comicRequest = ComicRequest();
 
   void toComicDetail(int comicId) async {
-    comicRequest
+    _comicRequest
         .comicDetail(comicId)
         .then((value) => {AppNavigator.toComicDetail(value.toJson())});
   }

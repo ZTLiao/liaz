@@ -66,8 +66,8 @@ Future<void> initHive() async {
 Future<void> initServices() async {
   await Get.put(LocalStorageService()).init();
   await Get.put(DeviceInfoService()).init();
-  await Get.put(AppConfigService()).init();
   await Get.put(OAuth2TokenService()).init();
+  await Get.put(AppConfigService()).init();
   await Get.put(UserService()).init();
   Get.put(AppSettingsService());
   Get.put(ComicService());

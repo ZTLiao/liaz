@@ -7,7 +7,9 @@ import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_volume_model.dart';
+import 'package:liaz/requests/file_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/novel_service.dart';
 
 class NovelDetailController extends BaseController {
   final NovelDetailModel detail;
@@ -19,17 +21,12 @@ class NovelDetailController extends BaseController {
 
   NovelDetailController({required this.detail});
 
-  void onReadChapter(NovelChapterModel chapter) {
-    // var chapterTypes = detail.chapters;
-    // if (chapterTypes == null) {
-    //   return;
-    // }
-    // var chapterType = chapterTypes
-    //     .firstWhere((element) => element.chapterType == chapter.chapterType);
-    // AppNavigator.toNovelReader(
-    //   novelChapterId: chapter.novelChapterId,
-    //   chapters: chapterType.chapters,
-    // );
+  void onReadChapter(NovelVolumeModel volume) {
+    var chapters = volume.chapters;
+    AppNavigator.toNovelReader(
+      novelChapterId: chapters[chapterIndex.value].novelChapterId,
+      chapters: chapters,
+    );
   }
 
   void onPreview(int i, NovelVolumeModel volume) async {
@@ -42,10 +39,15 @@ class NovelDetailController extends BaseController {
     content.value = StrUtil.empty;
     chapterIndex.value = i;
     var path = volume.chapters[i].paths[0];
-    content.value = await Request.instance.getText(
+    path = await FileRequest().getObject(path);
+    content.value = await Request.instance.getResource(
       path,
       baseUrl: Global.appConfig.fileUrl,
     );
+    // content.value = await Request.instance.getText(
+    //   path,
+    //   baseUrl: Global.appConfig.fileUrl,
+    // );
   }
 
   void share() {

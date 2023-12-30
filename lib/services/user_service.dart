@@ -67,4 +67,5 @@ class UserService extends GetxService {
     }
     return isRegister;
   }
+
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:battery_plus/battery_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -7,9 +8,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_settings.dart';
+import 'package:liaz/app/constants/app_string.dart';
+import 'package:liaz/app/constants/file_type.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
+import 'package:liaz/app/global/global.dart';
+import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/novel/novel_chapter_item_model.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 
 class NovelReaderController extends BaseController {
@@ -19,7 +25,15 @@ class NovelReaderController extends BaseController {
   NovelReaderController({
     required this.novelChapterId,
     required this.chapters,
-  });
+  }) {
+    int i = 0;
+    for (int len = chapters.length; i < len; i++) {
+      if (chapters[i].novelChapterId == novelChapterId) {
+        break;
+      }
+    }
+    chapterIndex.value = i;
+  }
 
   final FocusNode focusNode = FocusNode();
 
@@ -35,6 +49,9 @@ class NovelReaderController extends BaseController {
   /// 连接类型
   Rx<ConnectivityResult> connectivityType =
       Rx<ConnectivityResult>(ConnectivityResult.other);
+
+  Rx<NovelChapterItemModel> detail =
+      Rx<NovelChapterItemModel>(NovelChapterItemModel.empty());
 
   /// 电量信息
   Rx<int> batteryLevel = RxInt(0);
@@ -69,10 +86,65 @@ class NovelReaderController extends BaseController {
   /// 翻页动画
   bool get pageAnimation => AppSettings.novelReaderPageAnimation.value;
 
+  @override
+  void onInit() {
+    initConnectivity();
+    initBattery();
+    direction.value = AppSettings.novelReaderDirection.value;
+    scrollController.addListener(listenVertical);
+    setFull();
+    loadContent();
+    super.onInit();
+  }
+
+  /// 初始化连接状态
+  void initConnectivity() async {
+    var connectivity = Connectivity();
+    connectivitySubscription =
+        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      //提醒
+      if (connectivityType.value != result &&
+          result == ConnectivityResult.mobile) {
+        SmartDialog.showToast(AppString.warningFlow);
+      }
+      connectivityType.value = result;
+    });
+    connectivityType.value = await connectivity.checkConnectivity();
+  }
+
+  /// 初始化电池信息
+  void initBattery() async {
+    try {
+      var battery = Battery();
+      batterySubscription =
+          battery.onBatteryStateChanged.listen((BatteryState state) async {
+        try {
+          var level = await battery.batteryLevel;
+          batteryLevel.value = level;
+          showBattery.value = true;
+        } catch (e) {
+          showBattery.value = false;
+        }
+      });
+      batteryLevel.value = await battery.batteryLevel;
+      showBattery.value = true;
+    } catch (e) {
+      showBattery.value = false;
+    }
+  }
+
+  /// 监听竖向模式时滚动百分比
+  void listenVertical() {
+    if (scrollController.position.maxScrollExtent > 0) {
+      progress.value = scrollController.position.pixels /
+          scrollController.position.maxScrollExtent;
+    }
+  }
+
   /// 下一章
   void nextChapter() {
     if (chapterIndex.value == chapters.length - 1) {
-      SmartDialog.showToast("后面没有了");
+      SmartDialog.showToast(AppString.arriveLast);
       return;
     }
     chapterIndex.value += 1;
@@ -82,7 +154,7 @@ class NovelReaderController extends BaseController {
   /// 上一章
   void forwardChapter() {
     if (chapterIndex.value == 0) {
-      SmartDialog.showToast("前面没有了");
+      SmartDialog.showToast(AppString.frontEmpty);
       return;
     }
 
@@ -128,7 +200,6 @@ class NovelReaderController extends BaseController {
       return;
     }
     var value = currentIndex.value;
-
     if (value == 0) {
       forwardChapter();
     } else {
@@ -136,7 +207,33 @@ class NovelReaderController extends BaseController {
     }
   }
 
-  void loadContent() {}
+  void loadContent() async {
+    content.value = StrUtil.empty;
+    var chapter = chapters[chapterIndex.value];
+    var paths = chapter.paths;
+    var types = chapter.types;
+    var sb = StringBuffer();
+    for (int i = 0; i < paths.length; i++) {
+      var path = paths[i];
+      var type = types[i];
+      if (type == FileType.textPlain) {
+        var content = await Request.instance
+            .getText(path, baseUrl: Global.appConfig.fileUrl);
+        sb.write(content);
+      }
+    }
+    content.value = sb.toString();
+    detail.value = NovelChapterItemModel(
+      novelChapterId: novelChapterId,
+      novelId: chapter.novelId,
+      flag: chapter.flag,
+      chapterName: chapter.chapterName,
+      seqNo: chapter.seqNo,
+      paths: paths,
+      types: types,
+      direction: chapter.direction,
+    );
+  }
 
   /// 跳转页数
   void jumpToPage(int page, {bool anime = false}) {

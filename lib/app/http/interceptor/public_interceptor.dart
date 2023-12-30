@@ -30,13 +30,6 @@ class PublicInterceptor extends Interceptor {
       options.headers[AppConstant.imei] = deviceInfo.imei;
       options.headers[AppConstant.client] = deviceInfo.os;
       options.headers[AppConstant.channel] = AppConstant.channelName;
-      //添加token
-      var oauth2Token = OAuth2TokenService.instance.get();
-      if (oauth2Token != null) {
-        options.headers[AppConstant.authorization] =
-            oauth2Token.tokenType + StrUtil.space + oauth2Token.accessToken;
-        options.headers[AppConstant.userId] = oauth2Token.userId;
-      }
     } catch (e) {
       Log.logPrint(e);
     }

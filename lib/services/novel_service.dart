@@ -5,10 +5,10 @@ import 'package:liaz/routes/app_navigator.dart';
 class NovelService {
   static NovelService get instance => Get.find<NovelService>();
 
-  var novelRequest = NovelRequest();
+  final _novelRequest = NovelRequest();
 
   void toNovelDetail(int novelId) async {
-    novelRequest
+    _novelRequest
         .novelDetail(novelId)
         .then((value) => {AppNavigator.toNovelDetail(value.toJson())});
   }

@@ -12,31 +12,27 @@ class IndexHomePage extends GetView<IndexHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return MediaQuery.removePadding(
-      removeTop: true,
-      context: context,
-      child: DefaultTabController(
-        length: AppConstant.kTabSize,
-        child: Scaffold(
-          resizeToAvoidBottomInset: true,
-          appBar: AppBar(
-            bottom: const TabBar(
-              indicator: BoxDecoration(),
-              tabs: [
-                Tab(text: AppString.recommend),
-                Tab(text: AppString.upgrade),
-                Tab(text: AppString.rank),
-              ],
-            ),
-          ),
-          body: TabBarView(
-            //controller: controller.tabController,
-            children: [
-              IndexRecommendView(),
-              IndexUpgradeView(),
-              IndexRankView(),
+    return DefaultTabController(
+      length: AppConstant.kTabSize,
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          title: const TabBar(
+            indicator: BoxDecoration(),
+            tabs: [
+              Tab(text: AppString.recommend),
+              Tab(text: AppString.upgrade),
+              Tab(text: AppString.rank),
             ],
           ),
+        ),
+        body: TabBarView(
+          //controller: controller.tabController,
+          children: [
+            IndexRecommendView(),
+            IndexUpgradeView(),
+            IndexRankView(),
+          ],
         ),
       ),
     );

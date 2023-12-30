@@ -13,6 +13,7 @@ import 'package:liaz/app/http/interceptor/public_interceptor.dart';
 import 'package:liaz/app/utils/sign_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/oauth2_token_service.dart';
 
 class Request {
   static const int _connectTimeout = 60;
@@ -45,7 +46,7 @@ class Request {
     dio.interceptors.add(PublicInterceptor());
   }
 
-  dynamic responseBody(Response response) {
+  dynamic responseBody(Response<dynamic> response) {
     if (response.statusCode == HttpStatus.ok) {
       var result = ResponseEntity.fromJson(response.data);
       if (result.code == HttpStatus.ok) {
@@ -118,6 +119,13 @@ class Request {
     //加签
     header[AppConstant.sign] =
         SignUtil.generateSign(params, timestamp, Global.signKey);
+    //添加token
+    var oauth2Token = OAuth2TokenService.instance.get();
+    if (oauth2Token != null) {
+      header[AppConstant.authorization] =
+          oauth2Token.tokenType + StrUtil.space + oauth2Token.accessToken;
+      header[AppConstant.userId] = oauth2Token.userId;
+    }
     try {
       var response = await dio.get(
         baseUrl + path,
@@ -181,6 +189,13 @@ class Request {
     //加签
     header[AppConstant.sign] =
         SignUtil.generateSign(params, timestamp, Global.signKey);
+    //添加token
+    var oauth2Token = OAuth2TokenService.instance.get();
+    if (oauth2Token != null) {
+      header[AppConstant.authorization] =
+          oauth2Token.tokenType + StrUtil.space + oauth2Token.accessToken;
+      header[AppConstant.userId] = oauth2Token.userId;
+    }
     try {
       var response = await dio.post(
         baseUrl + path,
@@ -237,6 +252,13 @@ class Request {
     //加签
     header[AppConstant.sign] =
         SignUtil.generateSign(params, timestamp, Global.signKey);
+    //添加token
+    var oauth2Token = OAuth2TokenService.instance.get();
+    if (oauth2Token != null) {
+      header[AppConstant.authorization] =
+          oauth2Token.tokenType + StrUtil.space + oauth2Token.accessToken;
+      header[AppConstant.userId] = oauth2Token.userId;
+    }
     try {
       var response = await dio.post(
         baseUrl + path,
@@ -276,6 +298,28 @@ class Request {
           responseType: ResponseType.plain,
         ),
         cancelToken: cancel,
+      );
+      return response.data;
+    } on DioException catch (e) {
+      Log.e(e.message!, e.stackTrace);
+      if (e.type == DioExceptionType.cancel) {
+        rethrow;
+      }
+      if (e.type == DioExceptionType.badResponse) {
+        return throw AppError(
+            "${AppString.responseFail}${e.response?.statusCode ?? -1}");
+      }
+      throw AppError(AppString.serverError);
+    }
+  }
+
+  Future<dynamic> getResource(
+    String path, {
+    String baseUrl = Global.baseUrl,
+  }) async {
+    try {
+      var response = await dio.get(
+        baseUrl + path,
       );
       return response.data;
     } on DioException catch (e) {

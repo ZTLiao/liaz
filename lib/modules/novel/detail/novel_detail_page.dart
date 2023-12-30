@@ -10,8 +10,6 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
-import 'package:liaz/app/global/global.dart';
-import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/app/utils/tool_util.dart';
@@ -57,10 +55,12 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                   child: Opacity(
-                    opacity: 0.1,
+                    opacity: 0.6,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade50,
+                        color: Get.isDarkMode
+                            ? Colors.black45
+                            : Colors.grey.shade50,
                       ),
                     ),
                   ),
@@ -462,7 +462,10 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                                 contentPadding: AppStyle.edgeInsetsA4,
                                 visualDensity: const VisualDensity(
                                     vertical: VisualDensity.minimumDensity),
-                                onTap: () {},
+                                onTap: () {
+                                  controller.chapterIndex.value = i;
+                                  controller.onReadChapter(volume);
+                                },
                               );
                             },
                           ),
