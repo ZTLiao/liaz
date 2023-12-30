@@ -9,17 +9,22 @@ part 'app_config.g.dart';
 class AppConfig {
   @HiveField(0)
   String fileUrl;
+  @HiveField(1)
+  bool resourceAuthority;
 
   AppConfig({
     required this.fileUrl,
+    required this.resourceAuthority,
   });
 
   factory AppConfig.fromJson(Map<String, dynamic> json) => AppConfig(
         fileUrl: ConvertUtil.asT<String>(json['fileUrl'])!,
+        resourceAuthority: ConvertUtil.asT<bool>(json['resourceAuthority'])!,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'fileUrl': fileUrl,
+        'resourceAuthority': resourceAuthority,
       };
 
   @override
