@@ -40,14 +40,7 @@ class NovelDetailController extends BaseController {
     chapterIndex.value = i;
     var path = volume.chapters[i].paths[0];
     path = await FileRequest().getObject(path);
-    content.value = await Request.instance.getResource(
-      path,
-      baseUrl: Global.appConfig.fileUrl,
-    );
-    // content.value = await Request.instance.getText(
-    //   path,
-    //   baseUrl: Global.appConfig.fileUrl,
-    // );
+    content.value = await Request.instance.getResource(path);
   }
 
   void share() {

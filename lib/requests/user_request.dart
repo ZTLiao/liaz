@@ -1,6 +1,7 @@
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/db/oauth2_token.dart';
 import 'package:liaz/models/db/user.dart';
+import 'package:liaz/services/app_config_service.dart';
 
 class UserRequest {
   Future<OAuth2Token> signIn(
@@ -52,7 +53,11 @@ class UserRequest {
       'userId': userId,
     });
     if (result is Map) {
-      return User.fromJson(result as Map<String, dynamic>);
+      var model = User.fromJson(result as Map<String, dynamic>);
+      if (model.avatar != null) {
+        model.avatar = await AppConfigService.instance.getObject(model.avatar!);
+      }
+      return model;
     }
     return null;
   }

@@ -1,5 +1,6 @@
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/category/category_item_model.dart';
+import 'package:liaz/services/app_config_service.dart';
 
 class CategorySearchRequest {
   Future<List<CategoryItemModel>> getContent(
@@ -14,7 +15,9 @@ class CategorySearchRequest {
     });
     if (result is List) {
       for (var json in result) {
-        list.add(CategoryItemModel.fromJson(json));
+        var model = CategoryItemModel.fromJson(json);
+        model.cover = await AppConfigService.instance.getObject(model.cover);
+        list.add(model);
       }
     }
     return list;

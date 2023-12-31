@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:battery_plus/battery_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -12,7 +11,6 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/file_type.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
-import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_item_model.dart';
@@ -217,9 +215,7 @@ class NovelReaderController extends BaseController {
       var path = paths[i];
       var type = types[i];
       if (type == FileType.textPlain) {
-        var content = await Request.instance
-            .getText(path, baseUrl: Global.appConfig.fileUrl);
-        sb.write(content);
+        sb.write(await Request.instance.getResource(path));
       }
     }
     content.value = sb.toString();

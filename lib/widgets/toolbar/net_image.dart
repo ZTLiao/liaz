@@ -1,8 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/global/global.dart';
 
 class NetImage extends StatefulWidget {
   final String url;
@@ -50,24 +48,20 @@ class _NetImageState extends State<NetImage>
 
   @override
   Widget build(BuildContext context) {
-    var url = widget.url;
-    if (!(url.startsWith(AppConstant.https) ||
-        url.startsWith(AppConstant.http))) {
-      url = Global.appConfig.fileUrl + url;
-    }
-    if (url.isEmpty) {
-      return widget._default;
-    }
     return ClipRRect(
-      borderRadius: BorderRadius.circular(widget.borderRadius),
+      borderRadius: BorderRadius.circular(
+        widget.borderRadius,
+      ),
       child: ExtendedImage.network(
-        url,
+        widget.url,
         fit: widget.fit,
         height: widget.height,
         width: widget.width,
         shape: BoxShape.rectangle,
         handleLoadingProgress: widget.progress,
-        borderRadius: BorderRadius.circular(widget.borderRadius),
+        borderRadius: BorderRadius.circular(
+          widget.borderRadius,
+        ),
         loadStateChanged: (e) {
           if (e.extendedImageLoadState == LoadState.loading) {
             animationController.reset();
@@ -108,7 +102,7 @@ class _NetImageState extends State<NetImage>
               child: e.completedWidget,
             );
           }
-          return null;
+          return widget._default;
         },
       ),
     );

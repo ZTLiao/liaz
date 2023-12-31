@@ -2,6 +2,7 @@ import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/comic/comic_item_model.dart';
+import 'package:liaz/services/app_config_service.dart';
 
 class ComicRequest {
   Future<List<ComicItemModel>> comicUpgrade(int pageNum, int pageSize) async {
@@ -13,7 +14,9 @@ class ComicRequest {
     });
     if (result is List) {
       for (var json in result) {
-        list.add(ComicItemModel.fromJson(json));
+        var model = ComicItemModel.fromJson(json);
+        model.cover = await AppConfigService.instance.getObject(model.cover);
+        list.add(model);
       }
     }
     return list;
@@ -24,6 +27,20 @@ class ComicRequest {
     dynamic result = await Request.instance.get('/api/comic/$comicId');
     if (result is Map) {
       model = ComicDetailModel.fromJson(result as Map<String, dynamic>);
+      model.cover = await AppConfigService.instance.getObject(model.cover);
+      var chapterTypes = model.chapterTypes;
+      if (chapterTypes != null) {
+        for (int i = 0; i < model.chapterTypes!.length; i++) {
+          var chapterType = model.chapterTypes![i];
+          for (int j = 0; j < chapterType.chapters.length; j++) {
+            var chapter = chapterType.chapters[j];
+            for (int k = 0; k < chapter.paths.length; k++) {
+              chapter.paths[k] =
+                  await AppConfigService.instance.getObject(chapter.paths[k]);
+            }
+          }
+        }
+      }
     }
     return model;
   }
@@ -36,7 +53,12 @@ class ComicRequest {
     });
     if (result is List) {
       for (var json in result) {
-        list.add(ComicChapterModel.fromJson(json));
+        var model = ComicChapterModel.fromJson(json);
+        for (int i = 0; i < model.paths.length; i++) {
+          model.paths[i] =
+              await AppConfigService.instance.getObject(model.paths[i]);
+        }
+        list.add(model);
       }
     }
     return list;

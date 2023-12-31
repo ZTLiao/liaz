@@ -12,7 +12,6 @@ import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
-import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
@@ -42,11 +41,11 @@ class NovelDetailPage extends GetView<NovelDetailController> {
               decoration: BoxDecoration(
                 image: controller.detail.cover.isNotEmpty
                     ? DecorationImage(
-                  image: NetworkImage(
-                    ToolUtil.toResource(controller.detail.cover),
-                  ),
-                  fit: BoxFit.cover,
-                )
+                        image: NetworkImage(
+                          controller.detail.cover,
+                        ),
+                        fit: BoxFit.cover,
+                      )
                     : null,
               ),
             ),
@@ -89,14 +88,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
             ),
             Container(
               padding: AppStyle.edgeInsetsA8,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               child: Row(
                 children: [
                   Column(
@@ -152,8 +145,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           iconData: Remix.fire_line,
                           children: [
                             Text(
-                              '${AppString.popularNum} ${controller.detail
-                                  .hitNum}',
+                              '${AppString.popularNum} ${controller.detail.hitNum}',
                             ),
                           ],
                         ),
@@ -161,8 +153,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           iconData: Remix.heart_3_line,
                           children: [
                             Text(
-                              '${AppString.subscribeNum} ${controller.detail
-                                  .subscribeNum}',
+                              '${AppString.subscribeNum} ${controller.detail.subscribeNum}',
                             ),
                           ],
                         ),
@@ -170,10 +161,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           iconData: Remix.time_line,
                           children: [
                             Text(
-                              '${DateUtil.formatDate(
-                                  controller.detail.updated)} ${controller
-                                  .detail.isSerializated ? AppString
-                                  .serializated : AppString.finish}',
+                              '${DateUtil.formatDate(controller.detail.updated)} ${controller.detail.isSerializated ? AppString.serializated : AppString.finish}',
                             ),
                           ],
                         ),
@@ -234,17 +222,14 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                 },
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all(
-                      Size(MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5, 40)),
+                      Size(MediaQuery.of(context).size.width / 5, 40)),
                   shape: MaterialStateProperty.all(
                     const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
                   ),
                   foregroundColor: MaterialStateProperty.resolveWith(
-                        (states) {
+                    (states) {
                       return Get.isDarkMode ? Colors.blue : Colors.white;
                     },
                   ),
@@ -270,17 +255,14 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                 },
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all(
-                      Size(MediaQuery
-                          .of(context)
-                          .size
-                          .width / 5, 40)),
+                      Size(MediaQuery.of(context).size.width / 5, 40)),
                   shape: MaterialStateProperty.all(
                     const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
                   ),
                   foregroundColor: MaterialStateProperty.resolveWith(
-                        (states) {
+                    (states) {
                       return Get.isDarkMode ? Colors.black : Colors.white;
                     },
                   ),
@@ -308,38 +290,35 @@ class NovelDetailPage extends GetView<NovelDetailController> {
         ),
         AppStyle.vGap12,
         Obx(
-              () =>
-              Offstage(
-                offstage: controller.isRelateRecommend.value,
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        controller.isExpandDescription.value =
+          () => Offstage(
+            offstage: controller.isRelateRecommend.value,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    controller.isExpandDescription.value =
                         !controller.isExpandDescription.value;
-                      },
-                      child: Text(
-                        controller.detail.description,
-                        style: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                        ),
-                        maxLines: controller.isExpandDescription.value
-                            ? 999
-                            : 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                  },
+                  child: Text(
+                    controller.detail.description,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
                     ),
-                    controller.isExpandDescription.value
-                        ? const SizedBox()
-                        : AppStyle.vGap12,
-                    Divider(
-                      color: Colors.grey.withOpacity(.2),
-                      height: 1.0,
-                    ),
-                  ],
+                    maxLines: controller.isExpandDescription.value ? 999 : 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
+                controller.isExpandDescription.value
+                    ? const SizedBox()
+                    : AppStyle.vGap12,
+                Divider(
+                  color: Colors.grey.withOpacity(.2),
+                  height: 1.0,
+                ),
+              ],
+            ),
+          ),
         ),
       ],
     );
@@ -348,22 +327,16 @@ class NovelDetailPage extends GetView<NovelDetailController> {
   Widget _buildChapter(BuildContext context) {
     var volumes = controller.detail.volumes;
     return Obx(
-          () =>
-          Offstage(
-            offstage: controller.isRelateRecommend.value,
-            child: Column(
-              children: volumes
-                  .map((volume) =>
-                  Column(
+      () => Offstage(
+        offstage: controller.isRelateRecommend.value,
+        child: Column(
+          children: volumes
+              .map((volume) => Column(
                     children: [
                       ExpansionTile(
                         initiallyExpanded: true,
                         title: Text(
-                          '${(volume.volumeName != null &&
-                              volume.volumeName!.isNotEmpty)
-                              ? volume.volumeName
-                              : AppString.serialize} （${AppString.total}${volume
-                              .chapters.length}${AppString.volume}）',
+                          '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
                         ),
                         tilePadding: AppStyle.edgeInsetsH4,
                         children: [
@@ -381,9 +354,9 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                                       children: [
                                         Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           mainAxisAlignment:
-                                          MainAxisAlignment.end,
+                                              MainAxisAlignment.end,
                                           children: [
                                             Text(
                                               item.chapterName,
@@ -392,14 +365,11 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                                               style: Get.textTheme.bodyMedium!
                                                   .copyWith(
                                                 color:
-                                                i == 0 ? Colors.cyan : null,
+                                                    i == 0 ? Colors.cyan : null,
                                               ),
                                             ),
                                             Text(
-                                              '${AppString.at} ${DateUtil
-                                                  .formatDateTimeMinute(
-                                                  item.updatedAt)} ${AppString
-                                                  .publish}',
+                                              '${AppString.at} ${DateUtil.formatDateTimeMinute(item.updatedAt)} ${AppString.publish}',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
@@ -412,9 +382,9 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                                         Expanded(
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.end,
+                                                CrossAxisAlignment.end,
                                             mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                                MainAxisAlignment.end,
                                             children: [
                                               IconButton(
                                                 onPressed: () {
@@ -432,30 +402,27 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                                       ],
                                     ),
                                     Obx(
-                                          () =>
-                                          Offstage(
-                                            offstage: !(controller
+                                      () => Offstage(
+                                        offstage: !(controller
                                                 .isExpandPreview.value &&
-                                                controller.chapterIndex.value ==
-                                                    i),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: AppColor
-                                                    .novelThemes[AppSettings
-                                                    .novelReaderTheme
-                                                    .value]!
-                                                    .first,
-                                              ),
-                                              child: Text(
-                                                controller.content.value,
-                                                maxLines: 3,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  color: AppColor.grey99,
-                                                ),
-                                              ),
+                                            controller.chapterIndex.value == i),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: AppColor
+                                                .novelThemes[AppSettings
+                                                    .novelReaderTheme.value]!
+                                                .first,
+                                          ),
+                                          child: Text(
+                                            controller.content.value,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              color: AppColor.grey99,
                                             ),
                                           ),
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -477,9 +444,9 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                       ),
                     ],
                   ))
-                  .toList(),
-            ),
-          ),
+              .toList(),
+        ),
+      ),
     );
   }
 
@@ -497,60 +464,60 @@ class NovelDetailPage extends GetView<NovelDetailController> {
             title: '最弱的我用“穿墙bug”变强',
             subTitle: '作者:畑优以/北川ニキタ',
             showValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 4,
             title: '最弱的我用“穿墙bug”变强',
             subTitle: '作者:畑优以/北川ニキタ',
             showValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 4,
             title: '最弱的我用“穿墙bug”变强',
             subTitle: '作者:畑优以/北川ニキタ',
             showValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 4,
             title: '最弱的我用“穿墙bug”变强',
             subTitle: '作者:畑优以/北川ニキタ',
             showValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 4,
             title: '最弱的我用“穿墙bug”变强',
             subTitle: '作者:畑优以/北川ニキタ',
             showValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 4,
             title: '最弱的我用“穿墙bug”变强',
             subTitle: '作者:畑优以/北川ニキタ',
             showValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
+                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
           ),
         ],
       ),
@@ -565,46 +532,46 @@ class NovelDetailPage extends GetView<NovelDetailController> {
             recommendItemId: 1,
             title: '恋爱四格小剧场',
             showValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '恋爱四格小剧场',
             showValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '恋爱四格小剧场',
             showValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '恋爱四格小剧场',
             showValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '恋爱四格小剧场',
             showValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
+                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
           ),
         ],
       ),
@@ -620,90 +587,90 @@ class NovelDetailPage extends GetView<NovelDetailController> {
             title: '天才魔女没魔了',
             subTitle: '作者:辻岛もと',
             showValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '天才魔女没魔了',
             subTitle: '作者:辻岛もと',
             showValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '天才魔女没魔了',
             subTitle: '作者:辻岛もと',
             showValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '天才魔女没魔了',
             subTitle: '作者:辻岛もと',
             showValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '天才魔女没魔了',
             subTitle: '作者:辻岛もと',
             showValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '天才魔女没魔了',
             subTitle: '作者:辻岛もと',
             showValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '天才魔女没魔了',
             subTitle: '作者:辻岛もと',
             showValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '天才魔女没魔了',
             subTitle: '作者:辻岛もと',
             showValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
           ),
           RecommendItemModel(
             recommendItemId: 1,
             title: '天才魔女没魔了',
             subTitle: '作者:辻岛もと',
             showValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
             skipType: SkipTypeEnum.h5.index,
             skipValue:
-            'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
+                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
           ),
         ],
       ),
@@ -769,8 +736,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
       }
       childrens.add(widget);
     }
-    return Obx(() =>
-        Offstage(
+    return Obx(() => Offstage(
           offstage: !controller.isRelateRecommend.value,
           child: Column(
             children: childrens,

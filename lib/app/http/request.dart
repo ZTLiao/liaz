@@ -284,42 +284,10 @@ class Request {
     }
   }
 
-  Future<dynamic> getText(
-    String path, {
-    Map<String, dynamic>? queryParameters,
-    String baseUrl = Global.baseUrl,
-    CancelToken? cancel,
-  }) async {
+  Future<dynamic> getResource(String url) async {
     try {
       var response = await dio.get(
-        baseUrl + path,
-        queryParameters: queryParameters,
-        options: Options(
-          responseType: ResponseType.plain,
-        ),
-        cancelToken: cancel,
-      );
-      return response.data;
-    } on DioException catch (e) {
-      Log.e(e.message!, e.stackTrace);
-      if (e.type == DioExceptionType.cancel) {
-        rethrow;
-      }
-      if (e.type == DioExceptionType.badResponse) {
-        return throw AppError(
-            "${AppString.responseFail}${e.response?.statusCode ?? -1}");
-      }
-      throw AppError(AppString.serverError);
-    }
-  }
-
-  Future<dynamic> getResource(
-    String path, {
-    String baseUrl = Global.baseUrl,
-  }) async {
-    try {
-      var response = await dio.get(
-        baseUrl + path,
+        url,
       );
       return response.data;
     } on DioException catch (e) {

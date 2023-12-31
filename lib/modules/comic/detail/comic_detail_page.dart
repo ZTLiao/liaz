@@ -45,7 +45,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                 image: controller.detail.cover.isNotEmpty
                     ? DecorationImage(
                         image: NetworkImage(
-                          ToolUtil.toResource(controller.detail.cover),
+                          controller.detail.cover,
                         ),
                         fit: BoxFit.cover,
                       )
