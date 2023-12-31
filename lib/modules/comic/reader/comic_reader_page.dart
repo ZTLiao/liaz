@@ -386,7 +386,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         itemBuilder: (_, i) {
           if (i == controller.detail.value.paths.length - 1 &&
               controller.detail.value.paths[i] == "TC") {
-            return SizedBox();
+            return const SizedBox();
           }
           var url = controller.detail.value.paths[i];
           return Container(

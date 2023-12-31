@@ -267,6 +267,7 @@ class ComicReaderController extends BaseController {
       isLocal: false,
     );
     currentIndex.value = initialIndex;
+    jumpToPage(initialIndex);
   }
 
   void jumpToPage(int page, {bool anime = false}) {
