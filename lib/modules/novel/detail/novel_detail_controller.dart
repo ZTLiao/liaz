@@ -1,15 +1,12 @@
 import 'package:get/get.dart';
 import 'package:liaz/app/controller/base_controller.dart';
-import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
-import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_volume_model.dart';
 import 'package:liaz/requests/file_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
-import 'package:liaz/services/novel_service.dart';
 
 class NovelDetailController extends BaseController {
   final NovelDetailModel detail;

@@ -15,6 +15,7 @@ import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_item_model.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
+import 'package:liaz/services/app_config_service.dart';
 
 class NovelReaderController extends BaseController {
   final int novelChapterId;
@@ -215,6 +216,7 @@ class NovelReaderController extends BaseController {
       var path = paths[i];
       var type = types[i];
       if (type == FileType.textPlain) {
+        path = await AppConfigService.instance.getObject(path);
         sb.write(await Request.instance.getResource(path));
       }
     }

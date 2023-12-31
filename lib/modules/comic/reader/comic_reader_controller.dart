@@ -18,6 +18,7 @@ import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/requests/comic_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
+import 'package:liaz/services/app_config_service.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -249,8 +250,12 @@ class ComicReaderController extends BaseController {
     loadDetail();
   }
 
-  void loadDetail() {
+  void loadDetail() async {
     var comicChapter = chapters[chapterIndex.value];
+    for (int i = 0; i < comicChapter.paths.length; i++) {
+      comicChapter.paths[i] =
+          await AppConfigService.instance.getObject(comicChapter.paths[i]);
+    }
     detail.value = ComicChapterItemModel(
       comicChapterId: comicChapter.comicChapterId,
       comicId: comicChapter.comicId,

@@ -28,19 +28,6 @@ class NovelRequest {
     if (result is Map) {
       model = NovelDetailModel.fromJson(result as Map<String, dynamic>);
       model.cover = await AppConfigService.instance.getObject(model.cover);
-      var volumes = model.volumes;
-      if (volumes.isNotEmpty) {
-        for (int i = 0; i < model.volumes.length; i++) {
-          var volume = model.volumes[i];
-          for (int j = 0; j < volume.chapters.length; j++) {
-            var chapter = volume.chapters[j];
-            for (int k = 0; k < chapter.paths.length; k++) {
-              chapter.paths[k] =
-                  await AppConfigService.instance.getObject(chapter.paths[k]);
-            }
-          }
-        }
-      }
     }
     return model;
   }

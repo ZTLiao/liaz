@@ -28,19 +28,6 @@ class ComicRequest {
     if (result is Map) {
       model = ComicDetailModel.fromJson(result as Map<String, dynamic>);
       model.cover = await AppConfigService.instance.getObject(model.cover);
-      var chapterTypes = model.chapterTypes;
-      if (chapterTypes != null) {
-        for (int i = 0; i < model.chapterTypes!.length; i++) {
-          var chapterType = model.chapterTypes![i];
-          for (int j = 0; j < chapterType.chapters.length; j++) {
-            var chapter = chapterType.chapters[j];
-            for (int k = 0; k < chapter.paths.length; k++) {
-              chapter.paths[k] =
-                  await AppConfigService.instance.getObject(chapter.paths[k]);
-            }
-          }
-        }
-      }
     }
     return model;
   }
