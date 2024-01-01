@@ -42,10 +42,6 @@ class NovelRequest {
     if (result is List) {
       for (var json in result) {
         var model = NovelChapterModel.fromJson(json);
-        for (int i = 0; i < model.paths.length; i++) {
-          model.paths[i] =
-              await AppConfigService.instance.getObject(model.paths[i]);
-        }
         list.add(model);
       }
     }
