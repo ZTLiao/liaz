@@ -14,7 +14,9 @@ import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
 import 'package:liaz/widgets/view/page_list_view.dart';
 
 class CategoryHomePage extends GetView<CategoryHomeController> {
-  const CategoryHomePage({super.key});
+  final int index;
+
+  const CategoryHomePage(this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,59 +44,62 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width / 5,
-              child: ListView.separated(
-                separatorBuilder: (context, i) {
-                  return Divider(
-                    endIndent: 12,
-                    indent: 12,
-                    color: Colors.grey.withOpacity(0),
-                    height: 1,
-                  );
-                },
-                itemCount: controller.categories.value.length,
-                itemBuilder: (context, i) {
-                  var item = controller.categories.value[i];
-                  return Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Get.isDarkMode ? Colors.white12 : AppColor.greyf0,
-                    ),
-                    child: Center(
-                      child: TextButton(
-                        onPressed: () {
-                          controller.categoryId.value = item.categoryId;
-                          Log.i(
-                              "category index : ${i + 1}, categoryId : ${controller.categoryId.value}");
-                          controller.onRefresh();
-                        },
-                        style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all(
-                              Size(MediaQuery.of(context).size.width / 5, 40)),
-                          shape: MaterialStateProperty.all(
-                            const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
+              child: Obx(
+                () => ListView.separated(
+                  separatorBuilder: (context, i) {
+                    return Divider(
+                      endIndent: 12,
+                      indent: 12,
+                      color: Colors.grey.withOpacity(0),
+                      height: 1,
+                    );
+                  },
+                  itemCount: controller.categories.value.length,
+                  itemBuilder: (context, i) {
+                    var item = controller.categories.value[i];
+                    return Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color:
+                            Get.isDarkMode ? Colors.white12 : AppColor.greyf0,
+                      ),
+                      child: Center(
+                        child: TextButton(
+                          onPressed: () {
+                            controller.categoryId.value = item.categoryId;
+                            Log.i(
+                                "category index : ${i + 1}, categoryId : ${controller.categoryId.value}");
+                            controller.onRefresh();
+                          },
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all(Size(
+                                MediaQuery.of(context).size.width / 5, 40)),
+                            shape: MaterialStateProperty.all(
+                              const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
                             ),
                           ),
-                        ),
-                        child: Obx(
-                          () => Text(
-                            item.categoryName,
-                            maxLines: 1,
-                            style: TextStyle(
-                              color:
-                                  controller.categoryId.value == item.categoryId
-                                      ? Colors.cyan
-                                      : Get.isDarkMode
-                                          ? Colors.white70
-                                          : Colors.black54,
-                              overflow: TextOverflow.ellipsis,
+                          child: Obx(
+                            () => Text(
+                              item.categoryName,
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: controller.categoryId.value ==
+                                        item.categoryId
+                                    ? Colors.cyan
+                                    : Get.isDarkMode
+                                        ? Colors.white70
+                                        : Colors.black54,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
             Expanded(

@@ -2,11 +2,11 @@ enum AppIndexEnum {
   /// 首页
   kIndex,
 
-  /// 漫画
-  kComic,
+  /// 分类
+  kCategory,
 
-  /// 小说
-  kNovel,
+  /// 书架
+  kBookshelf,
 
   /// 我的
   kUser;

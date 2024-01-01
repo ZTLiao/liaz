@@ -91,4 +91,10 @@ class UserService extends GetxService {
       AppNavigator.toUserLogin();
     }
   }
+
+  void check() {
+    if (!Global.isUserLogin) {
+      AppNavigator.toUserLogin();
+    }
+  }
 }

@@ -6,15 +6,15 @@ import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/modules/bookshelf/home/bookshelf_home_controller.dart';
+import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/keep_alive_wrapper.dart';
 import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
 import 'package:liaz/widgets/view/page_list_view.dart';
 
 class BookshelfHomePage extends GetView<BookshelfHomeController> {
-  final BookshelfHomeController controller;
+  final int index;
 
-  BookshelfHomePage({super.key})
-      : controller = Get.put(BookshelfHomeController());
+  const BookshelfHomePage(this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +35,16 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
               ),
             ),
             PopupMenuButton(
-              onSelected: (e) {},
+              onSelected: (e) {
+                UserService.instance.check();
+                controller.sortType.value = e;
+                controller.onRefresh();
+              },
               itemBuilder: (c) => types.keys
                   .map(
                     (k) => CheckedPopupMenuItem(
                       value: k,
-                      checked: false,
+                      checked: controller.sortType.value == k,
                       child: Text(types[k] ?? StrUtil.empty),
                     ),
                   )
@@ -77,10 +81,11 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
             labelColor: Theme.of(context).colorScheme.primary,
             unselectedLabelColor:
                 Get.isDarkMode ? Colors.white70 : Colors.black87,
-            tabs: const [
-              Tab(text: AppString.comic),
-              Tab(text: AppString.novel),
-            ],
+            tabs: controller.bookshelfs.map((e) => Tab(text: e.value)).toList(),
+            onTap: (index) {
+              UserService.instance.check();
+              controller.onRefresh();
+            },
           ),
           Expanded(
             child: TabBarView(

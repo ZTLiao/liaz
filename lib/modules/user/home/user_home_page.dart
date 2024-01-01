@@ -10,7 +10,9 @@ import 'package:liaz/widgets/toolbar/user_photo.dart';
 import 'package:remixicon/remixicon.dart';
 
 class UserHomePage extends GetView<UserHomeController> {
-  const UserHomePage({super.key});
+  final int index;
+
+  const UserHomePage(this.index, {super.key});
 
   @override
   Widget build(BuildContext context) {
