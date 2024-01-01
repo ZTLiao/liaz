@@ -142,7 +142,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '关于我转生变成史莱姆这档事',
           cover:
               'https://otu1.dodomh.com/images/o/c1/61/e154030c63519dbf4e3220ace76c.jpg',
-          types: ['魔法', '冒险'],
+          categories: ['魔法', '冒险'],
           authors: ['伏濑'],
           upgradeChapter: '外传 井泽静江之章',
           updated: 1698319813000,
@@ -153,7 +153,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '关于我转生变成史莱姆这档事',
           cover:
               'https://otu1.dodomh.com/images/o/c1/61/e154030c63519dbf4e3220ace76c.jpg',
-          types: ['魔法', '冒险'],
+          categories: ['魔法', '冒险'],
           authors: ['伏濑'],
           upgradeChapter: '外传 井泽静江之章',
           updated: 1698319813000,
@@ -164,7 +164,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '关于我转生变成史莱姆这档事',
           cover:
               'https://otu1.dodomh.com/images/o/c1/61/e154030c63519dbf4e3220ace76c.jpg',
-          types: ['魔法', '冒险'],
+          categories: ['魔法', '冒险'],
           authors: ['伏濑'],
           upgradeChapter: '外传 井泽静江之章',
           updated: 1698319813000,
@@ -175,7 +175,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '关于我转生变成史莱姆这档事',
           cover:
               'https://otu1.dodomh.com/images/o/c1/61/e154030c63519dbf4e3220ace76c.jpg',
-          types: ['魔法', '冒险'],
+          categories: ['魔法', '冒险'],
           authors: ['伏濑'],
           upgradeChapter: '外传 井泽静江之章',
           updated: 1698319813000,
@@ -186,7 +186,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '关于我转生变成史莱姆这档事',
           cover:
               'https://otu1.dodomh.com/images/o/c1/61/e154030c63519dbf4e3220ace76c.jpg',
-          types: ['魔法', '冒险'],
+          categories: ['魔法', '冒险'],
           authors: ['伏濑'],
           upgradeChapter: '外传 井泽静江之章',
           updated: 1698319813000,
@@ -197,7 +197,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '关于我转生变成史莱姆这档事',
           cover:
               'https://otu1.dodomh.com/images/o/c1/61/e154030c63519dbf4e3220ace76c.jpg',
-          types: ['魔法', '冒险'],
+          categories: ['魔法', '冒险'],
           authors: ['伏濑'],
           upgradeChapter: '外传 井泽静江之章',
           updated: 1698319813000,
@@ -208,7 +208,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '关于我转生变成史莱姆这档事',
           cover:
               'https://otu1.dodomh.com/images/o/c1/61/e154030c63519dbf4e3220ace76c.jpg',
-          types: ['魔法', '冒险'],
+          categories: ['魔法', '冒险'],
           authors: ['伏濑'],
           upgradeChapter: '外传 井泽静江之章',
           updated: 1698319813000,
@@ -219,7 +219,7 @@ class IndexRankController extends BasePageController<CardItemModel>
           title: '关于我转生变成史莱姆这档事',
           cover:
               'https://otu1.dodomh.com/images/o/c1/61/e154030c63519dbf4e3220ace76c.jpg',
-          types: ['魔法', '冒险'],
+          categories: ['魔法', '冒险'],
           authors: ['伏濑'],
           upgradeChapter: '外传 井泽静江之章',
           updated: 1698319813000,
@@ -228,7 +228,7 @@ class IndexRankController extends BasePageController<CardItemModel>
       ];
       for (var i = 0, len = data.length; i < len; i++) {
         var item = data[i];
-        var types = StrUtil.listToStr(item.types, StrUtil.slash);
+        var types = StrUtil.listToStr(item.categories, StrUtil.slash);
         var authors = StrUtil.listToStr(item.authors, StrUtil.slash);
         var updateTime = DateUtil.formatDate(item.updated);
         var card = CardItemModel(

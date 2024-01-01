@@ -6,7 +6,7 @@ class NovelItemModel {
   int novelId;
   String title;
   String cover;
-  List<String> types;
+  List<String> categories;
   List<String> authors;
   String upgradeChapter;
   int updated;
@@ -16,7 +16,7 @@ class NovelItemModel {
     required this.novelId,
     required this.title,
     required this.cover,
-    required this.types,
+    required this.categories,
     required this.authors,
     required this.upgradeChapter,
     required this.updated,
@@ -24,10 +24,11 @@ class NovelItemModel {
   });
 
   factory NovelItemModel.fromJson(Map<String, dynamic> json) {
-    final List<String>? types = json['types'] is List ? <String>[] : null;
-    if (types != null) {
-      for (final dynamic type in json['types']!) {
-        types.add(ConvertUtil.asT<String>(type)!);
+    final List<String>? categories =
+        json['categories'] is List ? <String>[] : null;
+    if (categories != null) {
+      for (final dynamic category in json['categories']!) {
+        categories.add(ConvertUtil.asT<String>(category)!);
       }
     }
     final List<String>? authors = json['authors'] is List ? <String>[] : null;
@@ -40,7 +41,7 @@ class NovelItemModel {
         novelId: ConvertUtil.asT<int>(json['novelId'])!,
         title: ConvertUtil.asT<String>(json['title'])!,
         cover: ConvertUtil.asT<String>(json['cover'])!,
-        types: types ?? [],
+        categories: categories ?? [],
         authors: authors ?? [],
         upgradeChapter: ConvertUtil.asT<String>(json['upgradeChapter'])!,
         updated: ConvertUtil.asT<int>(json['updated'])!,
@@ -48,15 +49,15 @@ class NovelItemModel {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-    'novelId': novelId,
-    'title': title,
-    'cover': cover,
-    'types': types,
-    'authors': authors,
-    'upgradeChapter': upgradeChapter,
-    'updated': updated,
-    'novelChapterId': novelChapterId,
-  };
+        'novelId': novelId,
+        'title': title,
+        'cover': cover,
+        'categories': categories,
+        'authors': authors,
+        'upgradeChapter': upgradeChapter,
+        'updated': updated,
+        'novelChapterId': novelChapterId,
+      };
 
   @override
   String toString() {

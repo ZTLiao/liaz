@@ -9,6 +9,7 @@ import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/requests/category_request.dart';
 import 'package:liaz/requests/category_search_request.dart';
 import 'package:liaz/requests/comic_request.dart';
+import 'package:liaz/requests/novel_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 
 class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
@@ -28,6 +29,8 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
   var categorySearchRequest = CategorySearchRequest();
 
   var comicRequest = ComicRequest();
+
+  var novelRequest = NovelRequest();
 
   CategoryHomeController() {
     if (categories.value.isEmpty) {
@@ -91,6 +94,12 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
       var chapters = await comicRequest.getComicCatalogue(objId);
       AppNavigator.toComicReader(
         comicChapterId: objId,
+        chapters: chapters,
+      );
+    } else if (SkipTypeEnum.novel.index == skipType) {
+      var chapters = await novelRequest.getNovelCatalogue(objId);
+      AppNavigator.toNovelReader(
+        novelChapterId: objId,
         chapters: chapters,
       );
     }
