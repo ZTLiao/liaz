@@ -77,8 +77,13 @@ class NovelDetailPage extends GetView<NovelDetailController> {
               elevation: 0,
               actions: [
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Remix.heart_3_line),
+                  onPressed: controller.subscribe,
+                  icon: Obx(
+                    () => Icon(
+                      Remix.heart_3_fill,
+                      color: controller.isSubscribe.value ? Colors.red : null,
+                    ),
+                  ),
                 ),
                 IconButton(
                   onPressed: () {},

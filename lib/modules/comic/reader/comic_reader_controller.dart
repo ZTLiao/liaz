@@ -10,6 +10,7 @@ import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/date_util.dart';
@@ -19,6 +20,7 @@ import 'package:liaz/requests/comic_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/comic_service.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -159,6 +161,14 @@ class ComicReaderController extends BaseController {
 
   @override
   void onClose() {
+    ComicService.instance.uploadHistory(
+      detail.value.comicId,
+      AssetTypeEnum.comic.index,
+      comicChapterId,
+      detail.value.chapterName,
+      detail.value.paths[currentIndex.value],
+      currentIndex.value,
+    );
     focusNode.dispose();
     connectivitySubscription?.cancel();
     batterySubscription?.cancel();

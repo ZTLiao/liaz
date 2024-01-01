@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/chapter_type_enum.dart';
@@ -14,7 +13,6 @@ import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/enums/sort_type_enum.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
-import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
@@ -80,12 +78,12 @@ class ComicDetailPage extends GetView<ComicDetailController> {
               elevation: 0,
               actions: [
                 IconButton(
-                  onPressed: () {
-                    AppNavigator.toUserLogin();
-                  },
-                  icon: const Icon(
-                    Remix.heart_3_fill,
-                    color: Colors.red,
+                  onPressed: controller.subscribe,
+                  icon: Obx(
+                    () => Icon(
+                      Remix.heart_3_fill,
+                      color: controller.isSubscribe.value ? Colors.red : null,
+                    ),
                   ),
                 ),
                 IconButton(
@@ -339,9 +337,8 @@ class ComicDetailPage extends GetView<ComicDetailController> {
       () => Offstage(
         offstage: controller.isRelateRecommend.value,
         child: Column(
-          children: (controller.detail.chapterTypes != null &&
-                  controller.detail.chapterTypes!.isNotEmpty)
-              ? controller.detail.chapterTypes!.map((item) {
+          children: (controller.detail.chapterTypes.isNotEmpty)
+              ? controller.detail.chapterTypes.map((item) {
                   var chapterType = item.chapterType;
                   var sortType = item.sortType;
                   var chapters = item.chapters;

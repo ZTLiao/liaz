@@ -22,7 +22,8 @@ class ComicDetailModel {
   bool isLong;
   bool isHide;
   int sortType;
-  List<ComicChapterTypeModel>? chapterTypes;
+  List<ComicChapterTypeModel> chapterTypes;
+  bool isSubscribe;
 
   factory ComicDetailModel.empty() => ComicDetailModel(
         comicId: 0,
@@ -43,6 +44,7 @@ class ComicDetailModel {
         isHide: false,
         sortType: 0,
         chapterTypes: [],
+        isSubscribe: false,
       );
 
   ComicDetailModel({
@@ -63,7 +65,8 @@ class ComicDetailModel {
     required this.isLong,
     required this.isHide,
     required this.sortType,
-    this.chapterTypes,
+    required this.chapterTypes,
+    required this.isSubscribe,
   });
 
   factory ComicDetailModel.fromJson(Map<String, dynamic> json) {
@@ -92,9 +95,8 @@ class ComicDetailModel {
         categories.add(ConvertUtil.asT<String>(category)!);
       }
     }
-    final List<ComicChapterTypeModel>? chapterTypes =
-        json['chapterTypes'] is List ? <ComicChapterTypeModel>[] : null;
-    if (chapterTypes != null) {
+    final List<ComicChapterTypeModel> chapterTypes = <ComicChapterTypeModel>[];
+    if (json['chapterTypes'] != null) {
       for (final dynamic chapterType in json['chapterTypes']!) {
         chapterTypes.add(ComicChapterTypeModel.fromJson(chapterType));
       }
@@ -119,15 +121,14 @@ class ComicDetailModel {
       isHide: (flag & ComicFlag.hide) != 0,
       sortType: (flag & ComicFlag.sort) >> 3,
       chapterTypes: chapterTypes,
+      isSubscribe: ConvertUtil.asT<bool>(json['isSubscribe'])!,
     );
   }
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> list = [];
-    if (chapterTypes != null) {
-      for (final ComicChapterTypeModel chapterType in chapterTypes!) {
-        list.add(chapterType.toJson());
-      }
+    for (final ComicChapterTypeModel chapterType in chapterTypes) {
+      list.add(chapterType.toJson());
     }
     return <String, dynamic>{
       'comicId': comicId,
@@ -148,6 +149,7 @@ class ComicDetailModel {
       'isHide': isHide,
       'sortType': sortType,
       'chapterTypes': list,
+      'isSubscribe': isSubscribe,
     };
   }
 

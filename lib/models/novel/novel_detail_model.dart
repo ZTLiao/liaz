@@ -23,6 +23,7 @@ class NovelDetailModel {
   bool isHide;
   int sortType;
   List<NovelVolumeModel> volumes;
+  bool isSubscribe;
 
   factory NovelDetailModel.empty() => NovelDetailModel(
         novelId: 0,
@@ -42,6 +43,7 @@ class NovelDetailModel {
         isHide: false,
         sortType: 0,
         volumes: [],
+        isSubscribe: false,
       );
 
   NovelDetailModel({
@@ -62,6 +64,7 @@ class NovelDetailModel {
     required this.isHide,
     required this.sortType,
     required this.volumes,
+    required this.isSubscribe,
   });
 
   factory NovelDetailModel.fromJson(Map<String, dynamic> json) {
@@ -113,6 +116,7 @@ class NovelDetailModel {
       isHide: (flag & NovelFlag.hide) != 0,
       sortType: (flag & ComicFlag.sort) >> 3,
       volumes: volumes,
+      isSubscribe: ConvertUtil.asT<bool>(json['isSubscribe'])!,
     );
   }
 
@@ -139,6 +143,7 @@ class NovelDetailModel {
       'isHide': isHide,
       'sortType': sortType,
       'volumes': list,
+      'isSubscribe': isSubscribe,
     };
   }
 

@@ -14,6 +14,10 @@ class AppSettingsService extends GetxController {
         LocalStorageService.instance.getValue(LocalStorage.kThemeMode, 0);
     AppSettings.firstRun =
         LocalStorageService.instance.getValue(LocalStorage.kFirstRun, true);
+    //设置后续为非首次标识
+    if (AppSettings.firstRun) {
+      setNoFirstRun();
+    }
     //漫画
     AppSettings.comicReaderDirection.value = LocalStorageService.instance
         .getValue(LocalStorage.kComicReaderDirection, 0);
@@ -71,6 +75,8 @@ class AppSettingsService extends GetxController {
         .getValue(LocalStorage.kCollectHideComic, false);
     super.onInit();
   }
+
+  void init() async {}
 
   void changeTheme() {
     Get.dialog(

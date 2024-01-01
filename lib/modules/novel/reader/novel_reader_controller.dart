@@ -10,12 +10,14 @@ import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/file_type.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_item_model.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/novel_service.dart';
 
 class NovelReaderController extends BaseController {
   final int novelChapterId;
@@ -289,4 +291,29 @@ class NovelReaderController extends BaseController {
   void showMenu() {}
 
   void showSettings() {}
+
+  @override
+  void onClose() {
+    NovelService.instance.uploadHistory(
+      detail.value.novelId,
+      AssetTypeEnum.novel.index,
+      novelChapterId,
+      detail.value.chapterName,
+      detail.value.paths[currentIndex.value],
+      currentIndex.value,
+    );
+    scrollController.removeListener(listenVertical);
+    connectivitySubscription?.cancel();
+    batterySubscription?.cancel();
+    exitFull();
+    super.onClose();
+  }
+
+  /// 退出全屏
+  void exitFull() {
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.edgeToEdge,
+      overlays: SystemUiOverlay.values,
+    );
+  }
 }

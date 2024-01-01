@@ -2,6 +2,7 @@ import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/comic/comic_item_model.dart';
+import 'package:liaz/models/comic/comic_model.dart';
 import 'package:liaz/services/app_config_service.dart';
 
 class ComicRequest {
@@ -49,5 +50,22 @@ class ComicRequest {
       }
     }
     return list;
+  }
+
+  Future<ComicModel> getComic(int comicId) async {
+    var model = ComicModel(
+      comicId: 0,
+      title: '',
+      cover: '',
+    );
+    dynamic result =
+        await Request.instance.get('/api/comic/get', queryParameters: {
+      'comicId': comicId,
+    });
+    if (result is Map) {
+      model = ComicModel.fromJson(result as Map<String, dynamic>);
+      model.cover = await AppConfigService.instance.getObject(model.cover);
+    }
+    return model;
   }
 }

@@ -2,6 +2,7 @@ import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_item_model.dart';
+import 'package:liaz/models/novel/novel_model.dart';
 import 'package:liaz/services/app_config_service.dart';
 
 class NovelRequest {
@@ -49,5 +50,22 @@ class NovelRequest {
       }
     }
     return list;
+  }
+
+  Future<NovelModel> getNovel(int novelId) async {
+    var model = NovelModel(
+      novelId: 0,
+      title: '',
+      cover: '',
+    );
+    dynamic result =
+    await Request.instance.get('/api/novel/get', queryParameters: {
+      'novelId': novelId,
+    });
+    if (result is Map) {
+      model = NovelModel.fromJson(result as Map<String, dynamic>);
+      model.cover = await AppConfigService.instance.getObject(model.cover);
+    }
+    return model;
   }
 }

@@ -14,4 +14,6 @@ class Global {
   static String signKey = StrUtil.empty;
 
   static String publicKey = StrUtil.empty;
+
+  static bool isUserLogin = false;
 }

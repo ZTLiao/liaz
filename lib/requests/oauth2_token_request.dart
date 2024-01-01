@@ -1,3 +1,4 @@
+import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/db/oauth2_token.dart';
 
@@ -7,7 +8,12 @@ class OAuth2TokenRequest {
       'token': refreshToken,
     });
     if (result is Map) {
-      return OAuth2Token.fromJson(result as Map<String, dynamic>);
+      var model = OAuth2Token.fromJson(result as Map<String, dynamic>);
+      var accessToken = model.accessToken;
+      if (accessToken.isNotEmpty) {
+        Global.isUserLogin = true;
+      }
+      return model;
     }
     return null;
   }

@@ -8,6 +8,7 @@ class StrUtil {
   static const equal = '=';
   static const delimStart = '{';
   static const delimEnd = '}';
+  static const question = '?';
 
   static String listToStr(List<String> list, String separator) {
     String str = empty;

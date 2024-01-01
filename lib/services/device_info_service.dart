@@ -11,7 +11,7 @@ class DeviceInfoService extends GetxService {
   Future<void> init() async {
     var appDir = await getApplicationSupportDirectory();
     box = await Hive.openBox(
-      "deviceInfo",
+      "DeviceInfo",
       path: appDir.path,
     );
     if (box.values.toList().isEmpty) {
