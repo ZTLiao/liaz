@@ -42,7 +42,7 @@ class CardItemWidget extends StatelessWidget {
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
-                        Icons.account_circle,
+                        Icons.account_circle_outlined,
                         color: Colors.grey,
                         size: 18,
                       )),
@@ -60,7 +60,7 @@ class CardItemWidget extends StatelessWidget {
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
-                        Icons.label,
+                        Icons.label_outline,
                         color: Colors.grey,
                         size: 18,
                       )),
@@ -78,7 +78,7 @@ class CardItemWidget extends StatelessWidget {
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
-                        Icons.star,
+                        Icons.star_outline,
                         color: Colors.grey,
                         size: 18,
                       )),
