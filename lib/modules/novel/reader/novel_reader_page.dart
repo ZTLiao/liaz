@@ -17,7 +17,6 @@ import 'package:liaz/widgets/status/app_loading_widget.dart';
 import 'package:liaz/widgets/toolbar/local_image.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
 import 'package:liaz/widgets/view/custom_material.dart';
-import 'package:remixicon/remixicon.dart';
 
 class NovelReaderPage extends GetView<NovelReaderController> {
   const NovelReaderPage({super.key});
@@ -182,25 +181,33 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                                   Expanded(
                                     child: IconButton(
                                       onPressed: controller.forwardChapter,
-                                      icon: const Icon(Remix.skip_back_line),
+                                      icon: const Icon(
+                                        Icons.skip_previous,
+                                      ),
                                     ),
                                   ),
                                   Expanded(
                                     child: IconButton(
                                       onPressed: controller.showMenu,
-                                      icon: const Icon(Remix.file_list_line),
+                                      icon: const Icon(
+                                        Icons.list,
+                                      ),
                                     ),
                                   ),
                                   Expanded(
                                     child: IconButton(
                                       onPressed: controller.showSettings,
-                                      icon: const Icon(Remix.settings_line),
+                                      icon: const Icon(
+                                        Icons.settings,
+                                      ),
                                     ),
                                   ),
                                   Expanded(
                                     child: IconButton(
                                       onPressed: controller.nextChapter,
-                                      icon: const Icon(Remix.skip_forward_line),
+                                      icon: const Icon(
+                                        Icons.skip_next,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -551,35 +558,35 @@ class NovelReaderPage extends GetView<NovelReaderController> {
 
   Widget buildConnectivity() {
     var connectivityType = controller.connectivityType.value;
-    IconData icon = Remix.wifi_line;
+    IconData icon = Icons.wifi;
     var name = AppString.wifi;
     switch (connectivityType) {
       case ConnectivityResult.bluetooth:
-        icon = Remix.bluetooth_line;
+        icon = Icons.bluetooth;
         name = AppString.bluetooth;
         break;
       case ConnectivityResult.ethernet:
-        icon = Remix.computer_line;
+        icon = Icons.settings_ethernet;
         name = AppString.computer;
         break;
       case ConnectivityResult.mobile:
-        icon = Remix.base_station_line;
+        icon = Icons.smartphone;
         name = AppString.baseStation;
         break;
       case ConnectivityResult.wifi:
-        icon = Remix.wifi_line;
+        icon = Icons.wifi;
         name = AppString.wifi;
         break;
       case ConnectivityResult.vpn:
-        icon = Remix.shield_keyhole_line;
+        icon = Icons.vpn_key;
         name = AppString.vpn;
         break;
       case ConnectivityResult.none:
-        icon = Remix.wifi_off_line;
+        icon = Icons.wifi_off;
         name = AppString.wifiOff;
         break;
       case ConnectivityResult.other:
-        icon = Remix.question_line;
+        icon = Icons.question_mark;
         name = AppString.unkown;
         break;
       default:

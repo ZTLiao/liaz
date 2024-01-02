@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/modules/user/login/user_login_controller.dart';
-import 'package:remixicon/remixicon.dart';
 
 class UserLoginPage extends StatelessWidget {
   final UserLoginController controller;
@@ -194,8 +193,8 @@ class UserLoginPage extends StatelessWidget {
           suffixIcon: IconButton(
             icon: Icon(
               controller.isShowPassword.value
-                  ? Remix.eye_close_line
-                  : Remix.eye_line,
+                  ? Icons.visibility_off
+                  : Icons.visibility,
               color: Colors.grey,
             ),
             onPressed: () {

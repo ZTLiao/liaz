@@ -701,14 +701,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.0"
-  remixicon:
-    dependency: "direct main"
-    description:
-      name: remixicon
-      sha256: "9bef40aeea97e61ba78eadbaecdc629af7e8d30a77e536d37317aa78d491eaee"
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.0"
   scrollable_positioned_list:
     dependency: "direct main"
     description:

@@ -5,7 +5,6 @@ import 'package:liaz/modules/bookshelf/home/bookshelf_home_page.dart';
 import 'package:liaz/modules/category/home/category_home_page.dart';
 import 'package:liaz/modules/index/home/index_home_page.dart';
 import 'package:liaz/modules/user/home/user_home_page.dart';
-import 'package:remixicon/remixicon.dart';
 
 import 'index_controller.dart';
 
@@ -32,27 +31,25 @@ class IndexPage extends GetView<IndexController> {
               currentIndex: controller.index.value,
               onTap: controller.setIndex,
               type: BottomNavigationBarType.fixed,
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
               items: const [
                 BottomNavigationBarItem(
-                  icon: Icon(Remix.home_2_line),
-                  activeIcon: Icon(Remix.home_7_fill),
+                  icon: Icon(Icons.home_outlined),
+                  activeIcon: Icon(Icons.home),
                   label: AppString.home,
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Remix.bell_line),
-                  activeIcon: Icon(Remix.bell_fill),
-                  label: AppString.comic,
+                  icon: Icon(Icons.notifications_none),
+                  activeIcon: Icon(Icons.notifications_active_rounded),
+                  label: AppString.category,
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Remix.book_line),
-                  activeIcon: Icon(Remix.book_open_fill),
-                  label: AppString.novel,
+                  icon: Icon(Icons.import_contacts),
+                  activeIcon: Icon(Icons.menu_book),
+                  label: AppString.bookshelf,
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Remix.outlet_line),
-                  activeIcon: Icon(Remix.emotion_2_fill),
+                  icon: Icon(Icons.person_outline),
+                  activeIcon: Icon(Icons.person),
                   label: AppString.mine,
                 ),
               ],

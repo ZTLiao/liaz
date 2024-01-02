@@ -29,7 +29,7 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text(
-              AppString.bookshelf,
+              AppString.myBookshelf,
               style: TextStyle(
                 fontSize: 16,
               ),

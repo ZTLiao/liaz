@@ -7,7 +7,6 @@ import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/modules/user/login/user_login_listener.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/user_service.dart';
-import 'package:remixicon/remixicon.dart';
 
 class UserLoginController extends GetxController {
   TextEditingController username = TextEditingController();
@@ -18,11 +17,11 @@ class UserLoginController extends GetxController {
   final List thirdLogin = [
     {
       "title": "apple",
-      "icon": Remix.apple_line,
+      "icon": Icons.apple,
     },
     {
       "title": "google",
-      "icon": Remix.google_line,
+      "icon": Icons.apple,
     },
   ];
 

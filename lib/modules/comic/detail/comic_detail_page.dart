@@ -26,7 +26,6 @@ import 'package:liaz/widgets/toolbar/net_image.dart';
 import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
 import 'package:liaz/widgets/toolbar/title_widget.dart';
 import 'package:liaz/widgets/toolbar/two_box_grid_widget.dart';
-import 'package:remixicon/remixicon.dart';
 
 class ComicDetailPage extends GetView<ComicDetailController> {
   const ComicDetailPage({super.key});
@@ -81,7 +80,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                   onPressed: controller.subscribe,
                   icon: Obx(
                     () => Icon(
-                      Remix.heart_3_fill,
+                      Icons.favorite,
                       color: controller.isSubscribe.value ? Colors.red : null,
                     ),
                   ),
@@ -130,7 +129,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.user_line,
+                          iconData: Icons.person,
                           children: [
                             Text(
                               StrUtil.listToStr(
@@ -139,7 +138,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.price_tag_3_line,
+                          iconData: Icons.label,
                           children: [
                             Text(
                               StrUtil.listToStr(
@@ -148,7 +147,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.fire_line,
+                          iconData: Icons.local_fire_department,
                           children: [
                             Text(
                               '${AppString.popularNum} ${controller.detail.hitNum}',
@@ -156,7 +155,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.heart_3_line,
+                          iconData: Icons.favorite,
                           children: [
                             Text(
                               '${AppString.subscribeNum} ${controller.detail.subscribeNum}',
@@ -164,7 +163,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.time_line,
+                          iconData: Icons.schedule,
                           children: [
                             Text(
                               '${DateUtil.formatDate(controller.detail.updated)} ${controller.detail.isSerializated ? AppString.serializated : AppString.finish}',
@@ -356,39 +355,24 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                               title,
                             ),
                           ),
-                          sortType.value == SortTypeEnum.desc.index
-                              ? TextButton.icon(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(fontSize: 14),
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                  ),
-                                  onPressed: () {
-                                    sortType.value = SortTypeEnum.asc.index;
-                                    item.sort();
-                                  },
-                                  icon: const Icon(
-                                    Remix.sort_desc,
-                                    size: 20,
-                                  ),
-                                  label: const Text(AppString.desc),
-                                )
-                              : TextButton.icon(
-                                  style: TextButton.styleFrom(
-                                    textStyle: const TextStyle(fontSize: 14),
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                  ),
-                                  onPressed: () {
-                                    sortType.value = SortTypeEnum.desc.index;
-                                    item.sort();
-                                  },
-                                  icon: const Icon(
-                                    Remix.sort_asc,
-                                    size: 20,
-                                  ),
-                                  label: const Text(AppString.asc),
-                                ),
+                          TextButton.icon(
+                            style: TextButton.styleFrom(
+                              textStyle: const TextStyle(fontSize: 14),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            onPressed: () {
+                              sortType.value = SortTypeEnum.asc.index;
+                              item.sort();
+                            },
+                            icon: const Icon(
+                              Icons.sort,
+                              size: 20,
+                            ),
+                            label: Text(
+                                sortType.value == SortTypeEnum.desc.index
+                                    ? AppString.desc
+                                    : AppString.asc),
+                          ),
                         ],
                       ),
                       LayoutBuilder(

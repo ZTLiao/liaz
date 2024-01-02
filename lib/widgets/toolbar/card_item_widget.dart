@@ -3,7 +3,6 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/card_item_model.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
-import 'package:remixicon/remixicon.dart';
 
 class CardItemWidget extends StatelessWidget {
   final CardItemModel card;
@@ -43,7 +42,7 @@ class CardItemWidget extends StatelessWidget {
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
-                        Remix.user_line,
+                        Icons.account_circle,
                         color: Colors.grey,
                         size: 18,
                       )),
@@ -61,7 +60,7 @@ class CardItemWidget extends StatelessWidget {
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
-                        Remix.price_tag_3_line,
+                        Icons.label,
                         color: Colors.grey,
                         size: 18,
                       )),
@@ -79,7 +78,7 @@ class CardItemWidget extends StatelessWidget {
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
-                        Remix.star_line,
+                        Icons.star,
                         color: Colors.grey,
                         size: 18,
                       )),
@@ -97,7 +96,7 @@ class CardItemWidget extends StatelessWidget {
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
-                        Remix.time_line,
+                        Icons.schedule,
                         color: Colors.grey,
                         size: 18,
                       )),
@@ -118,7 +117,7 @@ class CardItemWidget extends StatelessWidget {
                 children: [
                   AppStyle.vGap12,
                   IconButton(
-                    icon: const Icon(Remix.book_open_line),
+                    icon: const Icon(Icons.auto_stories),
                     onPressed: () {
                       if (onOpen != null) {
                         onOpen!(card.objId);

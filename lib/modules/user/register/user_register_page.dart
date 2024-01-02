@@ -6,7 +6,6 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/gender_enum.dart';
 import 'package:liaz/modules/user/register/user_register_controller.dart';
-import 'package:remixicon/remixicon.dart';
 
 class UserRegisterPage extends StatelessWidget {
   final UserRegisterController controller;
@@ -154,8 +153,8 @@ class UserRegisterPage extends StatelessWidget {
           suffixIcon: IconButton(
             icon: Icon(
               controller.isShowPassword.value
-                  ? Remix.eye_close_line
-                  : Remix.eye_line,
+                  ? Icons.visibility_off
+                  : Icons.visibility,
               color: Colors.grey,
             ),
             onPressed: () {
@@ -242,7 +241,7 @@ class UserRegisterPage extends StatelessWidget {
                 controller.gender.value = GenderEnum.male.index;
               },
               icon: Icon(
-                Remix.men_line,
+                Icons.male,
                 color: controller.gender.value == GenderEnum.male.index
                     ? Colors.cyan
                     : (Get.isDarkMode ? Colors.white70 : Colors.black45),
@@ -270,7 +269,7 @@ class UserRegisterPage extends StatelessWidget {
                 controller.gender.value = GenderEnum.female.index;
               },
               icon: Icon(
-                Remix.women_line,
+                Icons.female,
                 color: controller.gender.value == GenderEnum.female.index
                     ? Colors.cyan
                     : (Get.isDarkMode ? Colors.white70 : Colors.black45),

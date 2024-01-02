@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/utils/str_util.dart';
-import 'package:remixicon/remixicon.dart';
 
 class SearchAppBar extends StatelessWidget {
   final String hintText;
@@ -32,7 +31,7 @@ class SearchAppBar extends StatelessWidget {
             width: 32,
             height: 24,
             child: Icon(
-              Remix.search_line,
+              Icons.search,
               size: 16,
               color: AppColor.grey99,
             ), //搜索框图标

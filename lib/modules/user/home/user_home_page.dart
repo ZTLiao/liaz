@@ -7,7 +7,6 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/widgets/toolbar/user_photo.dart';
-import 'package:remixicon/remixicon.dart';
 
 class UserHomePage extends GetView<UserHomeController> {
   final int index;
@@ -51,7 +50,7 @@ class UserHomePage extends GetView<UserHomeController> {
                   const SizedBox(
                     width: 100,
                     child: Icon(
-                      Remix.settings_2_line,
+                      Icons.settings,
                       color: Colors.grey,
                     ),
                   ),
@@ -63,7 +62,9 @@ class UserHomePage extends GetView<UserHomeController> {
                   Visibility(
                     visible: true,
                     child: ListTile(
-                      leading: const Icon(Remix.history_line),
+                      leading: const Icon(
+                        Icons.work_history,
+                      ),
                       title: const Text(AppString.browse),
                       trailing: const Icon(
                         Icons.chevron_right,
@@ -75,7 +76,9 @@ class UserHomePage extends GetView<UserHomeController> {
                   Visibility(
                     visible: true,
                     child: ListTile(
-                      leading: const Icon(Remix.chat_smile_2_line),
+                      leading: const Icon(
+                        Icons.chat,
+                      ),
                       title: const Text(AppString.comment),
                       trailing: const Icon(
                         Icons.chevron_right,
@@ -85,7 +88,9 @@ class UserHomePage extends GetView<UserHomeController> {
                     ),
                   ),
                   ListTile(
-                    leading: const Icon(Remix.star_line),
+                    leading: const Icon(
+                      Icons.star,
+                    ),
                     title: const Text(AppString.localComic),
                     trailing: const Icon(
                       Icons.chevron_right,
@@ -94,7 +99,9 @@ class UserHomePage extends GetView<UserHomeController> {
                     onTap: () {},
                   ),
                   ListTile(
-                    leading: const Icon(Remix.download_line),
+                    leading: const Icon(
+                      Icons.download,
+                    ),
                     title: const Text(AppString.download),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -133,7 +140,9 @@ class UserHomePage extends GetView<UserHomeController> {
                 context,
                 children: [
                   ListTile(
-                    leading: const Icon(Remix.settings_line),
+                    leading: const Icon(
+                      Icons.settings,
+                    ),
                     title: const Text(AppString.settings),
                     trailing: const Icon(
                       Icons.chevron_right,
@@ -142,7 +151,9 @@ class UserHomePage extends GetView<UserHomeController> {
                     onTap: () {},
                   ),
                   ListTile(
-                    leading: const Icon(Remix.github_fill),
+                    leading: const Icon(
+                      Icons.email,
+                    ),
                     title: const Text(AppString.messageBoard),
                     trailing: const Icon(
                       Icons.chevron_right,
@@ -151,7 +162,9 @@ class UserHomePage extends GetView<UserHomeController> {
                     onTap: () {},
                   ),
                   ListTile(
-                    leading: const Icon(Remix.error_warning_line),
+                    leading: const Icon(
+                      Icons.report_problem,
+                    ),
                     title: const Text(AppString.disclaimer),
                     trailing: const Icon(
                       Icons.chevron_right,
@@ -160,7 +173,9 @@ class UserHomePage extends GetView<UserHomeController> {
                     onTap: () {},
                   ),
                   ListTile(
-                    leading: const Icon(Remix.upload_2_line),
+                    leading: const Icon(
+                      Icons.upload,
+                    ),
                     title: const Text(AppString.checkUpdate),
                     trailing: const Icon(
                       Icons.chevron_right,
@@ -169,7 +184,9 @@ class UserHomePage extends GetView<UserHomeController> {
                     onTap: () {},
                   ),
                   ListTile(
-                    leading: const Icon(Remix.information_line),
+                    leading: const Icon(
+                      Icons.info_outline,
+                    ),
                     title: const Text(AppString.aboutAPP),
                     trailing: const Icon(
                       Icons.chevron_right,

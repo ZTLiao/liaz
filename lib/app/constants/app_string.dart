@@ -1,6 +1,8 @@
 class AppString {
   static const appName = 'LIAZ';
   static const home = '首页';
+  static const category = '分类';
+  static const bookshelf = '书架';
   static const comic = '漫画';
   static const novel = '小说';
   static const mine = '我的';
@@ -25,7 +27,7 @@ class AppString {
   static const searchAlert = '搜索 漫画/小说';
   static const hotSearch = '热门搜索';
   static const historySearch = '历史搜索';
-  static const bookshelf = '我的书架';
+  static const myBookshelf = '我的书架';
   static const operate = '操作';
   static const updateSort = '按更新时间排序';
   static const subscribeSort = '按订阅时间排序';

@@ -6,7 +6,6 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/modules/search/home/search_home_controller.dart';
 import 'package:liaz/widgets/toolbar/search_app_bar.dart';
-import 'package:remixicon/remixicon.dart';
 
 class SearchHomePage extends StatelessWidget {
   final SearchHomeController controller;
@@ -47,7 +46,7 @@ class SearchHomePage extends StatelessWidget {
                 Container(
                   padding: AppStyle.edgeInsetsH12.copyWith(bottom: 12),
                   child: const Icon(
-                    Remix.delete_bin_line,
+                    Icons.delete_forever,
                     size: 16,
                     color: AppColor.grey99,
                   ),
@@ -152,7 +151,7 @@ class SearchHomePage extends StatelessWidget {
                             height: 24,
                             child: i < 5
                                 ? const Icon(
-                                    Remix.fire_fill,
+                                    Icons.local_fire_department,
                                     size: 16,
                                     color: Color.fromRGBO(255, 148, 6, 1),
                                   )

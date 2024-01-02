@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
-import 'package:remixicon/remixicon.dart';
 
 class UserPhoto extends StatelessWidget {
   final String? url;
@@ -31,7 +30,7 @@ class UserPhoto extends StatelessWidget {
           borderRadius: AppStyle.radius32,
         ),
         child: const Icon(
-          Remix.user_fill,
+          Icons.person,
           color: Colors.white,
           size: 24,
         ),

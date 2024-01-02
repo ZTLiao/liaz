@@ -25,7 +25,6 @@ import 'package:liaz/widgets/toolbar/net_image.dart';
 import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
 import 'package:liaz/widgets/toolbar/title_widget.dart';
 import 'package:liaz/widgets/toolbar/two_box_grid_widget.dart';
-import 'package:remixicon/remixicon.dart';
 
 class NovelDetailPage extends GetView<NovelDetailController> {
   const NovelDetailPage({super.key});
@@ -80,7 +79,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                   onPressed: controller.subscribe,
                   icon: Obx(
                     () => Icon(
-                      Remix.heart_3_fill,
+                      Icons.favorite,
                       color: controller.isSubscribe.value ? Colors.red : null,
                     ),
                   ),
@@ -129,7 +128,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.user_line,
+                          iconData: Icons.person,
                           children: [
                             Text(
                               StrUtil.listToStr(
@@ -138,7 +137,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.price_tag_3_line,
+                          iconData: Icons.label,
                           children: [
                             Text(
                               StrUtil.listToStr(
@@ -147,7 +146,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.fire_line,
+                          iconData: Icons.local_fire_department,
                           children: [
                             Text(
                               '${AppString.popularNum} ${controller.detail.hitNum}',
@@ -155,7 +154,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.heart_3_line,
+                          iconData: Icons.favorite,
                           children: [
                             Text(
                               '${AppString.subscribeNum} ${controller.detail.subscribeNum}',
@@ -163,7 +162,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           ],
                         ),
                         IconItemWidget(
-                          iconData: Remix.time_line,
+                          iconData: Icons.schedule,
                           children: [
                             Text(
                               '${DateUtil.formatDate(controller.detail.updated)} ${controller.detail.isSerializated ? AppString.serializated : AppString.finish}',
@@ -397,7 +396,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                                                       i, volume);
                                                 },
                                                 icon: const Icon(
-                                                  Remix.information_line,
+                                                  Icons.info_outline,
                                                   color: AppColor.grey99,
                                                 ),
                                               ),
