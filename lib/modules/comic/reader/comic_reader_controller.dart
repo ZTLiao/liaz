@@ -76,9 +76,6 @@ class ComicReaderController extends BaseController {
   /// 当前页面
   var currentIndex = RxInt(0);
 
-  /// 初始化
-  var initialIndex = 0;
-
   /// 阅读方向
   var direction = RxInt(0);
 
@@ -276,8 +273,8 @@ class ComicReaderController extends BaseController {
       direction: comicChapter.direction,
       isLocal: false,
     );
-    currentIndex.value = initialIndex;
-    jumpToPage(initialIndex);
+    currentIndex.value = comicChapter.currentIndex;
+    jumpToPage(currentIndex.value);
   }
 
   void jumpToPage(int page, {bool anime = false}) {

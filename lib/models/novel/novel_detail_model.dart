@@ -24,6 +24,8 @@ class NovelDetailModel {
   int sortType;
   List<NovelVolumeModel> volumes;
   bool isSubscribe;
+  int browseChapterId;
+  int currentIndex;
 
   factory NovelDetailModel.empty() => NovelDetailModel(
         novelId: 0,
@@ -44,6 +46,8 @@ class NovelDetailModel {
         sortType: 0,
         volumes: [],
         isSubscribe: false,
+        browseChapterId: 0,
+        currentIndex: 0,
       );
 
   NovelDetailModel({
@@ -65,6 +69,8 @@ class NovelDetailModel {
     required this.sortType,
     required this.volumes,
     required this.isSubscribe,
+    required this.browseChapterId,
+    required this.currentIndex,
   });
 
   factory NovelDetailModel.fromJson(Map<String, dynamic> json) {
@@ -117,6 +123,8 @@ class NovelDetailModel {
       sortType: (flag & ComicFlag.sort) >> 3,
       volumes: volumes,
       isSubscribe: ConvertUtil.asT<bool>(json['isSubscribe'])!,
+      browseChapterId: ConvertUtil.asT<int>(json['browseChapterId'])!,
+      currentIndex: ConvertUtil.asT<int>(json['currentIndex'])!,
     );
   }
 
@@ -144,6 +152,8 @@ class NovelDetailModel {
       'sortType': sortType,
       'volumes': list,
       'isSubscribe': isSubscribe,
+      'browseChapterId': browseChapterId,
+      'currentIndex': currentIndex,
     };
   }
 

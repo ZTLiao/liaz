@@ -19,8 +19,11 @@ class NovelDetailController extends BaseController {
   var chapterIndex = RxInt(0);
   var content = RxString(StrUtil.empty);
 
+  var browseChapterId = RxInt(0);
+
   NovelDetailController({required this.detail}) {
     isSubscribe.value = detail.isSubscribe;
+    browseChapterId.value = detail.browseChapterId;
   }
 
   void subscribe() {
@@ -31,6 +34,16 @@ class NovelDetailController extends BaseController {
 
   void onReadChapter(NovelVolumeModel volume) {
     var chapters = volume.chapters;
+    browseChapterId.value = chapters[chapterIndex.value].novelChapterId;
+    if (chapters.isNotEmpty &&
+        chapters[chapterIndex.value].novelChapterId == detail.browseChapterId) {
+      for (var chapter in chapters) {
+        if (chapter.novelChapterId == detail.browseChapterId) {
+          chapter.currentIndex = detail.currentIndex;
+          break;
+        }
+      }
+    }
     AppNavigator.toNovelReader(
       novelChapterId: chapters[chapterIndex.value].novelChapterId,
       chapters: chapters,

@@ -14,17 +14,31 @@ class ComicDetailController extends BaseController {
   var isRelateRecommend = RxBool(false);
   var isSubscribe = RxBool(false);
 
+  var browseChapterId = RxInt(0);
+
   ComicDetailController({required this.detail}) {
     isSubscribe.value = detail.isSubscribe;
+    browseChapterId.value = detail.browseChapterId;
   }
 
   void onReadChapter(ComicChapterModel chapter) {
+    browseChapterId.value = chapter.comicChapterId;
     var chapterTypes = detail.chapterTypes;
     var chapterType = chapterTypes
         .firstWhere((element) => element.chapterType == chapter.chapterType);
+    var chapters = chapterType.chapters;
+    if (chapters.isNotEmpty &&
+        chapter.comicChapterId == detail.browseChapterId) {
+      for (var chapter in chapters) {
+        if (chapter.comicChapterId == detail.browseChapterId) {
+          chapter.currentIndex = detail.currentIndex;
+          break;
+        }
+      }
+    }
     AppNavigator.toComicReader(
       comicChapterId: chapter.comicChapterId,
-      chapters: chapterType.chapters,
+      chapters: chapters,
     );
   }
 

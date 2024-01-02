@@ -233,6 +233,9 @@ class NovelReaderController extends BaseController {
       types: types,
       direction: chapter.direction,
     );
+    if (chapter.currentIndex != 0) {
+      currentIndex.value = chapter.currentIndex;
+    }
   }
 
   /// 跳转页数
@@ -294,12 +297,17 @@ class NovelReaderController extends BaseController {
 
   @override
   void onClose() {
+    var path = StrUtil.empty;
+    var paths = detail.value.paths;
+    if (paths.isNotEmpty) {
+      path = detail.value.paths[0];
+    }
     NovelService.instance.uploadHistory(
       detail.value.novelId,
       AssetTypeEnum.novel.index,
       novelChapterId,
       detail.value.chapterName,
-      detail.value.paths[currentIndex.value],
+      path,
       currentIndex.value,
     );
     scrollController.removeListener(listenVertical);

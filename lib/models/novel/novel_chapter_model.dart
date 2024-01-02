@@ -14,6 +14,7 @@ class NovelChapterModel {
   int updatedAt;
   List<String> paths;
   List<String> types;
+  int currentIndex;
 
   NovelChapterModel({
     required this.novelChapterId,
@@ -27,6 +28,7 @@ class NovelChapterModel {
     required this.updatedAt,
     required this.paths,
     required this.types,
+    required this.currentIndex,
   });
 
   factory NovelChapterModel.empty() => NovelChapterModel(
@@ -41,6 +43,7 @@ class NovelChapterModel {
         updatedAt: 0,
         paths: [],
         types: [],
+        currentIndex: 0,
       );
 
   factory NovelChapterModel.fromJson(Map<String, dynamic> json) {
@@ -68,6 +71,7 @@ class NovelChapterModel {
       updatedAt: ConvertUtil.asT<int>(json['updatedAt'])!,
       paths: paths ?? [],
       types: types ?? [],
+      currentIndex: 0,
     );
   }
 
@@ -84,6 +88,7 @@ class NovelChapterModel {
       'updatedAt': updatedAt,
       'paths': paths,
       'types': types,
+      'currentIndex': currentIndex,
     };
   }
 

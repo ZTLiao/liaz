@@ -368,8 +368,11 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                                               overflow: TextOverflow.ellipsis,
                                               style: Get.textTheme.bodyMedium!
                                                   .copyWith(
-                                                color:
-                                                    i == 0 ? Colors.cyan : null,
+                                                color: item.novelChapterId ==
+                                                        controller.detail
+                                                            .browseChapterId
+                                                    ? Colors.cyan
+                                                    : null,
                                               ),
                                             ),
                                             Text(

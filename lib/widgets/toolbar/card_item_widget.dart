@@ -117,7 +117,7 @@ class CardItemWidget extends StatelessWidget {
                 children: [
                   AppStyle.vGap12,
                   IconButton(
-                    icon: const Icon(Icons.auto_stories),
+                    icon: const Icon(Icons.menu_book_outlined),
                     onPressed: () {
                       if (onOpen != null) {
                         onOpen!(card.objId);

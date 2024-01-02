@@ -399,8 +399,11 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                                     message: AppString.expandAll,
                                     child: OutlinedButton(
                                       style: OutlinedButton.styleFrom(
-                                        foregroundColor:
-                                            i == 0 ? Colors.cyan : Colors.grey,
+                                        foregroundColor: item.chapters[i]
+                                                    .comicChapterId ==
+                                                controller.browseChapterId.value
+                                            ? Colors.cyan
+                                            : Colors.grey,
                                         backgroundColor: Colors.white,
                                         textStyle:
                                             const TextStyle(fontSize: 14),
@@ -408,11 +411,14 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                                             MaterialTapTargetSize.shrinkWrap,
                                         minimumSize: const Size.fromHeight(40),
                                         side: BorderSide(
-                                          color: i == 0
-                                              ? Colors.cyan
-                                              : Get.isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black,
+                                          color:
+                                              item.chapters[i].comicChapterId ==
+                                                      controller
+                                                          .browseChapterId.value
+                                                  ? Colors.cyan
+                                                  : Get.isDarkMode
+                                                      ? Colors.white
+                                                      : Colors.black,
                                         ),
                                       ),
                                       onPressed: () {
@@ -427,8 +433,11 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                                   child: Obx(
                                     () => OutlinedButton(
                                       style: OutlinedButton.styleFrom(
-                                        foregroundColor:
-                                            i == 0 ? Colors.cyan : Colors.grey,
+                                        foregroundColor: item.chapters[i]
+                                                    .comicChapterId ==
+                                                controller.browseChapterId.value
+                                            ? Colors.cyan
+                                            : Colors.grey,
                                         backgroundColor: Colors.white,
                                         textStyle:
                                             const TextStyle(fontSize: 14),
@@ -436,11 +445,14 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                                             MaterialTapTargetSize.shrinkWrap,
                                         minimumSize: const Size.fromHeight(40),
                                         side: BorderSide(
-                                          color: i == 0
-                                              ? Colors.cyan
-                                              : Get.isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black,
+                                          color:
+                                              item.chapters[i].comicChapterId ==
+                                                      controller.detail
+                                                          .browseChapterId
+                                                  ? Colors.cyan
+                                                  : Get.isDarkMode
+                                                      ? Colors.white
+                                                      : Colors.black,
                                         ),
                                       ),
                                       onPressed: () {

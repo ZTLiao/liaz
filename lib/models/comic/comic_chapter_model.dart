@@ -13,6 +13,7 @@ class ComicChapterModel {
   int direction;
   int updatedAt;
   List<String> paths;
+  int currentIndex;
 
   ComicChapterModel({
     required this.comicChapterId,
@@ -25,6 +26,7 @@ class ComicChapterModel {
     required this.direction,
     required this.updatedAt,
     required this.paths,
+    required this.currentIndex,
   });
 
   factory ComicChapterModel.empty() => ComicChapterModel(
@@ -38,6 +40,7 @@ class ComicChapterModel {
         direction: 0,
         updatedAt: 0,
         paths: [],
+        currentIndex: 0,
       );
 
   factory ComicChapterModel.fromJson(Map<String, dynamic> json) {
@@ -58,6 +61,7 @@ class ComicChapterModel {
       direction: ConvertUtil.asT<int>(json['direction'])!,
       updatedAt: ConvertUtil.asT<int>(json['updatedAt'])!,
       paths: paths ?? [],
+      currentIndex: 0,
     );
   }
 
@@ -73,6 +77,7 @@ class ComicChapterModel {
       'direction': direction,
       'updatedAt': updatedAt,
       'paths': paths,
+      'currentIndex': currentIndex,
     };
   }
 
