@@ -39,6 +39,7 @@ class CardItemWidget extends StatelessWidget {
                   ),
                   AppStyle.vGap2,
                   Text.rich(
+                    maxLines: 1,
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
@@ -57,6 +58,7 @@ class CardItemWidget extends StatelessWidget {
                   ),
                   AppStyle.vGap2,
                   Text.rich(
+                    maxLines: 1,
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
@@ -68,13 +70,19 @@ class CardItemWidget extends StatelessWidget {
                         text: StrUtil.space,
                       ),
                       TextSpan(
-                          text: card.categories,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 14))
+                        text: card.categories,
+                        style: const TextStyle(
+                          height: 1.2,
+                          fontSize: 14,
+                          color: Colors.grey,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
                     ]),
                   ),
                   AppStyle.vGap2,
                   Text.rich(
+                    maxLines: 1,
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(
@@ -93,6 +101,7 @@ class CardItemWidget extends StatelessWidget {
                   ),
                   AppStyle.vGap2,
                   Text.rich(
+                    maxLines: 1,
                     TextSpan(children: [
                       const WidgetSpan(
                           child: Icon(

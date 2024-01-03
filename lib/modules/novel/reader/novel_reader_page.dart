@@ -239,7 +239,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
           padding: AppStyle.edgeInsetsA12,
           child: const Icon(
             Icons.arrow_circle_left,
-            color: Colors.blue,
+            color: Colors.cyan,
           ),
         ),
       ),
@@ -253,7 +253,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
           padding: AppStyle.edgeInsetsA12,
           child: const Icon(
             Icons.arrow_circle_right,
-            color: Colors.blue,
+            color: Colors.cyan,
           ),
         ),
       ),

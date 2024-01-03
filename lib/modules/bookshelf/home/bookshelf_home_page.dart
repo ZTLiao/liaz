@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/modules/bookshelf/home/bookshelf_home_controller.dart';
@@ -118,7 +117,7 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
                   title: item.title,
                   subTitle: item.upgradeChapter,
                   showValue: item.cover,
-                  skipType: SkipTypeEnum.h5.index,
+                  skipType: item.assetType,
                   skipValue: item.objId.toString(),
                   objId: item.objId,
                 ),
@@ -126,6 +125,7 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
             }
             return ThreeBoxGridWidget(
               items: items,
+              onTap: controller.onReadChapter,
             );
           }),
     );

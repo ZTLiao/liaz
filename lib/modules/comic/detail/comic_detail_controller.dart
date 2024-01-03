@@ -68,6 +68,20 @@ class ComicDetailController extends BaseController {
     );
   }
 
+  void startReading() {
+    isRelateRecommend.value = false;
+    if (browseChapterId.value != 0) {
+      for (var chapterType in detail.chapterTypes) {
+        for (var chapter in chapterType.chapters) {
+          if (chapter.comicChapterId == browseChapterId.value) {
+            onReadChapter(chapter);
+            break;
+          }
+        }
+      }
+    }
+  }
+
   @override
   void onClose() {
     EventBus.instance.unSubscribe(AppEvent.kUploadComicHistory);

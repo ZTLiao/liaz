@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_event.dart';
+import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -45,8 +47,17 @@ class NovelService {
           stopIndex,
         );
       });
+      EventBus.instance.publish(AppEvent.kUploadNovelHistory, chapterId);
     } catch (error, stackTrace) {
       Log.e(error.toString(), stackTrace);
     }
+  }
+
+  void onReadChapter(int novelChapterId) async {
+    var chapters = await _novelRequest.getNovelCatalogue(novelChapterId);
+    AppNavigator.toNovelReader(
+      novelChapterId: novelChapterId,
+      chapters: chapters,
+    );
   }
 }

@@ -52,4 +52,12 @@ class ComicService {
       Log.e(error.toString(), stackTrace);
     }
   }
+
+  void onReadChapter(int comicChapterId) async {
+    var chapters = await _comicRequest.getComicCatalogue(comicChapterId);
+    AppNavigator.toComicReader(
+      comicChapterId: comicChapterId,
+      chapters: chapters,
+    );
+  }
 }

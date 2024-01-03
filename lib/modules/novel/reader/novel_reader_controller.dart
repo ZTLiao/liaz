@@ -224,7 +224,7 @@ class NovelReaderController extends BaseController {
     }
     content.value = sb.toString();
     detail.value = NovelChapterItemModel(
-      novelChapterId: novelChapterId,
+      novelChapterId: chapter.novelChapterId,
       novelId: chapter.novelId,
       flag: chapter.flag,
       chapterName: chapter.chapterName,
@@ -305,7 +305,7 @@ class NovelReaderController extends BaseController {
     NovelService.instance.uploadHistory(
       detail.value.novelId,
       AssetTypeEnum.novel.index,
-      novelChapterId,
+      detail.value.novelChapterId,
       detail.value.chapterName,
       path,
       currentIndex.value,

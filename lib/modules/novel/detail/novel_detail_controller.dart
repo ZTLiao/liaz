@@ -84,6 +84,20 @@ class NovelDetailController extends BaseController {
     );
   }
 
+  void startReading() {
+    isRelateRecommend.value = false;
+    if (browseChapterId.value != 0) {
+      for (var valume in detail.volumes) {
+        for (var chapter in valume.chapters) {
+          if (chapter.novelChapterId == browseChapterId.value) {
+            onReadChapter(valume);
+            break;
+          }
+        }
+      }
+    }
+  }
+
   @override
   void onClose() {
     EventBus.instance.unSubscribe(AppEvent.kUploadNovelHistory);

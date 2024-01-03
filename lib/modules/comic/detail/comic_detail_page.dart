@@ -255,9 +255,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
             ),
             Expanded(
               child: TextButton(
-                onPressed: () {
-                  controller.isRelateRecommend.value = false;
-                },
+                onPressed: controller.startReading,
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all(
                       Size(MediaQuery.of(context).size.width / 5, 40)),
@@ -281,9 +279,11 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                     },
                   ),
                 ),
-                child: const Text(
-                  AppString.startReading,
-                  style: TextStyle(
+                child: Text(
+                  controller.browseChapterId.value != 0
+                      ? AppString.continueReading
+                      : AppString.startReading,
+                  style: const TextStyle(
                     color: Colors.cyan,
                   ),
                 ),
