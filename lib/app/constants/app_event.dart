@@ -1,5 +1,9 @@
 class AppEvent {
-  static const String navigationTopic = 'navigationTopic';
+  static const String kNavigationTopic = 'navigationTopic';
 
-  static const String userLoginTopic = 'userLoginTopic';
+  static const String kUserLoginTopic = 'userLoginTopic';
+
+  static const String kUploadComicHistory = 'uploadComicHistory';
+
+  static const String kUploadNovelHistory = 'uploadNovelHistory';
 }

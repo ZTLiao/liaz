@@ -60,7 +60,7 @@ class UserService extends GetxService {
     if (token.accessToken.isNotEmpty) {
       OAuth2TokenService.instance.put(token);
       UserService.instance.getUser(token.userId);
-      EventBus.instance.publish(AppEvent.userLoginTopic);
+      EventBus.instance.publish(AppEvent.kUserLoginTopic);
       isLogin = true;
     }
     return isLogin;

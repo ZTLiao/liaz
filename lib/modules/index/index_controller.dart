@@ -9,7 +9,7 @@ class IndexController extends GetxController {
   final GlobalKey subRouterKey = GlobalKey();
 
   void setIndex(i) {
-    EventBus.instance.publish(AppEvent.navigationTopic, i);
+    EventBus.instance.publish(AppEvent.kNavigationTopic, i);
     index.value = i;
   }
 }

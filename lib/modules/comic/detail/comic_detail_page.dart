@@ -447,8 +447,8 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                                         side: BorderSide(
                                           color:
                                               item.chapters[i].comicChapterId ==
-                                                      controller.detail
-                                                          .browseChapterId
+                                                      controller
+                                                          .browseChapterId.value
                                                   ? Colors.cyan
                                                   : Get.isDarkMode
                                                       ? Colors.white

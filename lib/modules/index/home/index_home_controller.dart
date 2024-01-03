@@ -11,14 +11,14 @@ class IndexHomeController extends GetxController
 
   @override
   void onInit() {
-    EventBus.instance.subscribe(AppEvent.navigationTopic, IndexHomeListener());
+    EventBus.instance.subscribe(AppEvent.kNavigationTopic, IndexHomeListener());
     tabController = TabController(length: AppConstant.kTabSize, vsync: this);
     super.onInit();
   }
 
   @override
   void onClose() {
-    EventBus.instance.unSubscribe(AppEvent.navigationTopic);
+    EventBus.instance.unSubscribe(AppEvent.kNavigationTopic);
     super.onClose();
   }
 }

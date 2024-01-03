@@ -27,7 +27,7 @@ class UserLoginController extends GetxController {
 
   @override
   void onInit() {
-    EventBus.instance.subscribe(AppEvent.userLoginTopic, UserLoginListener());
+    EventBus.instance.subscribe(AppEvent.kUserLoginTopic, UserLoginListener());
     super.onInit();
   }
 
@@ -46,5 +46,11 @@ class UserLoginController extends GetxController {
 
   void signUp() {
     AppNavigator.toUserRegister();
+  }
+
+  @override
+  void onClose() {
+    EventBus.instance.unSubscribe(AppEvent.kUserLoginTopic);
+    super.onClose();
   }
 }

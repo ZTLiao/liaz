@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
+import 'package:liaz/modules/comic/detail/comic_history_listener.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/user_service.dart';
 
@@ -19,6 +22,13 @@ class ComicDetailController extends BaseController {
   ComicDetailController({required this.detail}) {
     isSubscribe.value = detail.isSubscribe;
     browseChapterId.value = detail.browseChapterId;
+  }
+
+  @override
+  void onInit() {
+    EventBus.instance
+        .subscribe(AppEvent.kUploadComicHistory, ComicHistoryListener());
+    super.onInit();
   }
 
   void onReadChapter(ComicChapterModel chapter) {
@@ -56,5 +66,11 @@ class ComicDetailController extends BaseController {
       'https://www.baidu.com',
       content: detail.title,
     );
+  }
+
+  @override
+  void onClose() {
+    EventBus.instance.unSubscribe(AppEvent.kUploadComicHistory);
+    super.onClose();
   }
 }

@@ -25,7 +25,7 @@ class BookshelfHomeController
   @override
   void onInit() {
     EventBus.instance
-        .subscribe(AppEvent.navigationTopic, BookshelfHomeListener());
+        .subscribe(AppEvent.kNavigationTopic, BookshelfHomeListener());
     tabController = TabController(length: bookshelfs.length, vsync: this);
     super.onInit();
   }

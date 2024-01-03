@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_volume_model.dart';
+import 'package:liaz/modules/novel/detail/novel_history_listener.dart';
 import 'package:liaz/requests/file_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/user_service.dart';
@@ -24,6 +27,13 @@ class NovelDetailController extends BaseController {
   NovelDetailController({required this.detail}) {
     isSubscribe.value = detail.isSubscribe;
     browseChapterId.value = detail.browseChapterId;
+  }
+
+  @override
+  void onInit() {
+    EventBus.instance
+        .subscribe(AppEvent.kUploadNovelHistory, NovelHistoryListener());
+    super.onInit();
   }
 
   void subscribe() {
@@ -72,5 +82,11 @@ class NovelDetailController extends BaseController {
       'https://www.baidu.com',
       content: detail.title,
     );
+  }
+
+  @override
+  void onClose() {
+    EventBus.instance.unSubscribe(AppEvent.kUploadNovelHistory);
+    super.onClose();
   }
 }
