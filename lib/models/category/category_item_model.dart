@@ -9,6 +9,7 @@ class CategoryItemModel {
   String cover;
   int objId;
   String upgradeChapter;
+  int updatedAt;
 
   CategoryItemModel({
     required this.categoryId,
@@ -17,6 +18,7 @@ class CategoryItemModel {
     required this.cover,
     required this.objId,
     required this.upgradeChapter,
+    required this.updatedAt,
   });
 
   factory CategoryItemModel.fromJson(Map<String, dynamic> json) =>
@@ -27,6 +29,7 @@ class CategoryItemModel {
         cover: ConvertUtil.asT<String>(json['cover'])!,
         upgradeChapter: ConvertUtil.asT<String>(json['upgradeChapter'])!,
         objId: ConvertUtil.asT<int>(json['objId'])!,
+        updatedAt: ConvertUtil.asT<int>(json['updatedAt'])!,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -36,6 +39,7 @@ class CategoryItemModel {
         'cover': cover,
         'upgradeChapter': upgradeChapter,
         'objId': objId,
+        'updatedAt': updatedAt,
       };
 
   @override

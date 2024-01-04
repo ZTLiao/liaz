@@ -3,9 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
-import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/services/device_info_service.dart';
-import 'package:liaz/services/oauth2_token_service.dart';
 
 class PublicInterceptor extends Interceptor {
   @override
@@ -56,7 +54,7 @@ Response Data：${err.response?.data}''', err.stackTrace ?? StackTrace.current);
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     var time = DateTime.now().millisecondsSinceEpoch -
         response.requestOptions.extra['ts'];
-    Log.i(
+    Log.d(
       '''http response runtime:${time}ms
 Request Method：${response.requestOptions.method}
 Request Code：${response.statusCode}

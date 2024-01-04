@@ -297,8 +297,8 @@ class ComicDetailPage extends GetView<ComicDetailController> {
         ),
         AppStyle.vGap12,
         Obx(
-          () => Offstage(
-            offstage: controller.isRelateRecommend.value,
+          () => Visibility(
+            visible: !controller.isRelateRecommend.value,
             child: Column(
               children: [
                 GestureDetector(
@@ -333,8 +333,8 @@ class ComicDetailPage extends GetView<ComicDetailController> {
 
   Widget _buildChapter(BuildContext context) {
     return Obx(
-      () => Offstage(
-        offstage: controller.isRelateRecommend.value,
+      () => Visibility(
+        visible: !controller.isRelateRecommend.value,
         child: Column(
           children: (controller.detail.chapterTypes.isNotEmpty)
               ? controller.detail.chapterTypes.map((item) {
@@ -353,6 +353,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                           Expanded(
                             child: Text(
                               title,
+                              style: Get.textTheme.titleSmall,
                             ),
                           ),
                           TextButton.icon(
@@ -361,11 +362,11 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             onPressed: () {
-                              sortType.value = SortTypeEnum.asc.index;
+                              sortType.value = sortType.value == SortTypeEnum.desc.index ? SortTypeEnum.asc.index : SortTypeEnum.desc.index;
                               item.sort();
                             },
                             icon: const Icon(
-                              Icons.sort,
+                              Icons.swap_vert,
                               size: 20,
                             ),
                             label: Text(
@@ -418,7 +419,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                                                   ? Colors.cyan
                                                   : Get.isDarkMode
                                                       ? Colors.white
-                                                      : Colors.black,
+                                                      : Colors.grey,
                                         ),
                                       ),
                                       onPressed: () {
@@ -452,7 +453,7 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                                                   ? Colors.cyan
                                                   : Get.isDarkMode
                                                       ? Colors.white
-                                                      : Colors.black,
+                                                      : Colors.grey,
                                         ),
                                       ),
                                       onPressed: () {
@@ -767,11 +768,13 @@ class ComicDetailPage extends GetView<ComicDetailController> {
       }
       childrens.add(widget);
     }
-    return Obx(() => Offstage(
-          offstage: !controller.isRelateRecommend.value,
-          child: Column(
-            children: childrens,
-          ),
-        ));
+    return Obx(
+      () => Visibility(
+        visible: controller.isRelateRecommend.value,
+        child: Column(
+          children: childrens,
+        ),
+      ),
+    );
   }
 }

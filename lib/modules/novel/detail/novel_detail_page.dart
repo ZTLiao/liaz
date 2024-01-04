@@ -294,8 +294,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
         ),
         AppStyle.vGap12,
         Obx(
-          () => Offstage(
-            offstage: controller.isRelateRecommend.value,
+          () => Visibility(
+            visible: controller.isRelateRecommend.value,
             child: Column(
               children: [
                 GestureDetector(
@@ -331,8 +331,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
   Widget _buildChapter(BuildContext context) {
     var volumes = controller.detail.volumes;
     return Obx(
-      () => Offstage(
-        offstage: controller.isRelateRecommend.value,
+      () => Visibility(
+        visible: !controller.isRelateRecommend.value,
         child: Column(
           children: volumes
               .map((volume) => Column(
@@ -412,8 +412,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                                       ],
                                     ),
                                     Obx(
-                                      () => Offstage(
-                                        offstage: !(controller
+                                      () => Visibility(
+                                        visible: (controller
                                                 .isExpandPreview.value &&
                                             controller.chapterIndex.value == i),
                                         child: Container(
@@ -746,11 +746,13 @@ class NovelDetailPage extends GetView<NovelDetailController> {
       }
       childrens.add(widget);
     }
-    return Obx(() => Offstage(
-          offstage: !controller.isRelateRecommend.value,
-          child: Column(
-            children: childrens,
-          ),
-        ));
+    return Obx(
+      () => Visibility(
+        visible: controller.isRelateRecommend.value,
+        child: Column(
+          children: childrens,
+        ),
+      ),
+    );
   }
 }

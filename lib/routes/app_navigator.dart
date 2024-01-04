@@ -26,7 +26,7 @@ class AppNavigator {
 
   /// 跳转子路由页面
   static void toContentPage(String name, {dynamic arg, bool replace = false}) {
-    if (currentRouteName == name && replace) {
+    if (currentRouteName == name || replace) {
       Get.offAndToNamed(name, arguments: arg, id: kNavigatorID);
     } else {
       Get.toNamed(name, arguments: arg, id: kNavigatorID);
@@ -42,33 +42,41 @@ class AppNavigator {
     toContentPage(AppRoute.kSearch);
   }
 
-  static void toComicDetail(Map<String, dynamic> json) {
-    toContentPage(AppRoute.kComicDetail, arg: {
-      'detail': json,
-    });
+  static void toComicDetail(Map<String, dynamic> json, {bool replace = false}) {
+    toContentPage(
+      AppRoute.kComicDetail,
+      arg: {
+        'detail': json,
+      },
+      replace: replace,
+    );
   }
 
   static void toComicReader({
     required int comicChapterId,
     required List<ComicChapterModel> chapters,
   }) async {
-    await Get.toNamed(AppRoute.kComicReader, arguments: {
+    toContentPage(AppRoute.kComicReader, arg: {
       'comicChapterId': comicChapterId,
       'chapters': chapters,
     });
   }
 
-  static void toNovelDetail(Map<String, dynamic> json) {
-    toContentPage(AppRoute.kNovelDetail, arg: {
-      'detail': json,
-    });
+  static void toNovelDetail(Map<String, dynamic> json, {bool replace = false}) {
+    toContentPage(
+      AppRoute.kNovelDetail,
+      arg: {
+        'detail': json,
+      },
+      replace: replace,
+    );
   }
 
   static void toNovelReader({
     required int novelChapterId,
     required List<NovelChapterModel> chapters,
   }) async {
-    await Get.toNamed(AppRoute.kNovelReader, arguments: {
+    toContentPage(AppRoute.kNovelReader, arg: {
       'novelChapterId': novelChapterId,
       'chapters': chapters,
     });

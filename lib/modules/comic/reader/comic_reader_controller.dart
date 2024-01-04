@@ -387,8 +387,11 @@ class ComicReaderController extends BaseController {
   }
 
   onDetail() {
-    comicRequest
-        .comicDetail(detail.value.comicId)
-        .then((value) => {AppNavigator.toComicDetail(value.toJson())});
+    comicRequest.comicDetail(detail.value.comicId).then((value) => {
+          AppNavigator.toComicDetail(
+            value.toJson(),
+            replace: true,
+          )
+        });
   }
 }
