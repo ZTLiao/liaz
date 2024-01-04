@@ -6,6 +6,7 @@ class ItemModel {
   int skipType;
   String? skipValue;
   int? objId;
+  int? isUpgrade;
 
   ItemModel({
     required this.itemId,
@@ -15,5 +16,6 @@ class ItemModel {
     required this.skipType,
     this.skipValue,
     this.objId,
+    this.isUpgrade,
   });
 }

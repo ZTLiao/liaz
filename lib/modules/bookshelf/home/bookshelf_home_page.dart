@@ -120,6 +120,7 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
                   skipType: item.assetType,
                   skipValue: item.objId.toString(),
                   objId: item.objId,
+                  isUpgrade: item.isUpgrade,
                 ),
               );
             }

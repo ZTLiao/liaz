@@ -10,6 +10,7 @@ class CategoryItemModel {
   int objId;
   String upgradeChapter;
   int updatedAt;
+  int isUpgrade;
 
   CategoryItemModel({
     required this.categoryId,
@@ -19,6 +20,7 @@ class CategoryItemModel {
     required this.objId,
     required this.upgradeChapter,
     required this.updatedAt,
+    required this.isUpgrade,
   });
 
   factory CategoryItemModel.fromJson(Map<String, dynamic> json) =>
@@ -30,6 +32,7 @@ class CategoryItemModel {
         upgradeChapter: ConvertUtil.asT<String>(json['upgradeChapter'])!,
         objId: ConvertUtil.asT<int>(json['objId'])!,
         updatedAt: ConvertUtil.asT<int>(json['updatedAt'])!,
+        isUpgrade: ConvertUtil.asT<int>(json['isUpgrade'])!,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -40,6 +43,7 @@ class CategoryItemModel {
         'upgradeChapter': upgradeChapter,
         'objId': objId,
         'updatedAt': updatedAt,
+        'isUpgrade': isUpgrade,
       };
 
   @override

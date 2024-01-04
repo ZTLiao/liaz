@@ -108,4 +108,6 @@ class AppString {
   static const saveError = '保存成功';
   static const publish = '发布';
   static const at = '于';
+  static const updateTo = '更新至';
+  static const latest = 'NEW';
 }

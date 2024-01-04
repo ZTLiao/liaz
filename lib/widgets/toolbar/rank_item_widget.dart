@@ -35,13 +35,24 @@ class RankItemWidget extends StatelessWidget {
                 color: color,
                 size: 30,
               ),
-              Text(
-                index.toString(),
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                ),
-              ),
+              index <= 3
+                  ? Positioned(
+                      top: 3,
+                      child: Text(
+                        index.toString(),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  : Text(
+                      index.toString(),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
+                    ),
             ],
           ),
         ),
