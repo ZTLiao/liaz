@@ -15,10 +15,13 @@ class ComicService {
 
   final _browseRequest = BrowseRequest();
 
-  void toComicDetail(int comicId) async {
-    _comicRequest
-        .comicDetail(comicId)
-        .then((value) => {AppNavigator.toComicDetail(value.toJson())});
+  void toComicDetail(int comicId, {replace = false}) {
+    _comicRequest.comicDetail(comicId).then((value) => {
+          AppNavigator.toComicDetail(
+            value.toJson(),
+            replace: replace,
+          )
+        });
   }
 
   void uploadHistory(int objId, int assetType, int chapterId,

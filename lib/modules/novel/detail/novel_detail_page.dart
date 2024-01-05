@@ -295,7 +295,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
         AppStyle.vGap12,
         Obx(
           () => Visibility(
-            visible: controller.isRelateRecommend.value,
+            visible: !controller.isRelateRecommend.value,
             child: Column(
               children: [
                 GestureDetector(

@@ -42,13 +42,14 @@ class UserService extends GetxService {
     return box.values.firstOrNull;
   }
 
-  Future<void> getUser(userId) async {
+  Future<User?> getUser(userId) async {
     var user = get();
     user ??= await _userRequest.getUser(userId);
     if (user == null) {
-      return;
+      return null;
     }
     put(user);
+    return user;
   }
 
   Future<bool> signIn(String username, String password) async {

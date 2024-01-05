@@ -44,6 +44,20 @@ class User {
     this.city,
   });
 
+  factory User.empty() => User(
+        userId: 0,
+        username: '',
+        nickname: '',
+        phone: '',
+        email: '',
+        avatar: '',
+        description: '',
+        gender: 0,
+        country: '',
+        province: '',
+        city: '',
+      );
+
   factory User.fromJson(Map<String, dynamic> json) => User(
         userId: ConvertUtil.asT<int>(json['userId'])!,
         username: ConvertUtil.asT<String>(json['username'])!,

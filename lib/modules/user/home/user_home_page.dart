@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/app/global/global.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
+import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/toolbar/user_photo.dart';
 
 class UserHomePage extends GetView<UserHomeController> {
@@ -16,7 +17,20 @@ class UserHomePage extends GetView<UserHomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: Get.isDarkMode ? Colors.black : AppColor.backgroundColor,
+      appBar: AppBar(
+        title: Container(
+          alignment: Alignment.centerRight,
+          child: IconButton(
+            icon: const Icon(
+              Icons.settings,
+              color: Colors.grey,
+            ),
+            onPressed: () {},
+          ),
+        ),
+      ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: Get.isDarkMode
             ? SystemUiOverlayStyle.light.copyWith(
@@ -27,7 +41,6 @@ class UserHomePage extends GetView<UserHomeController> {
               ),
         child: SafeArea(
           child: ListView(
-            padding: AppStyle.edgeInsetsA4,
             children: [
               Row(
                 children: [
@@ -35,23 +48,20 @@ class UserHomePage extends GetView<UserHomeController> {
                     child: Visibility(
                       visible: true,
                       child: ListTile(
-                        leading: const UserPhoto(
-                          url: StrUtil.empty,
+                        leading: UserPhoto(
+                          url: controller.user.value.avatar,
                           size: 48,
                         ),
-                        title: const Text(
-                          AppString.notLogin,
-                          style: TextStyle(height: 7.0),
+                        title: Text(
+                          Global.isUserLogin
+                              ? controller.user.value.nickname
+                              : AppString.notLogin,
+                          style: const TextStyle(
+                            height: 3.0,
+                          ),
                         ),
-                        onTap: () {},
+                        onTap: UserService.instance.check,
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 100,
-                    child: Icon(
-                      Icons.settings,
-                      color: Colors.grey,
                     ),
                   ),
                 ],

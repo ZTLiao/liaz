@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -141,10 +143,29 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                           AppStyle.hGap12,
                           Expanded(
                             child: Text(
-                              controller.chapters[controller.chapterIndex.value]
-                                  .chapterName,
+                              controller.detail.value.chapterName,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Expanded(
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                                const Text(
+                                  AppString.detail,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.panorama_fish_eye,
+                                  ),
+                                  onPressed: controller.onDetail,
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -188,7 +209,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                                   ),
                                   Expanded(
                                     child: IconButton(
-                                      onPressed: controller.showMenu,
+                                      onPressed: controller.showCatalogue,
                                       icon: const Icon(
                                         Icons.list,
                                       ),

@@ -8,16 +8,20 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
+import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/constants/file_type.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_item_model.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
+import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/novel_service.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class NovelReaderController extends BaseController {
   final int novelChapterId;
@@ -291,7 +295,73 @@ class NovelReaderController extends BaseController {
     ));
   }
 
-  void showMenu() {}
+  void showCatalogue() async {
+    setShowControls();
+    showModalBottomSheet(
+      context: Get.context!,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
+      constraints: const BoxConstraints(
+        maxWidth: 500,
+      ),
+      backgroundColor: AppStyle.darkTheme.scaffoldBackgroundColor,
+      builder: (context) => Theme(
+        data: AppStyle.darkTheme,
+        child: Column(
+          children: [
+            ListTile(
+              title: Text('${AppString.catalogue}(${chapters.length})'),
+              trailing: IconButton(
+                onPressed: Get.back,
+                icon: const Icon(Icons.close),
+              ),
+              contentPadding: AppStyle.edgeInsetsL12,
+            ),
+            Divider(
+              height: 1.0,
+              color: Colors.grey.withOpacity(.2),
+            ),
+            Expanded(
+              child: ScrollablePositionedList.separated(
+                initialScrollIndex: chapterIndex.value,
+                itemCount: chapters.length,
+                separatorBuilder: (_, i) => Divider(
+                  indent: 12,
+                  endIndent: 12,
+                  height: 1.0,
+                  color: Colors.grey.withOpacity(.2),
+                ),
+                itemBuilder: (_, i) {
+                  var item = chapters[i];
+                  return ListTile(
+                    selected: i == chapterIndex.value,
+                    title: Text(item.chapterName),
+                    subtitle: item.updatedAt != 0
+                        ? Text(
+                            '${AppString.updateAt}${DateUtil.formatDate(item.updatedAt)}',
+                          )
+                        : null,
+                    onTap: () {
+                      chapterIndex.value = i;
+                      loadContent();
+                      Get.back();
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      routeSettings: const RouteSettings(
+        name: AppRoute.kModalBottomSheet,
+      ),
+    );
+  }
 
   void showSettings() {}
 
@@ -322,6 +392,13 @@ class NovelReaderController extends BaseController {
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.edgeToEdge,
       overlays: SystemUiOverlay.values,
+    );
+  }
+
+  void onDetail() {
+    NovelService.instance.toNovelDetail(
+      detail.value.novelId,
+      replace: true,
     );
   }
 }

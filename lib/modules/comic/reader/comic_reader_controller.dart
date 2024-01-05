@@ -16,8 +16,6 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/models/comic/comic_chapter_item_model.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
-import 'package:liaz/requests/comic_request.dart';
-import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/comic_service.dart';
@@ -93,8 +91,6 @@ class ComicReaderController extends BaseController {
 
   /// 显示电量
   RxBool showBattery = RxBool(true);
-
-  var comicRequest = ComicRequest();
 
   @override
   void onInit() {
@@ -387,11 +383,9 @@ class ComicReaderController extends BaseController {
   }
 
   onDetail() {
-    comicRequest.comicDetail(detail.value.comicId).then((value) => {
-          AppNavigator.toComicDetail(
-            value.toJson(),
-            replace: true,
-          )
-        });
+    ComicService.instance.toComicDetail(
+      detail.value.comicId,
+      replace: true,
+    );
   }
 }

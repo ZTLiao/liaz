@@ -15,10 +15,13 @@ class NovelService {
 
   final _browseRequest = BrowseRequest();
 
-  void toNovelDetail(int novelId) async {
-    _novelRequest
-        .novelDetail(novelId)
-        .then((value) => {AppNavigator.toNovelDetail(value.toJson())});
+  void toNovelDetail(int novelId, {replace = false}) {
+    _novelRequest.novelDetail(novelId).then((value) => {
+          AppNavigator.toNovelDetail(
+            value.toJson(),
+            replace: replace,
+          )
+        });
   }
 
   void uploadHistory(int objId, int assetType, int chapterId,

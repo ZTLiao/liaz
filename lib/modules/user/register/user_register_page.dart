@@ -92,10 +92,17 @@ class UserRegisterPage extends StatelessWidget {
                 top: 40,
                 left: 40,
               ),
-              child: const Icon(
-                Icons.camera_alt_outlined,
-                size: 17,
-                color: Colors.black45,
+              child: const CircleAvatar(
+                radius: 10,
+                backgroundColor: AppColor.greyf0,
+                child: CircleAvatar(
+                  radius: 10,
+                  child: Icon(
+                    Icons.camera_alt_outlined,
+                    size: 16,
+                    color: Colors.black45,
+                  ),
+                ),
               ),
             ),
           ],
