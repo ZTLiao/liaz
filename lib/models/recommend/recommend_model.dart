@@ -5,6 +5,7 @@ import 'package:liaz/models/recommend/recommend_item_model.dart';
 
 class RecommendModel {
   int recommendId;
+  int recommendType;
   String title;
   int showType;
   bool isShowTitle;
@@ -14,6 +15,7 @@ class RecommendModel {
 
   RecommendModel({
     required this.recommendId,
+    required this.recommendType,
     required this.title,
     required this.showType,
     required this.isShowTitle,
@@ -35,6 +37,7 @@ class RecommendModel {
     }
     return RecommendModel(
       recommendId: ConvertUtil.asT<int>(json['recommendId'])!,
+      recommendType: ConvertUtil.asT<int>(json['recommendType'])!,
       title: ConvertUtil.asT<String>(json['title'])!,
       showType: ConvertUtil.asT<int>(json['showType'])!,
       isShowTitle: ConvertUtil.asT<bool>(json['isShowTitle'])!,
@@ -45,6 +48,8 @@ class RecommendModel {
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
+        'recommendId': recommendId,
+        'recommendType': recommendType,
         'title': title,
         'showType': showType,
         'isShowTitle': isShowTitle,

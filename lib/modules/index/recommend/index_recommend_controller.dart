@@ -1,4 +1,5 @@
 import 'package:liaz/app/controller/base_page_controller.dart';
+import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/recommend_position_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/models/dto/item_model.dart';
@@ -25,10 +26,34 @@ class IndexRecommendController extends BasePageController<RecommendModel> {
       AppNavigator.toWebView(skipValue!);
       //漫画
     } else if (SkipTypeEnum.comic.index == skipType) {
-      ComicService.instance.toComicDetail(int.parse(skipValue!));
+      ComicService.instance.onReadChapter(int.parse(skipValue!));
       //小说
     } else if (SkipTypeEnum.novel.index == skipType) {
-      NovelService.instance.toNovelDetail(int.parse(skipValue!));
+      NovelService.instance.onReadChapter(int.parse(skipValue!));
+    }
+  }
+
+  void onOperate(int recommendType, int optType, String? optValue) async {
+    if (optType == OptTypeEnum.refresh.index) {
+      var data = await getData(1, pageSize);
+      if (data.isNotEmpty) {
+        var recommend = data
+            .where((element) => element.recommendType == recommendType)
+            .firstOrNull;
+        if (recommend == null) {
+          return;
+        }
+        for (var value in list) {
+          if (value.recommendType == recommendType) {
+            value.items = recommend.items;
+            break;
+          }
+        }
+      }
+    } else {
+      if (optValue != null) {
+        AppNavigator.toContentPage(optValue);
+      }
     }
   }
 }

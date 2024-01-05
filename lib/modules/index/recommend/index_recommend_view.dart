@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/modules/index/recommend/index_recommend_controller.dart';
+import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/widgets/keep_alive_wrapper.dart';
 import 'package:liaz/widgets/toolbar/swiper_widget.dart';
 import 'package:liaz/widgets/toolbar/title_widget.dart';
@@ -49,9 +51,22 @@ class IndexRecommendView extends StatelessWidget {
               objId: item.objId,
             ));
           }
+          IconData? icon;
+          if (recommend.optType == OptTypeEnum.refresh.index) {
+            icon = Icons.refresh;
+          } else if (recommend.optType == OptTypeEnum.more.index) {
+            icon = Icons.read_more;
+          }
+          onTap() {
+            controller.onOperate(
+                recommend.recommendType, recommend.optType, recommend.optValue);
+          }
+
           if (showType == ShowTypeEnum.banner.index) {
             return TitleWidget(
+              icon: icon,
               item: title,
+              onTap: onTap,
               child: SwiperWidget(
                 items: items,
                 onTop: (item) => controller.onDetail(item),
@@ -59,17 +74,19 @@ class IndexRecommendView extends StatelessWidget {
             );
           } else if (showType == ShowTypeEnum.twoGrid.index) {
             return TitleWidget(
-              icon: Icons.read_more,
+              icon: icon,
               item: title,
+              onTap: onTap,
               child: TwoBoxGridWidget(
                 items: items,
-                onTop: (item) => controller.onDetail(item),
+                onTap: (item) => controller.onDetail(item),
               ),
             );
           } else if (showType == ShowTypeEnum.threeGrid.index) {
             return TitleWidget(
-              icon: Icons.refresh,
+              icon: icon,
               item: title,
+              onTap: onTap,
               child: ThreeBoxGridWidget(
                 items: items,
                 onTap: (item) => controller.onDetail(item),
@@ -77,8 +94,9 @@ class IndexRecommendView extends StatelessWidget {
             );
           }
           return TitleWidget(
-            icon: Icons.refresh,
+            icon: icon,
             item: title,
+            onTap: onTap,
             child: CrossListWidget(
               items: items,
               onTap: (item) => controller.onDetail(item),

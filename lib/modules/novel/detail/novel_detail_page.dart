@@ -464,6 +464,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
     var list = [
       RecommendModel(
         recommendId: 1,
+        recommendType: 1,
         title: '最近更新',
         showType: ShowTypeEnum.none.index,
         isShowTitle: true,
@@ -533,6 +534,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
       ),
       RecommendModel(
         recommendId: 3,
+        recommendType: 1,
         title: '恋爱四格',
         showType: ShowTypeEnum.none.index,
         isShowTitle: true,
@@ -587,6 +589,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
       ),
       RecommendModel(
         recommendId: 2,
+        recommendType: 1,
         title: '热门连载',
         showType: ShowTypeEnum.none.index,
         isShowTitle: true,
@@ -717,7 +720,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           item: title,
           child: TwoBoxGridWidget(
             items: items,
-            onTop: (item) =>
+            onTap: (item) =>
                 AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
           ),
         );
