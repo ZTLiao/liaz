@@ -14,6 +14,7 @@ import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/models/db/device_info.dart';
 import 'package:liaz/models/db/oauth2_token.dart';
+import 'package:liaz/models/db/search.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/routes/app_navigator.dart';
@@ -26,6 +27,7 @@ import 'package:liaz/services/device_info_service.dart';
 import 'package:liaz/services/local_storage_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/oauth2_token_service.dart';
+import 'package:liaz/services/search_service.dart';
 import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -61,6 +63,7 @@ Future<void> initHive() async {
   Hive.registerAdapter(AppConfigAdapter());
   Hive.registerAdapter(OAuth2TokenAdapter());
   Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(SearchAdapter());
 }
 
 Future<void> initServices() async {
@@ -69,6 +72,7 @@ Future<void> initServices() async {
   await Get.put(OAuth2TokenService()).init();
   await Get.put(AppConfigService()).init();
   await Get.put(UserService()).init();
+  await Get.put(SearchService()).init();
   Get.put(AppSettingsService());
   Get.put(ComicService());
   Get.put(NovelService());

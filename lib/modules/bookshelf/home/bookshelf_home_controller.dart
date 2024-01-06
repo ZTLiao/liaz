@@ -75,4 +75,10 @@ class BookshelfHomeController
       NovelService.instance.toReadChapter(item.objId!);
     }
   }
+
+  @override
+  void onClose() {
+    tabController.dispose();
+    super.onClose();
+  }
 }

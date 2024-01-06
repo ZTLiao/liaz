@@ -17,7 +17,7 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
 
   @override
   Widget build(BuildContext context) {
-    Map<int, String> types = {
+    Map<int, String> sortTypes = {
       0: AppString.updateSort,
       1: AppString.subscribeSort,
       2: AppString.readSort,
@@ -39,12 +39,12 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
                 controller.sortType.value = e;
                 controller.onRefresh();
               },
-              itemBuilder: (c) => types.keys
+              itemBuilder: (c) => sortTypes.keys
                   .map(
                     (k) => CheckedPopupMenuItem(
                       value: k,
                       checked: controller.sortType.value == k,
-                      child: Text(types[k] ?? StrUtil.empty),
+                      child: Text(sortTypes[k] ?? StrUtil.empty),
                     ),
                   )
                   .toList(),
@@ -87,8 +87,8 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
             },
           ),
           Expanded(
-            child: TabBarView(
-              controller: controller.tabController,
+            child: IndexedStack(
+              index: controller.tabController.index,
               children: [
                 buildListView(),
                 buildListView(),
@@ -105,6 +105,7 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
       child: PageListView(
           pageController: controller,
           isLoadMore: true,
+          isFirstRefresh: true,
           padding: AppStyle.edgeInsetsH12.copyWith(bottom: 12),
           itemBuilder: (context, i) {
             var list = controller.list[i];

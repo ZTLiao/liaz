@@ -38,7 +38,6 @@ class PageListView extends StatelessWidget {
                       clamping: false, infiniteOffset: 70, triggerOffset: 70)
                   : null,
               controller: pageController.easyRefreshController,
-              refreshOnStart: isFirstRefresh,
               onLoad: isLoadMore ? pageController.onLoading : null,
               onRefresh: pageController.onRefresh,
               child: ListView.separated(

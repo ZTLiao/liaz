@@ -22,13 +22,13 @@ class SearchHomePage extends StatelessWidget {
           autofocus: true,
           hintText: AppString.searchAlert,
           controller: controller.searchController,
-          onTap: () {},
+          onTap: controller.onSearch,
         ),
       ),
       body: Column(
         children: [
-          Offstage(
-            offstage: false,
+          Visibility(
+            visible: true,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -54,8 +54,8 @@ class SearchHomePage extends StatelessWidget {
               ],
             ),
           ),
-          Offstage(
-            offstage: false,
+          Visibility(
+            visible: true,
             child: Padding(
               padding: AppStyle.edgeInsetsH12.copyWith(bottom: 12),
               child: Wrap(

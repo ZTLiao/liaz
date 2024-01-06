@@ -38,119 +38,129 @@ class CardItemWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   AppStyle.vGap2,
-                  Text.rich(
-                    maxLines: 1,
-                    TextSpan(children: [
-                      const WidgetSpan(
-                          child: Icon(
-                        Icons.account_circle_outlined,
-                        color: Colors.grey,
-                        size: 18,
-                      )),
-                      const TextSpan(
-                        text: StrUtil.space,
-                      ),
-                      TextSpan(
-                          text: card.authors,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 14))
-                    ]),
-                  ),
+                  card.authors.isNotEmpty
+                      ? Text.rich(
+                          maxLines: 1,
+                          TextSpan(children: [
+                            const WidgetSpan(
+                                child: Icon(
+                              Icons.account_circle_outlined,
+                              color: Colors.grey,
+                              size: 18,
+                            )),
+                            const TextSpan(
+                              text: StrUtil.space,
+                            ),
+                            TextSpan(
+                                text: card.authors,
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 14))
+                          ]),
+                        )
+                      : const SizedBox(),
                   AppStyle.vGap2,
-                  Text.rich(
-                    maxLines: 1,
-                    TextSpan(children: [
-                      const WidgetSpan(
-                          child: Icon(
-                        Icons.label_outline,
-                        color: Colors.grey,
-                        size: 18,
-                      )),
-                      const TextSpan(
-                        text: StrUtil.space,
-                      ),
-                      TextSpan(
-                        text: card.categories,
-                        style: const TextStyle(
-                          height: 1.2,
-                          fontSize: 14,
-                          color: Colors.grey,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      )
-                    ]),
-                  ),
+                  card.categories.isNotEmpty
+                      ? Text.rich(
+                          maxLines: 1,
+                          TextSpan(children: [
+                            const WidgetSpan(
+                                child: Icon(
+                              Icons.label_outline,
+                              color: Colors.grey,
+                              size: 18,
+                            )),
+                            const TextSpan(
+                              text: StrUtil.space,
+                            ),
+                            TextSpan(
+                              text: card.categories,
+                              style: const TextStyle(
+                                height: 1.2,
+                                fontSize: 14,
+                                color: Colors.grey,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
+                          ]),
+                        )
+                      : const SizedBox(),
                   AppStyle.vGap2,
-                  Text.rich(
-                    maxLines: 1,
-                    TextSpan(children: [
-                      const WidgetSpan(
-                          child: Icon(
-                        Icons.star_outline,
-                        color: Colors.grey,
-                        size: 18,
-                      )),
-                      const TextSpan(
-                        text: StrUtil.space,
-                      ),
-                      TextSpan(
-                          text: card.upgradeChapter,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 14))
-                    ]),
-                  ),
+                  card.upgradeChapter.isNotEmpty
+                      ? Text.rich(
+                          maxLines: 1,
+                          TextSpan(children: [
+                            const WidgetSpan(
+                                child: Icon(
+                              Icons.star_outline,
+                              color: Colors.grey,
+                              size: 18,
+                            )),
+                            const TextSpan(
+                              text: StrUtil.space,
+                            ),
+                            TextSpan(
+                                text: card.upgradeChapter,
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 14))
+                          ]),
+                        )
+                      : const SizedBox(),
                   AppStyle.vGap2,
-                  Text.rich(
-                    maxLines: 1,
-                    TextSpan(children: [
-                      const WidgetSpan(
-                          child: Icon(
-                        Icons.schedule,
-                        color: Colors.grey,
-                        size: 18,
-                      )),
-                      const TextSpan(
-                        text: StrUtil.space,
-                      ),
-                      TextSpan(
-                          text: card.updateTime,
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 14))
-                    ]),
-                  ),
+                  card.updateTime.isNotEmpty
+                      ? Text.rich(
+                          maxLines: 1,
+                          TextSpan(children: [
+                            const WidgetSpan(
+                                child: Icon(
+                              Icons.schedule,
+                              color: Colors.grey,
+                              size: 18,
+                            )),
+                            const TextSpan(
+                              text: StrUtil.space,
+                            ),
+                            TextSpan(
+                                text: card.updateTime,
+                                style: const TextStyle(
+                                    color: Colors.grey, fontSize: 14))
+                          ]),
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),
-            Center(
-              child: Column(
-                children: [
-                  AppStyle.vGap12,
-                  IconButton(
-                    icon: const Icon(Icons.menu_book_outlined),
-                    onPressed: () {
-                      if (onOpen != null) {
-                        onOpen!(card.objId);
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    width: 45,
-                    child: Center(
-                      child: Text(
-                        card.upgradeChapter,
-                        maxLines: 1,
-                        style: const TextStyle(
-                          height: 1.2,
-                          fontSize: 14,
-                          color: Colors.grey,
-                          overflow: TextOverflow.ellipsis,
+            card.objId != 0
+                ? Center(
+                    child: Column(
+                      children: [
+                        AppStyle.vGap12,
+                        IconButton(
+                          icon: const Icon(Icons.menu_book_outlined),
+                          onPressed: () {
+                            if (onOpen != null) {
+                              onOpen!(card.objId);
+                            }
+                          },
                         ),
-                      ),
+                        SizedBox(
+                          width: 45,
+                          child: Center(
+                            child: Text(
+                              card.upgradeChapter,
+                              maxLines: 1,
+                              style: const TextStyle(
+                                height: 1.2,
+                                fontSize: 14,
+                                color: Colors.grey,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),
