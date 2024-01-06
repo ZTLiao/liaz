@@ -16,10 +16,13 @@ class SearchService extends GetxService {
   }
 
   Future<void> put(Search search) async {
+    if (search.key.isEmpty) {
+      return;
+    }
     await box.put(search.key, search);
   }
 
   List<Search> list() {
-    return box.values.toList();
+    return box.values.toList().reversed.toList();
   }
 }

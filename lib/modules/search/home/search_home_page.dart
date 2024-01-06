@@ -43,51 +43,57 @@ class SearchHomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  padding: AppStyle.edgeInsetsH12.copyWith(bottom: 12),
-                  child: const Icon(
-                    Icons.delete_forever,
-                    size: 16,
-                    color: AppColor.grey99,
+                Obx(
+                  () => Visibility(
+                    visible: controller.searchHistory.isNotEmpty,
+                    child: Container(
+                      padding: AppStyle.edgeInsetsH12.copyWith(bottom: 12),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.delete_forever,
+                          size: 16,
+                          color: AppColor.grey99,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Visibility(
-            visible: true,
-            child: Padding(
-              padding: AppStyle.edgeInsetsH12.copyWith(bottom: 12),
-              child: Wrap(
-                spacing: 2,
-                runSpacing: 8,
-                children: [
-                  '海贼王',
-                  '火影忍者',
-                  '死神',
-                  '银魂',
-                  '家庭教师',
-                  '犬夜叉',
-                ]
-                    .map(
-                      (e) => TextButton(
-                        style: TextButton.styleFrom(
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          backgroundColor:
-                              Get.isDarkMode ? Colors.white10 : AppColor.greyf0,
-                        ),
-                        onPressed: () {},
-                        child: Text(
-                          e,
-                          style: TextStyle(
-                            color: Get.isDarkMode
-                                ? Colors.white70
-                                : Colors.black26,
+          Obx(
+            () => Visibility(
+              visible: controller.searchHistory.isNotEmpty,
+              child: Padding(
+                padding: AppStyle.edgeInsetsH12.copyWith(bottom: 12),
+                child: Wrap(
+                  spacing: 2,
+                  runSpacing: 8,
+                  children: controller.searchHistory
+                      .map(
+                        (e) => TextButton(
+                          style: TextButton.styleFrom(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            backgroundColor: Get.isDarkMode
+                                ? Colors.white10
+                                : AppColor.greyf0,
+                          ),
+                          onPressed: () {
+                            controller.searchKey(e.key);
+                          },
+                          child: Text(
+                            e.key,
+                            style: TextStyle(
+                              color: Get.isDarkMode
+                                  ? Colors.white70
+                                  : Colors.black26,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
+                      )
+                      .toList(),
+                ),
               ),
             ),
           ),
