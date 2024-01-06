@@ -1,7 +1,6 @@
 import 'package:liaz/app/controller/base_page_controller.dart';
 import 'package:liaz/models/novel/novel_item_model.dart';
 import 'package:liaz/requests/novel_request.dart';
-import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/novel_service.dart';
 
 class NovelUpgradeController extends BasePageController<NovelItemModel> {

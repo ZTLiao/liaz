@@ -8,6 +8,7 @@ class CategoryItemModel {
   String title;
   String cover;
   int objId;
+  int chapterId;
   String upgradeChapter;
   int updatedAt;
   int isUpgrade;
@@ -18,6 +19,7 @@ class CategoryItemModel {
     required this.title,
     required this.cover,
     required this.objId,
+    required this.chapterId,
     required this.upgradeChapter,
     required this.updatedAt,
     required this.isUpgrade,
@@ -29,8 +31,9 @@ class CategoryItemModel {
         assetType: ConvertUtil.asT<int>(json['assetType'])!,
         title: ConvertUtil.asT<String>(json['title'])!,
         cover: ConvertUtil.asT<String>(json['cover'])!,
-        upgradeChapter: ConvertUtil.asT<String>(json['upgradeChapter'])!,
         objId: ConvertUtil.asT<int>(json['objId'])!,
+        chapterId: ConvertUtil.asT<int>(json['chapterId'])!,
+        upgradeChapter: ConvertUtil.asT<String>(json['upgradeChapter'])!,
         updatedAt: ConvertUtil.asT<int>(json['updatedAt'])!,
         isUpgrade: ConvertUtil.asT<int>(json['isUpgrade'])!,
       );
@@ -40,8 +43,9 @@ class CategoryItemModel {
         'assetType': assetType,
         'title': title,
         'cover': cover,
-        'upgradeChapter': upgradeChapter,
         'objId': objId,
+        'chapterId': chapterId,
+        'upgradeChapter': upgradeChapter,
         'updatedAt': updatedAt,
         'isUpgrade': isUpgrade,
       };

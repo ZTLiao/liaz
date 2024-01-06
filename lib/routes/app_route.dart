@@ -23,7 +23,7 @@ class AppRoute {
   /// 小说阅读器
   static const kNovelReader = '/novel/reader';
 
-  ///
+  /// 模态底板
   static const kModalBottomSheet = '/modalBottomSheet';
 
   /// 用户登录

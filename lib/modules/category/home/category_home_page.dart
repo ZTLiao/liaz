@@ -136,7 +136,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
                   subTitle: item.upgradeChapter,
                   showValue: item.cover,
                   skipType: item.assetType,
-                  skipValue: item.objId.toString(),
+                  skipValue: item.chapterId.toString(),
                   objId: item.objId,
                 ),
               );

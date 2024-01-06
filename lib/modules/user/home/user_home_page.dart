@@ -60,6 +60,13 @@ class UserHomePage extends GetView<UserHomeController> {
                             height: 3.0,
                           ),
                         ),
+                        trailing: const SizedBox(
+                          width: 50,
+                          child: Icon(
+                            Icons.chevron_right,
+                            color: Colors.grey,
+                          ),
+                        ),
                         onTap: UserService.instance.check,
                       ),
                     ),
@@ -73,7 +80,7 @@ class UserHomePage extends GetView<UserHomeController> {
                     visible: true,
                     child: ListTile(
                       leading: const Icon(
-                        Icons.work_history,
+                        Icons.work_history_outlined,
                       ),
                       title: const Text(AppString.browse),
                       trailing: const Icon(
@@ -83,23 +90,9 @@ class UserHomePage extends GetView<UserHomeController> {
                       onTap: () {},
                     ),
                   ),
-                  Visibility(
-                    visible: true,
-                    child: ListTile(
-                      leading: const Icon(
-                        Icons.chat,
-                      ),
-                      title: const Text(AppString.comment),
-                      trailing: const Icon(
-                        Icons.chevron_right,
-                        color: Colors.grey,
-                      ),
-                      onTap: () {},
-                    ),
-                  ),
                   ListTile(
                     leading: const Icon(
-                      Icons.star,
+                      Icons.star_outline,
                     ),
                     title: const Text(AppString.localComic),
                     trailing: const Icon(
@@ -110,7 +103,7 @@ class UserHomePage extends GetView<UserHomeController> {
                   ),
                   ListTile(
                     leading: const Icon(
-                      Icons.download,
+                      Icons.download_outlined,
                     ),
                     title: const Text(AppString.download),
                     trailing: Row(
@@ -151,18 +144,7 @@ class UserHomePage extends GetView<UserHomeController> {
                 children: [
                   ListTile(
                     leading: const Icon(
-                      Icons.settings,
-                    ),
-                    title: const Text(AppString.settings),
-                    trailing: const Icon(
-                      Icons.chevron_right,
-                      color: Colors.grey,
-                    ),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.email,
+                      Icons.chat_outlined,
                     ),
                     title: const Text(AppString.messageBoard),
                     trailing: const Icon(
@@ -173,7 +155,7 @@ class UserHomePage extends GetView<UserHomeController> {
                   ),
                   ListTile(
                     leading: const Icon(
-                      Icons.report_problem,
+                      Icons.contact_support_outlined,
                     ),
                     title: const Text(AppString.disclaimer),
                     trailing: const Icon(
@@ -184,7 +166,7 @@ class UserHomePage extends GetView<UserHomeController> {
                   ),
                   ListTile(
                     leading: const Icon(
-                      Icons.upload,
+                      Icons.upload_outlined,
                     ),
                     title: const Text(AppString.checkUpdate),
                     trailing: const Icon(
