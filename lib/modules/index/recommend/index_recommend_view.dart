@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
+import 'package:liaz/app/enums/recommend_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
@@ -29,6 +31,7 @@ class IndexRecommendView extends StatelessWidget {
         padding: AppStyle.edgeInsetsH12,
         itemBuilder: (context, i) {
           var recommend = controller.list[i];
+          var recommendType = recommend.recommendType;
           var showType = recommend.showType;
           var title = TitleModel(
             titleId: recommend.recommendId,
@@ -49,6 +52,7 @@ class IndexRecommendView extends StatelessWidget {
               skipType: item.skipType,
               skipValue: item.skipValue,
               objId: item.objId,
+              isUpgrade: recommendType == RecommendTypeEnum.mySubscribe.index ? YesOrNo.yes : YesOrNo.no,
             ));
           }
           IconData? icon;

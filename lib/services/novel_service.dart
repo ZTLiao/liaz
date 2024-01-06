@@ -56,7 +56,7 @@ class NovelService {
     }
   }
 
-  void onReadChapter(int novelChapterId) async {
+  void toReadChapter(int novelChapterId) async {
     var chapters = await _novelRequest.getNovelCatalogue(novelChapterId);
     AppNavigator.toNovelReader(
       novelChapterId: novelChapterId,

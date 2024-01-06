@@ -56,7 +56,7 @@ class ComicService {
     }
   }
 
-  void onReadChapter(int comicChapterId) async {
+  void toReadChapter(int comicChapterId) async {
     var chapters = await _comicRequest.getComicCatalogue(comicChapterId);
     AppNavigator.toComicReader(
       comicChapterId: comicChapterId,

@@ -16,6 +16,6 @@ class NovelUpgradeController extends BasePageController<NovelItemModel> {
   }
 
   void onReadChapter(int novelChapterId) async {
-    NovelService.instance.onReadChapter(novelChapterId);
+    NovelService.instance.toReadChapter(novelChapterId);
   }
 }

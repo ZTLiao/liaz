@@ -70,9 +70,9 @@ class BookshelfHomeController
   void onReadChapter(ItemModel item) {
     var skipType = item.skipType;
     if (skipType == SkipTypeEnum.comic.index) {
-      ComicService.instance.onReadChapter(item.objId!);
+      ComicService.instance.toReadChapter(item.objId!);
     } else if (skipType == SkipTypeEnum.novel.index) {
-      NovelService.instance.onReadChapter(item.objId!);
+      NovelService.instance.toReadChapter(item.objId!);
     }
   }
 }

@@ -17,6 +17,6 @@ class ComicUpgradeController extends BasePageController<ComicItemModel> {
   }
 
   void onReadChapter(int comicChapterId) async {
-    ComicService.instance.onReadChapter(comicChapterId);
+    ComicService.instance.toReadChapter(comicChapterId);
   }
 }

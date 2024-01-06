@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:liaz/app/utils/convert_util.dart';
+import 'package:liaz/app/utils/str_util.dart';
 
 class RecommendItemModel {
   int recommendItemId;
@@ -21,18 +22,25 @@ class RecommendItemModel {
     this.objId,
   });
 
-  factory RecommendItemModel.fromJson(Map<String, dynamic> json) =>
-      RecommendItemModel(
-        recommendItemId: ConvertUtil.asT<int>(json['recommendItemId'])!,
-        title: ConvertUtil.asT<String>(json['title'])!,
-        subTitle: ConvertUtil.asT<String?>(json['subTitle']),
-        showValue: ConvertUtil.asT<String>(json['showValue'])!,
-        skipType: ConvertUtil.asT<int>(json['skipType'])!,
-        skipValue: ConvertUtil.asT<String?>(json['skipValue']),
-        objId: ConvertUtil.asT<int?>(json['objId']),
-      );
+  factory RecommendItemModel.fromJson(Map<String, dynamic> json) {
+    int objId = 0;
+    var objIdStr = json['objId'];
+    if (objIdStr is String && (objIdStr).isNotEmpty) {
+      objId = int.parse(objIdStr);
+    }
+    return RecommendItemModel(
+      recommendItemId: ConvertUtil.asT<int>(json['recommendItemId'])!,
+      title: ConvertUtil.asT<String>(json['title'])!,
+      subTitle: ConvertUtil.asT<String?>(json['subTitle']),
+      showValue: ConvertUtil.asT<String>(json['showValue'])!,
+      skipType: ConvertUtil.asT<int>(json['skipType'])!,
+      skipValue: ConvertUtil.asT<String?>(json['skipValue']),
+      objId: ConvertUtil.asT<int?>(objId),
+    );
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
+        'recommendItemId': recommendItemId,
         'title': title,
         'subTitle': subTitle,
         'showValue': showValue,
