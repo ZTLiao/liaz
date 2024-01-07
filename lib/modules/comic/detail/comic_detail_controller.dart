@@ -1,17 +1,21 @@
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_event.dart';
+import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/recommend_position_enum.dart';
 import 'package:liaz/app/enums/recommend_type_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/utils/share_util.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
+import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/comic/detail/comic_history_listener.dart';
 import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/recommend_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class ComicDetailController extends BaseController {
@@ -33,18 +37,45 @@ class ComicDetailController extends BaseController {
   }
 
   @override
-  void onInit() async {
-    var relateRecommends = await recommendRequest
-        .recommendByPosition(RecommendPositionEnum.relate.index);
-    if (relateRecommends.isNotEmpty) {
-      recommends.addAll(relateRecommends
-          .where((element) =>
-              element.recommendType == RecommendTypeEnum.custom.index)
-          .toList());
-    }
+  void onInit() {
+    initRelateRecommend();
     EventBus.instance
         .subscribe(AppEvent.kUploadComicHistory, ComicHistoryListener());
     super.onInit();
+  }
+
+  void initRelateRecommend() async {
+    var relateRecommends = await recommendRequest
+        .recommendByPosition(RecommendPositionEnum.relate.index);
+    var comicRecommends = await recommendRequest.recommendComic(detail.comicId);
+    if (relateRecommends.isNotEmpty) {
+      for (var relateRecommend in relateRecommends) {
+        var recommendType = relateRecommend.recommendType;
+        if (recommendType == RecommendTypeEnum.custom.index) {
+          recommends.add(relateRecommend);
+        } else if (recommendType == RecommendTypeEnum.author.index) {
+          var authorRecommends = comicRecommends
+              .where((element) => recommendType == element.recommendType)
+              .toList();
+          for (var authorRecommend in authorRecommends) {
+            authorRecommend.recommendId = relateRecommend.recommendId;
+            authorRecommend.title =
+                authorRecommend.title + StrUtil.space + AppString.works;
+            recommends.add(authorRecommend);
+          }
+        } else if (recommendType == RecommendTypeEnum.category.index) {
+          relateRecommend.title =
+              relateRecommend.title + StrUtil.space + AppString.works;
+          var categoryRecommends = comicRecommends
+              .where((element) => recommendType == element.recommendType)
+              .toList();
+          for (var categoryRecommend in categoryRecommends) {
+            relateRecommend.items.addAll(categoryRecommend.items);
+          }
+          recommends.add(relateRecommend);
+        }
+      }
+    }
   }
 
   void onReadChapter(ComicChapterModel chapter) {
@@ -96,6 +127,10 @@ class ComicDetailController extends BaseController {
         }
       }
     }
+  }
+
+  void onDetail(ItemModel item) {
+    RecommendService.instance.onDetail(item);
   }
 
   @override

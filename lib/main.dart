@@ -27,6 +27,7 @@ import 'package:liaz/services/device_info_service.dart';
 import 'package:liaz/services/local_storage_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/oauth2_token_service.dart';
+import 'package:liaz/services/recommend_service.dart';
 import 'package:liaz/services/search_service.dart';
 import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
@@ -76,6 +77,7 @@ Future<void> initServices() async {
   Get.put(AppSettingsService());
   Get.put(ComicService());
   Get.put(NovelService());
+  Get.put(RecommendService());
 }
 
 class AppScrollBehavior extends MaterialScrollBehavior {

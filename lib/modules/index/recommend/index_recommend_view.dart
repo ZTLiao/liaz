@@ -64,6 +64,8 @@ class IndexRecommendView extends StatelessWidget {
             icon = Icons.refresh;
           } else if (recommend.optType == OptTypeEnum.more.index) {
             icon = Icons.read_more;
+          } else if (recommend.optType == OptTypeEnum.jump.index) {
+            icon = Icons.chevron_right;
           }
           onTap() {
             controller.onOperate(

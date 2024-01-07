@@ -466,299 +466,78 @@ class NovelDetailPage extends GetView<NovelDetailController> {
   }
 
   Widget _buildRecommend(BuildContext context) {
-    var list = [
-      RecommendModel(
-        recommendId: 1,
-        recommendType: 1,
-        title: '最近更新',
-        showType: ShowTypeEnum.none.index,
-        isShowTitle: true,
-        optType: OptTypeEnum.none.index,
-        items: [
-          RecommendItemModel(
-            recommendItemId: 4,
-            title: '最弱的我用“穿墙bug”变强',
-            subTitle: '作者:畑优以/北川ニキタ',
-            showValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 4,
-            title: '最弱的我用“穿墙bug”变强',
-            subTitle: '作者:畑优以/北川ニキタ',
-            showValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 4,
-            title: '最弱的我用“穿墙bug”变强',
-            subTitle: '作者:畑优以/北川ニキタ',
-            showValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 4,
-            title: '最弱的我用“穿墙bug”变强',
-            subTitle: '作者:畑优以/北川ニキタ',
-            showValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 4,
-            title: '最弱的我用“穿墙bug”变强',
-            subTitle: '作者:畑优以/北川ニキタ',
-            showValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 4,
-            title: '最弱的我用“穿墙bug”变强',
-            subTitle: '作者:畑优以/北川ニキタ',
-            showValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/4/zuiruodewoyongchuanqiangbugbianqiang230720.jpg',
-          ),
-        ],
-      ),
-      RecommendModel(
-        recommendId: 3,
-        recommendType: 1,
-        title: '恋爱四格',
-        showType: ShowTypeEnum.none.index,
-        isShowTitle: true,
-        optType: OptTypeEnum.none.index,
-        items: [
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '恋爱四格小剧场',
-            showValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '恋爱四格小剧场',
-            showValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '恋爱四格小剧场',
-            showValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '恋爱四格小剧场',
-            showValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '恋爱四格小剧场',
-            showValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/tuijian/320_170/160802lianaisige.jpg',
-          ),
-        ],
-      ),
-      RecommendModel(
-        recommendId: 2,
-        recommendType: 1,
-        title: '热门连载',
-        showType: ShowTypeEnum.none.index,
-        isShowTitle: true,
-        optType: OptTypeEnum.none.index,
-        items: [
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '天才魔女没魔了',
-            subTitle: '作者:辻岛もと',
-            showValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '天才魔女没魔了',
-            subTitle: '作者:辻岛もと',
-            showValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '天才魔女没魔了',
-            subTitle: '作者:辻岛もと',
-            showValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '天才魔女没魔了',
-            subTitle: '作者:辻岛もと',
-            showValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '天才魔女没魔了',
-            subTitle: '作者:辻岛もと',
-            showValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '天才魔女没魔了',
-            subTitle: '作者:辻岛もと',
-            showValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '天才魔女没魔了',
-            subTitle: '作者:辻岛もと',
-            showValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '天才魔女没魔了',
-            subTitle: '作者:辻岛もと',
-            showValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-          ),
-          RecommendItemModel(
-            recommendItemId: 1,
-            title: '天才魔女没魔了',
-            subTitle: '作者:辻岛もと',
-            showValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-            skipType: SkipTypeEnum.h5.index,
-            skipValue:
-                'https://images.dmzj.com/webpic/14/tiancaimonvmeimole20230519.jpg',
-          ),
-        ],
-      ),
-    ];
-    var childrens = <Widget>[];
-    for (RecommendModel recommend in list) {
-      var showType = recommend.showType;
-      var title = TitleModel(
-        titleId: recommend.recommendId,
-        title: recommend.title,
-        showType: recommend.showType,
-        isShowTitle: recommend.isShowTitle,
-        optType: recommend.optType,
-        optValue: recommend.optValue,
-      );
-      var items = <ItemModel>[];
-      for (var i = 0; i < recommend.items.length; i++) {
-        var item = recommend.items[i];
-        items.add(ItemModel(
-          itemId: item.recommendItemId,
-          title: item.title,
-          subTitle: item.subTitle,
-          showValue: item.showValue,
-          skipType: item.skipType,
-          skipValue: item.skipValue,
-          objId: item.objId,
-        ));
-      }
-      Widget widget;
-      if (showType == ShowTypeEnum.twoGrid.index) {
-        widget = TitleWidget(
-          icon: Icons.chevron_right,
-          color: Colors.grey,
-          item: title,
-          child: TwoBoxGridWidget(
-            items: items,
-            onTap: (item) =>
-                AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
-          ),
-        );
-      } else if (showType == ShowTypeEnum.threeGrid.index) {
-        widget = TitleWidget(
-          icon: Icons.chevron_right,
-          color: Colors.grey,
-          item: title,
-          child: ThreeBoxGridWidget(
-            items: items,
-            onTap: (item) =>
-                AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
-          ),
-        );
-      } else {
-        widget = TitleWidget(
-          icon: Icons.chevron_right,
-          color: Colors.grey,
-          item: title,
-          child: CrossListWidget(
-            items: items,
-            onTap: (item) =>
-                AppNavigator.toComicDetail(ComicDetailModel.empty().toJson()),
-          ),
-        );
-      }
-      childrens.add(widget);
-    }
     return Obx(
       () => Visibility(
         visible: controller.isRelateRecommend.value,
         child: Column(
-          children: childrens,
+          children: controller.recommends.map((element) {
+            var showType = element.showType;
+            var title = TitleModel(
+              titleId: element.recommendId,
+              title: element.title,
+              showType: element.showType,
+              isShowTitle: element.isShowTitle,
+              optType: element.optType,
+              optValue: element.optValue,
+            );
+            var items = <ItemModel>[];
+            for (var i = 0; i < element.items.length; i++) {
+              var item = element.items[i];
+              items.add(ItemModel(
+                itemId: item.recommendItemId,
+                title: item.title,
+                subTitle: item.subTitle,
+                showValue: item.showValue,
+                skipType: item.skipType,
+                skipValue: item.skipValue,
+                objId: item.objId,
+              ));
+            }
+            if (items.isEmpty) {
+              return const SizedBox();
+            }
+            IconData? icon;
+            if (element.optType == OptTypeEnum.refresh.index) {
+              icon = Icons.refresh;
+            } else if (element.optType == OptTypeEnum.more.index) {
+              icon = Icons.read_more;
+            } else if (element.optType == OptTypeEnum.jump.index) {
+              icon = Icons.chevron_right;
+            }
+            Widget widget;
+            if (showType == ShowTypeEnum.twoGrid.index) {
+              widget = TitleWidget(
+                icon: icon,
+                color: Colors.grey,
+                item: title,
+                child: TwoBoxGridWidget(
+                  items: items,
+                  onTap: controller.onDetail,
+                ),
+              );
+            } else if (showType == ShowTypeEnum.threeGrid.index) {
+              widget = TitleWidget(
+                icon: icon,
+                color: Colors.grey,
+                item: title,
+                child: ThreeBoxGridWidget(
+                  items: items,
+                  onTap: controller.onDetail,
+                ),
+              );
+            } else {
+              widget = TitleWidget(
+                icon: icon,
+                color: Colors.grey,
+                item: title,
+                child: CrossListWidget(
+                  items: items,
+                  onTap: controller.onDetail,
+                ),
+              );
+            }
+            return widget;
+          }).toList(),
         ),
       ),
     );

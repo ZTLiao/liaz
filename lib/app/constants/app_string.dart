@@ -110,4 +110,5 @@ class AppString {
   static const at = '于';
   static const updateTo = '更新至';
   static const latest = 'NEW';
+  static const works = '作品';
 }

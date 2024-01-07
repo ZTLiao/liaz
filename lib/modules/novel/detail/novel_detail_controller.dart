@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_event.dart';
+import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/recommend_position_enum.dart';
@@ -8,6 +9,7 @@ import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_volume_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
@@ -15,6 +17,7 @@ import 'package:liaz/modules/novel/detail/novel_history_listener.dart';
 import 'package:liaz/requests/file_request.dart';
 import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/recommend_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class NovelDetailController extends BaseController {
@@ -40,17 +43,42 @@ class NovelDetailController extends BaseController {
 
   @override
   void onInit() async {
-    var relateRecommends = await recommendRequest
-        .recommendByPosition(RecommendPositionEnum.relate.index);
-    if (relateRecommends.isNotEmpty) {
-      recommends.addAll(relateRecommends
-          .where((element) =>
-              element.recommendType == RecommendTypeEnum.custom.index)
-          .toList());
-    }
+    initRelateRecommend();
     EventBus.instance
         .subscribe(AppEvent.kUploadNovelHistory, NovelHistoryListener());
     super.onInit();
+  }
+
+  void initRelateRecommend() async {
+    var relateRecommends = await recommendRequest
+        .recommendByPosition(RecommendPositionEnum.relate.index);
+    var novelRecommends = await recommendRequest.recommendNovel(detail.novelId);
+    if (relateRecommends.isNotEmpty) {
+      for (var relateRecommend in relateRecommends) {
+        var recommendType = relateRecommend.recommendType;
+        if (recommendType == RecommendTypeEnum.custom.index) {
+          recommends.add(relateRecommend);
+        } else if (recommendType == RecommendTypeEnum.author.index) {
+          var authorRecommends = novelRecommends
+              .where((element) => recommendType == element.recommendType)
+              .toList();
+          for (var authorRecommend in authorRecommends) {
+            authorRecommend.recommendId = relateRecommend.recommendId;
+            authorRecommend.title =
+                authorRecommend.title + StrUtil.space + AppString.works;
+            recommends.add(authorRecommend);
+          }
+        } else if (recommendType == RecommendTypeEnum.category.index) {
+          var categoryRecommends = novelRecommends
+              .where((element) => recommendType == element.recommendType)
+              .toList();
+          for (var categoryRecommend in categoryRecommends) {
+            relateRecommend.items.addAll(categoryRecommend.items);
+          }
+          recommends.add(relateRecommend);
+        }
+      }
+    }
   }
 
   void subscribe() {
@@ -113,6 +141,10 @@ class NovelDetailController extends BaseController {
         }
       }
     }
+  }
+
+  void onDetail(ItemModel item) {
+    RecommendService.instance.onDetail(item);
   }
 
   @override
