@@ -223,7 +223,8 @@ class ComicDetailPage extends GetView<ComicDetailController> {
             Expanded(
               child: TextButton(
                 onPressed: () {
-                  controller.isRelateRecommend.value = true;
+                  controller.isRelateRecommend.value =
+                      !controller.isRelateRecommend.value;
                 },
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all(
@@ -245,10 +246,14 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                     return Get.isDarkMode ? Colors.black : Colors.white;
                   }),
                 ),
-                child: Text(
-                  AppString.relateRecommend,
-                  style: TextStyle(
-                    color: Get.isDarkMode ? Colors.white : Colors.black54,
+                child: Obx(
+                  () => Text(
+                    AppString.relateRecommend,
+                    style: TextStyle(
+                      color: controller.isRelateRecommend.value
+                          ? Colors.cyan
+                          : (Get.isDarkMode ? Colors.white : Colors.black54),
+                    ),
                   ),
                 ),
               ),
@@ -362,7 +367,10 @@ class ComicDetailPage extends GetView<ComicDetailController> {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
                             onPressed: () {
-                              sortType.value = sortType.value == SortTypeEnum.desc.index ? SortTypeEnum.asc.index : SortTypeEnum.desc.index;
+                              sortType.value =
+                                  sortType.value == SortTypeEnum.desc.index
+                                      ? SortTypeEnum.asc.index
+                                      : SortTypeEnum.desc.index;
                               item.sort();
                             },
                             icon: const Icon(

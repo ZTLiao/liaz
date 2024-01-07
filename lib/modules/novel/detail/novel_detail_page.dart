@@ -222,7 +222,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
             Expanded(
               child: TextButton(
                 onPressed: () {
-                  controller.isRelateRecommend.value = true;
+                  controller.isRelateRecommend.value =
+                      !controller.isRelateRecommend.value;
                 },
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all(
@@ -244,10 +245,14 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                     return Get.isDarkMode ? Colors.black : Colors.white;
                   }),
                 ),
-                child: Text(
-                  AppString.relateRecommend,
-                  style: TextStyle(
-                    color: Get.isDarkMode ? Colors.white : Colors.black54,
+                child: Obx(
+                  () => Text(
+                    AppString.relateRecommend,
+                    style: TextStyle(
+                      color: controller.isRelateRecommend.value
+                          ? Colors.cyan
+                          : (Get.isDarkMode ? Colors.white : Colors.black54),
+                    ),
                   ),
                 ),
               ),

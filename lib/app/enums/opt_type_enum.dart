@@ -6,5 +6,8 @@ enum OptTypeEnum {
   refresh,
 
   /// 更多
-  more;
+  more,
+
+  /// 跳转
+  jump;
 }

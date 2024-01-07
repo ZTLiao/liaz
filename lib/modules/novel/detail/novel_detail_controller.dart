@@ -2,19 +2,26 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/enums/recommend_position_enum.dart';
+import 'package:liaz/app/enums/recommend_type_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_volume_model.dart';
+import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/novel/detail/novel_history_listener.dart';
 import 'package:liaz/requests/file_request.dart';
+import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/user_service.dart';
 
 class NovelDetailController extends BaseController {
   final NovelDetailModel detail;
+
+  var recommends = RxList<RecommendModel>([]);
+
   var isExpandDescription = RxBool(false);
   var isRelateRecommend = RxBool(false);
   var isSubscribe = RxBool(false);
@@ -24,13 +31,23 @@ class NovelDetailController extends BaseController {
 
   var browseChapterId = RxInt(0);
 
+  var recommendRequest = RecommendRequest();
+
   NovelDetailController({required this.detail}) {
     isSubscribe.value = detail.isSubscribe;
     browseChapterId.value = detail.browseChapterId;
   }
 
   @override
-  void onInit() {
+  void onInit() async {
+    var relateRecommends = await recommendRequest
+        .recommendByPosition(RecommendPositionEnum.relate.index);
+    if (relateRecommends.isNotEmpty) {
+      recommends.addAll(relateRecommends
+          .where((element) =>
+              element.recommendType == RecommendTypeEnum.custom.index)
+          .toList());
+    }
     EventBus.instance
         .subscribe(AppEvent.kUploadNovelHistory, NovelHistoryListener());
     super.onInit();

@@ -9,5 +9,11 @@ enum RecommendTypeEnum {
   hot,
 
   /// 最近上新
-  upgrade;
+  upgrade,
+
+  /// 作者关联
+  author,
+
+  /// 同类题材
+  category,;
 }
