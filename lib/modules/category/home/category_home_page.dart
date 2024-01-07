@@ -23,6 +23,7 @@ class CategoryHomePage extends GetView<CategoryHomeController> {
     return Scaffold(
       appBar: AppBar(
         title: SearchAppBar(
+          readOnly: true,
           onTap: () {
             AppNavigator.toSearch();
           },

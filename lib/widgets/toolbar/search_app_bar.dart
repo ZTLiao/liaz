@@ -7,14 +7,18 @@ class SearchAppBar extends StatelessWidget {
   final bool readOnly;
   final bool autofocus;
   final TextEditingController? controller;
+  final FocusNode? focusNode;
   final Function()? onTap;
+  final ValueChanged<String>? onSubmitted;
 
   const SearchAppBar(
       {this.hintText = StrUtil.empty,
-      this.readOnly = true,
+      this.readOnly = false,
       this.autofocus = false,
       this.controller,
+      this.focusNode,
       this.onTap,
+      this.onSubmitted,
       super.key});
 
   @override
@@ -38,19 +42,21 @@ class SearchAppBar extends StatelessWidget {
           ),
           Expanded(
             child: TextField(
+              focusNode: focusNode,
               readOnly: readOnly,
-              //只读不可编辑，点击搜索框直接跳转搜索页
               controller: controller,
               autofocus: autofocus,
+              textAlign: TextAlign.left,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: hintText, //搜索提示词
+                hintText: hintText,
                 hintStyle: const TextStyle(
                   fontSize: 13,
                   color: AppColor.grey99,
-                ), //搜索框文字样式
+                ),
               ),
-              onTap: onTap, //onTap
+              onTap: onTap,
+              onSubmitted: onSubmitted, // onTap
             ),
           ),
         ],

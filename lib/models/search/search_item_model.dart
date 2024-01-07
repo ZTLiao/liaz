@@ -9,6 +9,7 @@ class SearchItemModel {
   int assetType;
   String categories;
   String authors;
+  String upgradeChapter;
 
   SearchItemModel({
     required this.objId,
@@ -17,6 +18,7 @@ class SearchItemModel {
     required this.assetType,
     required this.categories,
     required this.authors,
+    required this.upgradeChapter,
   });
 
   factory SearchItemModel.fromJson(Map<String, dynamic> json) =>
@@ -27,6 +29,7 @@ class SearchItemModel {
         assetType: ConvertUtil.asT<int>(json['assetType'])!,
         categories: ConvertUtil.asT<String>(json['categories'])!,
         authors: ConvertUtil.asT<String>(json['authors'])!,
+        upgradeChapter: ConvertUtil.asT<String>(json['upgradeChapter'])!,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -36,6 +39,7 @@ class SearchItemModel {
         'assetType': assetType,
         'categories': categories,
         'authors': authors,
+        'upgradeChapter': upgradeChapter,
       };
 
   @override

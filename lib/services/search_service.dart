@@ -25,4 +25,11 @@ class SearchService extends GetxService {
   List<Search> list() {
     return box.values.toList().reversed.toList();
   }
+
+  void clear() async {
+    var keys = list().map((e) => e.key).toList();
+    if (keys.isNotEmpty) {
+      box.deleteAll(keys);
+    }
+  }
 }

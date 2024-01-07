@@ -19,36 +19,37 @@ class ComicUpgradeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return KeepAliveWrapper(
       child: PageListView(
-          pageController: controller,
-          isLoadMore: true,
-          separatorBuilder: (context, i) => Divider(
-                endIndent: 12,
-                indent: 12,
-                color: Colors.grey.withOpacity(.2),
-                height: 1,
-              ),
-          itemBuilder: (context, i) {
-            var item = controller.list[i];
-            var categories = StrUtil.listToStr(item.categories, StrUtil.slash);
-            var authors = StrUtil.listToStr(item.authors, StrUtil.slash);
-            var updateTime = DateUtil.formatDate(item.updated);
-            var card = CardItemModel(
-              cardId: item.comicId,
-              title: item.title,
-              cover: item.cover,
-              cardType: AssetTypeEnum.comic.index,
-              categories: categories,
-              authors: authors,
-              upgradeChapter: item.upgradeChapter,
-              updateTime: updateTime,
-              objId: item.comicChapterId,
-            );
-            return CardItemWidget(
-              card: card,
-              onTap: controller.onDetail,
-              onOpen: controller.onReadChapter,
-            );
-          }),
+        pageController: controller,
+        isLoadMore: true,
+        separatorBuilder: (context, i) => Divider(
+          endIndent: 12,
+          indent: 12,
+          color: Colors.grey.withOpacity(.2),
+          height: 1,
+        ),
+        itemBuilder: (context, i) {
+          var item = controller.list[i];
+          var categories = StrUtil.listToStr(item.categories, StrUtil.slash);
+          var authors = StrUtil.listToStr(item.authors, StrUtil.slash);
+          var updateTime = DateUtil.formatDate(item.updated);
+          var card = CardItemModel(
+            cardId: item.comicId,
+            title: item.title,
+            cover: item.cover,
+            cardType: AssetTypeEnum.comic.index,
+            categories: categories,
+            authors: authors,
+            upgradeChapter: item.upgradeChapter,
+            updateTime: updateTime,
+            objId: item.comicChapterId,
+          );
+          return CardItemWidget(
+            card: card,
+            onTap: controller.onDetail,
+            onOpen: controller.onReadChapter,
+          );
+        },
+      ),
     );
   }
 }

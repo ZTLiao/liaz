@@ -6,16 +6,24 @@ import 'package:liaz/widgets/toolbar/net_image.dart';
 
 class CardItemWidget extends StatelessWidget {
   final CardItemModel card;
-  final Function(int)? onTap;
+  final Function(CardItemModel)? onTap;
   final Function(int)? onOpen;
 
-  const CardItemWidget(
-      {required this.card, this.onTap, this.onOpen, super.key});
+  const CardItemWidget({
+    required this.card,
+    this.onTap,
+    this.onOpen,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onTap!(card.cardId),
+      onTap: () {
+        if (onTap != null) {
+          onTap!(card);
+        }
+      },
       child: Container(
         padding: AppStyle.edgeInsetsA12,
         child: Row(
@@ -109,21 +117,26 @@ class CardItemWidget extends StatelessWidget {
                   card.updateTime.isNotEmpty
                       ? Text.rich(
                           maxLines: 1,
-                          TextSpan(children: [
-                            const WidgetSpan(
-                                child: Icon(
-                              Icons.schedule,
-                              color: Colors.grey,
-                              size: 18,
-                            )),
-                            const TextSpan(
-                              text: StrUtil.space,
-                            ),
-                            TextSpan(
+                          TextSpan(
+                            children: [
+                              const WidgetSpan(
+                                  child: Icon(
+                                Icons.schedule,
+                                color: Colors.grey,
+                                size: 18,
+                              )),
+                              const TextSpan(
+                                text: StrUtil.space,
+                              ),
+                              TextSpan(
                                 text: card.updateTime,
                                 style: const TextStyle(
-                                    color: Colors.grey, fontSize: 14))
-                          ]),
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
                         )
                       : const SizedBox(),
                 ],

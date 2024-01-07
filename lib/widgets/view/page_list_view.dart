@@ -16,16 +16,17 @@ class PageListView extends StatelessWidget {
   final bool isLoadMore;
   final Widget? header;
 
-  const PageListView(
-      {required this.pageController,
-      required this.itemBuilder,
-      this.separatorBuilder,
-      this.padding,
-      this.isFirstRefresh = false,
-      this.isShowPageLoading = false,
-      this.isLoadMore = false,
-      this.header,
-      super.key});
+  const PageListView({
+    required this.pageController,
+    required this.itemBuilder,
+    this.separatorBuilder,
+    this.padding,
+    this.isFirstRefresh = false,
+    this.isShowPageLoading = false,
+    this.isLoadMore = false,
+    this.header,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

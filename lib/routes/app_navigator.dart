@@ -100,4 +100,12 @@ class AppNavigator {
   static void toUserRegister() {
     toContentPage(AppRoute.kUserRegister);
   }
+
+  static void closePage() {
+    if (Navigator.canPop(Get.context!)) {
+      Get.back();
+    } else {
+      Get.back(id: kNavigatorID);
+    }
+  }
 }
