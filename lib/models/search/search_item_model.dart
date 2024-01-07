@@ -7,8 +7,8 @@ class SearchItemModel {
   String title;
   String cover;
   int assetType;
-  String categories;
-  String authors;
+  String? categories;
+  String? authors;
   String upgradeChapter;
 
   SearchItemModel({
@@ -16,8 +16,8 @@ class SearchItemModel {
     required this.title,
     required this.cover,
     required this.assetType,
-    required this.categories,
-    required this.authors,
+    this.categories,
+    this.authors,
     required this.upgradeChapter,
   });
 
@@ -27,8 +27,8 @@ class SearchItemModel {
         title: ConvertUtil.asT<String>(json['title'])!,
         cover: ConvertUtil.asT<String>(json['cover'])!,
         assetType: ConvertUtil.asT<int>(json['assetType'])!,
-        categories: ConvertUtil.asT<String>(json['categories'])!,
-        authors: ConvertUtil.asT<String>(json['authors'])!,
+        categories: ConvertUtil.asT<String?>(json['categories']),
+        authors: ConvertUtil.asT<String?>(json['authors']),
         upgradeChapter: ConvertUtil.asT<String>(json['upgradeChapter'])!,
       );
 

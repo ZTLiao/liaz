@@ -8,7 +8,6 @@ import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/modules/index/recommend/index_recommend_controller.dart';
-import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/widgets/keep_alive_wrapper.dart';
 import 'package:liaz/widgets/toolbar/swiper_widget.dart';
 import 'package:liaz/widgets/toolbar/title_widget.dart';
@@ -52,8 +51,13 @@ class IndexRecommendView extends StatelessWidget {
               skipType: item.skipType,
               skipValue: item.skipValue,
               objId: item.objId,
-              isUpgrade: recommendType == RecommendTypeEnum.mySubscribe.index ? YesOrNo.yes : YesOrNo.no,
+              isUpgrade: recommendType == RecommendTypeEnum.mySubscribe.index
+                  ? YesOrNo.yes
+                  : YesOrNo.no,
             ));
+          }
+          if (items.isEmpty) {
+            return const SizedBox();
           }
           IconData? icon;
           if (recommend.optType == OptTypeEnum.refresh.index) {

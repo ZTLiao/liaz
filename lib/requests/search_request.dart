@@ -21,4 +21,15 @@ class SearchRequest {
     }
     return list;
   }
+
+  Future<List<SearchItemModel>> hotRank() async {
+    List<SearchItemModel> list = [];
+    dynamic result = await Request.instance.get('/api/search/hot/rank');
+    if (result is List) {
+      for (var json in result) {
+        list.add(SearchItemModel.fromJson(json));
+      }
+    }
+    return list;
+  }
 }

@@ -6,8 +6,8 @@ class CardItemModel {
   String categories;
   String authors;
   String upgradeChapter;
-  String updateTime;
-  int objId;
+  String? updateTime;
+  int? objId;
 
   CardItemModel({
     required this.cardId,
@@ -17,7 +17,7 @@ class CardItemModel {
     required this.categories,
     required this.authors,
     required this.upgradeChapter,
-    required this.updateTime,
-    required this.objId,
+    this.updateTime,
+    this.objId,
   });
 }

@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/card_item_model.dart';
 import 'package:liaz/modules/search/home/search_home_controller.dart';
@@ -47,10 +45,16 @@ class SearchHomePage extends StatelessWidget {
                 ),
                 itemBuilder: (context, i) {
                   var item = controller.list[i];
-                  var categories =
-                      item.categories.replaceAll(StrUtil.comma, StrUtil.slash);
-                  var authors =
-                      item.authors.replaceAll(StrUtil.comma, StrUtil.slash);
+                  var categories = StrUtil.empty;
+                  if (item.categories != null) {
+                    categories = item.categories!
+                        .replaceAll(StrUtil.comma, StrUtil.slash);
+                  }
+                  var authors = StrUtil.empty;
+                  if (item.authors != null) {
+                    categories =
+                        item.authors!.replaceAll(StrUtil.comma, StrUtil.slash);
+                  }
                   var card = CardItemModel(
                     cardId: item.objId,
                     title: item.title,
@@ -59,8 +63,6 @@ class SearchHomePage extends StatelessWidget {
                     categories: categories,
                     authors: authors,
                     upgradeChapter: item.upgradeChapter,
-                    updateTime: StrUtil.empty,
-                    objId: 0,
                   );
                   return CardItemWidget(
                     card: card,
@@ -174,60 +176,67 @@ class SearchHomePage extends StatelessWidget {
   }
 
   Widget buildHotSearchRank() {
-    return Expanded(
-      child: ListView.separated(
-        padding: AppStyle.edgeInsetsA12,
-        separatorBuilder: (context, i) {
-          return Divider(
-            endIndent: 12,
-            indent: 12,
-            color: Colors.grey.withOpacity(.2),
-            height: 1,
-          );
-        },
-        itemCount: 100,
-        itemBuilder: (context, i) {
-          return SizedBox(
-            height: 40,
-            child: Center(
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 70,
-                    child: Center(
-                      child: Text(
-                        '${i + 1}',
-                        style: TextStyle(
-                            color: i < 3
-                                ? const Color.fromRGBO(242, 106, 95, 1)
-                                : const Color.fromRGBO(255, 134, 0, 1)),
+    return Obx(
+      () => Expanded(
+        child: ListView.separated(
+          padding: AppStyle.edgeInsetsA12,
+          separatorBuilder: (context, i) {
+            return Divider(
+              endIndent: 12,
+              indent: 12,
+              color: Colors.grey.withOpacity(.2),
+              height: 1,
+            );
+          },
+          itemCount: controller.hotRank.length,
+          itemBuilder: (context, i) {
+            return InkWell(
+              onTap: () {
+                controller.onSelectKey(controller.hotRank[i].title);
+              },
+              child: SizedBox(
+                height: 40,
+                child: Center(
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 70,
+                        child: Center(
+                          child: Text(
+                            '${i + 1}',
+                            style: TextStyle(
+                                color: i < 3
+                                    ? const Color.fromRGBO(242, 106, 95, 1)
+                                    : const Color.fromRGBO(255, 134, 0, 1)),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Center(
-                      child: Text(
-                        "关键字 ${i + 1}",
-                        style: const TextStyle(color: Colors.cyan),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            controller.hotRank[i].title,
+                            style: const TextStyle(color: Colors.cyan),
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 64,
+                        height: 24,
+                        child: i < 5
+                            ? const Icon(
+                                Icons.local_fire_department,
+                                size: 16,
+                                color: Color.fromRGBO(255, 148, 6, 1),
+                              )
+                            : null,
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: 64,
-                    height: 24,
-                    child: i < 5
-                        ? const Icon(
-                            Icons.local_fire_department,
-                            size: 16,
-                            color: Color.fromRGBO(255, 148, 6, 1),
-                          )
-                        : null, //搜索框图标
-                  ),
-                ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/controller/base_page_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
-import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/search.dart';
 import 'package:liaz/models/dto/card_item_model.dart';
@@ -21,6 +20,8 @@ class SearchHomeController extends BasePageController<SearchItemModel> {
 
   var searchHistory = RxList<Search>([]);
 
+  var hotRank = RxList<SearchItemModel>([]);
+
   SearchHomeController() {
     searchController = TextEditingController(text: StrUtil.empty);
   }
@@ -28,6 +29,7 @@ class SearchHomeController extends BasePageController<SearchItemModel> {
   @override
   void onInit() {
     searchHistory.value = SearchService.instance.list();
+    searchRequest.hotRank().then((value) => hotRank.value = value);
     super.onInit();
   }
 

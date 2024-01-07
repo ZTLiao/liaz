@@ -114,7 +114,7 @@ class CardItemWidget extends StatelessWidget {
                         )
                       : const SizedBox(),
                   AppStyle.vGap2,
-                  card.updateTime.isNotEmpty
+                  card.updateTime != null && card.updateTime!.isNotEmpty
                       ? Text.rich(
                           maxLines: 1,
                           TextSpan(
@@ -142,7 +142,7 @@ class CardItemWidget extends StatelessWidget {
                 ],
               ),
             ),
-            card.objId != 0
+            card.objId != null && card.objId != 0
                 ? Center(
                     child: Column(
                       children: [
@@ -150,8 +150,8 @@ class CardItemWidget extends StatelessWidget {
                         IconButton(
                           icon: const Icon(Icons.menu_book_outlined),
                           onPressed: () {
-                            if (onOpen != null) {
-                              onOpen!(card.objId);
+                            if (onOpen != null && card.objId != null) {
+                              onOpen!(card.objId!);
                             }
                           },
                         ),
