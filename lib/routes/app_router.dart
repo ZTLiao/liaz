@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:get/get.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
@@ -76,7 +78,7 @@ class AppRouter {
       page: () => const ComicDetailPage(),
       binding: BindingsBuilder.put(
         () => ComicDetailController(
-          detail: ComicDetailModel.fromJson(Get.arguments['detail']),
+          comicDetail: ComicDetailModel.fromJson(Get.arguments['detail']),
         ),
       ),
     ),
@@ -85,7 +87,7 @@ class AppRouter {
       page: () => const NovelDetailPage(),
       binding: BindingsBuilder.put(
         () => NovelDetailController(
-          detail: NovelDetailModel.fromJson(Get.arguments['detail']),
+          novelDetail: NovelDetailModel.fromJson(Get.arguments['detail']),
         ),
       ),
     ),

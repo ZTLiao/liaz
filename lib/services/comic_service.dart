@@ -4,6 +4,7 @@ import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/requests/browse_request.dart';
 import 'package:liaz/requests/comic_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
@@ -22,6 +23,10 @@ class ComicService {
             replace: replace,
           )
         });
+  }
+
+  Future<ComicDetailModel> getComicDetail(int comicId) async {
+    return await _comicRequest.comicDetail(comicId);
   }
 
   void uploadHistory(int objId, int assetType, int chapterId,

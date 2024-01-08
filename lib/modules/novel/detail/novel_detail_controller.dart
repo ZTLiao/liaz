@@ -17,11 +17,14 @@ import 'package:liaz/modules/novel/detail/novel_history_listener.dart';
 import 'package:liaz/requests/file_request.dart';
 import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/recommend_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class NovelDetailController extends BaseController {
-  final NovelDetailModel detail;
+  final NovelDetailModel novelDetail;
+
+  final detail = Rx<NovelDetailModel>(NovelDetailModel.empty());
 
   var recommends = RxList<RecommendModel>([]);
 
@@ -36,9 +39,20 @@ class NovelDetailController extends BaseController {
 
   var recommendRequest = RecommendRequest();
 
-  NovelDetailController({required this.detail}) {
-    isSubscribe.value = detail.isSubscribe;
-    browseChapterId.value = detail.browseChapterId;
+  NovelDetailController({required this.novelDetail}) {
+    detail.value = novelDetail;
+  }
+
+  void initDetail() {
+    recommends.clear();
+    isSubscribe.value = detail.value.isSubscribe;
+    browseChapterId.value = detail.value.browseChapterId;
+    isExpandDescription.value = false;
+    isRelateRecommend.value = false;
+    isExpandPreview.value = false;
+    chapterIndex.value = 0;
+    content.value = StrUtil.empty;
+    initRelateRecommend();
   }
 
   @override
@@ -52,7 +66,7 @@ class NovelDetailController extends BaseController {
   void initRelateRecommend() async {
     var relateRecommends = await recommendRequest
         .recommendByPosition(RecommendPositionEnum.relate.index);
-    var novelRecommends = await recommendRequest.recommendNovel(detail.novelId);
+    var novelRecommends = await recommendRequest.recommendNovel(detail.value.novelId);
     if (relateRecommends.isNotEmpty) {
       for (var relateRecommend in relateRecommends) {
         var recommendType = relateRecommend.recommendType;
@@ -83,7 +97,7 @@ class NovelDetailController extends BaseController {
 
   void subscribe() {
     UserService.instance.novelSubscribe(
-        detail.novelId, isSubscribe.value ? YesOrNo.no : YesOrNo.yes);
+        detail.value.novelId, isSubscribe.value ? YesOrNo.no : YesOrNo.yes);
     isSubscribe.value = !isSubscribe.value;
   }
 
@@ -91,10 +105,10 @@ class NovelDetailController extends BaseController {
     var chapters = volume.chapters;
     browseChapterId.value = chapters[chapterIndex.value].novelChapterId;
     if (chapters.isNotEmpty &&
-        chapters[chapterIndex.value].novelChapterId == detail.browseChapterId) {
+        chapters[chapterIndex.value].novelChapterId == detail.value.browseChapterId) {
       for (var chapter in chapters) {
-        if (chapter.novelChapterId == detail.browseChapterId) {
-          chapter.currentIndex = detail.currentIndex;
+        if (chapter.novelChapterId == detail.value.browseChapterId) {
+          chapter.currentIndex = detail.value.currentIndex;
           break;
         }
       }
@@ -120,19 +134,19 @@ class NovelDetailController extends BaseController {
   }
 
   void share() {
-    if (detail.novelId == 0) {
+    if (detail.value.novelId == 0) {
       return;
     }
     ShareUtil.share(
       'https://www.baidu.com',
-      content: detail.title,
+      content: detail.value.title,
     );
   }
 
   void startReading() {
     isRelateRecommend.value = false;
     if (browseChapterId.value != 0) {
-      for (var valume in detail.volumes) {
+      for (var valume in detail.value.volumes) {
         for (var chapter in valume.chapters) {
           if (chapter.novelChapterId == browseChapterId.value) {
             onReadChapter(valume);
@@ -143,8 +157,9 @@ class NovelDetailController extends BaseController {
     }
   }
 
-  void onDetail(ItemModel item) {
-    RecommendService.instance.onDetail(item);
+  void onDetail(ItemModel item) async {
+    detail.value = await NovelService.instance.getNovelDetail(item.objId!);
+    initDetail();
   }
 
   @override

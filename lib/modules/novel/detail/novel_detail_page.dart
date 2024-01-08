@@ -9,16 +9,11 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
-import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
-import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
-import 'package:liaz/models/recommend/recommend_item_model.dart';
-import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_controller.dart';
-import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/widgets/toolbar/cross_list_widget.dart';
 import 'package:liaz/widgets/toolbar/icon_item_widget.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
@@ -31,184 +26,188 @@ class NovelDetailPage extends GetView<NovelDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size(double.infinity, 220),
-        child: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                image: controller.detail.cover.isNotEmpty
-                    ? DecorationImage(
-                        image: NetworkImage(
-                          controller.detail.cover,
-                        ),
-                        fit: BoxFit.cover,
-                      )
-                    : null,
+    return Obx(
+      () => Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size(double.infinity, 220),
+          child: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  image: controller.detail.value.cover.isNotEmpty
+                      ? DecorationImage(
+                          image: NetworkImage(
+                            controller.detail.value.cover,
+                          ),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
               ),
-            ),
-            Center(
-              child: ClipRRect(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                  child: Opacity(
-                    opacity: 0.6,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Get.isDarkMode
-                            ? Colors.black45
-                            : Colors.grey.shade50,
+              Center(
+                child: ClipRRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                    child: Opacity(
+                      opacity: 0.6,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Get.isDarkMode
+                              ? Colors.black45
+                              : Colors.grey.shade50,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            AppBar(
-              title: Text(
-                controller.detail.title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              actions: [
-                IconButton(
-                  onPressed: controller.subscribe,
-                  icon: Obx(
-                    () => Icon(
-                      Icons.favorite,
-                      color: controller.isSubscribe.value ? Colors.red : null,
-                    ),
+              AppBar(
+                title: Text(
+                  controller.detail.value.title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.share),
-                ),
-              ],
-            ),
-            Container(
-              padding: AppStyle.edgeInsetsA8,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      NetImage(
-                        controller.detail.cover,
-                        width: 120,
-                        height: 160,
-                        borderRadius: 4,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                actions: [
+                  IconButton(
+                    onPressed: controller.subscribe,
+                    icon: Obx(
+                      () => Icon(
+                        Icons.favorite,
+                        color: controller.isSubscribe.value ? Colors.red : null,
                       ),
-                    ],
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconItemWidget(
-                          children: [
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Text(
-                                controller.detail.title,
-                                maxLines: 1,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Icons.person,
-                          children: [
-                            Text(
-                              StrUtil.listToStr(
-                                  controller.detail.authors, StrUtil.space),
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Icons.label,
-                          children: [
-                            Text(
-                              StrUtil.listToStr(
-                                  controller.detail.categories, StrUtil.space),
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Icons.local_fire_department,
-                          children: [
-                            Text(
-                              '${AppString.popularNum} ${controller.detail.hitNum}',
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Icons.favorite,
-                          children: [
-                            Text(
-                              '${AppString.subscribeNum} ${controller.detail.subscribeNum}',
-                            ),
-                          ],
-                        ),
-                        IconItemWidget(
-                          iconData: Icons.schedule,
-                          children: [
-                            Text(
-                              '${DateUtil.formatDate(controller.detail.updated)} ${controller.detail.isSerializated ? AppString.serializated : AppString.finish}',
-                            ),
-                          ],
-                        ),
-                      ],
                     ),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.share),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: AppStyle.edgeInsetsH8,
-          child: Column(
-            children: [
-              _buildDescription(context),
-              _buildChapter(context),
-              _buildRecommend(context),
+              Container(
+                padding: AppStyle.edgeInsetsA8,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        NetImage(
+                          controller.detail.value.cover,
+                          width: 120,
+                          height: 160,
+                          borderRadius: 4,
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconItemWidget(
+                            children: [
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Text(
+                                  controller.detail.value.title,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Icons.person,
+                            children: [
+                              Text(
+                                StrUtil.listToStr(
+                                    controller.detail.value.authors,
+                                    StrUtil.space),
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Icons.label,
+                            children: [
+                              Text(
+                                StrUtil.listToStr(
+                                    controller.detail.value.categories,
+                                    StrUtil.space),
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Icons.local_fire_department,
+                            children: [
+                              Text(
+                                '${AppString.popularNum} ${controller.detail.value.hitNum}',
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Icons.favorite,
+                            children: [
+                              Text(
+                                '${AppString.subscribeNum} ${controller.detail.value.subscribeNum}',
+                              ),
+                            ],
+                          ),
+                          IconItemWidget(
+                            iconData: Icons.schedule,
+                            children: [
+                              Text(
+                                '${DateUtil.formatDate(controller.detail.value.updated)} ${controller.detail.value.isSerializated ? AppString.serializated : AppString.finish}',
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
-      ),
-      floatingActionButton: SpeedDial(
-        overlayColor: Colors.black,
-        overlayOpacity: 0,
-        icon: Icons.rocket,
-        elevation: 4.0,
-        buttonSize: const Size(50, 50),
-        childrenButtonSize: const Size(50, 50),
-        activeIcon: Icons.rocket_launch,
-        direction: SpeedDialDirection.up,
-        spaceBetweenChildren: 4.0,
-        spacing: 4.0,
-        children: [
-          SpeedDialChild(
-            child: const Icon(Icons.download),
-            backgroundColor: Colors.blue[300],
-            foregroundColor: Colors.white,
-            onTap: () {},
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: AppStyle.edgeInsetsH8,
+            child: Column(
+              children: [
+                _buildDescription(context),
+                _buildChapter(context),
+                _buildRecommend(context),
+              ],
+            ),
           ),
-        ],
+        ),
+        floatingActionButton: SpeedDial(
+          overlayColor: Colors.black,
+          overlayOpacity: 0,
+          icon: Icons.rocket,
+          elevation: 4.0,
+          buttonSize: const Size(50, 50),
+          childrenButtonSize: const Size(50, 50),
+          activeIcon: Icons.rocket_launch,
+          direction: SpeedDialDirection.up,
+          spaceBetweenChildren: 4.0,
+          spacing: 4.0,
+          children: [
+            SpeedDialChild(
+              child: const Icon(Icons.download),
+              backgroundColor: Colors.blue[300],
+              foregroundColor: Colors.white,
+              onTap: () {},
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -309,7 +308,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                         !controller.isExpandDescription.value;
                   },
                   child: Text(
-                    controller.detail.description,
+                    controller.detail.value.description,
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 14,
@@ -334,7 +333,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
   }
 
   Widget _buildChapter(BuildContext context) {
-    var volumes = controller.detail.volumes;
+    var volumes = controller.detail.value.volumes;
     return Obx(
       () => Visibility(
         visible: !controller.isRelateRecommend.value,

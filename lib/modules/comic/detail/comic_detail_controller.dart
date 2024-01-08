@@ -15,11 +15,13 @@ import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/comic/detail/comic_history_listener.dart';
 import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
-import 'package:liaz/services/recommend_service.dart';
+import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class ComicDetailController extends BaseController {
-  final ComicDetailModel detail;
+  final ComicDetailModel comicDetail;
+
+  final detail = Rx<ComicDetailModel>(ComicDetailModel.empty());
 
   var recommends = RxList<RecommendModel>([]);
 
@@ -31,14 +33,22 @@ class ComicDetailController extends BaseController {
 
   var recommendRequest = RecommendRequest();
 
-  ComicDetailController({required this.detail}) {
-    isSubscribe.value = detail.isSubscribe;
-    browseChapterId.value = detail.browseChapterId;
+  ComicDetailController({required this.comicDetail}) {
+    detail.value = comicDetail;
+  }
+
+  void initDetail() {
+    recommends.clear();
+    isSubscribe.value = detail.value.isSubscribe;
+    browseChapterId.value = detail.value.browseChapterId;
+    isRelateRecommend.value = false;
+    isExpandDescription.value = false;
+    initRelateRecommend();
   }
 
   @override
   void onInit() {
-    initRelateRecommend();
+    initDetail();
     EventBus.instance
         .subscribe(AppEvent.kUploadComicHistory, ComicHistoryListener());
     super.onInit();
@@ -47,7 +57,8 @@ class ComicDetailController extends BaseController {
   void initRelateRecommend() async {
     var relateRecommends = await recommendRequest
         .recommendByPosition(RecommendPositionEnum.relate.index);
-    var comicRecommends = await recommendRequest.recommendComic(detail.comicId);
+    var comicRecommends =
+        await recommendRequest.recommendComic(detail.value.comicId);
     if (relateRecommends.isNotEmpty) {
       for (var relateRecommend in relateRecommends) {
         var recommendType = relateRecommend.recommendType;
@@ -80,15 +91,15 @@ class ComicDetailController extends BaseController {
 
   void onReadChapter(ComicChapterModel chapter) {
     browseChapterId.value = chapter.comicChapterId;
-    var chapterTypes = detail.chapterTypes;
+    var chapterTypes = detail.value.chapterTypes;
     var chapterType = chapterTypes
         .firstWhere((element) => element.chapterType == chapter.chapterType);
     var chapters = chapterType.chapters;
     if (chapters.isNotEmpty &&
-        chapter.comicChapterId == detail.browseChapterId) {
+        chapter.comicChapterId == detail.value.browseChapterId) {
       for (var chapter in chapters) {
-        if (chapter.comicChapterId == detail.browseChapterId) {
-          chapter.currentIndex = detail.currentIndex;
+        if (chapter.comicChapterId == detail.value.browseChapterId) {
+          chapter.currentIndex = detail.value.currentIndex;
           break;
         }
       }
@@ -101,24 +112,24 @@ class ComicDetailController extends BaseController {
 
   void subscribe() {
     UserService.instance.comicSubscribe(
-        detail.comicId, isSubscribe.value ? YesOrNo.no : YesOrNo.yes);
+        detail.value.comicId, isSubscribe.value ? YesOrNo.no : YesOrNo.yes);
     isSubscribe.value = !isSubscribe.value;
   }
 
   void share() {
-    if (detail.comicId == 0) {
+    if (detail.value.comicId == 0) {
       return;
     }
     ShareUtil.share(
       'https://www.baidu.com',
-      content: detail.title,
+      content: detail.value.title,
     );
   }
 
   void startReading() {
     isRelateRecommend.value = false;
     if (browseChapterId.value != 0) {
-      for (var chapterType in detail.chapterTypes) {
+      for (var chapterType in detail.value.chapterTypes) {
         for (var chapter in chapterType.chapters) {
           if (chapter.comicChapterId == browseChapterId.value) {
             onReadChapter(chapter);
@@ -129,8 +140,9 @@ class ComicDetailController extends BaseController {
     }
   }
 
-  void onDetail(ItemModel item) {
-    RecommendService.instance.onDetail(item);
+  void onDetail(ItemModel item) async {
+    detail.value = await ComicService.instance.getComicDetail(item.objId!);
+    initDetail();
   }
 
   @override
