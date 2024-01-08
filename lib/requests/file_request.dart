@@ -25,7 +25,7 @@ class FileRequest {
         path.startsWith(AppConstant.http)) {
       return path;
     }
-    String requestUri = StrUtil.empty;
+    String requestUri = path;
     var fileUrl = Global.appConfig.fileUrl;
     var isAuthority = Global.appConfig.resourceAuthority;
     if (isAuthority) {
@@ -33,8 +33,26 @@ class FileRequest {
       if (result is String) {
         requestUri = result;
       }
-    } else {
-      requestUri = path;
+    }
+    if (requestUri.startsWith(AppConstant.https) ||
+        requestUri.startsWith(AppConstant.http)) {
+      return requestUri;
+    }
+    var bucketName = StrUtil.empty;
+    var pathArray = path.split(StrUtil.slash);
+    if (pathArray.length > 1) {
+      bucketName = path[1];
+    }
+    var objectName = StrUtil.empty;
+    if (pathArray.length > 2) {
+      objectName = path[2];
+    }
+    var bucketTemplate = '{bucketName}';
+    var objectTemplate = '{objectName}';
+    if (fileUrl.contains(bucketTemplate) && fileUrl.contains(objectTemplate)) {
+      return fileUrl
+          .replaceAll(bucketTemplate, bucketName)
+          .replaceAll(objectTemplate, objectName);
     }
     return fileUrl + requestUri;
   }
