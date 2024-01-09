@@ -248,7 +248,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                                 ),
                                 Expanded(
                                   child: IconButton(
-                                    onPressed: () {},
+                                    onPressed: controller.showSettings,
                                     icon: const Icon(
                                       Icons.settings,
                                     ),

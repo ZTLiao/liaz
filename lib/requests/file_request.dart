@@ -32,27 +32,27 @@ class FileRequest {
       dynamic result = await Request.instance.get('/api/file$path');
       if (result is String) {
         requestUri = result;
+        if (requestUri.startsWith(AppConstant.https) ||
+            requestUri.startsWith(AppConstant.http)) {
+          return requestUri;
+        }
       }
-    }
-    if (requestUri.startsWith(AppConstant.https) ||
-        requestUri.startsWith(AppConstant.http)) {
-      return requestUri;
-    }
-    var bucketName = StrUtil.empty;
-    var pathArray = path.split(StrUtil.slash);
-    if (pathArray.length > 1) {
-      bucketName = path[1];
-    }
-    var objectName = StrUtil.empty;
-    if (pathArray.length > 2) {
-      objectName = path[2];
     }
     var bucketTemplate = '{bucketName}';
     var objectTemplate = '{objectName}';
-    if (fileUrl.contains(bucketTemplate) && fileUrl.contains(objectTemplate)) {
+    if (fileUrl.contains(bucketTemplate)) {
+      var bucketName = StrUtil.empty;
+      var pathArray = path.split(StrUtil.slash);
+      if (pathArray.length > 1) {
+        bucketName = path[1];
+      }
+      var objectName = StrUtil.empty;
+      if (pathArray.length > 2) {
+        objectName = path[2];
+      }
       return fileUrl
-          .replaceAll(bucketTemplate, bucketName)
-          .replaceAll(objectTemplate, objectName);
+          .replaceFirst(bucketTemplate, bucketName)
+          .replaceFirst(objectTemplate, objectName);
     }
     return fileUrl + requestUri;
   }

@@ -58,11 +58,7 @@ class UserRequest {
       'userId': userId,
     });
     if (result is Map) {
-      var model = User.fromJson(result as Map<String, dynamic>);
-      if (model.avatar != null) {
-        model.avatar = await AppConfigService.instance.getObject(model.avatar!);
-      }
-      return model;
+      return User.fromJson(result as Map<String, dynamic>);
     }
     return null;
   }

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:liaz/models/db/user.dart';
+import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class UserHomeController extends GetxController {
@@ -7,10 +8,12 @@ class UserHomeController extends GetxController {
   Rx<User> user = Rx<User>(User.empty());
 
   @override
-  void onInit() {
+  void onInit() async {
     var userCache = UserService.instance.get();
     if (userCache != null) {
       user.value = userCache;
+      user.value.avatar =
+          await AppConfigService.instance.getObject(userCache.avatar!);
     }
     super.onInit();
   }

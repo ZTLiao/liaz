@@ -21,10 +21,10 @@ class IndexPage extends GetView<IndexController> {
               key: controller.indexKey,
               index: controller.index.value,
               children: [
-                IndexHomePage(controller.index.value),
+                const IndexHomePage(),
                 CategoryHomePage(controller.index.value),
                 BookshelfHomePage(controller.index.value),
-                UserHomePage(controller.index.value),
+                const UserHomePage(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(

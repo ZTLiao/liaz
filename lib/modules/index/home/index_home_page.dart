@@ -8,9 +8,7 @@ import 'package:liaz/modules/index/recommend/index_recommend_view.dart';
 import 'package:liaz/modules/index/upgrade/index_upgrade_view.dart';
 
 class IndexHomePage extends GetView<IndexHomeController> {
-  final int index;
-
-  const IndexHomePage(this.index, {super.key});
+  const IndexHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {

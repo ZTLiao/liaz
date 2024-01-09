@@ -10,9 +10,7 @@ import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/toolbar/user_photo.dart';
 
 class UserHomePage extends GetView<UserHomeController> {
-  final int index;
-
-  const UserHomePage(this.index, {super.key});
+  const UserHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +43,8 @@ class UserHomePage extends GetView<UserHomeController> {
               Row(
                 children: [
                   Expanded(
-                    child: Visibility(
-                      visible: true,
-                      child: ListTile(
+                    child: Obx(
+                      () => ListTile(
                         leading: UserPhoto(
                           url: controller.user.value.avatar,
                           size: 48,
