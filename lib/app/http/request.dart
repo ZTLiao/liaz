@@ -47,8 +47,15 @@ class Request {
   }
 
   dynamic responseBody(Response<dynamic> response) {
+    ResponseEntity? result;
     if (response.statusCode == HttpStatus.ok) {
-      var result = ResponseEntity.fromJson(response.data);
+      try {
+        result = ResponseEntity.fromJson(response.data);
+      } catch (error, stackTrace) {
+        Log.e(error.toString(), stackTrace);
+        SmartDialog.showToast(AppString.serverError);
+        return;
+      }
       if (result.code == HttpStatus.ok) {
         return result.data;
       } else {
@@ -68,13 +75,22 @@ class Request {
       }
     } else {
       var data = response.data;
-      var result = ResponseEntity(
+      result = ResponseEntity(
         code: HttpStatus.internalServerError,
         message: AppString.serverError,
         timestamp: DateTime.now().millisecondsSinceEpoch,
       );
       if (data is Map) {
-        result = ResponseEntity.fromJson(response.data);
+        try {
+          result = ResponseEntity.fromJson(response.data);
+        } catch (error, stackTrace) {
+          Log.e(error.toString(), stackTrace);
+          SmartDialog.showToast(AppString.serverError);
+        }
+        if (result == null) {
+          SmartDialog.showToast(AppString.serverError);
+          return;
+        }
       }
       if (response.statusCode == HttpStatus.unauthorized) {
         AppNavigator.toUserLogin();

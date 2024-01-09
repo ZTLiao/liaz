@@ -3,6 +3,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
@@ -284,13 +285,11 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         triggerOffset: 80,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: AppStyle.radius24,
           ),
           padding: AppStyle.edgeInsetsA12,
-          child: const Icon(
-            Icons.arrow_circle_left,
-            color: Colors.cyan,
+          child: const Text(
+            '${AppString.loading}...',
           ),
         ),
       ),
@@ -298,13 +297,11 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         triggerOffset: 80,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: AppStyle.radius24,
           ),
           padding: AppStyle.edgeInsetsA12,
-          child: const Icon(
-            Icons.arrow_circle_right,
-            color: Colors.cyan,
+          child: const Text(
+            '${AppString.loading}...',
           ),
         ),
       ),

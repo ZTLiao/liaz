@@ -16,6 +16,7 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/models/comic/comic_chapter_item_model.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
+import 'package:liaz/modules/settings/comic/comic_settings_view.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/comic_service.dart';
@@ -400,20 +401,15 @@ class ComicReaderController extends BaseController {
         ),
       ),
       constraints: const BoxConstraints(
-        maxWidth: 500,
+        maxHeight: 300,
       ),
       backgroundColor: Colors.black.withOpacity(0.7),
       builder: (context) => Theme(
         data: AppStyle.darkTheme,
         child: Column(
           children: [
-            ListTile(
-              title: const Text(AppString.settings),
-              trailing: IconButton(
-                onPressed: Get.back,
-                icon: const Icon(Icons.close),
-              ),
-              contentPadding: AppStyle.edgeInsetsL12,
+            Expanded(
+              child: ComicSettingsView(),
             ),
           ],
         ),
