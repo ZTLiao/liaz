@@ -11,6 +11,7 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/requests/comic_subscribe_request.dart';
 import 'package:liaz/requests/novel_subscribe_request.dart';
+import 'package:liaz/requests/oauth2_token_request.dart';
 import 'package:liaz/requests/user_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/oauth2_token_service.dart';
@@ -19,6 +20,8 @@ import 'package:path_provider/path_provider.dart';
 class UserService extends GetxService {
   static UserService get instance => Get.find<UserService>();
   late Box<User> box;
+
+  final _oauth2TokenRequest = OAuth2TokenRequest();
 
   final _userRequest = UserRequest();
 
@@ -32,6 +35,17 @@ class UserService extends GetxService {
       "User",
       path: appDir.path,
     );
+    Global.isUserLogin = false;
+    var oauth2Token = OAuth2TokenService.instance.get();
+    if (oauth2Token != null) {
+      _oauth2TokenRequest.refreshToken(oauth2Token.refreshToken).then((value) {
+        if (value != null) {
+          OAuth2TokenService.instance.put(value);
+        } else {
+          clear();
+        }
+      });
+    }
   }
 
   Future<void> put(User user) async {
@@ -50,6 +64,13 @@ class UserService extends GetxService {
     }
     put(user);
     return user;
+  }
+
+  void clear() async {
+    var keys = box.values.toList().map((e) => e.userId).toList();
+    if (keys.isNotEmpty) {
+      box.deleteAll(keys);
+    }
   }
 
   Future<bool> signIn(String username, String password) async {

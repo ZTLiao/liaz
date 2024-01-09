@@ -8,7 +8,6 @@ import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/requests/app_request.dart';
 import 'package:liaz/requests/file_request.dart';
 import 'package:liaz/requests/oauth2_token_request.dart';
-import 'package:liaz/services/oauth2_token_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AppConfigService extends GetxService {
@@ -16,8 +15,6 @@ class AppConfigService extends GetxService {
   late Box<AppConfig> box;
 
   final _fileRequest = FileRequest();
-
-  final _oauth2TokenRequest = OAuth2TokenRequest();
 
   Future<void> init() async {
     var appDir = await getApplicationSupportDirectory();
@@ -31,15 +28,6 @@ class AppConfigService extends GetxService {
     if (result.app != null) {
       Global.appConfig = result.app!;
       put(Global.appConfig);
-    }
-    Global.isUserLogin = false;
-    var oauth2Token = OAuth2TokenService.instance.get();
-    if (oauth2Token != null) {
-      _oauth2TokenRequest.refreshToken(oauth2Token.refreshToken).then((value) {
-        if (value != null) {
-          OAuth2TokenService.instance.put(value);
-        }
-      });
     }
   }
 
