@@ -21,7 +21,7 @@ class UserLoginController extends GetxController {
     },
     {
       "title": "google",
-      "icon": Icons.apple,
+      "icon": Icons.facebook,
     },
   ];
 
@@ -38,6 +38,7 @@ class UserLoginController extends GetxController {
     var isLogin =
         await UserService.instance.signIn(username.text, password.text);
     if (isLogin) {
+      EventBus.instance.publish(AppEvent.kUserLoginTopic);
       Get.back();
     } else {
       SmartDialog.showToast(AppString.usernameOrPasswordError);

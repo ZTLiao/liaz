@@ -50,7 +50,7 @@ class UserHomePage extends GetView<UserHomeController> {
                           size: 48,
                         ),
                         title: Text(
-                          Global.isUserLogin
+                          controller.user.value.nickname.isNotEmpty
                               ? controller.user.value.nickname
                               : AppString.notLogin,
                           style: const TextStyle(

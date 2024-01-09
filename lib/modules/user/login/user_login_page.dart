@@ -90,7 +90,7 @@ class UserLoginPage extends StatelessWidget {
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text('${item['title']}登录'),
+                        content: Text('${item['title']}${AppString.login}'),
                         action: SnackBarAction(
                           label: '取消',
                           onPressed: () {},
