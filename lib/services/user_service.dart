@@ -81,7 +81,7 @@ class UserService extends GetxService {
         username, encryptPassword, GrantTypeEnum.password.name);
     if (token.accessToken.isNotEmpty) {
       OAuth2TokenService.instance.put(token);
-      UserService.instance.getUser(token.userId);
+      await UserService.instance.getUser(token.userId);
       isLogin = true;
     }
     return isLogin;
