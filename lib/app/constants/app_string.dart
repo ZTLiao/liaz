@@ -111,4 +111,10 @@ class AppString {
   static const updateTo = '更新至';
   static const latest = 'NEW';
   static const works = '作品';
+  static const readDirection = '阅读方向';
+  static const leftToRight = '从左往右';
+  static const rightToLeft = '从右往左';
+  static const upToDown = '从上往下';
+  static const systemBrightness = '系统亮度';
+  static const screenDirection = '屏幕方向';
 }

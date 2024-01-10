@@ -401,7 +401,7 @@ class ComicReaderController extends BaseController {
         ),
       ),
       constraints: const BoxConstraints(
-        maxHeight: 300,
+        maxHeight: 150,
       ),
       backgroundColor: Colors.black.withOpacity(0.7),
       builder: (context) => Theme(
@@ -409,7 +409,139 @@ class ComicReaderController extends BaseController {
         child: Column(
           children: [
             Expanded(
-              child: ComicSettingsView(),
+              child: Obx(
+                () => ListView(
+                  children: [
+                    Row(
+                      children: [
+                        AppStyle.hGap8,
+                        const Icon(Icons.nights_stay_outlined),
+                        Expanded(
+                          child: Slider(
+                            value: 50,
+                            max: 200,
+                            onChanged: (e) {
+                              e = e - 1;
+                            },
+                          ),
+                        ),
+                        const Icon(Icons.wb_sunny_outlined),
+                        Checkbox(
+                          value: false,
+                          onChanged: (value) {},
+                        ),
+                        const Text(
+                          AppString.systemBrightness,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        AppStyle.hGap16,
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        AppStyle.hGap8,
+                        const Text(
+                          AppString.readDirection,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        Radio(
+                          value: ReaderDirectionEnum.leftToRight.index,
+                          groupValue: direction.value,
+                          onChanged: (value) {
+                            direction.value = value!;
+                          },
+                        ),
+                        Text(
+                          AppString.rightToLeft,
+                          style: TextStyle(
+                            color: direction.value ==
+                                    ReaderDirectionEnum.leftToRight.index
+                                ? Colors.cyan
+                                : Colors.white,
+                          ),
+                        ),
+                        Radio(
+                          value: ReaderDirectionEnum.rightToLeft.index,
+                          groupValue: direction.value,
+                          onChanged: (value) {
+                            direction.value = value!;
+                          },
+                        ),
+                        Text(
+                          AppString.rightToLeft,
+                          style: TextStyle(
+                            color: direction.value ==
+                                    ReaderDirectionEnum.rightToLeft.index
+                                ? Colors.cyan
+                                : Colors.white,
+                          ),
+                        ),
+                        Radio(
+                          value: ReaderDirectionEnum.upToDown.index,
+                          groupValue: direction.value,
+                          onChanged: (value) {
+                            direction.value = value!;
+                          },
+                        ),
+                        Text(
+                          AppString.upToDown,
+                          style: TextStyle(
+                            color: direction.value ==
+                                    ReaderDirectionEnum.upToDown.index
+                                ? Colors.cyan
+                                : Colors.white,
+                          ),
+                        ),
+                        AppStyle.hGap4,
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        AppStyle.hGap8,
+                        const Text(
+                          AppString.screenDirection,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        AppStyle.hGap24,
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              '竖屏阅读',
+                              style: TextStyle(
+                                color: Colors.cyan,
+                              ),
+                            ),
+                            style: ButtonStyle(
+                              side: MaterialStatePropertyAll(
+                                BorderSide(
+                                  color: Colors.cyan,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        AppStyle.hGap4,
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              '横屏阅读',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),

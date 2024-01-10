@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/modules/settings/comic/comic_settings_controller.dart';
 
 class ComicSettingsView extends StatelessWidget {
@@ -13,9 +14,7 @@ class ComicSettingsView extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black.withOpacity(0),
-      body: Center(
-        child: Text('漫画设置'),
-      ),
+      body: SizedBox(),
     );
   }
 }
