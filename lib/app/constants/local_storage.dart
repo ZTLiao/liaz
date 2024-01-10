@@ -79,4 +79,7 @@ class LocalStorage {
 
   /// 自动添加神隐漫画至收藏夹
   static const String kCollectHideComic = "CollectHideComic";
+
+  /// 屏幕亮度
+  static const String kScreenBrightness = "ScreenBrightness";
 }

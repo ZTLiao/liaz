@@ -47,6 +47,7 @@ dependencies:
   permission_handler: ^11.1.0
   image_picker: ^1.0.5
   image_gallery_saver: ^2.0.3
+  screen_brightness: ^0.2.2+1
 
 dev_dependencies:
   flutter_test:

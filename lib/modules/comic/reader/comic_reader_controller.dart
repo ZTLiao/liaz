@@ -16,9 +16,9 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/models/comic/comic_chapter_item_model.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
-import 'package:liaz/modules/settings/comic/comic_settings_view.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/app_settings_service.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -78,6 +78,9 @@ class ComicReaderController extends BaseController {
   /// 阅读方向
   var direction = RxInt(0);
 
+  ///屏幕亮度
+  var screenBrightness = RxDouble(0);
+
   bool get leftHandMode => AppSettings.comicReaderLeftHandMode.value;
 
   /// 翻页动画
@@ -97,10 +100,10 @@ class ComicReaderController extends BaseController {
   void onInit() {
     initConnectivity();
     initBattery();
+    direction.value = AppSettings.comicReaderDirection.value;
+    screenBrightness.value = AppSettings.screenBrightness.value;
     if (detail.value.isLong) {
       direction.value = ReaderDirectionEnum.upToDown.index;
-    } else {
-      direction.value = AppSettings.comicReaderDirection.value;
     }
     if (AppSettings.comicReaderFullScreen.value) {
       setFull();
@@ -401,7 +404,7 @@ class ComicReaderController extends BaseController {
         ),
       ),
       constraints: const BoxConstraints(
-        maxHeight: 150,
+        maxHeight: 170,
       ),
       backgroundColor: Colors.black.withOpacity(0.7),
       builder: (context) => Theme(
@@ -417,23 +420,17 @@ class ComicReaderController extends BaseController {
                         AppStyle.hGap8,
                         const Icon(Icons.nights_stay_outlined),
                         Expanded(
-                          child: Slider(
-                            value: 50,
-                            max: 200,
-                            onChanged: (e) {
-                              e = e - 1;
+                          child: Slider.adaptive(
+                            value: screenBrightness.value,
+                            onChanged: (value) {
+                              screenBrightness.value = value;
+                              setBrightness(value);
+                              AppSettingsService.instance
+                                  .setScreenBrightness(value);
                             },
                           ),
                         ),
                         const Icon(Icons.wb_sunny_outlined),
-                        Checkbox(
-                          value: false,
-                          onChanged: (value) {},
-                        ),
-                        const Text(
-                          AppString.systemBrightness,
-                          style: TextStyle(color: Colors.white),
-                        ),
                         AppStyle.hGap16,
                       ],
                     ),
@@ -451,6 +448,8 @@ class ComicReaderController extends BaseController {
                           groupValue: direction.value,
                           onChanged: (value) {
                             direction.value = value!;
+                            AppSettingsService.instance
+                                .setComicReaderDirection(value);
                           },
                         ),
                         Text(
@@ -467,6 +466,8 @@ class ComicReaderController extends BaseController {
                           groupValue: direction.value,
                           onChanged: (value) {
                             direction.value = value!;
+                            AppSettingsService.instance
+                                .setComicReaderDirection(value);
                           },
                         ),
                         Text(
@@ -483,6 +484,8 @@ class ComicReaderController extends BaseController {
                           groupValue: direction.value,
                           onChanged: (value) {
                             direction.value = value!;
+                            AppSettingsService.instance
+                                .setComicReaderDirection(value);
                           },
                         ),
                         Text(
@@ -511,7 +514,7 @@ class ComicReaderController extends BaseController {
                           child: TextButton(
                             onPressed: () {},
                             child: Text(
-                              '竖屏阅读',
+                              AppString.verticalScreenRead,
                               style: TextStyle(
                                 color: Colors.cyan,
                               ),
@@ -530,7 +533,7 @@ class ComicReaderController extends BaseController {
                           child: TextButton(
                             onPressed: () {},
                             child: Text(
-                              '横屏阅读',
+                              AppString.horizontalScreenRead,
                               style: TextStyle(
                                 color: Colors.white,
                               ),

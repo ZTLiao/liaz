@@ -73,6 +73,9 @@ class AppSettingsService extends GetxController {
     //自动添加神隐漫画至收藏夹
     AppSettings.collectHideComic.value = LocalStorageService.instance
         .getValue(LocalStorage.kCollectHideComic, false);
+    //屏幕亮度
+    AppSettings.screenBrightness.value = LocalStorageService.instance
+        .getValue(LocalStorage.kScreenBrightness, 0.5);
     super.onInit();
   }
 
@@ -278,5 +281,11 @@ class AppSettingsService extends GetxController {
 
   void setNoFirstRun() {
     LocalStorageService.instance.setValue(LocalStorage.kFirstRun, false);
+  }
+
+  void setScreenBrightness(double value) {
+    AppSettings.screenBrightness.value = value;
+    LocalStorageService.instance
+        .setValue(LocalStorage.kScreenBrightness, value);
   }
 }

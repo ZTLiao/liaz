@@ -2,6 +2,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 
 class BaseController extends GetxController {
   /// 加载中(更新页面)
@@ -35,6 +36,33 @@ class BaseController extends GetxController {
         exception.toString().replaceAll("Exception:", StrUtil.empty);
     if (!isShowPageError) {
       SmartDialog.showToast(errorMsg.value);
+    }
+  }
+
+  Future<double> get systemBrightness async {
+    try {
+      return await ScreenBrightness().system;
+    } catch (error, stackTrace) {
+      Log.e(error.toString(), stackTrace);
+      rethrow;
+    }
+  }
+
+  Future<double> get currentBrightness async {
+    try {
+      return await ScreenBrightness().current;
+    } catch (error, stackTrace) {
+      Log.e(error.toString(), stackTrace);
+      rethrow;
+    }
+  }
+
+  Future<void> setBrightness(double brightness) async {
+    try {
+      await ScreenBrightness().setScreenBrightness(brightness);
+    } catch (error, stackTrace) {
+      Log.e(error.toString(), stackTrace);
+      rethrow;
     }
   }
 }

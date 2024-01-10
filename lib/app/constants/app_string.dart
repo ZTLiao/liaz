@@ -117,4 +117,6 @@ class AppString {
   static const upToDown = '从上往下';
   static const systemBrightness = '系统亮度';
   static const screenDirection = '屏幕方向';
+  static const verticalScreenRead = '竖屏阅读';
+  static const  horizontalScreenRead = '横屏阅读';
 }

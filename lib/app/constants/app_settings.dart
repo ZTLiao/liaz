@@ -81,4 +81,7 @@ class AppSettings {
 
   /// 自动添加神隐漫画至收藏夹
   static final RxBool collectHideComic = RxBool(false);
+
+  /// 屏幕亮度
+  static final RxDouble screenBrightness = RxDouble(0.5);
 }
