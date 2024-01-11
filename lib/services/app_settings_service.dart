@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/local_storage.dart';
+import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/services/local_storage_service.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 
 class AppSettingsService extends GetxController {
   static AppSettingsService get instance => Get.find<AppSettingsService>();
@@ -76,10 +78,9 @@ class AppSettingsService extends GetxController {
     //屏幕亮度
     AppSettings.screenBrightness.value = LocalStorageService.instance
         .getValue(LocalStorage.kScreenBrightness, 0.5);
+    setScreenBrightness(AppSettings.screenBrightness.value);
     super.onInit();
   }
-
-  void init() async {}
 
   void changeTheme() {
     Get.dialog(
@@ -287,5 +288,15 @@ class AppSettingsService extends GetxController {
     AppSettings.screenBrightness.value = value;
     LocalStorageService.instance
         .setValue(LocalStorage.kScreenBrightness, value);
+    setBrightness(value);
+  }
+
+  Future<void> setBrightness(double brightness) async {
+    try {
+      await ScreenBrightness().setScreenBrightness(brightness);
+    } catch (error, stackTrace) {
+      Log.e(error.toString(), stackTrace);
+      rethrow;
+    }
   }
 }

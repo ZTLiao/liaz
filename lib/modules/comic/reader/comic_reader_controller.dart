@@ -184,7 +184,6 @@ class ComicReaderController extends BaseController {
         .reduce((ItemPosition min, ItemPosition position) =>
             position.itemTrailingEdge < min.itemTrailingEdge ? position : min)
         .index;
-
     currentIndex.value = index;
   }
 
@@ -274,13 +273,17 @@ class ComicReaderController extends BaseController {
       isLocal: false,
     );
     currentIndex.value = comicChapter.currentIndex;
-    jumpToPage(currentIndex.value);
+    Future.delayed(const Duration(milliseconds: 100), () {
+      jumpToPage(currentIndex.value);
+    });
   }
 
   void jumpToPage(int page, {bool anime = false}) {
     //竖向
     if (direction.value == ReaderDirectionEnum.upToDown.index) {
-      itemScrollController.jumpTo(index: page);
+      if (itemScrollController.isAttached) {
+        itemScrollController.jumpTo(index: page);
+      }
     } else {
       anime && pageAnimation
           ? preloadPageController.animateToPage(page,
@@ -424,7 +427,6 @@ class ComicReaderController extends BaseController {
                             value: screenBrightness.value,
                             onChanged: (value) {
                               screenBrightness.value = value;
-                              setBrightness(value);
                               AppSettingsService.instance
                                   .setScreenBrightness(value);
                             },

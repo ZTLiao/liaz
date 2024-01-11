@@ -9,6 +9,7 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/app/logger/log.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/modules/comic/reader/comic_reader_controller.dart';
 import 'package:liaz/widgets/status/app_error_widget.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
@@ -289,7 +290,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
           ),
           padding: AppStyle.edgeInsetsA12,
           child: const Text(
-            '${AppString.loading}...',
+            StrUtil.empty,
           ),
         ),
       ),
@@ -301,7 +302,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
           ),
           padding: AppStyle.edgeInsetsA12,
           child: const Text(
-            '${AppString.loading}...',
+            StrUtil.empty,
           ),
         ),
       ),
@@ -358,9 +359,8 @@ class ComicReaderPage extends GetView<ComicReaderController> {
             borderRadius: AppStyle.radius24,
           ),
           padding: AppStyle.edgeInsetsA12,
-          child: const Icon(
-            Icons.arrow_circle_up,
-            color: Colors.cyan,
+          child: const Text(
+            StrUtil.empty,
           ),
         ),
       ),
@@ -372,9 +372,8 @@ class ComicReaderPage extends GetView<ComicReaderController> {
             borderRadius: AppStyle.radius24,
           ),
           padding: AppStyle.edgeInsetsA12,
-          child: const Icon(
-            Icons.arrow_circle_down,
-            color: Colors.cyan,
+          child: const Text(
+            StrUtil.empty,
           ),
         ),
       ),
@@ -385,29 +384,30 @@ class ComicReaderPage extends GetView<ComicReaderController> {
       onLoad: () async {
         controller.nextChapter();
       },
-      child: ScrollablePositionedList.builder(
-        itemScrollController: controller.itemScrollController,
-        itemCount: controller.detail.value.paths.length,
-        itemPositionsListener: controller.itemPositionsListener,
-        itemBuilder: (_, i) {
-          if (i == controller.detail.value.paths.length - 1 &&
-              controller.detail.value.paths[i] == "TC") {
-            return const SizedBox();
-          }
-          var url = controller.detail.value.paths[i];
-          return Container(
-            constraints: const BoxConstraints(
-              minHeight: 200,
-            ),
-            child: controller.detail.value.isLocal
-                ? LocalImage(url, fit: BoxFit.contain)
-                : NetImage(
-                    url,
-                    fit: BoxFit.fitWidth,
-                    progress: true,
-                  ),
-          );
-        },
+      child: Obx(
+        () => ScrollablePositionedList.builder(
+          itemScrollController: controller.itemScrollController,
+          itemCount: controller.detail.value.paths.length,
+          itemPositionsListener: controller.itemPositionsListener,
+          itemBuilder: (_, i) {
+            if (i == controller.detail.value.paths.length - 1) {
+              return const SizedBox();
+            }
+            var url = controller.detail.value.paths[i];
+            return Container(
+              constraints: const BoxConstraints(
+                minHeight: 200,
+              ),
+              child: controller.detail.value.isLocal
+                  ? LocalImage(url, fit: BoxFit.contain)
+                  : NetImage(
+                      url,
+                      fit: BoxFit.fitWidth,
+                      progress: true,
+                    ),
+            );
+          },
+        ),
       ),
     );
   }

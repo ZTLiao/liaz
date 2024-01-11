@@ -57,12 +57,4 @@ class BaseController extends GetxController {
     }
   }
 
-  Future<void> setBrightness(double brightness) async {
-    try {
-      await ScreenBrightness().setScreenBrightness(brightness);
-    } catch (error, stackTrace) {
-      Log.e(error.toString(), stackTrace);
-      rethrow;
-    }
-  }
 }
