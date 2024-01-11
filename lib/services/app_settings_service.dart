@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/local_storage.dart';
+import 'package:liaz/app/enums/screen_direction_enum.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/services/local_storage_service.dart';
 import 'package:screen_brightness/screen_brightness.dart';
@@ -79,6 +81,8 @@ class AppSettingsService extends GetxController {
     AppSettings.screenBrightness.value = LocalStorageService.instance
         .getValue(LocalStorage.kScreenBrightness, 0.5);
     setScreenBrightness(AppSettings.screenBrightness.value);
+    //屏幕方向
+
     super.onInit();
   }
 
@@ -284,19 +288,27 @@ class AppSettingsService extends GetxController {
     LocalStorageService.instance.setValue(LocalStorage.kFirstRun, false);
   }
 
-  void setScreenBrightness(double value) {
+  void setScreenBrightness(double value) async {
     AppSettings.screenBrightness.value = value;
     LocalStorageService.instance
         .setValue(LocalStorage.kScreenBrightness, value);
-    setBrightness(value);
-  }
-
-  Future<void> setBrightness(double brightness) async {
     try {
-      await ScreenBrightness().setScreenBrightness(brightness);
+      await ScreenBrightness().setScreenBrightness(value);
     } catch (error, stackTrace) {
       Log.e(error.toString(), stackTrace);
       rethrow;
+    }
+  }
+
+  void setComicScreenDirection(int value) {
+    AppSettings.comicScreenDirection.value = value;
+    LocalStorageService.instance.setValue(LocalStorage.kComicScreenDirection, value);
+    if (value == ScreenDirectionEnum.vertical.index) {
+      SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    } else if (value == ScreenDirectionEnum.horizontal.index) {
+      SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
     }
   }
 }

@@ -47,7 +47,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                     onTap: () {
                       controller.setShowControls();
                     },
-                    child: controller.direction.value ==
+                    child: controller.readDirection.value ==
                             ReaderDirectionEnum.upToDown.index
                         ? buildVertical()
                         : buildHorizontal(),
@@ -319,7 +319,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
           controller.currentIndex.value = e;
         },
         reverse:
-            controller.direction.value == ReaderDirectionEnum.rightToLeft.index,
+            controller.readDirection.value == ReaderDirectionEnum.rightToLeft.index,
         physics: controller.lockSwipe.value
             ? const NeverScrollableScrollPhysics()
             : null,
@@ -355,7 +355,6 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         triggerOffset: 80,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: AppStyle.radius24,
           ),
           padding: AppStyle.edgeInsetsA12,
@@ -368,7 +367,6 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         triggerOffset: 80,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: AppStyle.radius24,
           ),
           padding: AppStyle.edgeInsetsA12,

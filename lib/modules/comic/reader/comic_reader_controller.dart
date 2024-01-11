@@ -12,6 +12,7 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
+import 'package:liaz/app/enums/screen_direction_enum.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/models/comic/comic_chapter_item_model.dart';
@@ -76,7 +77,7 @@ class ComicReaderController extends BaseController {
   var currentIndex = RxInt(0);
 
   /// 阅读方向
-  var direction = RxInt(0);
+  var readDirection = RxInt(0);
 
   ///屏幕亮度
   var screenBrightness = RxDouble(0);
@@ -96,15 +97,19 @@ class ComicReaderController extends BaseController {
   /// 显示电量
   RxBool showBattery = RxBool(true);
 
+  /// 屏幕方向
+  RxInt screenDirection = RxInt(0);
+
   @override
   void onInit() {
     initConnectivity();
     initBattery();
-    direction.value = AppSettings.comicReaderDirection.value;
+    readDirection.value = AppSettings.comicReaderDirection.value;
     screenBrightness.value = AppSettings.screenBrightness.value;
     if (detail.value.isLong) {
-      direction.value = ReaderDirectionEnum.upToDown.index;
+      readDirection.value = ReaderDirectionEnum.upToDown.index;
     }
+    screenDirection.value = AppSettings.comicScreenDirection.value;
     if (AppSettings.comicReaderFullScreen.value) {
       setFull();
     }
@@ -280,7 +285,7 @@ class ComicReaderController extends BaseController {
 
   void jumpToPage(int page, {bool anime = false}) {
     //竖向
-    if (direction.value == ReaderDirectionEnum.upToDown.index) {
+    if (readDirection.value == ReaderDirectionEnum.upToDown.index) {
       if (itemScrollController.isAttached) {
         itemScrollController.jumpTo(index: page);
       }
@@ -447,9 +452,9 @@ class ComicReaderController extends BaseController {
                         ),
                         Radio(
                           value: ReaderDirectionEnum.leftToRight.index,
-                          groupValue: direction.value,
+                          groupValue: readDirection.value,
                           onChanged: (value) {
-                            direction.value = value!;
+                            readDirection.value = value!;
                             AppSettingsService.instance
                                 .setComicReaderDirection(value);
                           },
@@ -457,7 +462,7 @@ class ComicReaderController extends BaseController {
                         Text(
                           AppString.rightToLeft,
                           style: TextStyle(
-                            color: direction.value ==
+                            color: readDirection.value ==
                                     ReaderDirectionEnum.leftToRight.index
                                 ? Colors.cyan
                                 : Colors.white,
@@ -465,9 +470,9 @@ class ComicReaderController extends BaseController {
                         ),
                         Radio(
                           value: ReaderDirectionEnum.rightToLeft.index,
-                          groupValue: direction.value,
+                          groupValue: readDirection.value,
                           onChanged: (value) {
-                            direction.value = value!;
+                            readDirection.value = value!;
                             AppSettingsService.instance
                                 .setComicReaderDirection(value);
                           },
@@ -475,7 +480,7 @@ class ComicReaderController extends BaseController {
                         Text(
                           AppString.rightToLeft,
                           style: TextStyle(
-                            color: direction.value ==
+                            color: readDirection.value ==
                                     ReaderDirectionEnum.rightToLeft.index
                                 ? Colors.cyan
                                 : Colors.white,
@@ -483,9 +488,9 @@ class ComicReaderController extends BaseController {
                         ),
                         Radio(
                           value: ReaderDirectionEnum.upToDown.index,
-                          groupValue: direction.value,
+                          groupValue: readDirection.value,
                           onChanged: (value) {
-                            direction.value = value!;
+                            readDirection.value = value!;
                             AppSettingsService.instance
                                 .setComicReaderDirection(value);
                           },
@@ -493,7 +498,7 @@ class ComicReaderController extends BaseController {
                         Text(
                           AppString.upToDown,
                           style: TextStyle(
-                            color: direction.value ==
+                            color: readDirection.value ==
                                     ReaderDirectionEnum.upToDown.index
                                 ? Colors.cyan
                                 : Colors.white,
@@ -514,18 +519,30 @@ class ComicReaderController extends BaseController {
                         AppStyle.hGap24,
                         Expanded(
                           child: TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              AppString.verticalScreenRead,
-                              style: TextStyle(
-                                color: Colors.cyan,
-                              ),
-                            ),
+                            onPressed: () {
+                              screenDirection.value =
+                                  ScreenDirectionEnum.vertical.index;
+                              AppSettingsService.instance
+                                  .setComicScreenDirection(
+                                      ScreenDirectionEnum.vertical.index);
+                            },
                             style: ButtonStyle(
                               side: MaterialStatePropertyAll(
                                 BorderSide(
-                                  color: Colors.cyan,
+                                  color: screenDirection.value ==
+                                          ScreenDirectionEnum.vertical.index
+                                      ? Colors.cyan
+                                      : Colors.white,
                                 ),
+                              ),
+                            ),
+                            child: Text(
+                              AppString.verticalScreenRead,
+                              style: TextStyle(
+                                color: screenDirection.value ==
+                                        ScreenDirectionEnum.vertical.index
+                                    ? Colors.cyan
+                                    : Colors.white,
                               ),
                             ),
                           ),
@@ -533,15 +550,35 @@ class ComicReaderController extends BaseController {
                         AppStyle.hGap4,
                         Expanded(
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              screenDirection.value =
+                                  ScreenDirectionEnum.horizontal.index;
+                              AppSettingsService.instance
+                                  .setComicScreenDirection(
+                                      ScreenDirectionEnum.horizontal.index);
+                            },
+                            style: ButtonStyle(
+                              side: MaterialStatePropertyAll(
+                                BorderSide(
+                                  color: screenDirection.value ==
+                                          ScreenDirectionEnum.horizontal.index
+                                      ? Colors.cyan
+                                      : Colors.white,
+                                ),
+                              ),
+                            ),
                             child: Text(
                               AppString.horizontalScreenRead,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: screenDirection.value ==
+                                        ScreenDirectionEnum.horizontal.index
+                                    ? Colors.cyan
+                                    : Colors.white,
                               ),
                             ),
                           ),
                         ),
+                        AppStyle.hGap4,
                       ],
                     ),
                   ],
