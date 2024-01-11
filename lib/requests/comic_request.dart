@@ -40,8 +40,8 @@ class ComicRequest {
       'comicChapterId': comicChapterId,
     });
     if (result is List) {
-      for (var json in result) {
-        var model = ComicChapterModel.fromJson(json);
+      for (int i = result.length - 1; i >= 0; i--) {
+        var model = ComicChapterModel.fromJson(result[i]);
         list.add(model);
       }
     }

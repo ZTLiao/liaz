@@ -12,6 +12,7 @@ import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
+import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_volume_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
@@ -106,19 +107,19 @@ class NovelDetailController extends BaseController {
   void onReadChapter(NovelVolumeModel volume) {
     var chapters = volume.chapters;
     browseChapterId.value = chapters[chapterIndex.value].novelChapterId;
-    if (chapters.isNotEmpty &&
-        chapters[chapterIndex.value].novelChapterId ==
-            detail.value.browseChapterId) {
+    var novelChapters = <NovelChapterModel>[];
+    if (chapters.isNotEmpty) {
       for (var chapter in chapters) {
-        if (chapter.novelChapterId == detail.value.browseChapterId) {
+        if (chapter.novelChapterId == browseChapterId.value) {
           chapter.currentIndex = detail.value.currentIndex;
-          break;
         }
+        novelChapters.add(NovelChapterModel.fromJson(chapter.toJson()));
       }
     }
+    novelChapters.sort((a, b) => a.seqNo.compareTo(b.seqNo));
     AppNavigator.toNovelReader(
       novelChapterId: chapters[chapterIndex.value].novelChapterId,
-      chapters: chapters,
+      chapters: novelChapters,
     );
   }
 

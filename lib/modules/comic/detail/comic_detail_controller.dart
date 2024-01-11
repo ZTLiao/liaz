@@ -96,19 +96,20 @@ class ComicDetailController extends BaseController {
     var chapterTypes = detail.value.chapterTypes;
     var chapterType = chapterTypes
         .firstWhere((element) => element.chapterType == chapter.chapterType);
+    var comicChapters = <ComicChapterModel>[];
     var chapters = chapterType.chapters;
-    if (chapters.isNotEmpty &&
-        chapter.comicChapterId == detail.value.browseChapterId) {
+    if (chapters.isNotEmpty) {
       for (var chapter in chapters) {
         if (chapter.comicChapterId == detail.value.browseChapterId) {
           chapter.currentIndex = detail.value.currentIndex;
-          break;
         }
+        comicChapters.add(ComicChapterModel.fromJson(chapter.toJson()));
       }
     }
+    comicChapters.sort((a, b) => a.seqNo.compareTo(b.seqNo));
     AppNavigator.toComicReader(
       comicChapterId: chapter.comicChapterId,
-      chapters: chapters,
+      chapters: comicChapters,
     );
   }
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/comic_flag.dart';
+import 'package:liaz/app/enums/sort_type_enum.dart';
 import 'package:liaz/app/utils/convert_util.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 
@@ -54,7 +55,7 @@ class ComicChapterTypeModel {
   }
 
   void sort() {
-    if (sortType.value == 0) {
+    if (sortType.value == SortTypeEnum.asc.index) {
       chapters.sort((a, b) => b.seqNo.compareTo(a.seqNo));
     } else {
       chapters.sort((a, b) => a.seqNo.compareTo(b.seqNo));

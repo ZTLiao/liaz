@@ -40,8 +40,8 @@ class NovelRequest {
       'novelChapterId': novelChapterId,
     });
     if (result is List) {
-      for (var json in result) {
-        var model = NovelChapterModel.fromJson(json);
+      for (int i = result.length - 1; i >= 0; i--) {
+        var model = NovelChapterModel.fromJson(result[i]);
         list.add(model);
       }
     }
@@ -55,7 +55,7 @@ class NovelRequest {
       cover: '',
     );
     dynamic result =
-    await Request.instance.get('/api/novel/get', queryParameters: {
+        await Request.instance.get('/api/novel/get', queryParameters: {
       'novelId': novelId,
     });
     if (result is Map) {

@@ -8,7 +8,6 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/app/logger/log.dart';
-import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/modules/comic/reader/comic_reader_controller.dart';
 import 'package:liaz/widgets/status/app_error_widget.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
@@ -289,7 +288,10 @@ class ComicReaderPage extends GetView<ComicReaderController> {
           ),
           padding: AppStyle.edgeInsetsA12,
           child: const Text(
-            StrUtil.empty,
+            '${AppString.loading}...',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -301,7 +303,10 @@ class ComicReaderPage extends GetView<ComicReaderController> {
           ),
           padding: AppStyle.edgeInsetsA12,
           child: const Text(
-            StrUtil.empty,
+            '${AppString.loading}...',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -358,7 +363,10 @@ class ComicReaderPage extends GetView<ComicReaderController> {
           ),
           padding: AppStyle.edgeInsetsA12,
           child: const Text(
-            StrUtil.empty,
+            '${AppString.loading}...',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -370,7 +378,10 @@ class ComicReaderPage extends GetView<ComicReaderController> {
           ),
           padding: AppStyle.edgeInsetsA12,
           child: const Text(
-            StrUtil.empty,
+            '${AppString.loading}...',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
