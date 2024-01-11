@@ -248,20 +248,25 @@ class _NovelHorizontalReaderState extends State<NovelHorizontalReader>
     required double fontSize,
     required double lineHeight,
   }) {
-    TextPainter textPainter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: TextStyle(
-          fontSize: fontSize,
-          height: lineHeight,
-          locale: View.of(context).platformDispatcher.locale,
+    try {
+      TextPainter textPainter = TextPainter(
+        text: TextSpan(
+          text: text,
+          style: TextStyle(
+            fontSize: fontSize,
+            height: lineHeight,
+            locale: View.of(context).platformDispatcher.locale,
+          ),
         ),
-      ),
-      textDirection: TextDirection.ltr,
-      maxLines: 1,
-    );
-    textPainter.layout(maxWidth: 200);
-    return textPainter.size;
+        textDirection: TextDirection.ltr,
+        maxLines: 1,
+      );
+      textPainter.layout(maxWidth: 200);
+      return textPainter.size;
+    } catch(error, stackTrace) {
+      Log.e(error.toString(), stackTrace);
+      return const Size(10, 30);
+    }
   }
 
   @override

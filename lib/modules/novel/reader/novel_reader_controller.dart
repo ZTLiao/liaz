@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
@@ -68,6 +69,12 @@ class NovelReaderController extends BaseController {
   /// 文本内容
   var content = RxString(StrUtil.empty);
 
+  /// 图片
+  var pictures = RxList<String>([]);
+
+  /// 是否包含图片
+  var hasPicture = RxBool(false);
+
   /// 是否显示控制器
   var showControls = RxBool(false);
 
@@ -78,7 +85,7 @@ class NovelReaderController extends BaseController {
   var currentIndex = RxInt(0);
 
   /// 阅读方向
-  var direction = RxInt(0);
+  var readDirection = RxInt(0);
 
   /// 最大页面
   var maxPage = RxInt(0);
@@ -99,7 +106,7 @@ class NovelReaderController extends BaseController {
   void onInit() {
     initConnectivity();
     initBattery();
-    direction.value = AppSettings.novelReaderDirection.value;
+    readDirection.value = AppSettings.novelReaderDirection.value;
     screenBrightness.value = AppSettings.screenBrightness.value;
     scrollController.addListener(listenVertical);
     setFull();
@@ -174,7 +181,7 @@ class NovelReaderController extends BaseController {
 
   /// 下一页
   void nextPage() {
-    if (direction.value == ReaderDirectionEnum.upToDown.index) {
+    if (readDirection.value == ReaderDirectionEnum.upToDown.index) {
       return;
     }
     var value = currentIndex.value;
@@ -206,7 +213,7 @@ class NovelReaderController extends BaseController {
 
   /// 上一页
   void forwardPage() {
-    if (direction.value == ReaderDirectionEnum.upToDown.index) {
+    if (readDirection.value == ReaderDirectionEnum.upToDown.index) {
       return;
     }
     var value = currentIndex.value;
@@ -226,9 +233,12 @@ class NovelReaderController extends BaseController {
     for (int i = 0; i < paths.length; i++) {
       var path = paths[i];
       var type = types[i];
+      path = await AppConfigService.instance.getObject(path);
       if (type == FileType.textPlain) {
-        path = await AppConfigService.instance.getObject(path);
         sb.write(await Request.instance.getResource(path));
+      } else if (type == FileType.imageJpeg) {
+        pictures.add(path);
+        hasPicture.value = true;
       }
     }
     content.value = sb.toString();
@@ -250,7 +260,7 @@ class NovelReaderController extends BaseController {
   /// 跳转页数
   void jumpToPage(int page, {bool anime = false}) {
     //竖向
-    if (direction.value == ReaderDirectionEnum.upToDown.index) {
+    if (readDirection.value == ReaderDirectionEnum.upToDown.index) {
       final viewportHeight = scrollController.position.viewportDimension;
       scrollController.jumpTo(viewportHeight * page);
     } else {
@@ -443,6 +453,115 @@ class NovelReaderController extends BaseController {
                         ),
                         const Icon(Icons.wb_sunny_outlined),
                         AppStyle.hGap16,
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        AppStyle.hGap8,
+                        const Text(
+                          AppString.readDirection,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        Radio(
+                          value: ReaderDirectionEnum.leftToRight.index,
+                          groupValue: readDirection.value,
+                          onChanged: (value) {
+                            readDirection.value = value!;
+                            AppSettingsService.instance
+                                .setNovelReaderDirection(value);
+                          },
+                        ),
+                        Text(
+                          AppString.rightToLeft,
+                          style: TextStyle(
+                            color: readDirection.value ==
+                                    ReaderDirectionEnum.leftToRight.index
+                                ? Colors.cyan
+                                : Colors.white,
+                          ),
+                        ),
+                        Radio(
+                          value: ReaderDirectionEnum.rightToLeft.index,
+                          groupValue: readDirection.value,
+                          onChanged: (value) {
+                            readDirection.value = value!;
+                            AppSettingsService.instance
+                                .setNovelReaderDirection(value);
+                          },
+                        ),
+                        Text(
+                          AppString.rightToLeft,
+                          style: TextStyle(
+                            color: readDirection.value ==
+                                    ReaderDirectionEnum.rightToLeft.index
+                                ? Colors.cyan
+                                : Colors.white,
+                          ),
+                        ),
+                        Radio(
+                          value: ReaderDirectionEnum.upToDown.index,
+                          groupValue: readDirection.value,
+                          onChanged: (value) {
+                            readDirection.value = value!;
+                            AppSettingsService.instance
+                                .setNovelReaderDirection(value);
+                          },
+                        ),
+                        Text(
+                          AppString.upToDown,
+                          style: TextStyle(
+                            color: readDirection.value ==
+                                    ReaderDirectionEnum.upToDown.index
+                                ? Colors.cyan
+                                : Colors.white,
+                          ),
+                        ),
+                        AppStyle.hGap4,
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        AppStyle.hGap8,
+                        const Text(
+                          AppString.readTheme,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: AppColor.novelThemes.keys
+                              .map(
+                                (e) => GestureDetector(
+                                  onTap: () {
+                                    AppSettingsService.instance
+                                        .setNovelReaderTheme(e);
+                                  },
+                                  child: Container(
+                                    margin: AppStyle.edgeInsetsL24,
+                                    height: 36,
+                                    width: 36,
+                                    decoration: BoxDecoration(
+                                      color: AppColor.novelThemes[e]!.first,
+                                      borderRadius: AppStyle.radius24,
+                                    ),
+                                    child: Visibility(
+                                      visible: AppColor.novelThemes.keys
+                                              .toList()
+                                              .indexOf(e) ==
+                                          AppSettings.novelReaderTheme.value,
+                                      child: Icon(
+                                        Icons.check,
+                                        color: AppColor.novelThemes[e]!.last,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
                       ],
                     ),
                   ],

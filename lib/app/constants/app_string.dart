@@ -119,4 +119,5 @@ class AppString {
   static const screenDirection = '屏幕方向';
   static const verticalScreenRead = '竖屏阅读';
   static const  horizontalScreenRead = '横屏阅读';
+  static const readTheme = '阅读主题';
 }

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +9,7 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/app/logger/log.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/modules/novel/reader/novel_horizontal_reader.dart';
 import 'package:liaz/modules/novel/reader/novel_reader_controller.dart';
@@ -53,10 +52,9 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                       onTap: () {
                         controller.setShowControls();
                       },
-                      //TODO
-                      child: false
+                      child: controller.hasPicture.value
                           ? buildPicture()
-                          : (controller.direction.value ==
+                          : (controller.readDirection.value ==
                                   ReaderDirectionEnum.upToDown.index
                               ? buildVertical()
                               : buildHorizontal()),
@@ -254,13 +252,11 @@ class NovelReaderPage extends GetView<NovelReaderController> {
         triggerOffset: 80,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: AppStyle.radius24,
           ),
           padding: AppStyle.edgeInsetsA12,
-          child: const Icon(
-            Icons.arrow_circle_left,
-            color: Colors.cyan,
+          child: const Text(
+            StrUtil.empty,
           ),
         ),
       ),
@@ -268,13 +264,11 @@ class NovelReaderPage extends GetView<NovelReaderController> {
         triggerOffset: 80,
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: AppStyle.radius24,
           ),
           padding: AppStyle.edgeInsetsA12,
-          child: const Icon(
-            Icons.arrow_circle_right,
-            color: Colors.cyan,
+          child: const Text(
+            StrUtil.empty,
           ),
         ),
       ),
@@ -288,8 +282,8 @@ class NovelReaderPage extends GetView<NovelReaderController> {
       child: NovelHorizontalReader(
         controller.content.value,
         controller: controller.pageController,
-        reverse:
-            controller.direction.value == ReaderDirectionEnum.rightToLeft.index,
+        reverse: controller.readDirection.value ==
+            ReaderDirectionEnum.rightToLeft.index,
         style: TextStyle(
           fontSize: AppSettings.novelReaderFontSize.value.toDouble(),
           height: AppSettings.novelReaderLineSpacing.value,
@@ -323,13 +317,11 @@ class NovelReaderPage extends GetView<NovelReaderController> {
               triggerOffset: 80,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
                   borderRadius: AppStyle.radius24,
                 ),
                 padding: AppStyle.edgeInsetsA12,
-                child: const Icon(
-                  Icons.arrow_circle_up,
-                  color: Colors.cyan,
+                child: const Text(
+                  StrUtil.empty,
                 ),
               ),
             ),
@@ -337,13 +329,11 @@ class NovelReaderPage extends GetView<NovelReaderController> {
               triggerOffset: 80,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
                   borderRadius: AppStyle.radius24,
                 ),
                 padding: AppStyle.edgeInsetsA12,
-                child: const Icon(
-                  Icons.arrow_circle_down,
-                  color: Colors.cyan,
+                child: const Text(
+                  StrUtil.empty,
                 ),
               ),
             ),
@@ -383,15 +373,11 @@ class NovelReaderPage extends GetView<NovelReaderController> {
           triggerOffset: 80,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
               borderRadius: AppStyle.radius24,
             ),
             padding: AppStyle.edgeInsetsA12,
-            child: Icon(
-              controller.direction.value != ReaderDirectionEnum.upToDown.index
-                  ? Icons.arrow_circle_left
-                  : Icons.arrow_circle_up,
-              color: Colors.cyan,
+            child: const Text(
+              StrUtil.empty,
             ),
           ),
         ),
@@ -399,15 +385,11 @@ class NovelReaderPage extends GetView<NovelReaderController> {
           triggerOffset: 80,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
               borderRadius: AppStyle.radius24,
             ),
             padding: AppStyle.edgeInsetsA12,
-            child: Icon(
-              controller.direction.value != ReaderDirectionEnum.upToDown.index
-                  ? Icons.arrow_circle_right
-                  : Icons.arrow_circle_down,
-              color: Colors.cyan,
+            child: const Text(
+              StrUtil.empty,
             ),
           ),
         ),
@@ -418,12 +400,12 @@ class NovelReaderPage extends GetView<NovelReaderController> {
         onLoad: () async {
           controller.nextChapter();
         },
-        child: controller.direction.value != ReaderDirectionEnum.upToDown.index
+        child: controller.readDirection.value !=
+                ReaderDirectionEnum.upToDown.index
             ? PageView.builder(
                 controller: controller.pageController,
-                //TODO picture
-                itemCount: 10,
-                reverse: controller.direction.value ==
+                itemCount: controller.pictures.length,
+                reverse: controller.readDirection.value ==
                     ReaderDirectionEnum.rightToLeft.index,
                 onPageChanged: (e) {
                   controller.currentIndex.value = e;
@@ -436,9 +418,12 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                           (AppSettings.novelReaderShowStatus.value ? 24 : 12),
                     ),
                     child: GestureDetector(
-                      onDoubleTap: () {},
+                      onDoubleTap: () {
+                        ToolUtil.showImageViewer(
+                            i, controller.pictures.toList());
+                      },
                       child: NetImage(
-                        '',
+                        controller.pictures[i],
                         fit: BoxFit.contain,
                         progress: true,
                       ),
@@ -451,29 +436,29 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                 padding: EdgeInsets.zero,
                 separatorBuilder: (_, i) => AppStyle.vGap4,
                 itemBuilder: (_, i) {
-                  //TODO
                   return GestureDetector(
                     onDoubleTap: () {
-                      ToolUtil.showImageViewer(i, []);
+                      ToolUtil.showImageViewer(i, controller.pictures.toList());
                     },
-                    child: false
+                    child: controller.detail.value.isLocal
                         ? LocalImage(
-                            '',
+                            controller.pictures[i],
                             fit: BoxFit.fitWidth,
                           )
                         : NetImage(
-                            '',
+                            controller.pictures[i],
                             fit: BoxFit.fitWidth,
                             progress: true,
                           ),
                   );
-                }),
+                },
+              ),
       ),
     );
   }
 
   Widget buildSilderBar() {
-    if (controller.direction.value == ReaderDirectionEnum.upToDown.index) {
+    if (controller.readDirection.value == ReaderDirectionEnum.upToDown.index) {
       return Obx(
         () {
           var value = controller.progress.value;
@@ -550,7 +535,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                   buildConnectivity(),
                   buildBattery(),
                   const Expanded(child: SizedBox()),
-                  controller.direction.value !=
+                  controller.readDirection.value !=
                           ReaderDirectionEnum.upToDown.index
                       ? Text(
                           '${controller.detail.value.paths.isEmpty ? 0 : controller.currentIndex.value + 1} / ${controller.maxPage.value}',

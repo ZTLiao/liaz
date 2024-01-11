@@ -41,7 +41,7 @@ class RecommendRequest {
   Future<List<RecommendModel>> recommendNovel(int novelId) async {
     List<RecommendModel> list = [];
     dynamic result =
-        await Request.instance.get('/api/recommend/novelId', queryParameters: {
+        await Request.instance.get('/api/recommend/novel', queryParameters: {
       'novelId': novelId,
     });
     if (result is List) {
