@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:liaz/app/constants/db.dart';
 import 'package:liaz/models/db/oauth2_token.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -10,7 +11,7 @@ class OAuth2TokenService extends GetxService {
   Future<void> init() async {
     var appDir = await getApplicationSupportDirectory();
     box = await Hive.openBox(
-      "OAuth2Token",
+      Db.oauth2Token,
       path: appDir.path,
     );
   }

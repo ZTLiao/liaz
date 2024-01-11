@@ -5,7 +5,7 @@ import 'package:liaz/app/utils/convert_util.dart';
 
 part 'oauth2_token.g.dart';
 
-@HiveField(3)
+@HiveType(typeId: 3)
 class OAuth2Token {
   @HiveField(0)
   String accessToken;

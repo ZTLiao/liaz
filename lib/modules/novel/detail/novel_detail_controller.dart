@@ -3,9 +3,11 @@ import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/recommend_position_enum.dart';
 import 'package:liaz/app/enums/recommend_type_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
+import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -18,7 +20,6 @@ import 'package:liaz/requests/file_request.dart';
 import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/novel_service.dart';
-import 'package:liaz/services/recommend_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class NovelDetailController extends BaseController {
@@ -66,7 +67,8 @@ class NovelDetailController extends BaseController {
   void initRelateRecommend() async {
     var relateRecommends = await recommendRequest
         .recommendByPosition(RecommendPositionEnum.relate.index);
-    var novelRecommends = await recommendRequest.recommendNovel(detail.value.novelId);
+    var novelRecommends =
+        await recommendRequest.recommendNovel(detail.value.novelId);
     if (relateRecommends.isNotEmpty) {
       for (var relateRecommend in relateRecommends) {
         var recommendType = relateRecommend.recommendType;
@@ -105,7 +107,8 @@ class NovelDetailController extends BaseController {
     var chapters = volume.chapters;
     browseChapterId.value = chapters[chapterIndex.value].novelChapterId;
     if (chapters.isNotEmpty &&
-        chapters[chapterIndex.value].novelChapterId == detail.value.browseChapterId) {
+        chapters[chapterIndex.value].novelChapterId ==
+            detail.value.browseChapterId) {
       for (var chapter in chapters) {
         if (chapter.novelChapterId == detail.value.browseChapterId) {
           chapter.currentIndex = detail.value.currentIndex;
@@ -137,8 +140,9 @@ class NovelDetailController extends BaseController {
     if (detail.value.novelId == 0) {
       return;
     }
+    var shareUrl = Global.appConfig.shareUrl;
     ShareUtil.share(
-      'https://www.baidu.com',
+      '$shareUrl?objId=${detail.value.novelId}&assetType=${AssetTypeEnum.novel.index}',
       content: detail.value.title,
     );
   }

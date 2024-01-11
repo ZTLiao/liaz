@@ -1,10 +1,7 @@
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
-import 'package:liaz/app/enums/recommend_position_enum.dart';
-import 'package:liaz/app/enums/recommend_type_enum.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/models/dto/item_model.dart';
-import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/novel_service.dart';

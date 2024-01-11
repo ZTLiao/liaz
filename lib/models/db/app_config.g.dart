@@ -13,17 +13,20 @@ class AppConfigAdapter extends TypeAdapter<AppConfig> {
     return AppConfig(
       fileUrl: fields[0] as String,
       resourceAuthority: fields[1] as bool,
+      shareUrl: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, AppConfig obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.fileUrl)
       ..writeByte(1)
-      ..write(obj.resourceAuthority);
+      ..write(obj.resourceAuthority)
+      ..writeByte(2)
+      ..write(obj.shareUrl);
   }
 
   @override

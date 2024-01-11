@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:liaz/app/constants/app_event.dart';
+import 'package:liaz/app/constants/db.dart';
 import 'package:liaz/app/enums/grant_type_enum.dart';
-import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/models/db/user.dart';
@@ -32,7 +31,7 @@ class UserService extends GetxService {
   Future<void> init() async {
     var appDir = await getApplicationSupportDirectory();
     box = await Hive.openBox(
-      "User",
+      Db.user,
       path: appDir.path,
     );
     Global.isUserLogin = false;

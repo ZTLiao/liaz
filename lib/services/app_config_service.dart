@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:liaz/app/constants/app_string.dart';
+import 'package:liaz/app/constants/db.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/requests/app_request.dart';
 import 'package:liaz/requests/file_request.dart';
-import 'package:liaz/requests/oauth2_token_request.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AppConfigService extends GetxService {
@@ -19,7 +19,7 @@ class AppConfigService extends GetxService {
   Future<void> init() async {
     var appDir = await getApplicationSupportDirectory();
     box = await Hive.openBox(
-      "AppConfig",
+      Db.appConfig,
       path: appDir.path,
     );
     var request = AppRequest();

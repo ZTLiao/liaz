@@ -3,9 +3,11 @@ import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/recommend_position_enum.dart';
 import 'package:liaz/app/enums/recommend_type_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
+import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
@@ -120,8 +122,9 @@ class ComicDetailController extends BaseController {
     if (detail.value.comicId == 0) {
       return;
     }
+    var shareUrl = Global.appConfig.shareUrl;
     ShareUtil.share(
-      'https://www.baidu.com',
+      '$shareUrl?objId=${detail.value.comicId}&assetType=${AssetTypeEnum.comic.index}',
       content: detail.value.title,
     );
   }

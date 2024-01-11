@@ -1,16 +1,30 @@
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:liaz/app/constants/app_event.dart';
+import 'package:liaz/app/constants/db.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/db/novel.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/requests/browse_request.dart';
 import 'package:liaz/requests/novel_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:path_provider/path_provider.dart';
 
 class NovelService {
   static NovelService get instance => Get.find<NovelService>();
+
+  late Box<Novel> box;
+
+  Future<void> init() async {
+    var appDir = await getApplicationSupportDirectory();
+    box = await Hive.openBox(
+      Db.novel,
+      path: appDir.path,
+    );
+  }
 
   final _novelRequest = NovelRequest();
 

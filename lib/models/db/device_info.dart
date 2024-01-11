@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'device_info.g.dart';
 
-@HiveField(1)
+@HiveType(typeId: 1)
 class DeviceInfo {
   @HiveField(0)
   String deviceId;

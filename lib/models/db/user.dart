@@ -5,7 +5,7 @@ import 'package:liaz/app/utils/convert_util.dart';
 
 part 'user.g.dart';
 
-@HiveField(4)
+@HiveType(typeId: 4)
 class User {
   @HiveField(0)
   int userId;

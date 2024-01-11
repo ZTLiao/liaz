@@ -73,7 +73,8 @@ class AppSettingsService extends GetxController {
         .getValue(LocalStorage.kScreenBrightness, 0.5);
     setScreenBrightness(AppSettings.screenBrightness.value);
     //屏幕方向
-
+    AppSettings.comicScreenDirection.value = LocalStorageService.instance
+        .getValue(LocalStorage.kComicScreenDirection, 0);
     super.onInit();
   }
 
