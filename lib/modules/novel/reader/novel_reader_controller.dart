@@ -23,6 +23,7 @@ import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/app_settings_service.dart';
 import 'package:liaz/services/novel_service.dart';
+import 'package:liaz/widgets/toolbar/number_controller_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class NovelReaderController extends BaseController {
@@ -426,7 +427,7 @@ class NovelReaderController extends BaseController {
         ),
       ),
       constraints: const BoxConstraints(
-        maxHeight: 170,
+        maxHeight: 240,
       ),
       backgroundColor: Colors.black.withOpacity(0.7),
       builder: (context) => Theme(
@@ -562,6 +563,80 @@ class NovelReaderController extends BaseController {
                               )
                               .toList(),
                         ),
+                      ],
+                    ),
+                    AppStyle.vGap8,
+                    Row(
+                      children: [
+                        AppStyle.hGap8,
+                        const Text(
+                          AppString.fontSize,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        AppStyle.hGap32,
+                        AppStyle.hGap32,
+                        AppStyle.hGap32,
+                        NumberControllerWidget(
+                          numText: '${AppSettings.novelReaderFontSize.value}',
+                          width: 100,
+                          addValueChanged: (value) {
+                            AppSettingsService.instance.setNovelReaderFontSize(
+                              AppSettings.novelReaderFontSize.value + 1,
+                            );
+                          },
+                          removeValueChanged: (value) {
+                            AppSettingsService.instance.setNovelReaderFontSize(
+                              AppSettings.novelReaderFontSize.value - 1,
+                            );
+                          },
+                          updateValueChanged: (value) {
+                            AppSettingsService.instance.setNovelReaderFontSize(
+                              value,
+                            );
+                          },
+                        ),
+                        AppStyle.hGap4,
+                      ],
+                    ),
+                    AppStyle.vGap8,
+                    Row(
+                      children: [
+                        AppStyle.hGap8,
+                        const Text(
+                          AppString.lineWidth,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        AppStyle.hGap32,
+                        AppStyle.hGap32,
+                        AppStyle.hGap32,
+                        NumberControllerWidget(
+                          numText: (AppSettings.novelReaderLineSpacing.value)
+                              .toStringAsFixed(1),
+                          width: 100,
+                          addValueChanged: (value) {
+                            AppSettingsService.instance
+                                .setNovelReaderLineSpacing(
+                              AppSettings.novelReaderLineSpacing.value + 0.1,
+                            );
+                          },
+                          removeValueChanged: (value) {
+                            AppSettingsService.instance
+                                .setNovelReaderLineSpacing(
+                              AppSettings.novelReaderLineSpacing.value - 0.1,
+                            );
+                          },
+                          updateValueChanged: (value) {
+                            AppSettingsService.instance
+                                .setNovelReaderLineSpacing(
+                              value,
+                            );
+                          },
+                        ),
+                        AppStyle.hGap4,
                       ],
                     ),
                   ],

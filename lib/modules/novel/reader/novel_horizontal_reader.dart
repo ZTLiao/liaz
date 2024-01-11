@@ -191,7 +191,10 @@ class _NovelHorizontalReaderState extends State<NovelHorizontalReader>
       if (symbolExp.hasMatch(item)) {
         chars.add(
           CharInfo(
-              text: item, width: parameter.symbolWidth, type: CharType.symbol),
+            text: item,
+            width: parameter.symbolWidth,
+            type: CharType.symbol,
+          ),
         );
         continue;
       }
@@ -207,7 +210,7 @@ class _NovelHorizontalReaderState extends State<NovelHorizontalReader>
     //开始分页
     List<String> rows = [];
     List<List<String>> pages = [];
-    String rowStr = "";
+    String rowStr = StrUtil.empty;
     double rowWidth = 0;
     for (var item in chars) {
       //是否超出了最大行数
@@ -218,7 +221,7 @@ class _NovelHorizontalReaderState extends State<NovelHorizontalReader>
       //新行
       if (item.type == CharType.newline) {
         rows.add(rowStr);
-        rowStr = "";
+        rowStr = StrUtil.empty;
         rowWidth = 0;
         //rowStr += item.text;
         continue;
@@ -263,7 +266,7 @@ class _NovelHorizontalReaderState extends State<NovelHorizontalReader>
       );
       textPainter.layout(maxWidth: 200);
       return textPainter.size;
-    } catch(error, stackTrace) {
+    } catch (error, stackTrace) {
       Log.e(error.toString(), stackTrace);
       return const Size(10, 30);
     }
@@ -316,14 +319,12 @@ class NovelTextPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var startTime = DateTime.now().millisecondsSinceEpoch;
-
     var i = 0;
     for (var item in text) {
       TextSpan textSpan = TextSpan(
         text: item,
         style: style,
       );
-
       final textPainter = TextPainter(
         text: textSpan,
         maxLines: 1,
@@ -331,10 +332,8 @@ class NovelTextPainter extends CustomPainter {
         textDirection: TextDirection.ltr,
       );
       textPainter.layout(maxWidth: size.width);
-
       final offset = Offset(0, i * fontHieght);
       textPainter.paint(canvas, offset);
-
       i++;
     }
     Log.d("绘制单页耗时:${DateTime.now().millisecondsSinceEpoch - startTime}ms");
