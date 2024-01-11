@@ -65,18 +65,9 @@ class AppSettingsService extends GetxController {
         .getValue(LocalStorage.kDownloadComicTaskCount, 5);
     AppSettings.downloadNovelTaskCount.value = LocalStorageService.instance
         .getValue(LocalStorage.kDownloadNovelTaskCount, 5);
-    //搜索API
-    AppSettings.comicSearchUseWebApi.value = LocalStorageService.instance
-        .getValue(LocalStorage.kComicSearchUseWebApi, false);
     //字体大小
     AppSettings.useSystemFontSize.value = LocalStorageService.instance
         .getValue(LocalStorage.kUseSystemFontSize, false);
-    //新闻字体
-    AppSettings.newsFontSize.value =
-        LocalStorageService.instance.getValue(LocalStorage.kNewsFontSize, 15);
-    //自动添加神隐漫画至收藏夹
-    AppSettings.collectHideComic.value = LocalStorageService.instance
-        .getValue(LocalStorage.kCollectHideComic, false);
     //屏幕亮度
     AppSettings.screenBrightness.value = LocalStorageService.instance
         .getValue(LocalStorage.kScreenBrightness, 0.5);
@@ -233,12 +224,6 @@ class AppSettingsService extends GetxController {
         .setValue(LocalStorage.kDownloadNovelTaskCount, task);
   }
 
-  void setComicSearchUseWebApi(bool e) {
-    AppSettings.comicSearchUseWebApi.value = e;
-    LocalStorageService.instance
-        .setValue(LocalStorage.kComicSearchUseWebApi, e);
-  }
-
   void setUseSystemFontSize(bool e) {
     AppSettings.useSystemFontSize.value = e;
     LocalStorageService.instance.setValue(LocalStorage.kUseSystemFontSize, e);
@@ -273,17 +258,6 @@ class AppSettingsService extends GetxController {
         .setValue(LocalStorage.kNovelReaderPageAnimation, value);
   }
 
-  void setNewsFontSize(int size) {
-    AppSettings.newsFontSize.value = size;
-    LocalStorageService.instance.setValue(LocalStorage.kNewsFontSize, size);
-  }
-
-  void setCollectHideComic(bool value) {
-    AppSettings.collectHideComic.value = value;
-    LocalStorageService.instance
-        .setValue(LocalStorage.kCollectHideComic, value);
-  }
-
   void setNoFirstRun() {
     LocalStorageService.instance.setValue(LocalStorage.kFirstRun, false);
   }
@@ -302,7 +276,8 @@ class AppSettingsService extends GetxController {
 
   void setComicScreenDirection(int value) {
     AppSettings.comicScreenDirection.value = value;
-    LocalStorageService.instance.setValue(LocalStorage.kComicScreenDirection, value);
+    LocalStorageService.instance
+        .setValue(LocalStorage.kComicScreenDirection, value);
     if (value == ScreenDirectionEnum.vertical.index) {
       SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

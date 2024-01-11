@@ -53,9 +53,6 @@ class LocalStorage {
   /// 下载漫画最大任务数
   static const String kDownloadComicTaskCount = "DownloadComicTaskCount";
 
-  /// 漫画搜索使用Web接口
-  static const String kComicSearchUseWebApi = "ComicSearchUseWebApi";
-
   /// 显示字体大小跟随系统
   static const String kUseSystemFontSize = "UseSystemFontSize";
 
@@ -73,12 +70,6 @@ class LocalStorage {
 
   /// 小说阅读-翻页动画
   static const String kNovelReaderPageAnimation = "NovelReaderPageAnimation";
-
-  /// 新闻字体大小
-  static const String kNewsFontSize = "NewsFontSize";
-
-  /// 自动添加神隐漫画至收藏夹
-  static const String kCollectHideComic = "CollectHideComic";
 
   /// 屏幕亮度
   static const String kScreenBrightness = "ScreenBrightness";

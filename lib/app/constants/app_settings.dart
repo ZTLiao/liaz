@@ -55,9 +55,6 @@ class AppSettings {
   /// 下载漫画最大任务数
   static final RxInt downloadNovelTaskCount = RxInt(5);
 
-  /// 漫画搜索使用Web接口
-  static final RxBool comicSearchUseWebApi = RxBool(false);
-
   /// 显示字体大小跟随系统
   static final RxBool useSystemFontSize = RxBool(false);
 
@@ -75,12 +72,6 @@ class AppSettings {
 
   /// 小说阅读翻页动画
   static final RxBool novelReaderPageAnimation = RxBool(true);
-
-  /// 下载漫画最大任务数
-  static final RxInt newsFontSize = RxInt(15);
-
-  /// 自动添加神隐漫画至收藏夹
-  static final RxBool collectHideComic = RxBool(false);
 
   /// 屏幕亮度
   static final RxDouble screenBrightness = RxDouble(0.5);

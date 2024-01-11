@@ -20,6 +20,7 @@ import 'package:liaz/models/novel/novel_chapter_item_model.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/app_settings_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -85,6 +86,9 @@ class NovelReaderController extends BaseController {
   /// 阅读进度，百分比
   var progress = RxDouble(0.0);
 
+  ///屏幕亮度
+  var screenBrightness = RxDouble(0);
+
   /// 左手模式
   bool get leftHandMode => AppSettings.novelReaderLeftHandMode.value;
 
@@ -96,6 +100,7 @@ class NovelReaderController extends BaseController {
     initConnectivity();
     initBattery();
     direction.value = AppSettings.novelReaderDirection.value;
+    screenBrightness.value = AppSettings.screenBrightness.value;
     scrollController.addListener(listenVertical);
     setFull();
     loadContent();
@@ -363,8 +368,6 @@ class NovelReaderController extends BaseController {
     );
   }
 
-  void showSettings() {}
-
   @override
   void onClose() {
     var path = StrUtil.empty;
@@ -399,6 +402,56 @@ class NovelReaderController extends BaseController {
     NovelService.instance.toNovelDetail(
       detail.value.novelId,
       replace: true,
+    );
+  }
+
+  void showSettings() {
+    setShowControls();
+    showModalBottomSheet(
+      context: Get.context!,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(0),
+          topRight: Radius.circular(0),
+        ),
+      ),
+      constraints: const BoxConstraints(
+        maxHeight: 170,
+      ),
+      backgroundColor: Colors.black.withOpacity(0.7),
+      builder: (context) => Theme(
+        data: AppStyle.darkTheme,
+        child: Column(
+          children: [
+            Expanded(
+              child: Obx(
+                () => ListView(
+                  children: [
+                    Row(
+                      children: [
+                        AppStyle.hGap8,
+                        const Icon(Icons.nights_stay_outlined),
+                        Expanded(
+                          child: Slider.adaptive(
+                            value: screenBrightness.value,
+                            onChanged: (value) {
+                              screenBrightness.value = value;
+                              AppSettingsService.instance
+                                  .setScreenBrightness(value);
+                            },
+                          ),
+                        ),
+                        const Icon(Icons.wb_sunny_outlined),
+                        AppStyle.hGap16,
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

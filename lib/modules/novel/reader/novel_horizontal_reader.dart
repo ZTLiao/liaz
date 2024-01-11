@@ -65,7 +65,6 @@ class _NovelHorizontalReaderState extends State<NovelHorizontalReader>
   void resetText() {
     text = widget.text;
     textStyle = widget.style;
-
     padding = widget.padding ?? EdgeInsets.zero;
     maxWidth = Get.width - padding.left - padding.right;
     maxHeight = Get.height - padding.top - padding.bottom;

@@ -3,7 +3,6 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
@@ -318,8 +317,8 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         onPageChanged: (e) {
           controller.currentIndex.value = e;
         },
-        reverse:
-            controller.readDirection.value == ReaderDirectionEnum.rightToLeft.index,
+        reverse: controller.readDirection.value ==
+            ReaderDirectionEnum.rightToLeft.index,
         physics: controller.lockSwipe.value
             ? const NeverScrollableScrollPhysics()
             : null,
