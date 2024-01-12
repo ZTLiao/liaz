@@ -262,6 +262,9 @@ class ComicReaderController extends BaseController {
   }
 
   void loadDetail() async {
+    if (chapters.isEmpty) {
+      return;
+    }
     var comicChapter = chapters[chapterIndex.value];
     for (int i = 0; i < comicChapter.paths.length; i++) {
       comicChapter.paths[i] =

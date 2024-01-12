@@ -75,20 +75,14 @@ class AppRouter {
     ),
     GetPage(
       name: AppRoute.kComicDetail,
-      page: () => const ComicDetailPage(),
-      binding: BindingsBuilder.put(
-        () => ComicDetailController(
-          comicDetail: ComicDetailModel.fromJson(Get.arguments['detail']),
-        ),
+      page: () => ComicDetailPage(
+        ComicDetailModel.fromJson(Get.arguments['detail']),
       ),
     ),
     GetPage(
       name: AppRoute.kNovelDetail,
-      page: () => const NovelDetailPage(),
-      binding: BindingsBuilder.put(
-        () => NovelDetailController(
-          novelDetail: NovelDetailModel.fromJson(Get.arguments['detail']),
-        ),
+      page: () => NovelDetailPage(
+        NovelDetailModel.fromJson(Get.arguments['detail']),
       ),
     ),
     GetPage(

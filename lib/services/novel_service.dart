@@ -77,6 +77,9 @@ class NovelService {
 
   void toReadChapter(int novelChapterId) async {
     var chapters = await _novelRequest.getNovelCatalogue(novelChapterId);
+    if (chapters.isEmpty) {
+      return;
+    }
     AppNavigator.toNovelReader(
       novelChapterId: novelChapterId,
       chapters: chapters,

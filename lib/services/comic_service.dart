@@ -76,6 +76,9 @@ class ComicService {
 
   void toReadChapter(int comicChapterId) async {
     var chapters = await _comicRequest.getComicCatalogue(comicChapterId);
+    if (chapters.isEmpty) {
+      return;
+    }
     AppNavigator.toComicReader(
       comicChapterId: comicChapterId,
       chapters: chapters,

@@ -12,6 +12,7 @@ import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/sort_type_enum.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_controller.dart';
@@ -22,8 +23,17 @@ import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
 import 'package:liaz/widgets/toolbar/title_widget.dart';
 import 'package:liaz/widgets/toolbar/two_box_grid_widget.dart';
 
-class ComicDetailPage extends GetView<ComicDetailController> {
-  const ComicDetailPage({super.key});
+class ComicDetailPage extends StatelessWidget {
+  final ComicDetailModel comicDetail;
+  final ComicDetailController controller;
+
+  ComicDetailPage(this.comicDetail, {super.key})
+      : controller = Get.put(
+          ComicDetailController(
+            comicDetail: comicDetail,
+          ),
+          tag: DateTime.now().millisecondsSinceEpoch.toString(),
+        );
 
   @override
   Widget build(BuildContext context) {

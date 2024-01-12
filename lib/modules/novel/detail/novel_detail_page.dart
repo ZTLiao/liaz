@@ -13,6 +13,7 @@ import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
+import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_controller.dart';
 import 'package:liaz/widgets/toolbar/cross_list_widget.dart';
 import 'package:liaz/widgets/toolbar/icon_item_widget.dart';
@@ -22,7 +23,16 @@ import 'package:liaz/widgets/toolbar/title_widget.dart';
 import 'package:liaz/widgets/toolbar/two_box_grid_widget.dart';
 
 class NovelDetailPage extends GetView<NovelDetailController> {
-  const NovelDetailPage({super.key});
+  final NovelDetailModel novelDetail;
+  final NovelDetailController controller;
+
+  NovelDetailPage(this.novelDetail, {super.key})
+      : controller = Get.put(
+          NovelDetailController(
+            novelDetail: novelDetail,
+          ),
+          tag: DateTime.now().millisecondsSinceEpoch.toString(),
+        );
 
   @override
   Widget build(BuildContext context) {

@@ -68,11 +68,23 @@ class BookshelfHomeController
   }
 
   void onReadChapter(ItemModel item) {
+    var itemId = item.itemId;
     var skipType = item.skipType;
-    if (skipType == SkipTypeEnum.comic.index) {
-      ComicService.instance.toReadChapter(item.objId!);
-    } else if (skipType == SkipTypeEnum.novel.index) {
-      NovelService.instance.toReadChapter(item.objId!);
+    var objId = item.objId;
+    var skipValue = objId;
+    if (objId == null || objId == 0) {
+      skipValue = itemId;
+      if (skipType == SkipTypeEnum.comic.index) {
+        ComicService.instance.toComicDetail(skipValue);
+      } else if (skipType == SkipTypeEnum.novel.index) {
+        NovelService.instance.toNovelDetail(skipValue);
+      }
+    } else {
+      if (skipType == SkipTypeEnum.comic.index) {
+        ComicService.instance.toReadChapter(skipValue!);
+      } else if (skipType == SkipTypeEnum.novel.index) {
+        NovelService.instance.toReadChapter(skipValue!);
+      }
     }
   }
 

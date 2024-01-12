@@ -22,11 +22,16 @@ class IndexRankView extends StatelessWidget {
       () => Scaffold(
         appBar: TabAppBar(
           isScrollable: true,
-          tabs: const [
-            Tab(text: AppString.popular),
-            Tab(text: AppString.discuss),
-            Tab(text: AppString.subscribe),
-          ],
+          tabs: controller.tabs
+              .map(
+                (e) => Tab(
+                  text: e,
+                ),
+              )
+              .toList(),
+          onTap: (v) {
+            controller.onRefresh();
+          },
           controller: controller.tabController,
           action: Column(
             children: [

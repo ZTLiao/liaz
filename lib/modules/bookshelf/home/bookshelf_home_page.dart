@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/modules/bookshelf/home/bookshelf_home_controller.dart';
@@ -112,11 +113,18 @@ class BookshelfHomePage extends GetView<BookshelfHomeController> {
             List<ItemModel> items = [];
             for (var i = 0, len = list.length; i < len; i++) {
               var item = list[i];
+              String subTitle = StrUtil.empty;
+              var upgradeChapter = item.upgradeChapter;
+              if (upgradeChapter.isEmpty) {
+                subTitle = DateUtil.formatDate(item.updatedAt);
+              } else {
+                subTitle = upgradeChapter;
+              }
               items.add(
                 ItemModel(
                   itemId: item.categoryId,
                   title: item.title,
-                  subTitle: item.upgradeChapter,
+                  subTitle: subTitle,
                   showValue: item.cover,
                   skipType: item.assetType,
                   skipValue: item.objId.toString(),
