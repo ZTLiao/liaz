@@ -14,7 +14,7 @@ class EventBus {
 
   final Map<String, StreamController<Event>> _streams = {};
 
-  final Map<int, StreamSubscription<Event>> _subscriptions = {};
+  final Map<String, StreamSubscription<Event>> _subscriptions = {};
 
   void publish(String topic, [dynamic source]) {
     if (!_streams.containsKey(topic)) {
@@ -33,16 +33,16 @@ class EventBus {
       _streams.addAll({topic: StreamController.broadcast()});
     }
     _subscriptions.addAll({
-      listener.hashCode:
-          _streams[topic]!.stream.listen((event) => listener.onListen(event))
+      topic: _streams[topic]!.stream.listen((event) => listener.onListen(event))
     });
   }
 
   void unSubscribe(String topic) {
     _subscriptions.forEach((key, value) {
-      _subscriptions[key]!.cancel();
+      if (key == topic) {
+        _subscriptions[key]!.cancel();
+      }
     });
-    _subscriptions.clear();
     if (_streams.containsKey(topic)) {
       _streams.remove(topic);
     }

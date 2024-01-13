@@ -7,7 +7,8 @@ import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/models/category/category_item_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
-import 'package:liaz/modules/bookshelf/home/bookshelf_home_listener.dart';
+import 'package:liaz/modules/bookshelf/home/bookshelf_check_listener.dart';
+import 'package:liaz/modules/bookshelf/home/bookshelf_subscribe_listener.dart';
 import 'package:liaz/requests/bookshelf_request.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/novel_service.dart';
@@ -29,7 +30,11 @@ class BookshelfHomeController
   @override
   void onInit() {
     EventBus.instance
-        .subscribe(AppEvent.kNavigationTopic, BookshelfHomeListener());
+        .subscribe(AppEvent.kNavigationTopic, BookshelfCheckListener());
+    EventBus.instance
+        .subscribe(AppEvent.kSubscribeComicTopic, BookshelfSubscribeListener());
+    EventBus.instance
+        .subscribe(AppEvent.kSubscribeNovelTopic, BookshelfSubscribeListener());
     tabController = TabController(length: bookshelfs.length, vsync: this);
     super.onInit();
   }

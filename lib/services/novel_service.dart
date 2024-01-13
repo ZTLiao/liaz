@@ -68,8 +68,8 @@ class NovelService {
           path,
           stopIndex,
         );
+        EventBus.instance.publish(AppEvent.kUploadNovelHistoryTopic, chapterId);
       });
-      EventBus.instance.publish(AppEvent.kUploadNovelHistory, chapterId);
     } catch (error, stackTrace) {
       Log.e(error.toString(), stackTrace);
     }

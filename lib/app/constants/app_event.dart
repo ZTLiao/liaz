@@ -3,7 +3,11 @@ class AppEvent {
 
   static const String kUserLoginTopic = 'userLoginTopic';
 
-  static const String kUploadComicHistory = 'uploadComicHistory';
+  static const String kUploadComicHistoryTopic = 'uploadComicHistoryTopic';
 
-  static const String kUploadNovelHistory = 'uploadNovelHistory';
+  static const String kUploadNovelHistoryTopic = 'uploadNovelHistoryTopic';
+
+  static const String kSubscribeComicTopic = 'subscribeComicTopic';
+
+  static const String kSubscribeNovelTopic = 'subscribeNovelTopic';
 }

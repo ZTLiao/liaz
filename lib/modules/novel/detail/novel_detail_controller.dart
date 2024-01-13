@@ -61,7 +61,7 @@ class NovelDetailController extends BaseController {
   void onInit() async {
     initRelateRecommend();
     EventBus.instance
-        .subscribe(AppEvent.kUploadNovelHistory, NovelHistoryListener());
+        .subscribe(AppEvent.kUploadNovelHistoryTopic, NovelHistoryListener());
     super.onInit();
   }
 
@@ -102,6 +102,7 @@ class NovelDetailController extends BaseController {
     UserService.instance.novelSubscribe(
         detail.value.novelId, isSubscribe.value ? YesOrNo.no : YesOrNo.yes);
     isSubscribe.value = !isSubscribe.value;
+    EventBus.instance.publish(AppEvent.kSubscribeComicTopic);
   }
 
   void onReadChapter(NovelVolumeModel volume) {
@@ -169,7 +170,7 @@ class NovelDetailController extends BaseController {
 
   @override
   void onClose() {
-    EventBus.instance.unSubscribe(AppEvent.kUploadNovelHistory);
+    EventBus.instance.unSubscribe(AppEvent.kUploadNovelHistoryTopic);
     super.onClose();
   }
 }

@@ -67,8 +67,8 @@ class ComicService {
           path,
           stopIndex,
         );
+        EventBus.instance.publish(AppEvent.kUploadComicHistoryTopic, chapterId);
       });
-      EventBus.instance.publish(AppEvent.kUploadComicHistory, chapterId);
     } catch (error, stackTrace) {
       Log.e(error.toString(), stackTrace);
     }

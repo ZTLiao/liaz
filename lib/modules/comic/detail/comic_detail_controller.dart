@@ -52,7 +52,7 @@ class ComicDetailController extends BaseController {
   void onInit() {
     initDetail();
     EventBus.instance
-        .subscribe(AppEvent.kUploadComicHistory, ComicHistoryListener());
+        .subscribe(AppEvent.kUploadComicHistoryTopic, ComicHistoryListener());
     super.onInit();
   }
 
@@ -151,7 +151,7 @@ class ComicDetailController extends BaseController {
 
   @override
   void onClose() {
-    EventBus.instance.unSubscribe(AppEvent.kUploadComicHistory);
+    EventBus.instance.unSubscribe(AppEvent.kUploadComicHistoryTopic);
     super.onClose();
   }
 }

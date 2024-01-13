@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/db.dart';
 import 'package:liaz/app/enums/grant_type_enum.dart';
+import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/models/db/user.dart';
@@ -101,7 +103,8 @@ class UserService extends GetxService {
 
   void comicSubscribe(int comicId, int isSubscribe) {
     if (Global.isUserLogin) {
-      _comicSubscribeRequest.subscribe(comicId, isSubscribe);
+      _comicSubscribeRequest.subscribe(comicId, isSubscribe).then(
+          (value) => EventBus.instance.publish(AppEvent.kSubscribeComicTopic));
     } else {
       AppNavigator.toUserLogin();
     }
@@ -109,7 +112,8 @@ class UserService extends GetxService {
 
   void novelSubscribe(int novelId, int isSubscribe) {
     if (Global.isUserLogin) {
-      _novelSubscribeRequest.subscribe(novelId, isSubscribe);
+      _novelSubscribeRequest.subscribe(novelId, isSubscribe).then(
+          (value) => EventBus.instance.publish(AppEvent.kSubscribeNovelTopic));
     } else {
       AppNavigator.toUserLogin();
     }
