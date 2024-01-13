@@ -154,4 +154,8 @@ class ComicDetailController extends BaseController {
     EventBus.instance.unSubscribe(AppEvent.kUploadComicHistoryTopic);
     super.onClose();
   }
+
+  void onDownload() {
+    AppNavigator.toComicDownload(detail.value.toJson());
+  }
 }

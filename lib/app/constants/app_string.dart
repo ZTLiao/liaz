@@ -75,6 +75,7 @@ class AppString {
   static const serializated = '连载中';
   static const finish = '已完结';
   static const serialize = '连载';
+  static const extra = '番外';
   static const total = '共';
   static const chapter = '话';
   static const volume = '卷';
@@ -122,4 +123,9 @@ class AppString {
   static const readTheme = '阅读主题';
   static const fontSize = '字体大小';
   static const lineWidth = '行距大小';
+  static const chooseChapter = '选择下载章节';
+  static const downloadManage = '下载管理';
+  static const selectAll = '全选';
+  static const uncheck = '取消选中';
+  static const downloadSelect = '下载选中';
 }

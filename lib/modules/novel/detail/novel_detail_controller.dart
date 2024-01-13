@@ -173,4 +173,8 @@ class NovelDetailController extends BaseController {
     EventBus.instance.unSubscribe(AppEvent.kUploadNovelHistoryTopic);
     super.onClose();
   }
+
+  void onDownload() {
+    AppNavigator.toNovelDownload(detail.value.toJson());
+  }
 }

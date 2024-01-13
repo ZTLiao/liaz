@@ -215,7 +215,7 @@ class ComicDetailPage extends StatelessWidget {
               child: const Icon(Icons.download),
               backgroundColor: Colors.blue[300],
               foregroundColor: Colors.white,
-              onTap: () {},
+              onTap: controller.onDownload,
             ),
           ],
         ),
@@ -357,9 +357,12 @@ class ComicDetailPage extends StatelessWidget {
                   var chapters = item.chapters;
                   String title = StrUtil.empty;
                   if (ChapterTypeEnum.serialize.index == chapterType) {
-                    title =
-                        '${AppString.serialize} （${AppString.total}${chapters.length}${AppString.chapter}）';
-                  } else if (ChapterTypeEnum.extra.index == chapterType) {}
+                    title = AppString.serialize;
+                  } else if (ChapterTypeEnum.extra.index == chapterType) {
+                    title = AppString.extra;
+                  }
+                  title +=
+                  '${StrUtil.space} ${AppString.total}${chapters.length}${AppString.chapter}）';
                   return Column(
                     children: [
                       Row(

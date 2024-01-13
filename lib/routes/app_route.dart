@@ -31,4 +31,10 @@ class AppRoute {
 
   /// 用户注册
   static const kUserRegister = '/user/register';
+
+  /// 漫画下载
+  static const kComicDownload = '/comic/download';
+
+  /// 小说下载
+  static const kNovelDownload = '/novel/download';
 }

@@ -16,13 +16,15 @@ class ComicAdapter extends TypeAdapter<Comic> {
       cover: fields[2] as String,
       categories: fields[3] as String,
       authors: fields[4] as String,
+      flag: fields[5] as int,
+      browseChapterId: fields[6] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Comic obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.comicId)
       ..writeByte(1)
@@ -32,7 +34,11 @@ class ComicAdapter extends TypeAdapter<Comic> {
       ..writeByte(3)
       ..write(obj.categories)
       ..writeByte(4)
-      ..write(obj.authors);
+      ..write(obj.authors)
+      ..writeByte(5)
+      ..write(obj.flag)
+      ..writeByte(6)
+      ..write(obj.browseChapterId);
   }
 
   @override

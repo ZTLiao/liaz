@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/global/global.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/toolbar/user_photo.dart';

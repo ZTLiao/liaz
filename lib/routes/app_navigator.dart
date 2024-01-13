@@ -108,4 +108,22 @@ class AppNavigator {
       Get.back(id: kNavigatorID);
     }
   }
+
+  static void toComicDownload(Map<String, dynamic> json) {
+    toContentPage(
+      AppRoute.kComicDownload,
+      arg: {
+        'detail': json,
+      },
+    );
+  }
+
+  static void toNovelDownload(Map<String, dynamic> json) {
+    toContentPage(
+      AppRoute.kNovelDownload,
+      arg: {
+        'detail': json,
+      },
+    );
+  }
 }

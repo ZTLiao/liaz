@@ -1,7 +1,6 @@
 part of 'novel.dart';
 
 class NovelAdapter extends TypeAdapter<Novel> {
-
   @override
   final int typeId = 7;
 
@@ -17,13 +16,15 @@ class NovelAdapter extends TypeAdapter<Novel> {
       cover: fields[2] as String,
       categories: fields[3] as String,
       authors: fields[4] as String,
+      flag: fields[5] as int,
+      browseChapterId: fields[6] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Novel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.novelId)
       ..writeByte(1)
@@ -33,7 +34,11 @@ class NovelAdapter extends TypeAdapter<Novel> {
       ..writeByte(3)
       ..write(obj.categories)
       ..writeByte(4)
-      ..write(obj.authors);
+      ..write(obj.authors)
+      ..writeByte(5)
+      ..write(obj.flag)
+      ..writeByte(6)
+      ..write(obj.browseChapterId);
   }
 
   @override

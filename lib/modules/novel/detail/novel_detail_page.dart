@@ -214,7 +214,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
               child: const Icon(Icons.download),
               backgroundColor: Colors.blue[300],
               foregroundColor: Colors.white,
-              onTap: () {},
+              onTap: controller.onDownload,
             ),
           ],
         ),

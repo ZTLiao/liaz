@@ -14,6 +14,10 @@ class Comic {
   String categories;
   @HiveField(4)
   String authors;
+  @HiveField(5)
+  int flag;
+  @HiveField(6)
+  int browseChapterId;
 
   Comic({
     required this.comicId,
@@ -21,5 +25,7 @@ class Comic {
     required this.cover,
     required this.categories,
     required this.authors,
+    required this.flag,
+    required this.browseChapterId,
   });
 }

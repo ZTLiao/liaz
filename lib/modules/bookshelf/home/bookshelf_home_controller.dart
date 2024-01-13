@@ -95,6 +95,9 @@ class BookshelfHomeController
 
   @override
   void onClose() {
+    EventBus.instance.unSubscribe(AppEvent.kNavigationTopic);
+    EventBus.instance.unSubscribe(AppEvent.kSubscribeComicTopic);
+    EventBus.instance.unSubscribe(AppEvent.kSubscribeNovelTopic);
     tabController.dispose();
     super.onClose();
   }
