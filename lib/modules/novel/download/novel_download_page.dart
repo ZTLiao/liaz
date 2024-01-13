@@ -67,21 +67,21 @@ class NovelDownloadPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
+        height: 50,
         child: SizedBox(
-          height: 40,
           child: Row(
             children: [
               Expanded(
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: controller.selectAll,
                   icon: const Icon(
                     Icons.check_box_outlined,
-                    size: 20,
+                    size: 18,
                   ),
                   label: const Text(
                     AppString.selectAll,
@@ -93,13 +93,13 @@ class NovelDownloadPage extends StatelessWidget {
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: controller.uncheck,
                   icon: const Icon(
                     Icons.check_box_outline_blank,
-                    size: 20,
+                    size: 18,
                   ),
                   label: const Text(
                     AppString.uncheck,
@@ -111,13 +111,13 @@ class NovelDownloadPage extends StatelessWidget {
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: controller.onDownload,
                   icon: const Icon(
                     Icons.download_outlined,
-                    size: 20,
+                    size: 18,
                   ),
                   label: Obx(
                     () => Text(
@@ -187,7 +187,9 @@ class NovelDownloadPage extends StatelessWidget {
                             visualDensity: const VisualDensity(
                               vertical: VisualDensity.minimumDensity,
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              controller.onSelect(item.novelChapterId);
+                            },
                           );
                         },
                       ),

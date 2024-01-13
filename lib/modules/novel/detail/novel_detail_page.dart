@@ -91,7 +91,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: controller.share,
                     icon: const Icon(Icons.share),
                   ),
                 ],

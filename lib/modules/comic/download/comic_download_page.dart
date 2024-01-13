@@ -64,28 +64,27 @@ class ComicDownloadPage extends StatelessWidget {
               offstage: !controller.isPageError.value,
               child: AppErrorWidget(
                 errorMsg: controller.errorMsg.value,
-                onRefresh: () {},
               ),
             ),
           ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
+        height: 50,
         child: SizedBox(
-          height: 40,
           child: Row(
             children: [
               Expanded(
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: controller.selectAll,
                   icon: const Icon(
                     Icons.check_box_outlined,
-                    size: 20,
+                    size: 18,
                   ),
                   label: const Text(
                     AppString.selectAll,
@@ -97,13 +96,13 @@ class ComicDownloadPage extends StatelessWidget {
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: controller.uncheck,
                   icon: const Icon(
                     Icons.check_box_outline_blank,
-                    size: 20,
+                    size: 18,
                   ),
                   label: const Text(
                     AppString.uncheck,
@@ -115,13 +114,13 @@ class ComicDownloadPage extends StatelessWidget {
                 child: TextButton.icon(
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(
-                      fontSize: 12,
+                      fontSize: 10,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: controller.onDownload,
                   icon: const Icon(
                     Icons.download_outlined,
-                    size: 20,
+                    size: 18,
                   ),
                   label: Obx(
                     () => Text(
@@ -225,7 +224,9 @@ class ComicDownloadPage extends StatelessWidget {
                                               : Colors.grey,
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    controller.onSelect(item.chapters[i].comicChapterId);
+                                  },
                                   child: Text(
                                     item.chapters[i].chapterName,
                                     textAlign: TextAlign.center,
