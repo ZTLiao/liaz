@@ -16,13 +16,14 @@ class NovelChapterAdapter extends TypeAdapter<NovelChapter> {
       seqNo: fields[2] as int,
       taskId: fields[3] as String,
       currentIndex: fields[4] as int,
+      novelId: fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, NovelChapter obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.chapterId)
       ..writeByte(1)
@@ -32,7 +33,9 @@ class NovelChapterAdapter extends TypeAdapter<NovelChapter> {
       ..writeByte(3)
       ..write(obj.taskId)
       ..writeByte(4)
-      ..write(obj.currentIndex);
+      ..write(obj.currentIndex)
+      ..writeByte(5)
+      ..write(obj.novelId);
   }
 
   @override

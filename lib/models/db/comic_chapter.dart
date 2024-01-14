@@ -14,6 +14,8 @@ class ComicChapter {
   String taskId;
   @HiveField(4)
   int currentIndex;
+  @HiveField(5)
+  int comicId;
 
   ComicChapter({
     required this.chapterId,
@@ -21,5 +23,6 @@ class ComicChapter {
     required this.seqNo,
     required this.taskId,
     required this.currentIndex,
+    required this.comicId,
   });
 }

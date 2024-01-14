@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -14,7 +13,10 @@ class LocalDownloadPage extends StatelessWidget {
   final LocalDownloadController controller;
 
   LocalDownloadPage({super.key})
-      : controller = Get.put(LocalDownloadController());
+      : controller = Get.put(
+          LocalDownloadController(),
+          tag: DateTime.now().millisecondsSinceEpoch.toString(),
+        );
 
   @override
   Widget build(BuildContext context) {

@@ -81,6 +81,7 @@ class ComicDownloadService extends DownloadService {
       seqNo: seqNo,
       taskId: taskId,
       currentIndex: currentIndex,
+      comicId: comicId,
     ));
     for (int i = 0; i < urls.length; i++) {
       urls[i] = await AppConfigService.instance.getObject(urls[i]);

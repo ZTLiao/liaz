@@ -25,11 +25,24 @@ class LocalDownloadController
   Future<List<List<CategoryItemModel>>> getData(
       int currentPage, int pageSize) async {
     pageSize = 18;
+    int startIndex = (currentPage - 1) * pageSize;
+    int endIndex = startIndex + pageSize - 1;
     var tabIndex = tabController.index;
     var assetType = tabs[tabIndex];
     List<CategoryItemModel> categoryItems = <CategoryItemModel>[];
     if (assetType.code == AssetTypeEnum.comic.code) {
       var comics = ComicService.instance.list();
+      if (comics.length > pageSize) {
+        if (endIndex < comics.length) {
+          comics = comics.sublist(startIndex, endIndex);
+        } else {
+          comics = comics.sublist(startIndex, comics.length);
+        }
+      } else {
+        if (currentPage > 1) {
+          comics.clear();
+        }
+      }
       for (var comic in comics) {
         categoryItems.add(CategoryItemModel(
           categoryId: comic.comicId,
@@ -42,6 +55,17 @@ class LocalDownloadController
       }
     } else if (assetType.code == AssetTypeEnum.novel.code) {
       var novels = NovelService.instance.list();
+      if (novels.length > pageSize) {
+        if (endIndex < novels.length) {
+          novels = novels.sublist(startIndex, endIndex);
+        } else {
+          novels = novels.sublist(startIndex, novels.length);
+        }
+      } else {
+        if (currentPage > 1) {
+          novels.clear();
+        }
+      }
       for (var novel in novels) {
         categoryItems.add(CategoryItemModel(
           categoryId: novel.novelId,

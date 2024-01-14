@@ -80,6 +80,7 @@ class NovelDownloadService extends DownloadService {
       seqNo: seqNo,
       taskId: taskId,
       currentIndex: currentIndex,
+      novelId: novelId,
     ));
     for (int i = 0; i < urls.length; i++) {
       urls[i] = await AppConfigService.instance.getObject(urls[i]);
