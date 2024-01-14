@@ -47,7 +47,9 @@ class LocalDownloadPage extends StatelessWidget {
 
   Widget buildListView() {
     return KeepAliveWrapper(
-      child: PageListView(
+      child: Padding(
+        padding: AppStyle.edgeInsetsV12,
+        child: PageListView(
           pageController: controller,
           isLoadMore: true,
           isFirstRefresh: true,
@@ -80,7 +82,9 @@ class LocalDownloadPage extends StatelessWidget {
             return ThreeBoxGridWidget(
               items: items,
             );
-          }),
+          },
+        ),
+      ),
     );
   }
 }
