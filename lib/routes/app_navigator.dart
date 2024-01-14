@@ -126,4 +126,8 @@ class AppNavigator {
       },
     );
   }
+
+  static void toLocalDownloadPage() {
+    toContentPage(AppRoute.kLocalDownload);
+  }
 }

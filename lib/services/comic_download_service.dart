@@ -88,7 +88,7 @@ class ComicDownloadService extends DownloadService {
     var task = Task(
       taskId: taskId,
       taskName: chapterName,
-      path: savePath,
+      path: path.join(savePath, taskId),
       files: [],
       urls: urls,
       index: 0,

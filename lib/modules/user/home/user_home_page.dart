@@ -5,6 +5,7 @@ import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
+import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/toolbar/user_photo.dart';
 
@@ -106,7 +107,7 @@ class UserHomePage extends GetView<UserHomeController> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Visibility(
-                          visible: true,
+                          visible: false,
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.red,
@@ -114,10 +115,10 @@ class UserHomePage extends GetView<UserHomeController> {
                             ),
                             width: 20,
                             height: 20,
-                            child: Center(
+                            child: const Center(
                               child: Text(
-                                "12",
-                                style: const TextStyle(
+                                '0',
+                                style: TextStyle(
                                   fontSize: 10,
                                   color: Colors.white,
                                 ),
@@ -131,7 +132,9 @@ class UserHomePage extends GetView<UserHomeController> {
                         ),
                       ],
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      AppNavigator.toLocalDownloadPage();
+                    },
                   ),
                 ],
               ),

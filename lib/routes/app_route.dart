@@ -37,4 +37,7 @@ class AppRoute {
 
   /// 小说下载
   static const kNovelDownload = '/novel/download';
+
+  /// 本机下载
+  static const kLocalDownload = '/local/download';
 }

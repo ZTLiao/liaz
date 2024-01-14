@@ -9,6 +9,7 @@ import 'package:liaz/modules/comic/reader/comic_reader_controller.dart';
 import 'package:liaz/modules/comic/reader/comic_reader_page.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/common/h5/h5_web_view_page.dart';
+import 'package:liaz/modules/download/local_download_page.dart';
 import 'package:liaz/modules/index/home/index_home_controller.dart';
 import 'package:liaz/modules/index/index_controller.dart';
 import 'package:liaz/modules/index/index_page.dart';
@@ -110,6 +111,10 @@ class AppRouter {
           Get.arguments['detail'],
         ),
       ),
+    ),
+    GetPage(
+      name: AppRoute.kLocalDownload,
+      page: () => LocalDownloadPage(),
     ),
   ];
 }
