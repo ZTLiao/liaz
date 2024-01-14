@@ -84,4 +84,12 @@ class ComicService {
       chapters: chapters,
     );
   }
+
+  void put(Comic comic) {
+    box.put(comic.comicId, comic);
+  }
+
+  bool exist(int key) {
+    return box.values.any((e) => e.comicId == key);
+  }
 }

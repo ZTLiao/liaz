@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
+import 'package:liaz/services/comic_download_service.dart';
 
 class ComicDownloadController extends BaseController {
   final RxSet<int> chapterIds = RxSet();
@@ -35,5 +38,32 @@ class ComicDownloadController extends BaseController {
     chapterIds.clear();
   }
 
-  void onDownload() {}
+  void onDownload() {
+    Map<int, ComicChapterModel> comicChapterMap = {};
+    for (var chapterType in comicDetail.chapterTypes) {
+      for (var chapter in chapterType.chapters) {
+        comicChapterMap[chapter.comicChapterId] = chapter;
+      }
+    }
+    for (var chapterId in chapterIds) {
+      if (!comicChapterMap.containsKey(chapterId)) {
+        continue;
+      }
+      var comicChapter = comicChapterMap[chapterId];
+      ComicDownloadService.instance.addTask(
+        comicId: comicDetail.comicId,
+        title: comicDetail.title,
+        cover: comicDetail.cover,
+        categories: StrUtil.listToStr(comicDetail.categories, StrUtil.comma),
+        authors: StrUtil.listToStr(comicDetail.authors, StrUtil.comma),
+        flag: comicDetail.flag,
+        browseChapterId: comicDetail.browseChapterId,
+        chapterId: chapterId,
+        chapterName: comicChapter!.chapterName,
+        seqNo: comicChapter.seqNo,
+        currentIndex: comicChapter.currentIndex,
+        urls: comicChapter.paths,
+      );
+    }
+  }
 }

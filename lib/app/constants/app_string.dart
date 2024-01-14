@@ -128,4 +128,8 @@ class AppString {
   static const selectAll = '全选';
   static const uncheck = '取消选中';
   static const downloadSelect = '下载选中';
+  static const cancel = '取消';
+  static const confirm = '确定';
+  static const cancelTaskAlert = '确定要取消该任务吗？';
+  static const cancelTask = '取消任务';
 }

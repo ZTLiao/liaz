@@ -85,4 +85,12 @@ class NovelService {
       chapters: chapters,
     );
   }
+
+  void put(Novel novel) {
+    box.put(novel.novelId, novel);
+  }
+
+  bool exist(int key) {
+    return box.values.any((e) => e.novelId == key);
+  }
 }

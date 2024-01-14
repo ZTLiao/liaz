@@ -300,10 +300,18 @@ class Request {
     }
   }
 
-  Future<dynamic> getResource(String url) async {
+  Future<dynamic> getResource(
+    String url, {
+    ResponseType responseType = ResponseType.plain,
+    CancelToken? cancel,
+  }) async {
     try {
       var response = await dio.get(
         url,
+        cancelToken: cancel,
+        options: Options(
+          responseType: responseType,
+        ),
       );
       return response.data;
     } on DioException catch (e) {

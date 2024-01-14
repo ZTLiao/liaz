@@ -13,10 +13,13 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/models/db/comic.dart';
+import 'package:liaz/models/db/comic_chapter.dart';
 import 'package:liaz/models/db/device_info.dart';
 import 'package:liaz/models/db/novel.dart';
+import 'package:liaz/models/db/novel_chapter.dart';
 import 'package:liaz/models/db/oauth2_token.dart';
 import 'package:liaz/models/db/search.dart';
+import 'package:liaz/models/db/task.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/routes/app_navigator.dart';
@@ -24,13 +27,18 @@ import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/routes/app_router.dart';
 import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/app_settings_service.dart';
+import 'package:liaz/services/comic_chapter_service.dart';
+import 'package:liaz/services/comic_download_service.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/device_info_service.dart';
 import 'package:liaz/services/local_storage_service.dart';
+import 'package:liaz/services/novel_chapter_service.dart';
+import 'package:liaz/services/novel_download_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/oauth2_token_service.dart';
 import 'package:liaz/services/recommend_service.dart';
 import 'package:liaz/services/search_service.dart';
+import 'package:liaz/services/task_service.dart';
 import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -69,6 +77,9 @@ Future<void> initHive() async {
   Hive.registerAdapter(SearchAdapter());
   Hive.registerAdapter(ComicAdapter());
   Hive.registerAdapter(NovelAdapter());
+  Hive.registerAdapter(ComicChapterAdapter());
+  Hive.registerAdapter(NovelChapterAdapter());
+  Hive.registerAdapter(TaskAdapter());
 }
 
 Future<void> initServices() async {
@@ -81,6 +92,12 @@ Future<void> initServices() async {
   Get.put(AppSettingsService());
   Get.put(ComicService()).init();
   Get.put(NovelService()).init();
+  Get.put(ComicChapterService()).init();
+  Get.put(NovelChapterService()).init();
+  Get.put(TaskService()).init().then((value) {
+    Get.put(ComicDownloadService()).init();
+    Get.put(NovelDownloadService()).init();
+  });
   Get.put(RecommendService());
 }
 

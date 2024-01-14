@@ -7,4 +7,7 @@ class Db {
   static const comic = 'Comic';
   static const novel = 'Novel';
   static const localStorage = 'LocalStorage';
+  static const comicChapter = 'ComicChapter';
+  static const novelChapter = 'NovelChapter';
+  static const task = 'Task';
 }
