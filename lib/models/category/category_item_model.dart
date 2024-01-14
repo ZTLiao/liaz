@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/utils/convert_util.dart';
+import 'package:liaz/app/utils/str_util.dart';
 
 class CategoryItemModel {
   int categoryId;
@@ -20,9 +22,9 @@ class CategoryItemModel {
     required this.cover,
     required this.objId,
     required this.chapterId,
-    required this.upgradeChapter,
-    required this.updatedAt,
-    required this.isUpgrade,
+    this.upgradeChapter = StrUtil.empty,
+    this.updatedAt = 0,
+    this.isUpgrade = YesOrNo.no,
   });
 
   factory CategoryItemModel.fromJson(Map<String, dynamic> json) =>

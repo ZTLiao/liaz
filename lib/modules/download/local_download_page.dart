@@ -24,12 +24,16 @@ class LocalDownloadPage extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: TabBar(
+            controller: controller.tabController,
             indicator: const BoxDecoration(),
             tabs: controller.tabs.map((e) => Tab(text: e.value)).toList(),
+            onTap: (index) {
+              controller.onRefresh();
+            },
           ),
         ),
         body: TabBarView(
-          //controller: controller.tabController,
+          controller: controller.tabController,
           children: [
             buildListView(),
             buildListView(),
@@ -53,7 +57,7 @@ class LocalDownloadPage extends StatelessWidget {
               var item = list[i];
               String subTitle = StrUtil.empty;
               var upgradeChapter = item.upgradeChapter;
-              if (upgradeChapter.isEmpty) {
+              if (upgradeChapter.isEmpty && item.updatedAt != 0) {
                 subTitle = DateUtil.formatDate(item.updatedAt);
               } else {
                 subTitle = upgradeChapter;

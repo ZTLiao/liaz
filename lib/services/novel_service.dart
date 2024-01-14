@@ -93,4 +93,8 @@ class NovelService {
   bool exist(int key) {
     return box.values.any((e) => e.novelId == key);
   }
+
+  List<Novel> list() {
+    return box.values.toList();
+  }
 }

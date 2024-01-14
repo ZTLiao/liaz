@@ -92,4 +92,8 @@ class ComicService {
   bool exist(int key) {
     return box.values.any((e) => e.comicId == key);
   }
+
+  List<Comic> list() {
+    return box.values.toList();
+  }
 }
