@@ -96,6 +96,7 @@ class NovelDownloadService extends DownloadService {
       total: urls.length,
       status: DownloadStatusEnum.wait.index,
       createdAt: DateTime.now().millisecond,
+      seqNo: seqNo,
     );
     TaskService.instance.put(task);
     taskQueues.add(DownloadTask(

@@ -70,7 +70,6 @@ class ComicDownloadPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        height: 50,
         child: SizedBox(
           child: Row(
             children: [

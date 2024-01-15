@@ -120,6 +120,7 @@ class AppRouter {
     GetPage(
       name: AppRoute.kDownloadDetail,
       page: () => DownloadDetailPage(
+        Get.arguments['title'],
         Get.arguments['taskIds'],
       ),
     ),

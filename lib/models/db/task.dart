@@ -22,6 +22,8 @@ class Task {
   int status;
   @HiveField(8)
   int createdAt;
+  @HiveField(9)
+  int seqNo;
 
   Task({
     required this.taskId,
@@ -33,5 +35,19 @@ class Task {
     required this.total,
     required this.status,
     required this.createdAt,
+    required this.seqNo,
   });
+
+  factory Task.empty() => Task(
+        taskId: '',
+        taskName: '',
+        path: '',
+        files: [],
+        urls: [],
+        index: 0,
+        total: 0,
+        status: 0,
+        createdAt: 0,
+        seqNo: 0,
+      );
 }

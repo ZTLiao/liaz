@@ -46,4 +46,12 @@ class TaskService {
   List<Task> list() {
     return box.values.toList();
   }
+
+  List<Task> getTasks(List<String> taskIds) {
+    var tasks = box.values
+        .where((element) => taskIds.contains(element.taskId))
+        .toList();
+    tasks.sort((a, b) => b.seqNo.compareTo(a.seqNo));
+    return tasks;
+  }
 }

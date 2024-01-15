@@ -20,13 +20,14 @@ class TaskAdapter extends TypeAdapter<Task> {
       total: fields[6] as int,
       status: fields[7] as int,
       createdAt: fields[8] as int,
+      seqNo: fields[9] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Task obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.taskId)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class TaskAdapter extends TypeAdapter<Task> {
       ..writeByte(7)
       ..write(obj.status)
       ..writeByte(8)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(9)
+      ..write(obj.seqNo);
   }
 
   @override

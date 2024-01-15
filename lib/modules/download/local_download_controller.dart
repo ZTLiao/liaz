@@ -102,6 +102,7 @@ class LocalDownloadController
   }
 
   void onChapter(ItemModel item) {
+    var title = item.title;
     var objId = item.objId;
     var skipType = item.skipType;
     List<String> taskIds = [];
@@ -110,6 +111,9 @@ class LocalDownloadController
     } else if (SkipTypeEnum.novel.index == skipType) {
       taskIds.addAll(NovelChapterService.instance.getTaskId(objId!));
     }
-    AppNavigator.toDownloadDetailPage(taskIds);
+    AppNavigator.toDownloadDetailPage(
+      title,
+      taskIds,
+    );
   }
 }

@@ -132,4 +132,5 @@ class AppString {
   static const confirm = '确定';
   static const cancelTaskAlert = '确定要取消该任务吗？';
   static const cancelTask = '取消任务';
+  static const delete = '删除';
 }
