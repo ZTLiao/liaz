@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_ticket_provider_mixin.dart';
 import 'package:liaz/app/controller/base_page_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
+import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/models/category/category_item_model.dart';
+import 'package:liaz/models/dto/item_model.dart';
+import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/comic_chapter_service.dart';
 import 'package:liaz/services/comic_service.dart';
+import 'package:liaz/services/novel_chapter_service.dart';
 import 'package:liaz/services/novel_service.dart';
 
 class LocalDownloadController
@@ -94,5 +99,17 @@ class LocalDownloadController
       }
     }
     return data;
+  }
+
+  void onChapter(ItemModel item) {
+    var objId = item.objId;
+    var skipType = item.skipType;
+    List<String> taskIds = [];
+    if (SkipTypeEnum.comic.index == skipType) {
+      taskIds.addAll(ComicChapterService.instance.getTaskId(objId!));
+    } else if (SkipTypeEnum.novel.index == skipType) {
+      taskIds.addAll(NovelChapterService.instance.getTaskId(objId!));
+    }
+    AppNavigator.toDownloadDetailPage(taskIds);
   }
 }

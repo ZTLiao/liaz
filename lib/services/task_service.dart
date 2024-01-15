@@ -27,9 +27,10 @@ class TaskService {
     await box.delete(key);
   }
 
-  List<Task> getDownloadingTask() {
+  List<Task> getDownloadingTask(String savePath) {
     return box.values
         .toList()
+        .where((x) => x.path.contains(savePath))
         .where((x) => x.status != DownloadStatusEnum.complete.index)
         .toList();
   }

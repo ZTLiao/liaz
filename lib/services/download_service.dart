@@ -155,7 +155,7 @@ abstract class DownloadService {
   }
 
   void initTask() async {
-    var tasks = TaskService.instance.getDownloadingTask();
+    var tasks = TaskService.instance.getDownloadingTask(savePath);
     for (var item in tasks) {
       if (item.status == DownloadStatusEnum.cancel.index) {
         TaskService.instance.delete(item.taskId);

@@ -130,4 +130,13 @@ class AppNavigator {
   static void toLocalDownloadPage() {
     toContentPage(AppRoute.kLocalDownload);
   }
+
+  static void toDownloadDetailPage(List<String> taskIds) {
+    toContentPage(
+      AppRoute.kDownloadDetail,
+      arg: {
+        'taskIds': taskIds,
+      },
+    );
+  }
 }

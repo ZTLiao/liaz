@@ -40,4 +40,7 @@ class AppRoute {
 
   /// 本机下载
   static const kLocalDownload = '/local/download';
+
+  /// 下载明细
+  static const kDownloadDetail = '/download/detail';
 }

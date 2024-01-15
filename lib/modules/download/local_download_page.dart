@@ -81,6 +81,7 @@ class LocalDownloadPage extends StatelessWidget {
             }
             return ThreeBoxGridWidget(
               items: items,
+              onTap: controller.onChapter,
             );
           },
         ),

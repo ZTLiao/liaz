@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/save_path.dart';
+import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/download_status_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/models/db/novel.dart';
@@ -62,7 +63,7 @@ class NovelDownloadService extends DownloadService {
     required int currentIndex,
     required List<String> urls,
   }) async {
-    String taskId = '${novelId}_$chapterId';
+    String taskId = '${novelId}_${chapterId}_${AssetTypeEnum.novel.index}';
     if (!NovelService.instance.exist(novelId)) {
       NovelService.instance.put(Novel(
         novelId: novelId,

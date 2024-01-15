@@ -4,6 +4,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/save_path.dart';
+import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/download_status_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/models/db/comic.dart';
@@ -63,7 +64,7 @@ class ComicDownloadService extends DownloadService {
     required int currentIndex,
     required List<String> urls,
   }) async {
-    String taskId = '${comicId}_$chapterId';
+    String taskId = '${comicId}_${chapterId}_${AssetTypeEnum.comic.index}';
     if (!ComicService.instance.exist(comicId)) {
       ComicService.instance.put(Comic(
         comicId: comicId,

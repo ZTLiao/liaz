@@ -27,7 +27,6 @@ class IndexHomePage extends GetView<IndexHomeController> {
           ),
         ),
         body: TabBarView(
-          controller: controller.tabController,
           children: [
             IndexRecommendView(),
             IndexUpgradeView(),
