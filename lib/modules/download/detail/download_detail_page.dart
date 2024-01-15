@@ -31,40 +31,49 @@ class DownloadDetailPage extends StatelessWidget {
       ),
       body: Padding(
         padding: AppStyle.edgeInsetsA12,
-        child: ListView.separated(
-          separatorBuilder: (context, i) {
-            return const Divider(
-              color: Colors.grey,
-            );
-          },
-          itemCount: controller.tasks.length,
-          itemBuilder: (context, i) {
-            var task = controller.tasks[i];
-            return Slidable(
-              key: ValueKey(task.taskId),
-              endActionPane: ActionPane(
-                extentRatio: 0.25,
-                motion: const ScrollMotion(),
-                dismissible: DismissiblePane(onDismissed: () {
-
-                }),
-                children: [
-                  SlidableAction(
-                    onPressed: controller.doNothing,
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    icon: Icons.delete,
-                    label: AppString.delete,
-                  ),
-                ],
-              ),
-              child: ListTile(
-                title: Text(
-                  task.taskName,
+        child: Obx(
+          () => ListView.separated(
+            itemCount: controller.tasks.length + 1,
+            separatorBuilder: (context, i) {
+              var task = controller.tasks[i];
+              return LinearProgressIndicator(
+                minHeight: 1,
+                value: task.total > 0
+                    ? (task.total == 0 ? 0 : (task.index + 1)) / task.total
+                    : 0,
+              );
+            },
+            itemBuilder: (context, i) {
+              if (controller.taskIds.length <= i) {
+                return const SizedBox();
+              }
+              var task = controller.tasks[i];
+              return Slidable(
+                key: ValueKey(task.taskId),
+                endActionPane: ActionPane(
+                  extentRatio: 0.25,
+                  motion: const ScrollMotion(),
+                  dismissible: DismissiblePane(onDismissed: () {
+                    controller.dismiss(task.taskId);
+                  }),
+                  children: [
+                    SlidableAction(
+                      onPressed: controller.doNothing,
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete,
+                      label: AppString.delete,
+                    ),
+                  ],
                 ),
-              ),
-            );
-          },
+                child: ListTile(
+                  title: Text(
+                    task.taskName,
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -82,7 +91,7 @@ class DownloadDetailPage extends StatelessWidget {
                     Icons.pause_outlined,
                     size: 20,
                   ),
-                  label: const Text("暂停全部"),
+                  label: const Text('暂停'),
                 ),
               ),
               Expanded(
@@ -92,10 +101,10 @@ class DownloadDetailPage extends StatelessWidget {
                   ),
                   onPressed: () {},
                   icon: const Icon(
-                    Icons.download_outlined,
+                    Icons.start_outlined,
                     size: 20,
                   ),
-                  label: const Text("开始全部"),
+                  label: const Text('开始'),
                 ),
               ),
             ],

@@ -17,4 +17,9 @@ class DownloadDetailController extends GetxController {
   }
 
   void doNothing(BuildContext context) {}
+
+  void dismiss(String taskId) {
+    taskIds.contains(taskId);
+    tasks.removeWhere((element) => element.taskId == taskId);
+  }
 }
