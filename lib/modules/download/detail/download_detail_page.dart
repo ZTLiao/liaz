@@ -60,10 +60,24 @@ class DownloadDetailPage extends GetView<DownloadDetailController> {
                     ),
                   ],
                 ),
-                child: ListTile(
-                  title: Text(
-                    task.taskName,
-                  ),
+                child: Row(
+                  children: [
+                    Obx(
+                      () => Checkbox(
+                        value: controller.checkIds.contains(task.taskId),
+                        onChanged: (value) {
+                          controller.check(task.taskId);
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        title: Text(
+                          task.taskName,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               );
             },
