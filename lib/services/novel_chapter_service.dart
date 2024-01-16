@@ -20,14 +20,21 @@ class NovelChapterService {
     box.put(novelChapter.chapterId, novelChapter);
   }
 
-  void delete(int chapterId) {
-    box.delete(chapterId);
+  void delete(int key) {
+    box.delete(key);
   }
 
   List<String> getTaskId(int novelId) {
     return box.values
         .where((element) => element.novelId == novelId)
         .map((e) => e.taskId)
+        .toList();
+  }
+
+  List<int> getChapterIds(int novelId) {
+    return box.values
+        .where((element) => element.novelId == novelId)
+        .map((e) => e.chapterId)
         .toList();
   }
 }

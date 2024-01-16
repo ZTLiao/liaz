@@ -133,4 +133,7 @@ class AppString {
   static const cancelTaskAlert = '确定要取消该任务吗？';
   static const cancelTask = '取消任务';
   static const delete = '删除';
+  static const pause = '暂停';
+  static const start = '开始';
+  static const startDownload = '已添加到下载列表，下载过程中请保持APP在前台运行';
 }

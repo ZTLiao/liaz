@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/enums/download_status_enum.dart';
 import 'package:liaz/app/logger/log.dart';
@@ -24,12 +23,6 @@ abstract class DownloadService {
 
   /// 当前正在下载的数量
   var currentNum = 0;
-
-  /// 任务列表
-  RxList<DownloadTask> taskQueues = RxList<DownloadTask>();
-
-  /// 已下载、下载中的ID
-  RxSet<String> downloadIds = RxSet<String>();
 
   Future<void> init() async {
     savePath = await getSavePath();
@@ -78,7 +71,7 @@ abstract class DownloadService {
       return;
     }
     //把任务状态改为pauseCellular
-    for (var item in taskQueues) {
+    for (var item in TaskService.instance.taskQueues) {
       if (item.status == DownloadStatusEnum.wait.index ||
           item.status == DownloadStatusEnum.loading.index ||
           item.status == DownloadStatusEnum.downloading.index ||
@@ -93,7 +86,7 @@ abstract class DownloadService {
   /// 无网络
   void switchNoNetwork() {
     //把任务状态改为pauseCellular
-    for (var item in taskQueues) {
+    for (var item in TaskService.instance.taskQueues) {
       if (item.status == DownloadStatusEnum.wait.index ||
           item.status == DownloadStatusEnum.loading.index ||
           item.status == DownloadStatusEnum.downloading.index ||
@@ -106,7 +99,7 @@ abstract class DownloadService {
   }
 
   void switchToWiFi() {
-    for (var item in taskQueues) {
+    for (var item in TaskService.instance.taskQueues) {
       if (item.status == DownloadStatusEnum.pauseCellular.index ||
           item.status == DownloadStatusEnum.waitNetwork.index) {
         item.updateStatus(DownloadStatusEnum.wait, updateTask: false);
@@ -119,31 +112,31 @@ abstract class DownloadService {
   void updateQueue() {
     //如果下载中任务数小于设定值，添加一个任务
     //如果任务取消或完成，移除队列
-    for (var task in List<DownloadTask>.from(taskQueues)) {
+    for (var task in List<DownloadTask>.from(TaskService.instance.taskQueues)) {
       //下载完成或取消，移除队列
       if (task.status == DownloadStatusEnum.complete.index ||
           task.status == DownloadStatusEnum.cancel.index) {
-        taskQueues.remove(task);
+        TaskService.instance.taskQueues.remove(task);
         updateDownloaded();
         continue;
       }
     }
     var taskNum = AppSettings.downloadComicTaskCount.value;
-    var count = taskQueues
+    var count = TaskService.instance.taskQueues
         .where((x) =>
             x.status == DownloadStatusEnum.downloading.index ||
             x.status == DownloadStatusEnum.loading.index)
         .length;
     currentNum = count;
     if (taskNum == 0) {
-      var ls =
-          taskQueues.where((x) => x.status == DownloadStatusEnum.wait.index);
+      var ls = TaskService.instance.taskQueues
+          .where((x) => x.status == DownloadStatusEnum.wait.index);
       for (var item in ls) {
         item.start();
       }
     } else {
       if (count < taskNum) {
-        var ls = taskQueues
+        var ls = TaskService.instance.taskQueues
             .where((x) => x.status == DownloadStatusEnum.wait.index)
             .take(taskNum - count);
         for (var item in ls) {
@@ -179,7 +172,7 @@ abstract class DownloadService {
           item.status = DownloadStatusEnum.wait.index;
         }
       }
-      taskQueues.add(
+      TaskService.instance.taskQueues.add(
         DownloadTask(
           item,
           onUpdate: updateQueue,
@@ -195,8 +188,8 @@ abstract class DownloadService {
   Future<File?> getCached(String url);
 
   void updateDownloadIds() {
-    downloadIds.clear();
-    downloadIds.addAll(TaskService.instance.getTaskIds());
+    TaskService.instance.downloadIds.clear();
+    TaskService.instance.downloadIds.addAll(TaskService.instance.getTaskIds());
   }
 
   void updateDownloaded();
@@ -204,7 +197,7 @@ abstract class DownloadService {
   /// 继续
   void resumeAll() {
     //更新状态至等待
-    for (var task in taskQueues) {
+    for (var task in TaskService.instance.taskQueues) {
       if (task.status == DownloadStatusEnum.pause.index) {
         task.stop();
         task.updateStatus(
@@ -218,7 +211,7 @@ abstract class DownloadService {
 
   /// 暂停
   void pauseAll() {
-    for (var task in taskQueues) {
+    for (var task in TaskService.instance.taskQueues) {
       if (task.status != DownloadStatusEnum.pause.index &&
           task.status != DownloadStatusEnum.error.index &&
           task.status != DownloadStatusEnum.errorLoad.index) {

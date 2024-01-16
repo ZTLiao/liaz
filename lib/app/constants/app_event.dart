@@ -14,4 +14,8 @@ class AppEvent {
   static const String kDownloadComicTopic = 'downloadComicTopic';
 
   static const String kDownloadNovelTopic = 'downloadNovelTopic';
+
+  static const String kDownloadUpdateTopic = 'downloadUpdateTopic';
+
+  static const String kDownloadDeleteTopic = 'downloadDeleteTopic';
 }

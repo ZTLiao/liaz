@@ -3,8 +3,10 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/enums/download_status_enum.dart';
+import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/dialog_util.dart';
@@ -163,6 +165,7 @@ class DownloadTask {
 
   Future<void> _saveTask() async {
     await TaskService.instance.put(task.value);
+    EventBus.instance.publish(AppEvent.kDownloadUpdateTopic, task.value.taskId);
   }
 
   Future<void> _deleteTask() async {

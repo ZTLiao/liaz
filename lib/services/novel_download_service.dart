@@ -99,7 +99,7 @@ class NovelDownloadService extends DownloadService {
       seqNo: seqNo,
     );
     TaskService.instance.put(task);
-    taskQueues.add(DownloadTask(
+    TaskService.instance.taskQueues.add(DownloadTask(
       task,
       onUpdate: updateQueue,
       getCached: getCached,
@@ -109,7 +109,7 @@ class NovelDownloadService extends DownloadService {
 
   ///删除
   void deleteChapter(int novelId, int chapterId) async {
-    var taskId = '${novelId}_$chapterId';
+    var taskId = '${novelId}_${chapterId}_${AssetTypeEnum.novel.index}';
     var task = TaskService.instance.get(taskId);
     if (task != null) {
       delete(task);

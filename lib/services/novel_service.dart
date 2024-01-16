@@ -97,4 +97,8 @@ class NovelService {
   List<Novel> list() {
     return box.values.toList();
   }
+
+  void delete(int key) {
+    box.delete(key);
+  }
 }

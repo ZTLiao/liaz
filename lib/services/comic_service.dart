@@ -96,4 +96,8 @@ class ComicService {
   List<Comic> list() {
     return box.values.toList();
   }
+
+  void delete(int key) {
+    box.delete(key);
+  }
 }

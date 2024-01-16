@@ -5,18 +5,8 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/modules/download/detail/download_detail_controller.dart';
 
-class DownloadDetailPage extends StatelessWidget {
-  final String title;
-  final List<String> taskIds;
-  final DownloadDetailController controller;
-
-  DownloadDetailPage(this.title, this.taskIds, {super.key})
-      : controller = Get.put(
-          DownloadDetailController(
-            taskIds: taskIds,
-          ),
-          tag: DateTime.now().millisecondsSinceEpoch.toString(),
-        );
+class DownloadDetailPage extends GetView<DownloadDetailController> {
+  const DownloadDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +15,7 @@ class DownloadDetailPage extends StatelessWidget {
       appBar: AppBar(
         title: Center(
           child: Text(
-            title,
+            controller.title,
           ),
         ),
       ),
@@ -35,16 +25,18 @@ class DownloadDetailPage extends StatelessWidget {
           () => ListView.separated(
             itemCount: controller.tasks.length + 1,
             separatorBuilder: (context, i) {
-              var task = controller.tasks[i];
               return LinearProgressIndicator(
                 minHeight: 1,
-                value: task.total > 0
-                    ? (task.total == 0 ? 0 : (task.index + 1)) / task.total
+                value: controller.tasks[i].total > 0
+                    ? (controller.tasks[i].total == 0
+                            ? 0
+                            : (controller.tasks[i].index + 1)) /
+                        controller.tasks[i].total
                     : 0,
               );
             },
             itemBuilder: (context, i) {
-              if (controller.taskIds.length <= i) {
+              if (controller.tasks.length <= i) {
                 return const SizedBox();
               }
               var task = controller.tasks[i];
@@ -58,7 +50,9 @@ class DownloadDetailPage extends StatelessWidget {
                   }),
                   children: [
                     SlidableAction(
-                      onPressed: controller.doNothing,
+                      onPressed: (context) {
+                        controller.dismiss(task.taskId);
+                      },
                       backgroundColor: Colors.red,
                       foregroundColor: Colors.white,
                       icon: Icons.delete,
@@ -91,7 +85,9 @@ class DownloadDetailPage extends StatelessWidget {
                     Icons.pause_outlined,
                     size: 20,
                   ),
-                  label: const Text('暂停'),
+                  label: const Text(
+                    AppString.pause,
+                  ),
                 ),
               ),
               Expanded(
@@ -104,7 +100,9 @@ class DownloadDetailPage extends StatelessWidget {
                     Icons.start_outlined,
                     size: 20,
                   ),
-                  label: const Text('开始'),
+                  label: const Text(
+                    AppString.start,
+                  ),
                 ),
               ),
             ],

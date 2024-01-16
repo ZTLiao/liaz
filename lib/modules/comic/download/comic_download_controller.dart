@@ -1,8 +1,11 @@
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
+import 'package:liaz/services/comic_chapter_service.dart';
 import 'package:liaz/services/comic_download_service.dart';
 
 class ComicDownloadController extends BaseController {
@@ -13,6 +16,12 @@ class ComicDownloadController extends BaseController {
   ComicDownloadController({
     required this.comicDetail,
   });
+
+  @override
+  void onInit() {
+    chapterIds.addAll(ComicChapterService.instance.getChapterIds(comicDetail.comicId));
+    super.onInit();
+  }
 
   void selectAll() {
     var chapterTypes = comicDetail.chapterTypes;
@@ -38,7 +47,7 @@ class ComicDownloadController extends BaseController {
     chapterIds.clear();
   }
 
-  void onDownload() {
+  void onDownload() async {
     Map<int, ComicChapterModel> comicChapterMap = {};
     for (var chapterType in comicDetail.chapterTypes) {
       for (var chapter in chapterType.chapters) {
@@ -65,5 +74,6 @@ class ComicDownloadController extends BaseController {
         urls: comicChapter.paths,
       );
     }
+    SmartDialog.showToast(AppString.startDownload);
   }
 }
