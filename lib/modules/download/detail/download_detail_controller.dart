@@ -61,4 +61,26 @@ class DownloadDetailController extends GetxController {
     EventBus.instance.unSubscribe(AppEvent.kDownloadDeleteTopic);
     super.onClose();
   }
+
+  void pause() {
+    var list = TaskService.instance.taskQueues
+        .where((element) => checkIds.contains(element.task.value.taskId));
+    if (list.isEmpty) {
+      return;
+    }
+    for (var task in list) {
+      task.pause();
+    }
+  }
+
+  void resume() {
+    var list = TaskService.instance.taskQueues
+        .where((element) => checkIds.contains(element.task.value.taskId));
+    if (list.isEmpty) {
+      return;
+    }
+    for (var task in list) {
+      task.resume();
+    }
+  }
 }

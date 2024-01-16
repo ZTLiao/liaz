@@ -94,7 +94,7 @@ class DownloadDetailPage extends GetView<DownloadDetailController> {
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 14),
                   ),
-                  onPressed: () {},
+                  onPressed: controller.pause,
                   icon: const Icon(
                     Icons.pause_outlined,
                     size: 20,
@@ -109,7 +109,7 @@ class DownloadDetailPage extends GetView<DownloadDetailController> {
                   style: TextButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 14),
                   ),
-                  onPressed: () {},
+                  onPressed: controller.resume,
                   icon: const Icon(
                     Icons.start_outlined,
                     size: 20,

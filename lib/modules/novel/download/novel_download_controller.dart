@@ -1,4 +1,6 @@
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
@@ -65,5 +67,6 @@ class NovelDownloadController extends BaseController {
         urls: novelChapter.paths,
       );
     }
+    SmartDialog.showToast(AppString.startDownload);
   }
 }

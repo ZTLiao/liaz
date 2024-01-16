@@ -6,6 +6,7 @@ import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/comic_chapter_service.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/novel_chapter_service.dart';
+import 'package:liaz/services/novel_service.dart';
 
 class DownloadDeleteListener extends EventListener {
   @override
@@ -33,7 +34,7 @@ class DownloadDeleteListener extends EventListener {
       NovelChapterService.instance.delete(chapterId);
       var chapterIds = NovelChapterService.instance.getChapterIds(objId);
       if (chapterIds.isEmpty) {
-        NovelChapterService.instance.delete(objId);
+        NovelService.instance.delete(objId);
         AppNavigator.closePage();
       }
     }
