@@ -190,12 +190,15 @@ class ComicDetailPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding: AppStyle.edgeInsetsH8,
-            child: Column(
-              children: [
-                _buildDescription(context),
-                _buildChapter(context),
-                _buildRecommend(context),
-              ],
+            child: Offstage(
+              offstage: controller.detail.value.comicId == 0,
+              child: Column(
+                children: [
+                  _buildDescription(context),
+                  _buildChapter(context),
+                  _buildRecommend(context),
+                ],
+              ),
             ),
           ),
         ),
@@ -362,7 +365,7 @@ class ComicDetailPage extends StatelessWidget {
                     title = AppString.extra;
                   }
                   title +=
-                  '${StrUtil.space} ${AppString.total}${chapters.length}${AppString.chapter}）';
+                      '${StrUtil.space} ${AppString.total}${chapters.length}${AppString.chapter}）';
                   return Column(
                     children: [
                       Row(

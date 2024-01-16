@@ -189,12 +189,15 @@ class NovelDetailPage extends GetView<NovelDetailController> {
         body: SingleChildScrollView(
           child: Padding(
             padding: AppStyle.edgeInsetsH8,
-            child: Column(
-              children: [
-                _buildDescription(context),
-                _buildChapter(context),
-                _buildRecommend(context),
-              ],
+            child: Offstage(
+              offstage: controller.detail.value.novelId == 0,
+              child: Column(
+                children: [
+                  _buildDescription(context),
+                  _buildChapter(context),
+                  _buildRecommend(context),
+                ],
+              ),
             ),
           ),
         ),
