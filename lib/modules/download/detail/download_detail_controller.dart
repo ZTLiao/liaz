@@ -13,6 +13,7 @@ import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/comic_chapter_service.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/novel_chapter_service.dart';
+import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/task_service.dart';
 
 import 'package:path/path.dart' as path;
@@ -144,7 +145,7 @@ class DownloadDetailController extends GetxController {
 
   void toNovelChapter(int novelId, int novelChapterId, Task task) {
     List<NovelChapterModel> novelChapters = <NovelChapterModel>[];
-    var comic = ComicService.instance.get(novelId);
+    var comic = NovelService.instance.get(novelId);
     for (var task in tasks) {
       var taskIdArray = task.taskId.split(StrUtil.underline);
       var objId = int.parse(taskIdArray[0]);

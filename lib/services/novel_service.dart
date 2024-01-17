@@ -101,4 +101,8 @@ class NovelService {
   void delete(int key) {
     box.delete(key);
   }
+
+  Novel get(int novelId) {
+    return box.values.where((element) => element.novelId == novelId).first;
+  }
 }

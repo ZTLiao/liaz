@@ -101,6 +101,10 @@ class AppNavigator {
     toContentPage(AppRoute.kUserRegister);
   }
 
+  static void toForgetPassword() {
+    toContentPage(AppRoute.kForgetPassword);
+  }
+
   static void closePage() {
     if (Navigator.canPop(Get.context!)) {
       Get.back();

@@ -89,16 +89,22 @@ class AppString {
   static const register = '注册';
   static const loginEn = 'Login';
   static const registerEn = 'Register';
+  static const email = '邮箱';
   static const username = '账号';
   static const password = '密码';
+  static const verifyCode = '验证码';
+  static const newPassword = '新密码';
   static const noAccount = '没有账号？';
   static const clickRegister = '点击注册';
   static const thirdLogin = '其它账号登录';
   static const forgetPassword = '忘记密码？';
   static const usernameAlertMsg = '账号/邮箱/手机号码';
   static const usernameEmptyError = '请输入账号';
+  static const emailEmptyError = '请输入邮箱';
   static const passwordEmptyError = '请输入密码';
   static const passwordShortError = '密码不能低于六位';
+  static const verifyCodeEmptyError = '请输入验证码';
+  static const verifyCodeShortError = '验证码少于六位';
   static const usernameOrPasswordError = '账号或密码错误';
   static const nickname = '昵称';
   static const nicknameEmptyError = '请输入昵称';
@@ -136,4 +142,5 @@ class AppString {
   static const pause = '暂停';
   static const start = '开始';
   static const startDownload = '已添加到下载列表，下载过程中请保持APP在前台运行';
+  static const reset = 'Reset';
 }

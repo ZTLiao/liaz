@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/modules/user/login/user_login_controller.dart';
+import 'package:liaz/routes/app_navigator.dart';
 
 class UserLoginPage extends StatelessWidget {
   final UserLoginController controller;
@@ -42,8 +43,8 @@ class UserLoginPage extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              buildOtherLoginText(),
-              buildOtherMethod(context),
+              //buildOtherLoginText(),
+              //buildOtherMethod(context),
               buildRegisterText(context),
             ],
           ),
@@ -156,13 +157,13 @@ class UserLoginPage extends StatelessWidget {
   }
 
   Widget buildForgetPasswordText(BuildContext context) {
-    return Padding(
+    return const Padding(
       padding: AppStyle.edgeInsetsT8,
       child: Align(
         alignment: Alignment.centerRight,
         child: TextButton(
-          onPressed: () {},
-          child: const Text(
+          onPressed: AppNavigator.toForgetPassword,
+          child: Text(
             AppString.forgetPassword,
             style: TextStyle(
               fontSize: 14,

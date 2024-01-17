@@ -29,6 +29,9 @@ class AppRoute {
   /// 用户登录
   static const kUserLogin = '/user/login';
 
+  /// 忘记密码
+  static const kForgetPassword = '/forget/password';
+
   /// 用户注册
   static const kUserRegister = '/user/register';
 
