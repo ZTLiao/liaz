@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:liaz/app/constants/app_color.dart';
-import 'package:liaz/app/constants/app_string.dart';
 
 class EmptyPage extends StatelessWidget {
   const EmptyPage({super.key});

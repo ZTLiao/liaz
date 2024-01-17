@@ -6,21 +6,24 @@ import 'package:path_provider/path_provider.dart';
 
 class OAuth2TokenService extends GetxService {
   static OAuth2TokenService get instance => Get.find<OAuth2TokenService>();
-  late Box<OAuth2Token> box;
+  Box<OAuth2Token>? box;
 
   Future<void> init() async {
-    var appDir = await getApplicationSupportDirectory();
-    box = await Hive.openBox(
-      Db.oauth2Token,
-      path: appDir.path,
-    );
+    if (box == null) {
+      var appDir = await getApplicationSupportDirectory();
+      box = await Hive.openBox(
+        Db.oauth2Token,
+        path: appDir.path,
+      );
+    }
   }
 
   Future<void> put(OAuth2Token oauth2Token) async {
-    await box.put(oauth2Token.userId, oauth2Token);
+    await box!.put(oauth2Token.userId, oauth2Token);
   }
 
-  OAuth2Token? get() {
-    return box.values.firstOrNull;
+  Future<OAuth2Token?> get() async {
+    await init();
+    return box!.values.firstOrNull;
   }
 }

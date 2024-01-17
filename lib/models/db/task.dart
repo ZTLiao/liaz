@@ -24,6 +24,8 @@ class Task {
   int createdAt;
   @HiveField(9)
   int seqNo;
+  @HiveField(10)
+  List<String> types;
 
   Task({
     required this.taskId,
@@ -36,6 +38,7 @@ class Task {
     required this.status,
     required this.createdAt,
     required this.seqNo,
+    required this.types,
   });
 
   factory Task.empty() => Task(
@@ -49,5 +52,6 @@ class Task {
         status: 0,
         createdAt: 0,
         seqNo: 0,
+        types: [],
       );
 }

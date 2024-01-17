@@ -16,13 +16,13 @@ class UserHomeController extends GetxController {
   }
 
   void updateUser() async {
-    var userCache = UserService.instance.get();
-    if (userCache != null) {
-      Global.isUserLogin = true;
-      userCache.avatar =
-          await AppConfigService.instance.getObject(userCache.avatar!);
-      user.value = userCache;
+    UserService.instance.get().then((value) async {
+      if (value != null) {
+        Global.isUserLogin = true;
+        value.avatar = await AppConfigService.instance.getObject(value.avatar!);
+        user.value = value;
+      }
       Log.i("avatar : ${user.value.avatar}");
-    }
+    });
   }
 }

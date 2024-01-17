@@ -98,6 +98,7 @@ class ComicDownloadService extends DownloadService {
       status: DownloadStatusEnum.wait.index,
       createdAt: DateTime.now().millisecond,
       seqNo: seqNo,
+      types: [],
     );
     TaskService.instance.put(task);
     TaskService.instance.taskQueues.add(DownloadTask(

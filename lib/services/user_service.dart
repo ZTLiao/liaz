@@ -20,7 +20,7 @@ import 'package:path_provider/path_provider.dart';
 
 class UserService extends GetxService {
   static UserService get instance => Get.find<UserService>();
-  late Box<User> box;
+  Box<User>? box;
 
   final _oauth2TokenRequest = OAuth2TokenRequest();
 
@@ -31,13 +31,18 @@ class UserService extends GetxService {
   final _novelSubscribeRequest = NovelSubscribeRequest();
 
   Future<void> init() async {
-    var appDir = await getApplicationSupportDirectory();
-    box = await Hive.openBox(
-      Db.user,
-      path: appDir.path,
-    );
+    if (box == null) {
+      var appDir = await getApplicationSupportDirectory();
+      box = await Hive.openBox(
+        Db.user,
+        path: appDir.path,
+      );
+    }
+  }
+
+  Future<void> refreshToken() async {
     Global.isUserLogin = false;
-    var oauth2Token = OAuth2TokenService.instance.get();
+    var oauth2Token = await OAuth2TokenService.instance.get();
     if (oauth2Token != null) {
       _oauth2TokenRequest.refreshToken(oauth2Token.refreshToken).then((value) {
         if (value != null) {
@@ -50,15 +55,16 @@ class UserService extends GetxService {
   }
 
   Future<void> put(User user) async {
-    await box.put(user.userId, user);
+    await box!.put(user.userId, user);
   }
 
-  User? get() {
-    return box.values.firstOrNull;
+  Future<User?> get() async {
+    await init();
+    return box!.values.firstOrNull;
   }
 
   Future<User?> getUser(userId) async {
-    var user = get();
+    var user = await get();
     user ??= await _userRequest.getUser(userId);
     if (user == null) {
       return null;
@@ -68,9 +74,9 @@ class UserService extends GetxService {
   }
 
   void clear() async {
-    var keys = box.values.toList().map((e) => e.userId).toList();
+    var keys = box!.values.toList().map((e) => e.userId).toList();
     if (keys.isNotEmpty) {
-      box.deleteAll(keys);
+      box!.deleteAll(keys);
     }
   }
 

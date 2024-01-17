@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:battery_plus/battery_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -22,9 +23,12 @@ import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/app_settings_service.dart';
+import 'package:liaz/services/novel_download_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/widgets/toolbar/number_controller_widget.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
+import 'package:path/path.dart' as path;
 
 class NovelReaderController extends BaseController {
   final int novelChapterId;
@@ -41,6 +45,7 @@ class NovelReaderController extends BaseController {
       }
     }
     chapterIndex.value = i;
+    isLocal.value = chapters[i].isLocal;
   }
 
   final FocusNode focusNode = FocusNode();
@@ -96,6 +101,9 @@ class NovelReaderController extends BaseController {
 
   ///屏幕亮度
   var screenBrightness = RxDouble(0);
+
+  /// 是否为本地
+  var isLocal = RxBool(false);
 
   /// 左手模式
   bool get leftHandMode => AppSettings.novelReaderLeftHandMode.value;
@@ -232,14 +240,24 @@ class NovelReaderController extends BaseController {
     var types = chapter.types;
     var sb = StringBuffer();
     for (int i = 0; i < paths.length; i++) {
-      var path = paths[i];
       var type = types[i];
-      path = await AppConfigService.instance.getObject(path);
-      if (type == FileType.textPlain) {
-        sb.write(await Request.instance.getResource(path));
-      } else if (type == FileType.imageJpeg) {
-        pictures.add(path);
-        hasPicture.value = true;
+      if (isLocal.value) {
+        if (type == FileType.textPlain) {
+          sb.write(await File(
+                  path.join(NovelDownloadService.instance.savePath, paths[i]))
+              .readAsString());
+        } else if (type == FileType.imageJpeg) {
+          pictures.add(paths[i]);
+          hasPicture.value = true;
+        }
+      } else {
+        paths[i] = await AppConfigService.instance.getObject(paths[i]);
+        if (type == FileType.textPlain) {
+          sb.write(await Request.instance.getResource(paths[i]));
+        } else if (type == FileType.imageJpeg) {
+          pictures.add(paths[i]);
+          hasPicture.value = true;
+        }
       }
     }
     content.value = sb.toString();
@@ -252,7 +270,9 @@ class NovelReaderController extends BaseController {
       paths: paths,
       types: types,
       direction: chapter.direction,
+      isLocal: chapter.isLocal,
     );
+    isLocal.value = chapter.isLocal;
     if (chapter.currentIndex != 0) {
       currentIndex.value = chapter.currentIndex;
     }
@@ -386,14 +406,16 @@ class NovelReaderController extends BaseController {
     if (paths.isNotEmpty) {
       path = detail.value.paths[0];
     }
-    NovelService.instance.uploadHistory(
-      detail.value.novelId,
-      AssetTypeEnum.novel.index,
-      detail.value.novelChapterId,
-      detail.value.chapterName,
-      path,
-      currentIndex.value,
-    );
+    if (!isLocal.value) {
+      NovelService.instance.uploadHistory(
+        detail.value.novelId,
+        AssetTypeEnum.novel.index,
+        detail.value.novelChapterId,
+        detail.value.chapterName,
+        path,
+        currentIndex.value,
+      );
+    }
     scrollController.removeListener(listenVertical);
     connectivitySubscription?.cancel();
     batterySubscription?.cancel();

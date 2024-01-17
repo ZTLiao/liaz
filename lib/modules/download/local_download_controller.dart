@@ -23,6 +23,7 @@ class LocalDownloadController
   @override
   void onInit() {
     tabController = TabController(length: tabs.length, vsync: this);
+    onRefresh();
     super.onInit();
   }
 
@@ -115,5 +116,6 @@ class LocalDownloadController
       title,
       taskIds,
     );
+    onRefresh();
   }
 }

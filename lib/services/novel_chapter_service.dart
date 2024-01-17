@@ -37,4 +37,8 @@ class NovelChapterService {
         .map((e) => e.chapterId)
         .toList();
   }
+
+  NovelChapter get(int key) {
+    return box.values.where((element) => element.chapterId == key).first;
+  }
 }

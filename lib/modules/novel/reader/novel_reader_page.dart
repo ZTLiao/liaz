@@ -146,24 +146,27 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Expanded(
-                            child: Stack(
-                              alignment: Alignment.center,
-                              children: <Widget>[
-                                const Text(
-                                  AppString.detail,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white,
+                          Visibility(
+                            visible: !controller.isLocal.value,
+                            child: Expanded(
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: <Widget>[
+                                  const Text(
+                                    AppString.detail,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.panorama_fish_eye,
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.panorama_fish_eye,
+                                    ),
+                                    onPressed: controller.onDetail,
                                   ),
-                                  onPressed: controller.onDetail,
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -422,11 +425,16 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                         ToolUtil.showImageViewer(
                             i, controller.pictures.toList());
                       },
-                      child: NetImage(
-                        controller.pictures[i],
-                        fit: BoxFit.contain,
-                        progress: true,
-                      ),
+                      child: controller.detail.value.isLocal
+                          ? LocalImage(
+                              controller.pictures[i],
+                              fit: BoxFit.contain,
+                            )
+                          : NetImage(
+                              controller.pictures[i],
+                              fit: BoxFit.contain,
+                              progress: true,
+                            ),
                     ),
                   );
                 })

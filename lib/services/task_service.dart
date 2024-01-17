@@ -69,7 +69,8 @@ class TaskService {
     return box.values.toList();
   }
 
-  List<Task> getTasks(List<String> taskIds) {
+  Future<List<Task>> getTasks(List<String> taskIds) async {
+    await init();
     var tasks = box.values
         .where((element) => taskIds.contains(element.taskId))
         .toList();

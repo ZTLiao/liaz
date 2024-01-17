@@ -62,18 +62,21 @@ class NovelDownloadService extends DownloadService {
     required int seqNo,
     required int currentIndex,
     required List<String> urls,
+    required List<String> types,
   }) async {
     String taskId = '${novelId}_${chapterId}_${AssetTypeEnum.novel.index}';
     if (!NovelService.instance.exist(novelId)) {
-      NovelService.instance.put(Novel(
-        novelId: novelId,
-        title: title,
-        cover: cover,
-        categories: categories,
-        authors: authors,
-        flag: flag,
-        browseChapterId: browseChapterId,
-      ));
+      NovelService.instance.put(
+        Novel(
+          novelId: novelId,
+          title: title,
+          cover: cover,
+          categories: categories,
+          authors: authors,
+          flag: flag,
+          browseChapterId: browseChapterId,
+        ),
+      );
     }
     NovelChapterService.instance.put(NovelChapter(
       chapterId: chapterId,
@@ -97,6 +100,7 @@ class NovelDownloadService extends DownloadService {
       status: DownloadStatusEnum.wait.index,
       createdAt: DateTime.now().millisecond,
       seqNo: seqNo,
+      types: types,
     );
     TaskService.instance.put(task);
     TaskService.instance.taskQueues.add(DownloadTask(

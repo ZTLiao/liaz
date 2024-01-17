@@ -136,7 +136,7 @@ class Request {
     header[AppConstant.sign] =
         SignUtil.generateSign(params, timestamp, Global.signKey);
     //添加token
-    var oauth2Token = OAuth2TokenService.instance.get();
+    var oauth2Token = await OAuth2TokenService.instance.get();
     if (oauth2Token != null) {
       header[AppConstant.authorization] =
           oauth2Token.tokenType + StrUtil.space + oauth2Token.accessToken;
@@ -206,7 +206,7 @@ class Request {
     header[AppConstant.sign] =
         SignUtil.generateSign(params, timestamp, Global.signKey);
     //添加token
-    var oauth2Token = OAuth2TokenService.instance.get();
+    var oauth2Token = await OAuth2TokenService.instance.get();
     if (oauth2Token != null) {
       header[AppConstant.authorization] =
           oauth2Token.tokenType + StrUtil.space + oauth2Token.accessToken;
@@ -269,7 +269,7 @@ class Request {
     header[AppConstant.sign] =
         SignUtil.generateSign(params, timestamp, Global.signKey);
     //添加token
-    var oauth2Token = OAuth2TokenService.instance.get();
+    var oauth2Token = await OAuth2TokenService.instance.get();
     if (oauth2Token != null) {
       header[AppConstant.authorization] =
           oauth2Token.tokenType + StrUtil.space + oauth2Token.accessToken;

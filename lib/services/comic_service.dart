@@ -89,6 +89,10 @@ class ComicService {
     box.put(comic.comicId, comic);
   }
 
+  Comic get(int comicId) {
+    return box.values.where((element) => element.comicId == comicId).first;
+  }
+
   bool exist(int key) {
     return box.values.any((e) => e.comicId == key);
   }

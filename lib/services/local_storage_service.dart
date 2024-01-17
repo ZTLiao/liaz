@@ -7,29 +7,29 @@ import 'package:path_provider/path_provider.dart';
 class LocalStorageService extends GetxService {
   static LocalStorageService get instance => Get.find<LocalStorageService>();
 
-  late Box settingsBox;
+  late Box box;
 
   Future init() async {
     var dir = await getApplicationSupportDirectory();
-    settingsBox = await Hive.openBox(
+    box = await Hive.openBox(
       Db.localStorage,
       path: dir.path,
     );
   }
 
   T getValue<T>(dynamic key, T defaultValue) {
-    var value = settingsBox.get(key, defaultValue: defaultValue) as T;
+    var value = box.get(key, defaultValue: defaultValue) as T;
     Log.d("Get LocalStorage：$key\r\n$value");
     return value;
   }
 
   Future setValue<T>(dynamic key, T value) async {
     Log.d("Set LocalStorage：$key\r\n$value");
-    return await settingsBox.put(key, value);
+    return await box.put(key, value);
   }
 
   Future removeValue<T>(dynamic key) async {
     Log.d("Remove LocalStorage：$key");
-    return await settingsBox.delete(key);
+    return await box.delete(key);
   }
 }

@@ -15,6 +15,7 @@ class NovelChapterModel {
   List<String> paths;
   List<String> types;
   int currentIndex;
+  bool isLocal;
 
   NovelChapterModel({
     required this.novelChapterId,
@@ -29,6 +30,7 @@ class NovelChapterModel {
     required this.paths,
     required this.types,
     required this.currentIndex,
+    this.isLocal = false,
   });
 
   factory NovelChapterModel.empty() => NovelChapterModel(

@@ -24,6 +24,10 @@ class ComicChapterService {
     box.delete(key);
   }
 
+  ComicChapter get(int key) {
+    return box.values.where((element) => element.chapterId == key).first;
+  }
+
   List<String> getTaskId(int comicId) {
     return box.values
         .where((element) => element.comicId == comicId)

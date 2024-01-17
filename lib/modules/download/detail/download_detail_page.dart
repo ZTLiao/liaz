@@ -75,6 +75,9 @@ class DownloadDetailPage extends GetView<DownloadDetailController> {
                         title: Text(
                           task.taskName,
                         ),
+                        onTap: () {
+                          controller.onReadChapter(task.taskId);
+                        },
                       ),
                     ),
                   ],

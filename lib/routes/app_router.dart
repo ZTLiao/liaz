@@ -120,7 +120,7 @@ class AppRouter {
     ),
     GetPage(
       name: AppRoute.kDownloadDetail,
-      page: () => DownloadDetailPage(),
+      page: () => const DownloadDetailPage(),
       binding: BindingsBuilder.put(
         () => DownloadDetailController(
           title: Get.arguments['title'],

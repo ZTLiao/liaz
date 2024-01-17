@@ -20,9 +20,12 @@ import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/app_settings_service.dart';
+import 'package:liaz/services/comic_download_service.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
+import 'package:path/path.dart' as path;
 
 class ComicReaderController extends BaseController {
   final int comicChapterId;
@@ -40,6 +43,7 @@ class ComicReaderController extends BaseController {
       }
     }
     chapterIndex.value = i;
+    isLocal.value = chapters[i].isLocal;
     loadDetail();
   }
 
@@ -81,6 +85,9 @@ class ComicReaderController extends BaseController {
 
   ///屏幕亮度
   var screenBrightness = RxDouble(0);
+
+  ///是否本地
+  var isLocal = RxBool(false);
 
   bool get leftHandMode => AppSettings.comicReaderLeftHandMode.value;
 
@@ -163,14 +170,16 @@ class ComicReaderController extends BaseController {
 
   @override
   void onClose() {
-    ComicService.instance.uploadHistory(
-      detail.value.comicId,
-      AssetTypeEnum.comic.index,
-      comicChapterId,
-      detail.value.chapterName,
-      detail.value.paths[currentIndex.value],
-      currentIndex.value,
-    );
+    if (!isLocal.value) {
+      ComicService.instance.uploadHistory(
+        detail.value.comicId,
+        AssetTypeEnum.comic.index,
+        comicChapterId,
+        detail.value.chapterName,
+        detail.value.paths[currentIndex.value],
+        currentIndex.value,
+      );
+    }
     focusNode.dispose();
     connectivitySubscription?.cancel();
     batterySubscription?.cancel();
@@ -266,9 +275,15 @@ class ComicReaderController extends BaseController {
       return;
     }
     var comicChapter = chapters[chapterIndex.value];
+
     for (int i = 0; i < comicChapter.paths.length; i++) {
-      comicChapter.paths[i] =
-          await AppConfigService.instance.getObject(comicChapter.paths[i]);
+      if (isLocal.value) {
+        comicChapter.paths[i] = path.join(
+            ComicDownloadService.instance.savePath, comicChapter.paths[i]);
+      } else {
+        comicChapter.paths[i] =
+            await AppConfigService.instance.getObject(comicChapter.paths[i]);
+      }
     }
     detail.value = ComicChapterItemModel(
       comicChapterId: comicChapter.comicChapterId,
@@ -278,9 +293,10 @@ class ComicReaderController extends BaseController {
       seqNo: comicChapter.seqNo,
       paths: comicChapter.paths,
       direction: comicChapter.direction,
-      isLocal: false,
+      isLocal: comicChapter.isLocal,
     );
     currentIndex.value = comicChapter.currentIndex;
+    isLocal.value = comicChapter.isLocal;
     Future.delayed(const Duration(milliseconds: 100), () {
       jumpToPage(currentIndex.value);
     });

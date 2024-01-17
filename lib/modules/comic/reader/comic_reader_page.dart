@@ -180,24 +180,27 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: <Widget>[
-                              const Text(
-                                AppString.detail,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.white,
+                        Visibility(
+                          visible: !controller.isLocal.value,
+                          child: Expanded(
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: <Widget>[
+                                const Text(
+                                  AppString.detail,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.panorama_fish_eye,
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.panorama_fish_eye,
+                                  ),
+                                  onPressed: controller.onDetail,
                                 ),
-                                onPressed: controller.onDetail,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -341,7 +344,10 @@ class ComicReaderPage extends GetView<ComicReaderController> {
               controller.lockSwipe.value = (e.scale ?? 1) > 1.0;
             },
             child: controller.detail.value.isLocal
-                ? LocalImage(url, fit: BoxFit.contain)
+                ? LocalImage(
+                    url,
+                    fit: BoxFit.contain,
+                  )
                 : NetImage(
                     url,
                     fit: BoxFit.contain,
@@ -407,7 +413,10 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                 minHeight: 200,
               ),
               child: controller.detail.value.isLocal
-                  ? LocalImage(url, fit: BoxFit.contain)
+                  ? LocalImage(
+                      url,
+                      fit: BoxFit.contain,
+                    )
                   : NetImage(
                       url,
                       fit: BoxFit.fitWidth,

@@ -65,6 +65,7 @@ class NovelDownloadController extends BaseController {
         seqNo: novelChapter.seqNo,
         currentIndex: novelChapter.currentIndex,
         urls: novelChapter.paths,
+        types: novelChapter.types,
       );
     }
     SmartDialog.showToast(AppString.startDownload);

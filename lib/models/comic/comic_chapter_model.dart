@@ -14,6 +14,7 @@ class ComicChapterModel {
   int updatedAt;
   List<String> paths;
   int currentIndex;
+  bool isLocal;
 
   ComicChapterModel({
     required this.comicChapterId,
@@ -27,6 +28,7 @@ class ComicChapterModel {
     required this.updatedAt,
     required this.paths,
     required this.currentIndex,
+    this.isLocal = false,
   });
 
   factory ComicChapterModel.empty() => ComicChapterModel(

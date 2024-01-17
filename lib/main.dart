@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -65,6 +66,14 @@ Future<void> init() async {
   await initHive();
   //初始化服务
   await initServices();
+  //设置状态栏为透明
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    systemNavigationBarColor: Colors.transparent,
+  );
+  SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
 }
 
 Future<void> initHive() async {
@@ -85,9 +94,11 @@ Future<void> initHive() async {
 Future<void> initServices() async {
   await Get.put(LocalStorageService()).init();
   await Get.put(DeviceInfoService()).init();
-  await Get.put(OAuth2TokenService()).init();
+  Get.put(OAuth2TokenService()).init();
   await Get.put(AppConfigService()).init();
-  await Get.put(UserService()).init();
+  Get.put(UserService())
+      .init()
+      .then((value) => UserService.instance.refreshToken());
   Get.put(SearchService()).init();
   Get.put(AppSettingsService());
   Get.put(ComicService()).init();
