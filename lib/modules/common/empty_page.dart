@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liaz/app/constants/app_asset.dart';
 
 class EmptyPage extends StatelessWidget {
   const EmptyPage({super.key});
@@ -9,7 +10,7 @@ class EmptyPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Image.asset(
-          "assets/images/logo.png",
+          AppAsset.imageLogo,
           height: 80,
         ),
       ),

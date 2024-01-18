@@ -34,8 +34,8 @@ class AppNavigator {
     }
   }
 
-  static void toIndex() {
-    toContentPage(AppRoute.kIndex);
+  static void toIndex({bool replace = false}) {
+    toContentPage(AppRoute.kIndex, replace: replace);
   }
 
   /// 打开搜索

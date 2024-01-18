@@ -23,6 +23,7 @@ import 'package:liaz/models/db/search.dart';
 import 'package:liaz/models/db/task.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/modules/common/empty_page.dart';
+import 'package:liaz/modules/common/splash/splash_screen_page.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/routes/app_router.dart';
@@ -122,12 +123,14 @@ class LiazApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasSplash = false;
     return GetMaterialApp(
       title: AppString.appName,
       scrollBehavior: AppScrollBehavior(),
       theme: AppStyle.lightTheme,
       darkTheme: AppStyle.darkTheme,
-      initialRoute: AppRoute.kIndex,
+      home: hasSplash ? SplashScreenPage() : null,
+      initialRoute: hasSplash ? null : AppRoute.kIndex,
       getPages: AppRouter.routes,
       onUnknownRoute: (settings) => GetPageRoute(
         page: () => const EmptyPage(),
