@@ -34,30 +34,29 @@ class BasePageController<T> extends BaseController {
     if (isLoading) {
       return;
     }
-    error = null;
-    isLoading = true;
-    isPageError.value = false;
-    isPageEmpty.value = false;
-    //页面开始更新
-    isPageLoading.value = true;
-    //获取数据
-    getData(this.currentPage, this.pageSize).then((value) {
-      try {
-        isCanLoadMore.value = value.isNotEmpty;
-        if (isCanLoadMore.value) {
-          this.currentPage++;
-          this.list.addAll(value);
-        }
-        if (this.currentPage == 1) {
-          isPageEmpty.value = true;
-        }
-      } catch (e) {
-        except(e);
-      } finally {
-        isLoading = false;
-        isPageLoading.value = false;
+    try {
+      error = null;
+      isLoading = true;
+      isPageError.value = false;
+      isPageEmpty.value = false;
+      //页面开始更新
+      isPageLoading.value = true;
+      //获取数据
+      var result = await getData(this.currentPage, this.pageSize);
+      isCanLoadMore.value = result.isNotEmpty;
+      if (isCanLoadMore.value) {
+        this.currentPage++;
+        this.list.addAll(result);
       }
-    });
+      if (this.currentPage == 1) {
+        isPageEmpty.value = true;
+      }
+    } catch (e) {
+      except(e);
+    } finally {
+      isLoading = false;
+      isPageLoading.value = false;
+    }
   }
 
   Future<List<T>> getData(int currentPage, int pageSize) async {
