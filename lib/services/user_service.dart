@@ -107,6 +107,14 @@ class UserService extends GetxService {
     return isRegister;
   }
 
+  Future<bool> resetPassword(
+      String username, String verifyCode, String newPassword) async {
+    var encryptPassword = md5.convert(utf8.encode(newPassword)).toString();
+    Log.i('newPassword : $newPassword, encryptPassword : $encryptPassword');
+    await _userRequest.resetPassword(username, verifyCode, encryptPassword);
+    return true;
+  }
+
   void comicSubscribe(int comicId, int isSubscribe) {
     if (Global.isUserLogin) {
       _comicSubscribeRequest.subscribe(comicId, isSubscribe).then(

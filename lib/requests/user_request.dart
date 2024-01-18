@@ -62,4 +62,13 @@ class UserRequest {
     }
     return null;
   }
+
+  Future<void> resetPassword(
+      String username, String verifyCode, String newPassword) async {
+    return await Request.instance.post('/api/account/reset/password', data: {
+      'username': username,
+      'verifyCode': verifyCode,
+      'newPassword': newPassword,
+    });
+  }
 }

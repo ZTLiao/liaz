@@ -145,4 +145,7 @@ class AppString {
   static const resetEn = 'Reset';
   static const sendVerifyCode = '发送验证码';
   static const sendSuccess = '发送成功';
+  static const verifyCodeFail = '验证码验证失败';
+  static const resetPasswordForSuccess = '重置密码成功';
+  static const resetPasswordForFail = '重置密码失败';
 }
