@@ -10,7 +10,13 @@ import 'package:liaz/models/dto/download_task.dart';
 import 'package:path_provider/path_provider.dart';
 
 class TaskService {
-  static TaskService get instance => Get.find<TaskService>();
+  static TaskService get instance {
+    if (Get.isRegistered<TaskService>()) {
+      return Get.find<TaskService>();
+    }
+    return Get.put(TaskService());
+  }
+
   late Box<Task> box;
 
   /// 任务列表

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/decrypt_util.dart';

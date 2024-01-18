@@ -14,7 +14,13 @@ import 'package:liaz/routes/app_navigator.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ComicService {
-  static ComicService get instance => Get.find<ComicService>();
+  static ComicService get instance {
+    if (Get.isRegistered<ComicService>()) {
+      return Get.find<ComicService>();
+    }
+    return Get.put(ComicService());
+  }
+
   late Box<Comic> box;
 
   Future<void> init() async {

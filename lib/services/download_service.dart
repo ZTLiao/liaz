@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/enums/download_status_enum.dart';
 import 'package:liaz/app/logger/log.dart';
@@ -12,7 +13,7 @@ import 'package:liaz/services/task_service.dart';
 
 import 'package:path/path.dart' as path;
 
-abstract class DownloadService {
+abstract class DownloadService extends GetxService {
   /// 连接信息监听
   StreamSubscription<ConnectivityResult>? connectivitySubscription;
 

@@ -14,7 +14,12 @@ import 'package:liaz/routes/app_navigator.dart';
 import 'package:path_provider/path_provider.dart';
 
 class NovelService {
-  static NovelService get instance => Get.find<NovelService>();
+  static NovelService get instance {
+    if (Get.isRegistered<NovelService>()) {
+      return Get.find<NovelService>();
+    }
+    return Get.put(NovelService());
+  }
 
   late Box<Novel> box;
 

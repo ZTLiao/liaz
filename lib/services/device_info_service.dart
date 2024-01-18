@@ -6,7 +6,13 @@ import 'package:liaz/models/db/device_info.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DeviceInfoService extends GetxService {
-  static DeviceInfoService get instance => Get.find<DeviceInfoService>();
+  static DeviceInfoService get instance {
+    if (Get.isRegistered<DeviceInfoService>()) {
+      return Get.find<DeviceInfoService>();
+    }
+    return Get.put(DeviceInfoService());
+  }
+
   late Box<DeviceInfo> box;
 
   Future<void> init() async {

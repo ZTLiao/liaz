@@ -5,7 +5,13 @@ import 'package:liaz/models/db/search.dart';
 import 'package:path_provider/path_provider.dart';
 
 class SearchService extends GetxService {
-  static SearchService get instance => Get.find<SearchService>();
+  static SearchService get instance {
+    if (Get.isRegistered<SearchService>()) {
+      return Get.find<SearchService>();
+    }
+    return Get.put(SearchService());
+  }
+
   late Box<Search> box;
 
   Future<void> init() async {

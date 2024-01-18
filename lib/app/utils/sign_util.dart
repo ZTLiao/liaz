@@ -35,7 +35,7 @@ class SignUtil {
       Log.logPrint(e);
     }
     var sign = md5.convert(utf8.encode(sb.toString())).toString().toUpperCase();
-    Log.i('params : ${sb.toString()}, sign : $sign');
+    Log.d('params : ${sb.toString()}, sign : $sign');
     return sign;
   }
 }

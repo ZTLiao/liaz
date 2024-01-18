@@ -12,7 +12,13 @@ import 'package:liaz/requests/file_request.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AppConfigService extends GetxService {
-  static AppConfigService get instance => Get.find<AppConfigService>();
+  static AppConfigService get instance {
+    if (Get.isRegistered<AppConfigService>()) {
+      return Get.find<AppConfigService>();
+    }
+    return Get.put(AppConfigService());
+  }
+
   late Box<AppConfig> box;
 
   final _fileRequest = FileRequest();

@@ -5,7 +5,12 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:path_provider/path_provider.dart';
 
 class LocalStorageService extends GetxService {
-  static LocalStorageService get instance => Get.find<LocalStorageService>();
+  static LocalStorageService get instance {
+    if (Get.isRegistered<LocalStorageService>()) {
+      return Get.find<LocalStorageService>();
+    }
+    return Get.put(LocalStorageService());
+  }
 
   late Box box;
 

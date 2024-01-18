@@ -9,11 +9,15 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/services/local_storage_service.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 
-class AppSettingsService extends GetxController {
-  static AppSettingsService get instance => Get.find<AppSettingsService>();
+class AppSettingsService extends GetxService {
+  static AppSettingsService get instance {
+    if (Get.isRegistered<AppSettingsService>()) {
+      return Get.find<AppSettingsService>();
+    }
+    return Get.put(AppSettingsService());
+  }
 
-  @override
-  void onInit() {
+  void init() async {
     AppSettings.themeMode.value =
         LocalStorageService.instance.getValue(LocalStorage.kThemeMode, 0);
     AppSettings.firstRun =
@@ -75,7 +79,6 @@ class AppSettingsService extends GetxController {
     //屏幕方向
     AppSettings.comicScreenDirection.value = LocalStorageService.instance
         .getValue(LocalStorage.kComicScreenDirection, 0);
-    super.onInit();
   }
 
   void changeTheme() {

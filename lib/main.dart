@@ -93,15 +93,16 @@ Future<void> initHive() async {
 }
 
 Future<void> initServices() async {
-  await Get.put(LocalStorageService()).init();
   await Get.put(DeviceInfoService()).init();
-  Get.put(OAuth2TokenService()).init();
   await Get.put(AppConfigService()).init();
+  Get.put(LocalStorageService())
+      .init()
+      .then((value) => Get.put(AppSettingsService()).init());
+  Get.put(OAuth2TokenService()).init();
   Get.put(UserService())
       .init()
       .then((value) => UserService.instance.refreshToken());
   Get.put(SearchService()).init();
-  Get.put(AppSettingsService());
   Get.put(ComicService()).init();
   Get.put(NovelService()).init();
   Get.put(ComicChapterService()).init();

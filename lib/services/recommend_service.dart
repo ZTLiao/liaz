@@ -6,8 +6,13 @@ import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/novel_service.dart';
 
-class RecommendService {
-  static RecommendService get instance => Get.find<RecommendService>();
+class RecommendService extends GetxService {
+  static RecommendService get instance {
+    if (Get.isRegistered<RecommendService>()) {
+      return Get.find<RecommendService>();
+    }
+    return Get.put(RecommendService());
+  }
 
   void onDetail(ItemModel item) {
     var skipType = item.skipType;

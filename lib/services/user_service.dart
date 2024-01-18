@@ -19,7 +19,13 @@ import 'package:liaz/services/oauth2_token_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 class UserService extends GetxService {
-  static UserService get instance => Get.find<UserService>();
+  static UserService get instance {
+    if (Get.isRegistered<UserService>()) {
+      return Get.find<UserService>();
+    }
+    return Get.put(UserService());
+  }
+
   Box<User>? box;
 
   final _oauth2TokenRequest = OAuth2TokenRequest();

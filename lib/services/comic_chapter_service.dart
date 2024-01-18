@@ -5,7 +5,13 @@ import 'package:liaz/models/db/comic_chapter.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ComicChapterService {
-  static ComicChapterService get instance => Get.find<ComicChapterService>();
+  static ComicChapterService get instance {
+    if (Get.isRegistered<ComicChapterService>()) {
+      return Get.find<ComicChapterService>();
+    }
+    return Get.put(ComicChapterService());
+  }
+
   late Box<ComicChapter> box;
 
   Future<void> init() async {

@@ -5,7 +5,13 @@ import 'package:liaz/models/db/oauth2_token.dart';
 import 'package:path_provider/path_provider.dart';
 
 class OAuth2TokenService extends GetxService {
-  static OAuth2TokenService get instance => Get.find<OAuth2TokenService>();
+  static OAuth2TokenService get instance {
+    if (Get.isRegistered<OAuth2TokenService>()) {
+      return Get.find<OAuth2TokenService>();
+    }
+    return Get.put(OAuth2TokenService());
+  }
+
   Box<OAuth2Token>? box;
 
   Future<void> init() async {

@@ -20,7 +20,12 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
 class NovelDownloadService extends DownloadService {
-  static NovelDownloadService get instance => Get.find<NovelDownloadService>();
+  static NovelDownloadService get instance {
+    if (Get.isRegistered<NovelDownloadService>()) {
+      return Get.find<NovelDownloadService>();
+    }
+    return Get.put(NovelDownloadService());
+  }
 
   @override
   Future<File?> getCached(String url) async {
