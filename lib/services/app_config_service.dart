@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/db.dart';
 import 'package:liaz/app/global/global.dart';
+import 'package:liaz/app/utils/decrypt_util.dart';
 import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/requests/app_request.dart';
 import 'package:liaz/requests/file_request.dart';
@@ -16,27 +17,47 @@ class AppConfigService extends GetxService {
 
   final _fileRequest = FileRequest();
 
+  final _appRequest = AppRequest();
+
   Future<void> init() async {
     var appDir = await getApplicationSupportDirectory();
     box = await Hive.openBox(
       Db.appConfig,
       path: appDir.path,
     );
-    var request = AppRequest();
     //初始化APP配置
-    var result = await request.clientInit();
-    if (result.app != null) {
-      Global.appConfig = result.app!;
-      put(Global.appConfig);
+    if (isExist()) {
+      _appRequest.clientInit().then((value) {
+        if (value.app != null) {
+          put(value.app!);
+        }
+      });
+    } else {
+      var result = await _appRequest.clientInit();
+      if (result.app != null) {
+        put(result.app!);
+      }
     }
   }
 
-  Future<void> put(AppConfig appConfig) async {
-    await box.put(AppString.appName, appConfig);
+  void put(AppConfig appConfig) {
+    initConfig(appConfig);
+    box.put(AppString.appName, appConfig);
   }
 
-  AppConfig? get() {
-    return box.values.firstOrNull;
+  bool isExist() {
+    var values = box.values;
+    var isExist = values.isNotEmpty;
+    if (isExist) {
+      initConfig(values.first);
+    }
+    return isExist;
+  }
+
+  void initConfig(AppConfig appConfig) {
+    Global.appConfig = appConfig;
+    Global.signKey = DecryptUtil.decryptKey(appConfig.signKey);
+    Global.publicKey = DecryptUtil.decryptKey(appConfig.publicKey);
   }
 
   Future<String> getObject(String path) async {

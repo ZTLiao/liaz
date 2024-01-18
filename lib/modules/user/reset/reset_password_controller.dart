@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/requests/verify_code_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
@@ -20,16 +21,19 @@ class ResetPasswordController extends GetxController {
   /// 是否等待验证
   RxBool isWaitVerify = RxBool(false);
 
-  RxInt countdown = RxInt(60);
+  RxInt countdown = RxInt(AppConstant.countdownTime);
 
   var verifyCodeRequest = VerifyCodeRequest();
 
   void sendVerifyCode() {
-    isWaitVerify.value = true;
-    decrement();
-    verifyCodeRequest
-        .sendVerifyCodeForEmail(email.text)
-        .then((value) => SmartDialog.showToast(AppString.sendSuccess));
+    if (email.text.isEmpty) {
+      return;
+    }
+    verifyCodeRequest.sendVerifyCodeForEmail(email.text).then((value) {
+      SmartDialog.showToast(AppString.sendSuccess);
+      isWaitVerify.value = true;
+      decrement();
+    });
   }
 
   void confirmVerifyCode() async {
@@ -49,7 +53,7 @@ class ResetPasswordController extends GetxController {
       });
     }
     isWaitVerify.value = false;
-    countdown.value = 60;
+    countdown.value = AppConstant.countdownTime;
   }
 
   void resetPassword() async {

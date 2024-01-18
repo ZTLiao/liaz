@@ -28,4 +28,6 @@ class AppConstant {
 
   static const String https = 'https';
   static const String http = 'http';
+
+  static const int countdownTime = 60;
 }
