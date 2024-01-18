@@ -96,6 +96,7 @@ class IndexRankView extends StatelessWidget {
               child: Expanded(
                 child: CardItemWidget(
                   card: card,
+                  onTap: controller.onDetail
                 ),
               ),
             );

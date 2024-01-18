@@ -162,7 +162,7 @@ class UserLoginPage extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerRight,
         child: TextButton(
-          onPressed: AppNavigator.toForgetPassword,
+          onPressed: AppNavigator.toResetPassword,
           child: Text(
             AppString.forgetPassword,
             style: TextStyle(

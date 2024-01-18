@@ -142,5 +142,7 @@ class AppString {
   static const pause = '暂停';
   static const start = '开始';
   static const startDownload = '已添加到下载列表，下载过程中请保持APP在前台运行';
-  static const reset = 'Reset';
+  static const resetEn = 'Reset';
+  static const sendVerifyCode = '发送验证码';
+  static const sendSuccess = '发送成功';
 }

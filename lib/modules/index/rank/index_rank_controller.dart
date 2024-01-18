@@ -8,6 +8,8 @@ import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/card_item_model.dart';
 import 'package:liaz/requests/rank_request.dart';
+import 'package:liaz/services/comic_service.dart';
+import 'package:liaz/services/novel_service.dart';
 
 class IndexRankController extends BasePageController<CardItemModel>
     with GetTickerProviderStateMixin {
@@ -55,5 +57,15 @@ class IndexRankController extends BasePageController<CardItemModel>
       list.add(card);
     }
     return list;
+  }
+
+  void onDetail(CardItemModel item) {
+    var cardId = item.cardId;
+    var cardType = item.cardType;
+    if (AssetTypeEnum.comic.index == cardType) {
+      ComicService.instance.toComicDetail(cardId);
+    } else if (AssetTypeEnum.novel.index == cardType) {
+      NovelService.instance.toNovelDetail(cardId);
+    }
   }
 }

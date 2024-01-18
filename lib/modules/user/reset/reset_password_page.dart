@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/modules/user/forget/forget_password_controller.dart';
+import 'package:liaz/modules/user/reset/reset_password_controller.dart';
 
-class ForgetPasswordPage extends StatelessWidget {
-  final ForgetPasswordController controller;
+class ResetPasswordPage extends StatelessWidget {
+  final ResetPasswordController controller;
 
-  ForgetPasswordPage({super.key})
-      : controller = Get.put(ForgetPasswordController());
+  ResetPasswordPage({super.key})
+      : controller = Get.put(ResetPasswordController());
 
   @override
   Widget build(BuildContext context) {
@@ -20,30 +20,89 @@ class ForgetPasswordPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: kToolbarHeight,
+          child: Obx(
+            () => Column(
+              children: [
+                const SizedBox(
+                  height: kToolbarHeight,
+                ),
+                buildTitle(),
+                buildTitleLine(),
+                const SizedBox(
+                  height: 60,
+                ),
+                buildEmailTextField(),
+                const SizedBox(
+                  height: 30,
+                ),
+                Visibility(
+                  visible: controller.isWaitVerify.value || controller.hasVerifyCode.value,
+                  child: buildVerifyCodeTextField(context),
+                ),
+                Visibility(
+                  visible: controller.hasVerifyCode.value,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      buildNewPasswordTextField(context),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 60,
+                ),
+                Obx(
+                  () => controller.hasVerifyCode.value
+                      ? buildConfirmButton(context)
+                      : buildVerifyCodeButton(context),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildVerifyCodeButton(BuildContext context) {
+    return Obx(
+      () => Align(
+        child: SizedBox(
+          height: 45,
+          width: 270,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              // 设置圆角
+              shape: MaterialStateProperty.all(
+                const StadiumBorder(
+                  side: BorderSide(
+                    style: BorderStyle.none,
+                  ),
+                ),
               ),
-              buildTitle(),
-              buildTitleLine(),
-              const SizedBox(
-                height: 60,
+              //背景颜色
+              backgroundColor: MaterialStateProperty.resolveWith(
+                (states) {
+                  if (states.contains(MaterialState.pressed)) {
+                    return Colors.black;
+                  }
+                  return Colors.cyan;
+                },
               ),
-              buildEmailTextField(),
-              const SizedBox(
-                height: 30,
+            ),
+            onPressed: controller.isWaitVerify.value
+                ? controller.confirmVerifyCode
+                : controller.sendVerifyCode,
+            child: Text(
+              controller.isWaitVerify.value
+                  ? '${AppString.confirm}（${controller.countdown.value}）'
+                  : AppString.sendVerifyCode,
+              style: const TextStyle(
+                color: Colors.white,
               ),
-              buildVerifyCodeTextField(context),
-              const SizedBox(
-                height: 30,
-              ),
-              buildNewPasswordTextField(context),
-              const SizedBox(
-                height: 60,
-              ),
-              buildConfirmButton(context),
-            ],
+            ),
           ),
         ),
       ),
@@ -173,7 +232,7 @@ class ForgetPasswordPage extends StatelessWidget {
       child: const Padding(
         padding: AppStyle.edgeInsetsA8,
         child: Text(
-          AppString.reset,
+          AppString.resetEn,
           style: TextStyle(
             fontSize: 42,
           ),

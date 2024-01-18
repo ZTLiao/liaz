@@ -23,7 +23,6 @@ class LocalDownloadController
   @override
   void onInit() {
     tabController = TabController(length: tabs.length, vsync: this);
-    onRefresh();
     super.onInit();
   }
 
@@ -102,7 +101,7 @@ class LocalDownloadController
     return data;
   }
 
-  void onChapter(ItemModel item) {
+  void onChapter(ItemModel item) async {
     var title = item.title;
     var objId = item.objId;
     var skipType = item.skipType;
@@ -112,7 +111,7 @@ class LocalDownloadController
     } else if (SkipTypeEnum.novel.index == skipType) {
       taskIds.addAll(NovelChapterService.instance.getTaskId(objId!));
     }
-    AppNavigator.toDownloadDetailPage(
+    await AppNavigator.toDownloadDetailPage(
       title,
       taskIds,
     );

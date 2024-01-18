@@ -25,11 +25,12 @@ class AppNavigator {
   }
 
   /// 跳转子路由页面
-  static void toContentPage(String name, {dynamic arg, bool replace = false}) {
+  static Future<T?>? toContentPage<T>(String name,
+      {dynamic arg, bool replace = false}) {
     if (currentRouteName == name || replace) {
-      Get.offAndToNamed(name, arguments: arg, id: kNavigatorID);
+      return Get.offAndToNamed(name, arguments: arg, id: kNavigatorID);
     } else {
-      Get.toNamed(name, arguments: arg, id: kNavigatorID);
+      return Get.toNamed(name, arguments: arg, id: kNavigatorID);
     }
   }
 
@@ -101,8 +102,8 @@ class AppNavigator {
     toContentPage(AppRoute.kUserRegister);
   }
 
-  static void toForgetPassword() {
-    toContentPage(AppRoute.kForgetPassword);
+  static void toResetPassword() {
+    toContentPage(AppRoute.kResetPassword);
   }
 
   static void closePage() {
@@ -135,8 +136,9 @@ class AppNavigator {
     toContentPage(AppRoute.kLocalDownload);
   }
 
-  static void toDownloadDetailPage(String title, List<String> taskIds) {
-    toContentPage(
+  static Future<dynamic>? toDownloadDetailPage(
+      String title, List<String> taskIds) {
+    return toContentPage(
       AppRoute.kDownloadDetail,
       arg: {
         'title': title,
