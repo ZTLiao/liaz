@@ -146,4 +146,8 @@ class AppNavigator {
       },
     );
   }
+
+  static void toUserDetail() {
+    toContentPage(AppRoute.kUserDetail);
+  }
 }

@@ -17,6 +17,7 @@ class IndexHomePage extends GetView<IndexHomeController> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: const TabBar(
             indicator: BoxDecoration(),
             tabs: [

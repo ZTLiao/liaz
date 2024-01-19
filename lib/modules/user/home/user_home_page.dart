@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/global/global.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/routes/app_navigator.dart';
-import 'package:liaz/services/user_service.dart';
 import 'package:liaz/widgets/toolbar/user_photo.dart';
 
 class UserHomePage extends GetView<UserHomeController> {
@@ -20,12 +20,13 @@ class UserHomePage extends GetView<UserHomeController> {
       appBar: AppBar(
         title: Container(
           alignment: Alignment.centerRight,
+          margin: AppStyle.edgeInsetsH8.copyWith(top: 12),
           child: IconButton(
+            onPressed: () {},
             icon: const Icon(
               Icons.settings,
               color: Colors.grey,
             ),
-            onPressed: () {},
           ),
         ),
       ),
@@ -44,27 +45,27 @@ class UserHomePage extends GetView<UserHomeController> {
                 children: [
                   Expanded(
                     child: Obx(
-                      () => ListTile(
-                        leading: UserPhoto(
-                          url: controller.user.value.avatar,
-                          size: 48,
-                        ),
-                        title: Text(
-                          controller.user.value.nickname.isNotEmpty
-                              ? controller.user.value.nickname
-                              : AppString.notLogin,
-                          style: const TextStyle(
-                            height: 3.0,
+                      () => Container(
+                        margin: AppStyle.edgeInsetsH12.copyWith(top: 12),
+                        child: ListTile(
+                          leading: UserPhoto(
+                            url: controller.user.value.avatar,
+                            size: 48,
                           ),
-                        ),
-                        trailing: const SizedBox(
-                          width: 50,
-                          child: Icon(
+                          title: Text(
+                            controller.user.value.nickname.isNotEmpty
+                                ? controller.user.value.nickname
+                                : AppString.notLogin,
+                            style: const TextStyle(
+                              height: 3.0,
+                            ),
+                          ),
+                          trailing: const Icon(
                             Icons.chevron_right,
                             color: Colors.grey,
                           ),
+                          onTap: controller.onUserDetail,
                         ),
-                        onTap: UserService.instance.check,
                       ),
                     ),
                   ),
@@ -74,7 +75,7 @@ class UserHomePage extends GetView<UserHomeController> {
                 context,
                 children: [
                   Visibility(
-                    visible: true,
+                    visible: Global.isUserLogin,
                     child: ListTile(
                       leading: const Icon(
                         Icons.work_history_outlined,
@@ -86,17 +87,6 @@ class UserHomePage extends GetView<UserHomeController> {
                       ),
                       onTap: () {},
                     ),
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.star_outline,
-                    ),
-                    title: const Text(AppString.localComic),
-                    trailing: const Icon(
-                      Icons.chevron_right,
-                      color: Colors.grey,
-                    ),
-                    onTap: () {},
                   ),
                   ListTile(
                     leading: const Icon(
@@ -136,11 +126,6 @@ class UserHomePage extends GetView<UserHomeController> {
                       AppNavigator.toLocalDownloadPage();
                     },
                   ),
-                ],
-              ),
-              _buildCard(
-                context,
-                children: [
                   ListTile(
                     leading: const Icon(
                       Icons.chat_outlined,

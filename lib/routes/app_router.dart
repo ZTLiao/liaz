@@ -20,6 +20,7 @@ import 'package:liaz/modules/novel/download/novel_download_page.dart';
 import 'package:liaz/modules/novel/reader/novel_reader_controller.dart';
 import 'package:liaz/modules/novel/reader/novel_reader_page.dart';
 import 'package:liaz/modules/search/home/search_home_page.dart';
+import 'package:liaz/modules/user/detail/user_detail_page.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/modules/user/login/user_login_page.dart';
 import 'package:liaz/modules/user/register/user_register_page.dart';
@@ -102,6 +103,10 @@ class AppRouter {
     GetPage(
       name: AppRoute.kResetPassword,
       page: () => ResetPasswordPage(),
+    ),
+    GetPage(
+      name: AppRoute.kUserDetail,
+      page: () => UserDetailPage(),
     ),
     GetPage(
       name: AppRoute.kComicDownload,
