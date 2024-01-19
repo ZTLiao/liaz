@@ -40,162 +40,18 @@ class NovelDetailPage extends GetView<NovelDetailController> {
       () => Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size(double.infinity, 220),
-          child: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  image: controller.detail.value.cover.isNotEmpty
-                      ? DecorationImage(
-                          image: NetworkImage(
-                            controller.detail.value.cover,
-                          ),
-                          fit: BoxFit.cover,
-                        )
-                      : null,
-                ),
-              ),
-              Center(
-                child: ClipRRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                    child: Opacity(
-                      opacity: 0.6,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Get.isDarkMode
-                              ? Colors.black45
-                              : Colors.grey.shade50,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              AppBar(
-                title: Text(
-                  controller.detail.value.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                actions: [
-                  IconButton(
-                    onPressed: controller.subscribe,
-                    icon: Obx(
-                      () => Icon(
-                        Icons.favorite,
-                        color: controller.isSubscribe.value ? Colors.red : null,
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: controller.share,
-                    icon: const Icon(Icons.share),
-                  ),
-                ],
-              ),
-              Container(
-                padding: AppStyle.edgeInsetsA8,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        NetImage(
-                          controller.detail.value.cover,
-                          width: 120,
-                          height: 160,
-                          borderRadius: 4,
-                        ),
-                      ],
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconItemWidget(
-                            children: [
-                              SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Text(
-                                  controller.detail.value.title,
-                                  maxLines: 1,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Icons.person,
-                            children: [
-                              Text(
-                                StrUtil.listToStr(
-                                    controller.detail.value.authors,
-                                    StrUtil.space),
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Icons.label,
-                            children: [
-                              Text(
-                                StrUtil.listToStr(
-                                    controller.detail.value.categories,
-                                    StrUtil.space),
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Icons.local_fire_department,
-                            children: [
-                              Text(
-                                '${AppString.popularNum} ${controller.detail.value.hitNum}',
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Icons.favorite,
-                            children: [
-                              Text(
-                                '${AppString.subscribeNum} ${controller.detail.value.subscribeNum}',
-                              ),
-                            ],
-                          ),
-                          IconItemWidget(
-                            iconData: Icons.schedule,
-                            children: [
-                              Text(
-                                '${DateUtil.formatDate(controller.detail.value.updated)} ${controller.detail.value.isSerializated ? AppString.serializated : AppString.finish}',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          child: _buildHeader(context),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: AppStyle.edgeInsetsH8,
-            child: Offstage(
-              offstage: controller.detail.value.novelId == 0,
+        body: Offstage(
+          offstage: controller.detail.value.novelId == 0,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: AppStyle.edgeInsetsH8,
               child: Column(
                 children: [
                   _buildDescription(context),
-                  _buildChapter(context),
-                  _buildRecommend(context),
+                  _buildChapter(),
+                  _buildRecommend(),
                 ],
               ),
             ),
@@ -222,6 +78,151 @@ class NovelDetailPage extends GetView<NovelDetailController> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            image: controller.detail.value.cover.isNotEmpty
+                ? DecorationImage(
+                    image: NetworkImage(
+                      controller.detail.value.cover,
+                    ),
+                    fit: BoxFit.cover,
+                  )
+                : null,
+          ),
+        ),
+        Center(
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Opacity(
+                opacity: 0.6,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color:
+                        Get.isDarkMode ? Colors.black45 : Colors.grey.shade50,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+        AppBar(
+          title: Text(
+            controller.detail.value.title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+            IconButton(
+              onPressed: controller.subscribe,
+              icon: Obx(
+                () => Icon(
+                  Icons.favorite,
+                  color: controller.isSubscribe.value ? Colors.red : null,
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: controller.share,
+              icon: const Icon(Icons.share),
+            ),
+          ],
+        ),
+        Container(
+          padding: AppStyle.edgeInsetsA8,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  NetImage(
+                    controller.detail.value.cover,
+                    width: 120,
+                    height: 160,
+                    borderRadius: 4,
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconItemWidget(
+                      children: [
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Text(
+                            controller.detail.value.title,
+                            maxLines: 1,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    IconItemWidget(
+                      iconData: Icons.person,
+                      children: [
+                        Text(
+                          StrUtil.listToStr(
+                              controller.detail.value.authors, StrUtil.space),
+                        ),
+                      ],
+                    ),
+                    IconItemWidget(
+                      iconData: Icons.label,
+                      children: [
+                        Text(
+                          StrUtil.listToStr(controller.detail.value.categories,
+                              StrUtil.space),
+                        ),
+                      ],
+                    ),
+                    IconItemWidget(
+                      iconData: Icons.local_fire_department,
+                      children: [
+                        Text(
+                          '${AppString.popularNum} ${controller.detail.value.hitNum}',
+                        ),
+                      ],
+                    ),
+                    IconItemWidget(
+                      iconData: Icons.favorite,
+                      children: [
+                        Text(
+                          '${AppString.subscribeNum} ${controller.detail.value.subscribeNum}',
+                        ),
+                      ],
+                    ),
+                    IconItemWidget(
+                      iconData: Icons.schedule,
+                      children: [
+                        Text(
+                          '${DateUtil.formatDate(controller.detail.value.updated)} ${controller.detail.value.isSerializated ? AppString.serializated : AppString.finish}',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -345,7 +346,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
     );
   }
 
-  Widget _buildChapter(BuildContext context) {
+  Widget _buildChapter() {
     var volumes = controller.detail.value.volumes;
     return Obx(
       () => Visibility(
@@ -355,7 +356,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
               .map((volume) => Column(
                     children: [
                       ExpansionTile(
-                        initiallyExpanded: true,
+                        initiallyExpanded: volumes.length == 1,
                         title: Text(
                           '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
                         ),
@@ -477,7 +478,7 @@ class NovelDetailPage extends GetView<NovelDetailController> {
     );
   }
 
-  Widget _buildRecommend(BuildContext context) {
+  Widget _buildRecommend() {
     return Obx(
       () => Visibility(
         visible: controller.isRelateRecommend.value,
