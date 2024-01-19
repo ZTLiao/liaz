@@ -133,6 +133,7 @@ class LiazApp extends StatelessWidget {
       home: hasSplash ? SplashScreenPage() : null,
       initialRoute: hasSplash ? null : AppRoute.kIndex,
       getPages: AppRouter.routes,
+      debugShowCheckedModeBanner: false,
       onUnknownRoute: (settings) => GetPageRoute(
         page: () => const EmptyPage(),
       ),
