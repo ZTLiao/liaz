@@ -187,16 +187,16 @@ class ComicDetailPage extends StatelessWidget {
             ],
           ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: AppStyle.edgeInsetsH8,
-            child: Offstage(
-              offstage: controller.detail.value.comicId == 0,
+        body: Offstage(
+          offstage: controller.detail.value.comicId == 0,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: AppStyle.edgeInsetsH8,
               child: Column(
                 children: [
                   _buildDescription(context),
-                  _buildChapter(context),
-                  _buildRecommend(context),
+                  _buildChapter(),
+                  _buildRecommend(),
                 ],
               ),
             ),
@@ -348,7 +348,7 @@ class ComicDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildChapter(BuildContext context) {
+  Widget _buildChapter() {
     return Obx(
       () => Visibility(
         visible: !controller.isRelateRecommend.value,
@@ -419,75 +419,65 @@ class ComicDetailPage extends StatelessWidget {
                                 if (item.isShowMoreButton &&
                                     !item.isShowAll.value &&
                                     i == 14) {
-                                  return Tooltip(
-                                    message: AppString.expandAll,
-                                    child: OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                        foregroundColor: item.chapters[i]
+                                  return OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor: item
+                                                  .chapters[i].comicChapterId ==
+                                              controller.browseChapterId.value
+                                          ? Colors.cyan
+                                          : Colors.grey,
+                                      backgroundColor: Colors.white,
+                                      textStyle: const TextStyle(fontSize: 14),
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      minimumSize: const Size.fromHeight(40),
+                                      side: BorderSide(
+                                        color: item.chapters[i]
                                                     .comicChapterId ==
                                                 controller.browseChapterId.value
                                             ? Colors.cyan
-                                            : Colors.grey,
-                                        backgroundColor: Colors.white,
-                                        textStyle:
-                                            const TextStyle(fontSize: 14),
-                                        tapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        minimumSize: const Size.fromHeight(40),
-                                        side: BorderSide(
-                                          color:
-                                              item.chapters[i].comicChapterId ==
-                                                      controller
-                                                          .browseChapterId.value
-                                                  ? Colors.cyan
-                                                  : Get.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.grey,
-                                        ),
+                                            : Get.isDarkMode
+                                                ? Colors.white
+                                                : Colors.grey,
                                       ),
-                                      onPressed: () {
-                                        item.isShowAll.value = true;
-                                      },
-                                      child: const Icon(Icons.arrow_drop_down),
                                     ),
+                                    onPressed: () {
+                                      item.isShowAll.value = true;
+                                    },
+                                    child: const Icon(Icons.arrow_drop_down),
                                   );
                                 }
-                                return Tooltip(
-                                  message: item.chapters[i].chapterName,
-                                  child: Obx(
-                                    () => OutlinedButton(
-                                      style: OutlinedButton.styleFrom(
-                                        foregroundColor: item.chapters[i]
+                                return Obx(
+                                  () => OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      foregroundColor: item
+                                                  .chapters[i].comicChapterId ==
+                                              controller.browseChapterId.value
+                                          ? Colors.cyan
+                                          : Colors.grey,
+                                      backgroundColor: Colors.white,
+                                      textStyle: const TextStyle(fontSize: 14),
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                      minimumSize: const Size.fromHeight(40),
+                                      side: BorderSide(
+                                        color: item.chapters[i]
                                                     .comicChapterId ==
                                                 controller.browseChapterId.value
                                             ? Colors.cyan
-                                            : Colors.grey,
-                                        backgroundColor: Colors.white,
-                                        textStyle:
-                                            const TextStyle(fontSize: 14),
-                                        tapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        minimumSize: const Size.fromHeight(40),
-                                        side: BorderSide(
-                                          color:
-                                              item.chapters[i].comicChapterId ==
-                                                      controller
-                                                          .browseChapterId.value
-                                                  ? Colors.cyan
-                                                  : Get.isDarkMode
-                                                      ? Colors.white
-                                                      : Colors.grey,
-                                        ),
+                                            : Get.isDarkMode
+                                                ? Colors.white
+                                                : Colors.grey,
                                       ),
-                                      onPressed: () {
-                                        controller
-                                            .onReadChapter(item.chapters[i]);
-                                      },
-                                      child: Text(
-                                        item.chapters[i].chapterName,
-                                        textAlign: TextAlign.center,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                    ),
+                                    onPressed: () {
+                                      controller
+                                          .onReadChapter(item.chapters[i]);
+                                    },
+                                    child: Text(
+                                      item.chapters[i].chapterName,
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 );
@@ -505,7 +495,7 @@ class ComicDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildRecommend(BuildContext context) {
+  Widget _buildRecommend() {
     return Obx(
       () => Visibility(
         visible: controller.isRelateRecommend.value,

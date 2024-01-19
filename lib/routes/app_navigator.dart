@@ -53,11 +53,11 @@ class AppNavigator {
     );
   }
 
-  static void toComicReader({
+  static Future<dynamic> toComicReader({
     required int comicChapterId,
     required List<ComicChapterModel> chapters,
   }) async {
-    toContentPage(AppRoute.kComicReader, arg: {
+    return toContentPage(AppRoute.kComicReader, arg: {
       'comicChapterId': comicChapterId,
       'chapters': chapters,
     });
@@ -136,8 +136,8 @@ class AppNavigator {
     toContentPage(AppRoute.kLocalDownload);
   }
 
-  static Future<dynamic>? toDownloadDetailPage(
-      String title, List<String> taskIds) {
+  static Future<dynamic> toDownloadDetailPage(
+      String title, List<String> taskIds) async {
     return toContentPage(
       AppRoute.kDownloadDetail,
       arg: {
