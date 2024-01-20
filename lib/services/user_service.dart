@@ -165,4 +165,8 @@ class UserService extends GetxService {
       SmartDialog.showToast(AppString.updateFail);
     });
   }
+
+  Future<void> signOut() async {
+    return await _userRequest.signOut();
+  }
 }

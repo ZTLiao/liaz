@@ -88,4 +88,8 @@ class UserRequest {
     }
     return user;
   }
+
+  Future<void> signOut() async {
+    return await Request.instance.post("/oauth/sign/out");
+  }
 }

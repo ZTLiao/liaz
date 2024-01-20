@@ -150,4 +150,13 @@ class AppNavigator {
   static void toUserDetail() {
     toContentPage(AppRoute.kUserDetail);
   }
+
+  static void toSettings(int index) {
+    toContentPage(
+      AppRoute.kSettings,
+      arg: {
+        'index': index,
+      },
+    );
+  }
 }

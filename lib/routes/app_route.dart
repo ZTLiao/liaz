@@ -8,6 +8,9 @@ class AppRoute {
   /// 搜索
   static const kSearch = '/search';
 
+  /// 设置
+  static const kSettings = '/settings';
+
   /// webView
   static const kWebView = '/web/view';
 
