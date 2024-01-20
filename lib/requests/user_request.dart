@@ -71,4 +71,21 @@ class UserRequest {
       'newPassword': newPassword,
     });
   }
+
+  Future<User> updateUser(int userId, String nickname, String phone,
+      String email, int gender, String description) async {
+    var user = User.empty();
+    var result = await Request.instance.post('/api/user/update', data: {
+      'userId': userId,
+      'nickname': nickname,
+      'phone': phone,
+      'email': email,
+      'gender': gender,
+      'description': description,
+    });
+    if (result is Map) {
+      user = User.fromJson(result as Map<String, dynamic>);
+    }
+    return user;
+  }
 }

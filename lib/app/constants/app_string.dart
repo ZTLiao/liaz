@@ -148,5 +148,17 @@ class AppString {
   static const verifyCodeFail = '验证码验证失败';
   static const resetPasswordForSuccess = '重置密码成功';
   static const resetPasswordForFail = '重置密码失败';
-  static const editUser = '编辑个人资料';
+  static const userDetail = '个人资料';
+  static const userAvatar = '头像';
+  static const ipAddress = 'IP属地';
+  static const phone = '手机号码';
+  static const gender = '性别';
+  static const description = '描述';
+  static const male = '男';
+  static const female = '女';
+  static const pleaseInputValidPhone = '请输入正确的手机号码';
+  static const pleaseInputValidEmail = '请输入正确的邮箱';
+  static const specialMine = '特别的你...';
+  static const updateSuccess = '修改成功';
+  static const updateFail = '修改失败';
 }

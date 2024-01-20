@@ -74,18 +74,20 @@ class UserHomePage extends GetView<UserHomeController> {
               _buildCard(
                 context,
                 children: [
-                  Visibility(
-                    visible: Global.isUserLogin,
-                    child: ListTile(
-                      leading: const Icon(
-                        Icons.work_history_outlined,
+                  Obx(
+                    () => Visibility(
+                      visible: controller.user.value.userId != 0,
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.work_history_outlined,
+                        ),
+                        title: const Text(AppString.browse),
+                        trailing: const Icon(
+                          Icons.chevron_right,
+                          color: Colors.grey,
+                        ),
+                        onTap: () {},
                       ),
-                      title: const Text(AppString.browse),
-                      trailing: const Icon(
-                        Icons.chevron_right,
-                        color: Colors.grey,
-                      ),
-                      onTap: () {},
                     ),
                   ),
                   ListTile(

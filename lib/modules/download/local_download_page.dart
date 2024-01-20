@@ -25,6 +25,7 @@ class LocalDownloadPage extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
+          centerTitle: true,
           title: TabBar(
             controller: controller.tabController,
             indicator: const BoxDecoration(),

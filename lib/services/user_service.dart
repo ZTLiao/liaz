@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:liaz/app/constants/app_event.dart';
+import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/db.dart';
 import 'package:liaz/app/enums/grant_type_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
@@ -69,7 +71,7 @@ class UserService extends GetxService {
     await init();
     var value = box!.values.firstOrNull;
     if (value != null) {
-      value.avatar = await AppConfigService.instance.getObject(value.avatar!);
+      value.avatar = await AppConfigService.instance.getObject(value.avatar);
     }
     return value;
   }
@@ -148,5 +150,19 @@ class UserService extends GetxService {
     if (!Global.isUserLogin) {
       AppNavigator.toUserLogin();
     }
+  }
+
+  void updateUser(int userId, String nickname, String phone, String email,
+      int gender, String description) {
+    _userRequest
+        .updateUser(userId, nickname, phone, email, gender, description)
+        .then((value) async {
+      if (value.userId != 0) {
+        put(value);
+      }
+      SmartDialog.showToast(AppString.updateSuccess);
+    }).onError((error, stackTrace) {
+      SmartDialog.showToast(AppString.updateFail);
+    });
   }
 }

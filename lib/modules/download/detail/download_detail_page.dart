@@ -13,10 +13,9 @@ class DownloadDetailPage extends GetView<DownloadDetailController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            controller.title,
-          ),
+        centerTitle: true,
+        title: Text(
+          controller.title,
         ),
       ),
       body: Padding(
