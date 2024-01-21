@@ -23,7 +23,7 @@ class AppConfigAdapter extends TypeAdapter<AppConfig> {
   @override
   void write(BinaryWriter writer, AppConfig obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.fileUrl)
       ..writeByte(1)
