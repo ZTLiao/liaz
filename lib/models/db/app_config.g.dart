@@ -16,6 +16,7 @@ class AppConfigAdapter extends TypeAdapter<AppConfig> {
       shareUrl: fields[2] as String,
       signKey: fields[3] as String,
       publicKey: fields[4] as String,
+      downloadApp: fields[5] as String,
     );
   }
 
@@ -32,7 +33,9 @@ class AppConfigAdapter extends TypeAdapter<AppConfig> {
       ..writeByte(3)
       ..write(obj.signKey)
       ..writeByte(4)
-      ..write(obj.publicKey);
+      ..write(obj.publicKey)
+      ..writeByte(5)
+      ..write(obj.downloadApp);
   }
 
   @override

@@ -1,4 +1,6 @@
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -41,5 +43,14 @@ class UserHomeController extends GetxController {
     } else {
       UserService.instance.check();
     }
+  }
+
+  void shareApp() {
+    var downloadApp = Global.appConfig.downloadApp;
+    if (downloadApp.isEmpty) {
+      SmartDialog.showToast(AppString.notYetOpen);
+      return;
+    }
+    AppNavigator.toWebView(downloadApp);
   }
 }

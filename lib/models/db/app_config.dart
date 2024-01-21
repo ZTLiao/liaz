@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
-import 'package:liaz/app/utils/convert_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 
 part 'app_config.g.dart';
@@ -18,6 +17,8 @@ class AppConfig {
   String signKey;
   @HiveField(4)
   String publicKey;
+  @HiveField(5)
+  String downloadApp;
 
   AppConfig({
     this.fileUrl = StrUtil.empty,
@@ -25,6 +26,7 @@ class AppConfig {
     this.shareUrl = StrUtil.empty,
     this.signKey = StrUtil.empty,
     this.publicKey = StrUtil.empty,
+    this.downloadApp = StrUtil.empty,
   });
 
   factory AppConfig.fromJson(Map<String, dynamic> json) {
@@ -33,12 +35,14 @@ class AppConfig {
     var shareUrl = json['shareUrl'] ?? StrUtil.empty;
     var signKey = json['signKey'] ?? StrUtil.empty;
     var publicKey = json['publicKey'] ?? StrUtil.empty;
+    var downloadApp = json['downloadApp'] ?? StrUtil.empty;
     return AppConfig(
       fileUrl: fileUrl,
       resourceAuthority: resourceAuthority,
       shareUrl: shareUrl,
       signKey: signKey,
       publicKey: publicKey,
+      downloadApp: downloadApp,
     );
   }
 
@@ -48,6 +52,7 @@ class AppConfig {
         'shareUrl': shareUrl,
         'signKey': signKey,
         'publicKey': publicKey,
+        'downloadApp': downloadApp,
       };
 
   @override

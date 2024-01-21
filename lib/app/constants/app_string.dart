@@ -187,4 +187,5 @@ class AppString {
   static const messageBoardWelcome = '留言板';
   static const messageBoardRemark = '有什么想说的，亲！什么都可以写哦...';
   static const thankYou = '感谢您的宝贵建议！';
+  static const notYetOpen = '暂未开放';
 }
