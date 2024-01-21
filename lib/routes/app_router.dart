@@ -17,6 +17,8 @@ import 'package:liaz/modules/download/local_download_page.dart';
 import 'package:liaz/modules/index/home/index_home_controller.dart';
 import 'package:liaz/modules/index/index_controller.dart';
 import 'package:liaz/modules/index/index_page.dart';
+import 'package:liaz/modules/message/message_board_controller.dart';
+import 'package:liaz/modules/message/message_board_page.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_page.dart';
 import 'package:liaz/modules/novel/download/novel_download_page.dart';
 import 'package:liaz/modules/novel/reader/novel_reader_controller.dart';
@@ -170,6 +172,13 @@ class AppRouter {
       page: () => const BrowseHistoryPage(),
       binding: BindingsBuilder.put(
         () => BrowseHistoryController(),
+      ),
+    ),
+    GetPage(
+      name: AppRoute.kMessageBoard,
+      page: () => const MessageBoardPage(),
+      binding: BindingsBuilder.put(
+        () => MessageBoardController(),
       ),
     ),
   ];

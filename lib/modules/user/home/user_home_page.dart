@@ -100,16 +100,16 @@ class UserHomePage extends GetView<UserHomeController> {
                     ),
                     onTap: AppNavigator.toLocalDownloadPage,
                   ),
-                  ListTile(
-                    leading: const Icon(
+                  const ListTile(
+                    leading: Icon(
                       Icons.chat_outlined,
                     ),
-                    title: const Text(AppString.messageBoard),
-                    trailing: const Icon(
+                    title: Text(AppString.messageBoard),
+                    trailing: Icon(
                       Icons.chevron_right,
                       color: Colors.grey,
                     ),
-                    onTap: () {},
+                    onTap: AppNavigator.toMessageBoard,
                   ),
                   ListTile(
                     leading: const Icon(

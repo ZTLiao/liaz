@@ -67,4 +67,7 @@ class AppRoute {
 
   /// 浏览记录
   static const kBrowseHistory = '/browse/history';
+
+  /// 留言板块
+  static const kMessageBoard = '/message/board';
 }

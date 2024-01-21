@@ -177,4 +177,8 @@ class AppNavigator {
   static void toBrowseHistory() {
     toContentPage(AppRoute.kBrowseHistory);
   }
+
+  static void toMessageBoard() {
+    toContentPage(AppRoute.kMessageBoard);
+  }
 }

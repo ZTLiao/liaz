@@ -184,4 +184,7 @@ class AppString {
   static const passwordAndConfirmPasswordNoSameError = '密码与确认密码不一致';
   static const setSuccess = '设置成功';
   static const logoutAccount = '退出当前账号';
+  static const messageBoardWelcome = '留言板';
+  static const messageBoardRemark = '有什么想说的，亲！什么都可以写哦...';
+  static const thankYou = '感谢您的宝贵建议！';
 }
