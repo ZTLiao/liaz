@@ -34,7 +34,7 @@ class UserRegisterController extends GetxController {
   /// 是否显示明文
   RxBool isShowPassword = RxBool(true);
 
-  var uploadRequest = FileRequest();
+  var fileRequest = FileRequest();
 
   var userRequest = UserRequest();
 
@@ -45,7 +45,7 @@ class UserRegisterController extends GetxController {
       image.value = File(pickedFile.path);
       if (image.value != null) {
         avatar.value =
-            await uploadRequest.upload(BucketConstant.avatar, image.value!);
+            await fileRequest.upload(BucketConstant.avatar, image.value!);
       }
     }
   }

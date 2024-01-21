@@ -351,24 +351,20 @@ class ComicReaderController extends BaseController {
       context: Get.context!,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(12),
-          topRight: Radius.circular(12),
+          topLeft: Radius.circular(0),
+          topRight: Radius.circular(0),
         ),
       ),
       constraints: const BoxConstraints(
         maxWidth: 500,
       ),
-      backgroundColor: AppStyle.darkTheme.scaffoldBackgroundColor,
+      backgroundColor: AppStyle.darkTheme.scaffoldBackgroundColor.withOpacity(0.7),
       builder: (context) => Theme(
         data: AppStyle.darkTheme,
         child: Column(
           children: [
             ListTile(
               title: Text('${AppString.catalogue}(${chapters.length})'),
-              trailing: IconButton(
-                onPressed: Get.back,
-                icon: const Icon(Icons.close),
-              ),
               contentPadding: AppStyle.edgeInsetsL12,
             ),
             Divider(

@@ -71,11 +71,12 @@ class UserRequest {
     });
   }
 
-  Future<User> updateUser(int userId, String nickname, String phone,
-      String email, int gender, String description) async {
+  Future<User> updateUser(int userId, String avatar, String nickname,
+      String phone, String email, int gender, String description) async {
     var user = User.empty();
     var result = await Request.instance.post('/api/user/update', data: {
       'userId': userId,
+      'avatar': avatar,
       'nickname': nickname,
       'phone': phone,
       'email': email,

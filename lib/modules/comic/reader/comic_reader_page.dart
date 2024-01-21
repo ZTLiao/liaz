@@ -161,7 +161,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                   right: 0,
                   duration: const Duration(milliseconds: 100),
                   child: Container(
-                    color: AppStyle.darkTheme.cardColor,
+                    color: AppStyle.darkTheme.cardColor.withOpacity(0.7),
                     height: 48 + AppStyle.statusBarHeight,
                     padding: EdgeInsets.only(top: AppStyle.statusBarHeight),
                     child: Row(
@@ -218,7 +218,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                   right: 0,
                   duration: const Duration(milliseconds: 100),
                   child: Container(
-                    color: AppStyle.darkTheme.cardColor,
+                    color: AppStyle.darkTheme.cardColor.withOpacity(0.7),
                     height: 104 + AppStyle.bottomBarHeight,
                     padding: EdgeInsets.only(bottom: AppStyle.bottomBarHeight),
                     alignment: Alignment.center,
@@ -230,7 +230,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                         children: [
                           buildSilderBar(),
                           Material(
-                            color: AppStyle.darkTheme.cardColor,
+                            color: AppStyle.darkTheme.cardColor.withOpacity(0),
                             child: Row(
                               children: [
                                 Expanded(

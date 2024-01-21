@@ -37,9 +37,10 @@ class UserHomeController extends GetxController {
     });
   }
 
-  void onUserDetail() {
+  void onUserDetail() async {
     if (Global.isUserLogin) {
-      AppNavigator.toUserDetail();
+      await AppNavigator.toUserDetail();
+      updateUser();
     } else {
       UserService.instance.check();
     }

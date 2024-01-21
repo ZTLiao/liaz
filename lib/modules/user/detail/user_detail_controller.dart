@@ -1,14 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:liaz/app/constants/app_string.dart';
+import 'package:liaz/app/constants/bucket_constant.dart';
 import 'package:liaz/app/enums/gender_enum.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/user.dart';
+import 'package:liaz/requests/file_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class UserDetailController extends GetxController {
   Rx<User> user = Rx<User>(User.empty());
+
+  RxString originAvatar = RxString(StrUtil.empty);
+
+  RxString avatar = RxString(StrUtil.empty);
 
   RxString nickname = RxString(StrUtil.empty);
 
@@ -28,26 +38,38 @@ class UserDetailController extends GetxController {
 
   TextEditingController descriptionController = TextEditingController();
 
+  var fileRequest = FileRequest();
+
   UserDetailController() {
     UserService.instance.get().then((value) {
       if (value != null) {
         user.value = User.fromJson(value.toJson());
-        nicknameController.text = value.nickname;
-        nickname.value = value.nickname;
-        phoneController.text = value.phone;
-        phone.value = value.phone;
-        emailController.text = value.email;
-        email.value = value.email;
-        gender.value = value.gender;
-        descriptionController.text = value.description;
-        description.value = value.description;
+        UserService.instance
+            .getAvatar()
+            .then((value) => originAvatar.value = value);
+        avatar.value = user.value.avatar;
+        nicknameController.text = user.value.nickname;
+        nickname.value = user.value.nickname;
+        phoneController.text = user.value.phone;
+        phone.value = user.value.phone;
+        emailController.text = user.value.email;
+        email.value = user.value.email;
+        gender.value = user.value.gender;
+        descriptionController.text = user.value.description;
+        description.value = user.value.description;
       }
     });
   }
 
   void saveUser() {
-    UserService.instance.updateUser(user.value.userId, nickname.value,
-        phone.value, email.value, gender.value, description.value);
+    UserService.instance.updateUser(
+        user.value.userId,
+        originAvatar.value,
+        nickname.value,
+        phone.value,
+        email.value,
+        gender.value,
+        description.value);
   }
 
   void editNickname() {
@@ -200,5 +222,16 @@ class UserDetailController extends GetxController {
         ),
       ),
     );
+  }
+
+  void setAvatar() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      originAvatar.value = await fileRequest.upload(
+          BucketConstant.avatar, File(pickedFile.path));
+      avatar.value =
+          await AppConfigService.instance.getObject(originAvatar.value);
+    }
   }
 }

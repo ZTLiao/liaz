@@ -11,6 +11,7 @@ import 'package:liaz/app/enums/grant_type_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/requests/comic_subscribe_request.dart';
 import 'package:liaz/requests/novel_subscribe_request.dart';
@@ -74,6 +75,14 @@ class UserService extends GetxService {
       value.avatar = await AppConfigService.instance.getObject(value.avatar);
     }
     return value;
+  }
+
+  Future<String> getAvatar() async {
+    var value = box!.values.firstOrNull;
+    if (value != null) {
+      return value.avatar;
+    }
+    return StrUtil.empty;
   }
 
   Future<User?> getUser(userId) async {
@@ -152,10 +161,10 @@ class UserService extends GetxService {
     }
   }
 
-  void updateUser(int userId, String nickname, String phone, String email,
-      int gender, String description) {
+  void updateUser(int userId, String avatar, String nickname, String phone,
+      String email, int gender, String description) {
     _userRequest
-        .updateUser(userId, nickname, phone, email, gender, description)
+        .updateUser(userId, avatar, nickname, phone, email, gender, description)
         .then((value) async {
       if (value.userId != 0) {
         put(value);

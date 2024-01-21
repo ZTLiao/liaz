@@ -150,8 +150,8 @@ class AppNavigator {
     );
   }
 
-  static void toUserDetail() {
-    toContentPage(AppRoute.kUserDetail);
+  static Future<dynamic> toUserDetail() async {
+    return toContentPage(AppRoute.kUserDetail);
   }
 
   static void toSettings() {

@@ -129,7 +129,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                     right: 0,
                     duration: const Duration(milliseconds: 100),
                     child: Container(
-                      color: AppStyle.darkTheme.cardColor,
+                      color: AppStyle.darkTheme.cardColor.withOpacity(0.7),
                       height: 48 + AppStyle.statusBarHeight,
                       padding: EdgeInsets.only(top: AppStyle.statusBarHeight),
                       child: Row(
@@ -184,7 +184,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                     right: 0,
                     duration: const Duration(milliseconds: 100),
                     child: Container(
-                      color: AppStyle.darkTheme.cardColor,
+                      color: AppStyle.darkTheme.cardColor.withOpacity(0.7),
                       height: 104 + AppStyle.bottomBarHeight,
                       padding:
                           EdgeInsets.only(bottom: AppStyle.bottomBarHeight),
@@ -197,7 +197,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                           children: [
                             buildSilderBar(),
                             Material(
-                              color: AppStyle.darkTheme.cardColor,
+                              color: AppStyle.darkTheme.cardColor.withOpacity(0),
                               child: Row(
                                 children: [
                                   Expanded(

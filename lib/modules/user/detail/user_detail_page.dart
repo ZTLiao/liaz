@@ -27,8 +27,9 @@ class UserDetailPage extends StatelessWidget {
                 leading:
                     const Text('${AppString.userAvatar}${StrUtil.semicolon}'),
                 trailing: UserPhoto(
-                  url: controller.user.value.avatar,
+                  url: controller.avatar.value,
                 ),
+                onTap: controller.setAvatar,
               ),
               ListTile(
                 leading:
