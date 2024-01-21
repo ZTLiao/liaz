@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/error/app_error.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -24,6 +25,7 @@ import 'package:liaz/models/db/task.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/common/splash/splash_screen_page.dart';
+import 'package:liaz/requests/crash_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/routes/app_router.dart';
@@ -51,14 +53,17 @@ void main() {
     Zone.current
         .handleUncaughtError(details.exception, (details.stack as StackTrace));
   };
+  var crashRequest = CrashRequest();
   runZonedGuarded(() async {
     //初始化
     await init();
     runApp(const LiazApp());
-  }, (error, stack) {
-    Log.e(error.toString(), stack);
+  }, (error, stackTrace) {
+    Log.e(error.toString(), stackTrace);
     //全局异常捕获
-    Log.logPrint(stack);
+    Log.logPrint(stackTrace);
+    //上报崩溃日志
+    crashRequest.report(error.toString(), stackTrace);
   });
 }
 
