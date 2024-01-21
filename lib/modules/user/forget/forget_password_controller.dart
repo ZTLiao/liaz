@@ -7,7 +7,7 @@ import 'package:liaz/requests/verify_code_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/user_service.dart';
 
-class ResetPasswordController extends GetxController {
+class ForgetPasswordController extends GetxController {
   TextEditingController email = TextEditingController();
   TextEditingController verifyCode = TextEditingController();
   TextEditingController newPassword = TextEditingController();

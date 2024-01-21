@@ -35,6 +35,14 @@ class UserLoginController extends GetxController {
     if (password.text.isEmpty) {
       return;
     }
+    if (password.text.isNotEmpty && password.text.length < 6) {
+      SmartDialog.showToast(AppString.passwordShortError);
+      return;
+    }
+    if (!RegExp(r'[a-zA-Z0-9_-]{4,16}').hasMatch(username.text)) {
+      SmartDialog.showToast(AppString.usernameInvalidError);
+      return;
+    }
     var isLogin =
         await UserService.instance.signIn(username.text, password.text);
     if (isLogin) {

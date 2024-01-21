@@ -122,7 +122,7 @@ abstract class DownloadService extends GetxService {
         continue;
       }
     }
-    var taskNum = AppSettings.downloadComicTaskCount.value;
+    var taskNum = AppSettings.downloadTaskCount.value;
     var count = TaskService.instance.taskQueues
         .where((x) =>
             x.status == DownloadStatusEnum.downloading.index ||

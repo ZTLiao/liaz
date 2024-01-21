@@ -47,11 +47,8 @@ class LocalStorage {
   /// 下载是否允许使用流量
   static const String kDownloadAllowCellular = "DownloadAllowCellular";
 
-  /// 下载小说最大任务数
-  static const String kDownloadNovelTaskCount = "DownloadNovelTaskCount";
-
-  /// 下载漫画最大任务数
-  static const String kDownloadComicTaskCount = "DownloadComicTaskCount";
+  /// 下载最大任务数
+  static const String kDownloadTaskCount = "DownloadTaskCount";
 
   /// 显示字体大小跟随系统
   static const String kUseSystemFontSize = "UseSystemFontSize";

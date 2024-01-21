@@ -42,6 +42,9 @@ class AppStyle {
   static const vGap32 = SizedBox(
     height: 32,
   );
+  static const vGap60 = SizedBox(
+    height: 60,
+  );
 
   static const hGap4 = SizedBox(
     width: 4,

@@ -20,12 +20,16 @@ import 'package:liaz/modules/novel/download/novel_download_page.dart';
 import 'package:liaz/modules/novel/reader/novel_reader_controller.dart';
 import 'package:liaz/modules/novel/reader/novel_reader_page.dart';
 import 'package:liaz/modules/search/home/search_home_page.dart';
+import 'package:liaz/modules/settings/comic/comic_settings_page.dart';
+import 'package:liaz/modules/settings/general/general_settings_page.dart';
+import 'package:liaz/modules/settings/novel/novel_settings_page.dart';
 import 'package:liaz/modules/settings/settings_page.dart';
 import 'package:liaz/modules/user/detail/user_detail_page.dart';
 import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/modules/user/login/user_login_page.dart';
 import 'package:liaz/modules/user/register/user_register_page.dart';
-import 'package:liaz/modules/user/reset/reset_password_page.dart';
+import 'package:liaz/modules/user/forget/forget_password_page.dart';
+import 'package:liaz/modules/user/set/set_password_page.dart';
 import 'package:liaz/routes/app_route.dart';
 
 class AppRouter {
@@ -53,9 +57,19 @@ class AppRouter {
     ),
     GetPage(
       name: AppRoute.kSettings,
-      page: () => SettingsPage(
-        index: Get.arguments['index'],
-      ),
+      page: () => SettingsPage(),
+    ),
+    GetPage(
+      name: AppRoute.kGeneralSettings,
+      page: () => GeneralSettingsPage(),
+    ),
+    GetPage(
+      name: AppRoute.kComicSettings,
+      page: () => const ComicSettingsPage(),
+    ),
+    GetPage(
+      name: AppRoute.kNovelSettings,
+      page: () => const NovelSettingsPage(),
     ),
     GetPage(
       name: AppRoute.kComicReader,
@@ -108,8 +122,12 @@ class AppRouter {
       page: () => UserRegisterPage(),
     ),
     GetPage(
-      name: AppRoute.kResetPassword,
-      page: () => ResetPasswordPage(),
+      name: AppRoute.kForgetPassword,
+      page: () => ForgetPasswordPage(),
+    ),
+    GetPage(
+      name: AppRoute.kSetPassword,
+      page: () => SetPasswordPage(),
     ),
     GetPage(
       name: AppRoute.kUserDetail,

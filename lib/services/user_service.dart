@@ -86,7 +86,7 @@ class UserService extends GetxService {
     return user;
   }
 
-  void clear() async {
+  Future<void> clear() async {
     var keys = box!.values.toList().map((e) => e.userId).toList();
     if (keys.isNotEmpty) {
       box!.deleteAll(keys);
@@ -167,6 +167,20 @@ class UserService extends GetxService {
   }
 
   Future<void> signOut() async {
-    return await _userRequest.signOut();
+    await _userRequest.signOut();
+    Global.isUserLogin = false;
+    await clear();
+    await OAuth2TokenService.instance.clear();
+    EventBus.instance.publish(AppEvent.kUserLogoutTopic);
+    AppNavigator.toUserLogin(
+      replace: true,
+    );
+  }
+
+  Future<bool> setPassword(String password) async {
+    var encryptPassword = md5.convert(utf8.encode(password)).toString();
+    Log.i('password : $password, encryptPassword : $encryptPassword');
+    await _userRequest.setPassword(encryptPassword);
+    return true;
   }
 }

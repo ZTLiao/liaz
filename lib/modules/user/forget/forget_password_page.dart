@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/modules/user/reset/reset_password_controller.dart';
+import 'package:liaz/modules/user/forget/forget_password_controller.dart';
 
-class ResetPasswordPage extends StatelessWidget {
-  final ResetPasswordController controller;
+class ForgetPasswordPage extends StatelessWidget {
+  final ForgetPasswordController controller;
 
-  ResetPasswordPage({super.key})
-      : controller = Get.put(ResetPasswordController());
+  ForgetPasswordPage({super.key})
+      : controller = Get.put(ForgetPasswordController());
 
   @override
   Widget build(BuildContext context) {

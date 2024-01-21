@@ -3,6 +3,8 @@ class AppEvent {
 
   static const String kUserLoginTopic = 'userLoginTopic';
 
+  static const String kUserLogoutTopic = 'userLogoutTopic';
+
   static const String kUploadComicHistoryTopic = 'uploadComicHistoryTopic';
 
   static const String kUploadNovelHistoryTopic = 'uploadNovelHistoryTopic';

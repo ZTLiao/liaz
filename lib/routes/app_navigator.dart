@@ -94,16 +94,19 @@ class AppNavigator {
     }
   }
 
-  static void toUserLogin() {
-    toContentPage(AppRoute.kUserLogin);
+  static void toUserLogin({bool replace = false}) {
+    toContentPage(
+      AppRoute.kUserLogin,
+      replace: replace,
+    );
   }
 
   static void toUserRegister() {
     toContentPage(AppRoute.kUserRegister);
   }
 
-  static void toResetPassword() {
-    toContentPage(AppRoute.kResetPassword);
+  static void toForgetPassword() {
+    toContentPage(AppRoute.kForgetPassword);
   }
 
   static void closePage() {
@@ -151,12 +154,23 @@ class AppNavigator {
     toContentPage(AppRoute.kUserDetail);
   }
 
-  static void toSettings(int index) {
-    toContentPage(
-      AppRoute.kSettings,
-      arg: {
-        'index': index,
-      },
-    );
+  static void toSettings() {
+    toContentPage(AppRoute.kSettings);
+  }
+
+  static void toGeneralSettings() {
+    toContentPage(AppRoute.kGeneralSettings);
+  }
+
+  static void toComicSettings() {
+    toContentPage(AppRoute.kComicSettings);
+  }
+
+  static void toNovelSettings() {
+    toContentPage(AppRoute.kNovelSettings);
+  }
+
+  static void toSetPassword() {
+    toContentPage(AppRoute.kSetPassword);
   }
 }

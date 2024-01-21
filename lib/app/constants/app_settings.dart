@@ -19,12 +19,6 @@ class AppSettings {
   /// 漫画阅读显示状态信息
   static final RxBool comicReaderShowStatus = RxBool(true);
 
-  /// 漫画阅读尾页显示观点/吐槽
-  static final RxBool comicReaderShowViewPoint = RxBool(true);
-
-  /// 启用旧板吐槽
-  static final RxBool comicReaderOldViewPoint = RxBool(false);
-
   /// 小说阅读方向
   /// * [0] 左右
   /// * [1] 上下
@@ -49,23 +43,14 @@ class AppSettings {
   /// 下载是否允许使用流量
   static final RxBool downloadAllowCellular = RxBool(true);
 
-  /// 下载漫画最大任务数
-  static final RxInt downloadComicTaskCount = RxInt(5);
-
-  /// 下载漫画最大任务数
-  static final RxInt downloadNovelTaskCount = RxInt(5);
-
-  /// 显示字体大小跟随系统
-  static final RxBool useSystemFontSize = RxBool(false);
+  /// 下载最大任务数
+  static final RxInt downloadTaskCount = RxInt(5);
 
   /// 漫画阅读左手模式
   static final RxBool comicReaderLeftHandMode = RxBool(false);
 
   /// 小说阅读左手模式
   static final RxBool novelReaderLeftHandMode = RxBool(false);
-
-  /// 漫画阅读优先加载高清图
-  static final RxBool comicReaderHD = RxBool(false);
 
   /// 漫画阅读翻页动画
   static final RxBool comicReaderPageAnimation = RxBool(true);

@@ -35,16 +35,10 @@ class AppSettingsService extends GetxService {
         .getValue(LocalStorage.kComicReaderShowStatus, true);
     AppSettings.comicReaderShowStatus.value = LocalStorageService.instance
         .getValue(LocalStorage.kComicReaderShowStatus, true);
-    AppSettings.comicReaderShowViewPoint.value = LocalStorageService.instance
-        .getValue(LocalStorage.kComicReaderShowViewPoint, true);
     AppSettings.comicReaderLeftHandMode.value = LocalStorageService.instance
         .getValue(LocalStorage.kComicReaderLeftHandMode, false);
-    AppSettings.comicReaderHD.value = LocalStorageService.instance
-        .getValue(LocalStorage.kComicReaderHD, false);
     AppSettings.comicReaderPageAnimation.value = LocalStorageService.instance
         .getValue(LocalStorage.kComicReaderPageAnimation, true);
-    AppSettings.comicReaderOldViewPoint.value = LocalStorageService.instance
-        .getValue(LocalStorage.kComicReaderOldViewPoint, false);
     //小说
     AppSettings.novelReaderDirection.value = LocalStorageService.instance
         .getValue(LocalStorage.kNovelReaderDirection, 0);
@@ -65,13 +59,8 @@ class AppSettingsService extends GetxService {
     //下载
     AppSettings.downloadAllowCellular.value = LocalStorageService.instance
         .getValue(LocalStorage.kDownloadAllowCellular, true);
-    AppSettings.downloadComicTaskCount.value = LocalStorageService.instance
-        .getValue(LocalStorage.kDownloadComicTaskCount, 5);
-    AppSettings.downloadNovelTaskCount.value = LocalStorageService.instance
-        .getValue(LocalStorage.kDownloadNovelTaskCount, 5);
-    //字体大小
-    AppSettings.useSystemFontSize.value = LocalStorageService.instance
-        .getValue(LocalStorage.kUseSystemFontSize, false);
+    AppSettings.downloadTaskCount.value = LocalStorageService.instance
+        .getValue(LocalStorage.kDownloadTaskCount, 5);
     //屏幕亮度
     AppSettings.screenBrightness.value = LocalStorageService.instance
         .getValue(LocalStorage.kScreenBrightness, 0.5);
@@ -146,18 +135,6 @@ class AppSettingsService extends GetxService {
         .setValue(LocalStorage.kComicReaderShowStatus, value);
   }
 
-  void setComicReaderShowViewPoint(bool value) {
-    AppSettings.comicReaderShowViewPoint.value = value;
-    LocalStorageService.instance
-        .setValue(LocalStorage.kComicReaderShowViewPoint, value);
-  }
-
-  void setComicReaderOldViewPoint(bool value) {
-    AppSettings.comicReaderOldViewPoint.value = value;
-    LocalStorageService.instance
-        .setValue(LocalStorage.kComicReaderOldViewPoint, value);
-  }
-
   void setNovelReaderDirection(int direction) {
     if (AppSettings.novelReaderDirection.value == direction) {
       return;
@@ -217,20 +194,9 @@ class AppSettingsService extends GetxService {
   }
 
   void setDownloadComicTaskCount(int task) {
-    AppSettings.downloadComicTaskCount.value = task;
+    AppSettings.downloadTaskCount.value = task;
     LocalStorageService.instance
-        .setValue(LocalStorage.kDownloadComicTaskCount, task);
-  }
-
-  void setDownloadNovelTaskCount(int task) {
-    AppSettings.downloadNovelTaskCount.value = task;
-    LocalStorageService.instance
-        .setValue(LocalStorage.kDownloadNovelTaskCount, task);
-  }
-
-  void setUseSystemFontSize(bool e) {
-    AppSettings.useSystemFontSize.value = e;
-    LocalStorageService.instance.setValue(LocalStorage.kUseSystemFontSize, e);
+        .setValue(LocalStorage.kDownloadTaskCount, task);
   }
 
   void setComicReaderLeftHandMode(bool value) {
@@ -243,11 +209,6 @@ class AppSettingsService extends GetxService {
     AppSettings.novelReaderLeftHandMode.value = value;
     LocalStorageService.instance
         .setValue(LocalStorage.kNovelReaderLeftHandMode, value);
-  }
-
-  void setComicReaderHD(bool value) {
-    AppSettings.comicReaderHD.value = value;
-    LocalStorageService.instance.setValue(LocalStorage.kComicReaderHD, value);
   }
 
   void setComicReaderPageAnimation(bool value) {

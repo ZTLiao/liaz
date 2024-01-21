@@ -1,14 +1,18 @@
 import 'package:get/get.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/routes/app_navigator.dart';
-import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class UserHomeController extends GetxController {
   /// 用户信息
   Rx<User> user = Rx<User>(User.empty());
+
+  RxString avatar = RxString(StrUtil.empty);
+
+  RxString nickname = RxString(StrUtil.empty);
 
   @override
   void onInit() {
@@ -17,12 +21,17 @@ class UserHomeController extends GetxController {
   }
 
   void updateUser() async {
+    user.value = User.empty();
+    avatar.value = StrUtil.empty;
+    nickname.value = StrUtil.empty;
     UserService.instance.get().then((value) async {
       if (value != null) {
         Global.isUserLogin = true;
         user.value = value;
+        avatar.value = value.avatar;
+        nickname.value = value.nickname;
       }
-      Log.i("avatar : ${user.value.avatar}");
+      Log.i("avatar : ${avatar.value},  nickname : ${nickname.value}");
     });
   }
 

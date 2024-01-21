@@ -10,6 +10,7 @@ class StrUtil {
   static const delimEnd = '}';
   static const question = '?';
   static const underline = '_';
+  static const semicolon = ':';
 
   static String listToStr(List<String> list, String separator) {
     String str = empty;

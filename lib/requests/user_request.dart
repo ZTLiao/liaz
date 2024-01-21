@@ -2,7 +2,6 @@ import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/db/oauth2_token.dart';
 import 'package:liaz/models/db/user.dart';
-import 'package:liaz/services/app_config_service.dart';
 
 class UserRequest {
   Future<OAuth2Token> signIn(
@@ -91,5 +90,11 @@ class UserRequest {
 
   Future<void> signOut() async {
     return await Request.instance.post("/oauth/sign/out");
+  }
+
+  Future<void> setPassword(String password) async {
+    return await Request.instance.post("/api/account/set/password", data: {
+      'password': password,
+    });
   }
 }

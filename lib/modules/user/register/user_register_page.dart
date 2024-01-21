@@ -117,12 +117,6 @@ class UserRegisterPage extends StatelessWidget {
       decoration: const InputDecoration(
         labelText: AppString.username,
       ),
-      validator: (v) {
-        if (v!.isEmpty) {
-          return AppString.usernameEmptyError;
-        }
-        return null;
-      },
     );
   }
 
@@ -133,9 +127,6 @@ class UserRegisterPage extends StatelessWidget {
         labelText: AppString.nickname,
       ),
       validator: (v) {
-        if (v!.isEmpty) {
-          return AppString.nicknameEmptyError;
-        }
         return null;
       },
     );
@@ -146,15 +137,6 @@ class UserRegisterPage extends StatelessWidget {
       () => TextFormField(
         obscureText: controller.isShowPassword.value,
         controller: controller.password,
-        validator: (v) {
-          if (v!.isEmpty) {
-            return AppString.passwordEmptyError;
-          }
-          if (v.length < 6) {
-            return AppString.passwordShortError;
-          }
-          return null;
-        },
         decoration: InputDecoration(
           labelText: AppString.password,
           suffixIcon: IconButton(

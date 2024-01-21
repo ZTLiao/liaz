@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/bucket_constant.dart';
 import 'package:liaz/app/enums/gender_enum.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -50,6 +52,14 @@ class UserRegisterController extends GetxController {
 
   void signUp() async {
     if (password.text.isEmpty) {
+      return;
+    }
+    if (password.text.isNotEmpty && password.text.length < 6) {
+      SmartDialog.showToast(AppString.passwordShortError);
+      return;
+    }
+    if (!RegExp(r'[a-zA-Z0-9_-]{4,16}').hasMatch(username.text)) {
+      SmartDialog.showToast(AppString.usernameInvalidError);
       return;
     }
     var isRegister = await UserService.instance.signUp(username.text,

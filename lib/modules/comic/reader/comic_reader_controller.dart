@@ -431,7 +431,7 @@ class ComicReaderController extends BaseController {
         ),
       ),
       constraints: const BoxConstraints(
-        maxHeight: 170,
+        maxHeight: 240,
       ),
       backgroundColor: Colors.black.withOpacity(0.7),
       builder: (context) => Theme(
@@ -442,102 +442,96 @@ class ComicReaderController extends BaseController {
               child: Obx(
                 () => ListView(
                   children: [
-                    Row(
-                      children: [
-                        AppStyle.hGap8,
-                        const Icon(Icons.nights_stay_outlined),
-                        Expanded(
-                          child: Slider.adaptive(
-                            value: screenBrightness.value,
+                    ListTile(
+                      leading: const Icon(Icons.nights_stay_outlined),
+                      title: Slider.adaptive(
+                        value: screenBrightness.value,
+                        onChanged: (value) {
+                          screenBrightness.value = value;
+                          AppSettingsService.instance
+                              .setScreenBrightness(value);
+                        },
+                      ),
+                      trailing: const Icon(Icons.wb_sunny_outlined),
+                    ),
+                    ListTile(
+                      leading: const Text(
+                        AppString.readDirection,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Radio(
+                            value: ReaderDirectionEnum.leftToRight.index,
+                            groupValue: readDirection.value,
                             onChanged: (value) {
-                              screenBrightness.value = value;
+                              readDirection.value = value!;
                               AppSettingsService.instance
-                                  .setScreenBrightness(value);
+                                  .setComicReaderDirection(value);
                             },
                           ),
-                        ),
-                        const Icon(Icons.wb_sunny_outlined),
-                        AppStyle.hGap16,
-                      ],
+                          Text(
+                            AppString.rightToLeft,
+                            style: TextStyle(
+                              color: readDirection.value ==
+                                      ReaderDirectionEnum.leftToRight.index
+                                  ? Colors.cyan
+                                  : Colors.white,
+                            ),
+                          ),
+                          Radio(
+                            value: ReaderDirectionEnum.rightToLeft.index,
+                            groupValue: readDirection.value,
+                            onChanged: (value) {
+                              readDirection.value = value!;
+                              AppSettingsService.instance
+                                  .setComicReaderDirection(value);
+                            },
+                          ),
+                          Text(
+                            AppString.rightToLeft,
+                            style: TextStyle(
+                              color: readDirection.value ==
+                                      ReaderDirectionEnum.rightToLeft.index
+                                  ? Colors.cyan
+                                  : Colors.white,
+                            ),
+                          ),
+                          Radio(
+                            value: ReaderDirectionEnum.upToDown.index,
+                            groupValue: readDirection.value,
+                            onChanged: (value) {
+                              readDirection.value = value!;
+                              AppSettingsService.instance
+                                  .setComicReaderDirection(value);
+                            },
+                          ),
+                          Text(
+                            AppString.upToDown,
+                            style: TextStyle(
+                              color: readDirection.value ==
+                                      ReaderDirectionEnum.upToDown.index
+                                  ? Colors.cyan
+                                  : Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        AppStyle.hGap8,
-                        const Text(
-                          AppString.readDirection,
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                    ListTile(
+                      leading: const Text(
+                        AppString.screenDirection,
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
-                        Radio(
-                          value: ReaderDirectionEnum.leftToRight.index,
-                          groupValue: readDirection.value,
-                          onChanged: (value) {
-                            readDirection.value = value!;
-                            AppSettingsService.instance
-                                .setComicReaderDirection(value);
-                          },
-                        ),
-                        Text(
-                          AppString.rightToLeft,
-                          style: TextStyle(
-                            color: readDirection.value ==
-                                    ReaderDirectionEnum.leftToRight.index
-                                ? Colors.cyan
-                                : Colors.white,
-                          ),
-                        ),
-                        Radio(
-                          value: ReaderDirectionEnum.rightToLeft.index,
-                          groupValue: readDirection.value,
-                          onChanged: (value) {
-                            readDirection.value = value!;
-                            AppSettingsService.instance
-                                .setComicReaderDirection(value);
-                          },
-                        ),
-                        Text(
-                          AppString.rightToLeft,
-                          style: TextStyle(
-                            color: readDirection.value ==
-                                    ReaderDirectionEnum.rightToLeft.index
-                                ? Colors.cyan
-                                : Colors.white,
-                          ),
-                        ),
-                        Radio(
-                          value: ReaderDirectionEnum.upToDown.index,
-                          groupValue: readDirection.value,
-                          onChanged: (value) {
-                            readDirection.value = value!;
-                            AppSettingsService.instance
-                                .setComicReaderDirection(value);
-                          },
-                        ),
-                        Text(
-                          AppString.upToDown,
-                          style: TextStyle(
-                            color: readDirection.value ==
-                                    ReaderDirectionEnum.upToDown.index
-                                ? Colors.cyan
-                                : Colors.white,
-                          ),
-                        ),
-                        AppStyle.hGap4,
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        AppStyle.hGap8,
-                        const Text(
-                          AppString.screenDirection,
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        AppStyle.hGap24,
-                        Expanded(
-                          child: TextButton(
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextButton(
                             onPressed: () {
                               screenDirection.value =
                                   ScreenDirectionEnum.vertical.index;
@@ -565,10 +559,8 @@ class ComicReaderController extends BaseController {
                               ),
                             ),
                           ),
-                        ),
-                        AppStyle.hGap4,
-                        Expanded(
-                          child: TextButton(
+                          AppStyle.hGap4,
+                          TextButton(
                             onPressed: () {
                               screenDirection.value =
                                   ScreenDirectionEnum.horizontal.index;
@@ -596,9 +588,8 @@ class ComicReaderController extends BaseController {
                               ),
                             ),
                           ),
-                        ),
-                        AppStyle.hGap4,
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

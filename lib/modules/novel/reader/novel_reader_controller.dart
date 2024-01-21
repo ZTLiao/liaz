@@ -15,7 +15,6 @@ import 'package:liaz/app/constants/file_type.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
-import 'package:liaz/app/http/request.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_item_model.dart';
@@ -251,10 +250,10 @@ class NovelReaderController extends BaseController {
           hasPicture.value = true;
         }
       } else {
-        paths[i] = await AppConfigService.instance.getObject(paths[i]);
         if (type == FileType.textPlain) {
-          sb.write(await Request.instance.getResource(paths[i]));
+          sb.write(await NovelService.instance.getContent(paths[i]));
         } else if (type == FileType.imageJpeg) {
+          paths[i] = await AppConfigService.instance.getObject(paths[i]);
           pictures.add(paths[i]);
           hasPicture.value = true;
         }
@@ -449,7 +448,7 @@ class NovelReaderController extends BaseController {
         ),
       ),
       constraints: const BoxConstraints(
-        maxHeight: 240,
+        maxHeight: 300,
       ),
       backgroundColor: Colors.black.withOpacity(0.7),
       builder: (context) => Theme(
@@ -460,206 +459,195 @@ class NovelReaderController extends BaseController {
               child: Obx(
                 () => ListView(
                   children: [
-                    Row(
-                      children: [
-                        AppStyle.hGap8,
-                        const Icon(Icons.nights_stay_outlined),
-                        Expanded(
-                          child: Slider.adaptive(
-                            value: screenBrightness.value,
+                    ListTile(
+                      leading: const Icon(Icons.nights_stay_outlined),
+                      title: Slider.adaptive(
+                        value: screenBrightness.value,
+                        onChanged: (value) {
+                          screenBrightness.value = value;
+                          AppSettingsService.instance
+                              .setScreenBrightness(value);
+                        },
+                      ),
+                      trailing: const Icon(Icons.wb_sunny_outlined),
+                    ),
+                    ListTile(
+                      leading: const Text(
+                        AppString.readDirection,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Radio(
+                            value: ReaderDirectionEnum.leftToRight.index,
+                            groupValue: readDirection.value,
                             onChanged: (value) {
-                              screenBrightness.value = value;
+                              readDirection.value = value!;
                               AppSettingsService.instance
-                                  .setScreenBrightness(value);
+                                  .setComicReaderDirection(value);
                             },
                           ),
-                        ),
-                        const Icon(Icons.wb_sunny_outlined),
-                        AppStyle.hGap16,
-                      ],
+                          Text(
+                            AppString.rightToLeft,
+                            style: TextStyle(
+                              color: readDirection.value ==
+                                      ReaderDirectionEnum.leftToRight.index
+                                  ? Colors.cyan
+                                  : Colors.white,
+                            ),
+                          ),
+                          Radio(
+                            value: ReaderDirectionEnum.rightToLeft.index,
+                            groupValue: readDirection.value,
+                            onChanged: (value) {
+                              readDirection.value = value!;
+                              AppSettingsService.instance
+                                  .setComicReaderDirection(value);
+                            },
+                          ),
+                          Text(
+                            AppString.rightToLeft,
+                            style: TextStyle(
+                              color: readDirection.value ==
+                                      ReaderDirectionEnum.rightToLeft.index
+                                  ? Colors.cyan
+                                  : Colors.white,
+                            ),
+                          ),
+                          Radio(
+                            value: ReaderDirectionEnum.upToDown.index,
+                            groupValue: readDirection.value,
+                            onChanged: (value) {
+                              readDirection.value = value!;
+                              AppSettingsService.instance
+                                  .setComicReaderDirection(value);
+                            },
+                          ),
+                          Text(
+                            AppString.upToDown,
+                            style: TextStyle(
+                              color: readDirection.value ==
+                                      ReaderDirectionEnum.upToDown.index
+                                  ? Colors.cyan
+                                  : Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        AppStyle.hGap8,
-                        const Text(
-                          AppString.readDirection,
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
+                    ListTile(
+                      leading: const Text(
+                        AppString.readTheme,
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
-                        Radio(
-                          value: ReaderDirectionEnum.leftToRight.index,
-                          groupValue: readDirection.value,
-                          onChanged: (value) {
-                            readDirection.value = value!;
-                            AppSettingsService.instance
-                                .setNovelReaderDirection(value);
-                          },
-                        ),
-                        Text(
-                          AppString.rightToLeft,
-                          style: TextStyle(
-                            color: readDirection.value ==
-                                    ReaderDirectionEnum.leftToRight.index
-                                ? Colors.cyan
-                                : Colors.white,
-                          ),
-                        ),
-                        Radio(
-                          value: ReaderDirectionEnum.rightToLeft.index,
-                          groupValue: readDirection.value,
-                          onChanged: (value) {
-                            readDirection.value = value!;
-                            AppSettingsService.instance
-                                .setNovelReaderDirection(value);
-                          },
-                        ),
-                        Text(
-                          AppString.rightToLeft,
-                          style: TextStyle(
-                            color: readDirection.value ==
-                                    ReaderDirectionEnum.rightToLeft.index
-                                ? Colors.cyan
-                                : Colors.white,
-                          ),
-                        ),
-                        Radio(
-                          value: ReaderDirectionEnum.upToDown.index,
-                          groupValue: readDirection.value,
-                          onChanged: (value) {
-                            readDirection.value = value!;
-                            AppSettingsService.instance
-                                .setNovelReaderDirection(value);
-                          },
-                        ),
-                        Text(
-                          AppString.upToDown,
-                          style: TextStyle(
-                            color: readDirection.value ==
-                                    ReaderDirectionEnum.upToDown.index
-                                ? Colors.cyan
-                                : Colors.white,
-                          ),
-                        ),
-                        AppStyle.hGap4,
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        AppStyle.hGap8,
-                        const Text(
-                          AppString.readTheme,
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: AppColor.novelThemes.keys
-                              .map(
-                                (e) => GestureDetector(
-                                  onTap: () {
-                                    AppSettingsService.instance
-                                        .setNovelReaderTheme(e);
-                                  },
-                                  child: Container(
-                                    margin: AppStyle.edgeInsetsL24,
-                                    height: 36,
-                                    width: 36,
-                                    decoration: BoxDecoration(
-                                      color: AppColor.novelThemes[e]!.first,
-                                      borderRadius: AppStyle.radius24,
-                                    ),
-                                    child: Visibility(
-                                      visible: AppColor.novelThemes.keys
-                                              .toList()
-                                              .indexOf(e) ==
-                                          AppSettings.novelReaderTheme.value,
-                                      child: Icon(
-                                        Icons.check,
-                                        color: AppColor.novelThemes[e]!.last,
-                                      ),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: AppColor.novelThemes.keys
+                            .map(
+                              (e) => GestureDetector(
+                                onTap: () {
+                                  AppSettingsService.instance
+                                      .setNovelReaderTheme(e);
+                                },
+                                child: Container(
+                                  margin: AppStyle.edgeInsetsL24,
+                                  height: 36,
+                                  width: 36,
+                                  decoration: BoxDecoration(
+                                    color: AppColor.novelThemes[e]!.first,
+                                    borderRadius: AppStyle.radius24,
+                                  ),
+                                  child: Visibility(
+                                    visible: AppColor.novelThemes.keys
+                                            .toList()
+                                            .indexOf(e) ==
+                                        AppSettings.novelReaderTheme.value,
+                                    child: Icon(
+                                      Icons.check,
+                                      color: AppColor.novelThemes[e]!.last,
                                     ),
                                   ),
                                 ),
-                              )
-                              .toList(),
-                        ),
-                      ],
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ),
-                    AppStyle.vGap8,
-                    Row(
-                      children: [
-                        AppStyle.hGap8,
-                        const Text(
-                          AppString.fontSize,
-                          style: TextStyle(
-                            color: Colors.white,
+                    ListTile(
+                      leading: const Text(
+                        AppString.fontSize,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          NumberControllerWidget(
+                            numText: '${AppSettings.novelReaderFontSize.value}',
+                            width: 100,
+                            addValueChanged: (value) {
+                              AppSettingsService.instance
+                                  .setNovelReaderFontSize(
+                                AppSettings.novelReaderFontSize.value + 1,
+                              );
+                            },
+                            removeValueChanged: (value) {
+                              AppSettingsService.instance
+                                  .setNovelReaderFontSize(
+                                AppSettings.novelReaderFontSize.value - 1,
+                              );
+                            },
+                            updateValueChanged: (value) {
+                              AppSettingsService.instance
+                                  .setNovelReaderFontSize(
+                                value,
+                              );
+                            },
                           ),
-                        ),
-                        AppStyle.hGap32,
-                        AppStyle.hGap32,
-                        AppStyle.hGap32,
-                        NumberControllerWidget(
-                          numText: '${AppSettings.novelReaderFontSize.value}',
-                          width: 100,
-                          addValueChanged: (value) {
-                            AppSettingsService.instance.setNovelReaderFontSize(
-                              AppSettings.novelReaderFontSize.value + 1,
-                            );
-                          },
-                          removeValueChanged: (value) {
-                            AppSettingsService.instance.setNovelReaderFontSize(
-                              AppSettings.novelReaderFontSize.value - 1,
-                            );
-                          },
-                          updateValueChanged: (value) {
-                            AppSettingsService.instance.setNovelReaderFontSize(
-                              value,
-                            );
-                          },
-                        ),
-                        AppStyle.hGap4,
-                      ],
+                        ],
+                      ),
                     ),
-                    AppStyle.vGap8,
-                    Row(
-                      children: [
-                        AppStyle.hGap8,
-                        const Text(
-                          AppString.lineWidth,
-                          style: TextStyle(
-                            color: Colors.white,
+                    ListTile(
+                      leading: const Text(
+                        AppString.lineWidth,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          NumberControllerWidget(
+                            numText: (AppSettings.novelReaderLineSpacing.value)
+                                .toStringAsFixed(1),
+                            width: 100,
+                            addValueChanged: (value) {
+                              AppSettingsService.instance
+                                  .setNovelReaderLineSpacing(
+                                AppSettings.novelReaderLineSpacing.value + 0.1,
+                              );
+                            },
+                            removeValueChanged: (value) {
+                              AppSettingsService.instance
+                                  .setNovelReaderLineSpacing(
+                                AppSettings.novelReaderLineSpacing.value - 0.1,
+                              );
+                            },
+                            updateValueChanged: (value) {
+                              AppSettingsService.instance
+                                  .setNovelReaderLineSpacing(
+                                value,
+                              );
+                            },
                           ),
-                        ),
-                        AppStyle.hGap32,
-                        AppStyle.hGap32,
-                        AppStyle.hGap32,
-                        NumberControllerWidget(
-                          numText: (AppSettings.novelReaderLineSpacing.value)
-                              .toStringAsFixed(1),
-                          width: 100,
-                          addValueChanged: (value) {
-                            AppSettingsService.instance
-                                .setNovelReaderLineSpacing(
-                              AppSettings.novelReaderLineSpacing.value + 0.1,
-                            );
-                          },
-                          removeValueChanged: (value) {
-                            AppSettingsService.instance
-                                .setNovelReaderLineSpacing(
-                              AppSettings.novelReaderLineSpacing.value - 0.1,
-                            );
-                          },
-                          updateValueChanged: (value) {
-                            AppSettingsService.instance
-                                .setNovelReaderLineSpacing(
-                              value,
-                            );
-                          },
-                        ),
-                        AppStyle.hGap4,
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

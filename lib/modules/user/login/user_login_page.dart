@@ -36,9 +36,7 @@ class UserLoginPage extends StatelessWidget {
               ),
               buildPasswordTextField(context),
               buildForgetPasswordText(context),
-              const SizedBox(
-                height: 60,
-              ),
+              AppStyle.vGap60,
               buildLoginButton(context),
               const SizedBox(
                 height: 40,
@@ -162,7 +160,7 @@ class UserLoginPage extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerRight,
         child: TextButton(
-          onPressed: AppNavigator.toResetPassword,
+          onPressed: AppNavigator.toForgetPassword,
           child: Text(
             AppString.forgetPassword,
             style: TextStyle(
@@ -180,15 +178,6 @@ class UserLoginPage extends StatelessWidget {
       () => TextFormField(
         obscureText: controller.isShowPassword.value,
         controller: controller.password,
-        validator: (v) {
-          if (v!.isEmpty) {
-            return AppString.passwordEmptyError;
-          }
-          if (v.length < 6) {
-            return AppString.passwordShortError;
-          }
-          return null;
-        },
         decoration: InputDecoration(
           labelText: AppString.password,
           suffixIcon: IconButton(
@@ -215,12 +204,6 @@ class UserLoginPage extends StatelessWidget {
         labelText: AppString.username,
         hintText: AppString.usernameAlertMsg,
       ),
-      validator: (v) {
-        if (v!.isEmpty) {
-          return AppString.usernameEmptyError;
-        }
-        return null;
-      },
     );
   }
 

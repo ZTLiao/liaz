@@ -20,11 +20,9 @@ class UserHomePage extends GetView<UserHomeController> {
         title: Container(
           alignment: Alignment.centerRight,
           margin: AppStyle.edgeInsetsH8.copyWith(top: 12),
-          child: IconButton(
-            onPressed: () {
-              AppNavigator.toSettings(0);
-            },
-            icon: const Icon(
+          child: const IconButton(
+            onPressed: AppNavigator.toSettings,
+            icon: Icon(
               Icons.settings,
               color: Colors.grey,
             ),
@@ -50,12 +48,12 @@ class UserHomePage extends GetView<UserHomeController> {
                         margin: AppStyle.edgeInsetsH12.copyWith(top: 12),
                         child: ListTile(
                           leading: UserPhoto(
-                            url: controller.user.value.avatar,
+                            url: controller.avatar.value,
                             size: 48,
                           ),
                           title: Text(
-                            controller.user.value.nickname.isNotEmpty
-                                ? controller.user.value.nickname
+                            controller.nickname.value.isNotEmpty
+                                ? controller.nickname.value
                                 : AppString.notLogin,
                             style: const TextStyle(
                               height: 3.0,
@@ -95,7 +93,7 @@ class UserHomePage extends GetView<UserHomeController> {
                     leading: const Icon(
                       Icons.download_outlined,
                     ),
-                    title: const Text(AppString.download),
+                    title: const Text(AppString.localDownload),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -142,31 +140,9 @@ class UserHomePage extends GetView<UserHomeController> {
                   ),
                   ListTile(
                     leading: const Icon(
-                      Icons.contact_support_outlined,
+                      Icons.share,
                     ),
-                    title: const Text(AppString.disclaimer),
-                    trailing: const Icon(
-                      Icons.chevron_right,
-                      color: Colors.grey,
-                    ),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.upload_outlined,
-                    ),
-                    title: const Text(AppString.checkUpdate),
-                    trailing: const Icon(
-                      Icons.chevron_right,
-                      color: Colors.grey,
-                    ),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.info_outline,
-                    ),
-                    title: const Text(AppString.aboutAPP),
+                    title: const Text(AppString.shareAPP),
                     trailing: const Icon(
                       Icons.chevron_right,
                       color: Colors.grey,

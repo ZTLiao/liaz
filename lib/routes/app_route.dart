@@ -11,6 +11,18 @@ class AppRoute {
   /// 设置
   static const kSettings = '/settings';
 
+  /// 通用设置
+  static const kGeneralSettings = '/settings/general';
+
+  /// 漫画设置
+  static const kComicSettings = '/settings/comic';
+
+  /// 小说设置
+  static const kNovelSettings = '/settings/novel';
+
+  /// 设置密码
+  static const kSetPassword = '/set/password';
+
   /// webView
   static const kWebView = '/web/view';
 
@@ -32,8 +44,8 @@ class AppRoute {
   /// 用户登录
   static const kUserLogin = '/user/login';
 
-  /// 重置密码
-  static const kResetPassword = '/reset/password';
+  /// 忘记密码
+  static const kForgetPassword = '/forget/password';
 
   /// 用户注册
   static const kUserRegister = '/user/register';

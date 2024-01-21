@@ -32,4 +32,11 @@ class OAuth2TokenService extends GetxService {
     await init();
     return box!.values.firstOrNull;
   }
+
+  Future<void> clear() async {
+    var keys = box!.values.toList().map((e) => e.userId).toList();
+    if (keys.isNotEmpty) {
+      box!.deleteAll(keys);
+    }
+  }
 }
