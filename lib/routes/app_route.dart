@@ -64,4 +64,7 @@ class AppRoute {
 
   /// 下载明细
   static const kDownloadDetail = '/download/detail';
+
+  /// 浏览记录
+  static const kBrowseHistory = '/browse/history';
 }

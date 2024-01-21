@@ -76,56 +76,29 @@ class UserHomePage extends GetView<UserHomeController> {
                   Obx(
                     () => Visibility(
                       visible: controller.user.value.userId != 0,
-                      child: ListTile(
-                        leading: const Icon(
+                      child: const ListTile(
+                        leading: Icon(
                           Icons.work_history_outlined,
                         ),
-                        title: const Text(AppString.browse),
-                        trailing: const Icon(
+                        title: Text(AppString.browse),
+                        trailing: Icon(
                           Icons.chevron_right,
                           color: Colors.grey,
                         ),
-                        onTap: () {},
+                        onTap: AppNavigator.toBrowseHistory,
                       ),
                     ),
                   ),
-                  ListTile(
-                    leading: const Icon(
+                  const ListTile(
+                    leading: Icon(
                       Icons.download_outlined,
                     ),
-                    title: const Text(AppString.localDownload),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Visibility(
-                          visible: false,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: AppStyle.radius24,
-                            ),
-                            width: 20,
-                            height: 20,
-                            child: const Center(
-                              child: Text(
-                                '0',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const Icon(
-                          Icons.chevron_right,
-                          color: Colors.grey,
-                        ),
-                      ],
+                    title: Text(AppString.localDownload),
+                    trailing: Icon(
+                      Icons.chevron_right,
+                      color: Colors.grey,
                     ),
-                    onTap: () {
-                      AppNavigator.toLocalDownloadPage();
-                    },
+                    onTap: AppNavigator.toLocalDownloadPage,
                   ),
                   ListTile(
                     leading: const Icon(

@@ -173,4 +173,8 @@ class AppNavigator {
   static void toSetPassword() {
     toContentPage(AppRoute.kSetPassword);
   }
+
+  static void toBrowseHistory() {
+    toContentPage(AppRoute.kBrowseHistory);
+  }
 }

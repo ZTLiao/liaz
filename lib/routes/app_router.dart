@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/modules/bookshelf/home/bookshelf_home_controller.dart';
+import 'package:liaz/modules/browse/browse_history_controller.dart';
+import 'package:liaz/modules/browse/browse_history_page.dart';
 import 'package:liaz/modules/category/home/category_home_controller.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_page.dart';
 import 'package:liaz/modules/comic/download/comic_download_page.dart';
@@ -161,6 +163,13 @@ class AppRouter {
           title: Get.arguments['title'],
           taskIds: Get.arguments['taskIds'],
         ),
+      ),
+    ),
+    GetPage(
+      name: AppRoute.kBrowseHistory,
+      page: () => const BrowseHistoryPage(),
+      binding: BindingsBuilder.put(
+        () => BrowseHistoryController(),
       ),
     ),
   ];
