@@ -31,7 +31,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:path/path.dart' as path;
 
 class NovelReaderController extends BaseController {
-  final int novelChapterId;
+  int novelChapterId;
   final List<NovelChapterModel> chapters;
 
   NovelReaderController({
@@ -277,6 +277,7 @@ class NovelReaderController extends BaseController {
       isLocal: chapter.isLocal,
     );
     isLocal.value = chapter.isLocal;
+    novelChapterId = chapter.novelChapterId;
     if (chapter.currentIndex != 0) {
       currentIndex.value = chapter.currentIndex;
     }
@@ -348,7 +349,8 @@ class NovelReaderController extends BaseController {
       constraints: const BoxConstraints(
         maxWidth: 500,
       ),
-      backgroundColor: AppStyle.darkTheme.scaffoldBackgroundColor.withOpacity(0.7),
+      backgroundColor:
+          AppStyle.darkTheme.scaffoldBackgroundColor.withOpacity(0.7),
       builder: (context) => Theme(
         data: AppStyle.darkTheme,
         child: Column(
@@ -664,15 +666,14 @@ class NovelReaderController extends BaseController {
                             onPressed: () {
                               screenDirection.value =
                                   ScreenDirectionEnum.vertical.index;
-                              AppSettingsService.instance
-                                  .setScreenDirection(
+                              AppSettingsService.instance.setScreenDirection(
                                   ScreenDirectionEnum.vertical.index);
                             },
                             style: ButtonStyle(
                               side: MaterialStatePropertyAll(
                                 BorderSide(
                                   color: screenDirection.value ==
-                                      ScreenDirectionEnum.vertical.index
+                                          ScreenDirectionEnum.vertical.index
                                       ? Colors.cyan
                                       : Colors.white,
                                 ),
@@ -682,7 +683,7 @@ class NovelReaderController extends BaseController {
                               AppString.verticalScreenRead,
                               style: TextStyle(
                                 color: screenDirection.value ==
-                                    ScreenDirectionEnum.vertical.index
+                                        ScreenDirectionEnum.vertical.index
                                     ? Colors.cyan
                                     : Colors.white,
                               ),
@@ -693,15 +694,14 @@ class NovelReaderController extends BaseController {
                             onPressed: () {
                               screenDirection.value =
                                   ScreenDirectionEnum.horizontal.index;
-                              AppSettingsService.instance
-                                  .setScreenDirection(
+                              AppSettingsService.instance.setScreenDirection(
                                   ScreenDirectionEnum.horizontal.index);
                             },
                             style: ButtonStyle(
                               side: MaterialStatePropertyAll(
                                 BorderSide(
                                   color: screenDirection.value ==
-                                      ScreenDirectionEnum.horizontal.index
+                                          ScreenDirectionEnum.horizontal.index
                                       ? Colors.cyan
                                       : Colors.white,
                                 ),
@@ -711,7 +711,7 @@ class NovelReaderController extends BaseController {
                               AppString.horizontalScreenRead,
                               style: TextStyle(
                                 color: screenDirection.value ==
-                                    ScreenDirectionEnum.horizontal.index
+                                        ScreenDirectionEnum.horizontal.index
                                     ? Colors.cyan
                                     : Colors.white,
                               ),

@@ -109,11 +109,16 @@ class AppNavigator {
     toContentPage(AppRoute.kForgetPassword);
   }
 
-  static void closePage() {
+  static closePage<T>({T? result}) {
     if (Navigator.canPop(Get.context!)) {
-      Get.back();
+      return Get.back(
+        result: result,
+      );
     } else {
-      Get.back(id: kNavigatorID);
+      return Get.back(
+        result: result,
+        id: kNavigatorID,
+      );
     }
   }
 

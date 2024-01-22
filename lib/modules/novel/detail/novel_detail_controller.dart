@@ -60,8 +60,14 @@ class NovelDetailController extends BaseController {
   @override
   void onInit() async {
     initRelateRecommend();
-    EventBus.instance
-        .subscribe(AppEvent.kUploadNovelHistoryTopic, NovelHistoryListener());
+    EventBus.instance.subscribe(
+      AppEvent.kUploadNovelHistoryTopic,
+      NovelHistoryListener(
+        (chapterId) {
+          browseChapterId.value = chapterId;
+        },
+      ),
+    );
     super.onInit();
   }
 

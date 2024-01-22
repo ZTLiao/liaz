@@ -28,7 +28,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:path/path.dart' as path;
 
 class ComicReaderController extends BaseController {
-  final int comicChapterId;
+  int comicChapterId;
 
   final List<ComicChapterModel> chapters;
 
@@ -174,7 +174,7 @@ class ComicReaderController extends BaseController {
       ComicService.instance.uploadHistory(
         detail.value.comicId,
         AssetTypeEnum.comic.index,
-        comicChapterId,
+        detail.value.comicChapterId,
         detail.value.chapterName,
         detail.value.paths[currentIndex.value],
         currentIndex.value,
@@ -296,6 +296,7 @@ class ComicReaderController extends BaseController {
       isLocal: comicChapter.isLocal,
     );
     currentIndex.value = comicChapter.currentIndex;
+    comicChapterId = comicChapter.comicChapterId;
     isLocal.value = comicChapter.isLocal;
     Future.delayed(const Duration(milliseconds: 100), () {
       jumpToPage(currentIndex.value);
@@ -358,7 +359,8 @@ class ComicReaderController extends BaseController {
       constraints: const BoxConstraints(
         maxWidth: 500,
       ),
-      backgroundColor: AppStyle.darkTheme.scaffoldBackgroundColor.withOpacity(0.7),
+      backgroundColor:
+          AppStyle.darkTheme.scaffoldBackgroundColor.withOpacity(0.7),
       builder: (context) => Theme(
         data: AppStyle.darkTheme,
         child: Column(
@@ -531,9 +533,8 @@ class ComicReaderController extends BaseController {
                             onPressed: () {
                               screenDirection.value =
                                   ScreenDirectionEnum.vertical.index;
-                              AppSettingsService.instance
-                                  .setScreenDirection(
-                                      ScreenDirectionEnum.vertical.index);
+                              AppSettingsService.instance.setScreenDirection(
+                                  ScreenDirectionEnum.vertical.index);
                             },
                             style: ButtonStyle(
                               side: MaterialStatePropertyAll(
@@ -560,9 +561,8 @@ class ComicReaderController extends BaseController {
                             onPressed: () {
                               screenDirection.value =
                                   ScreenDirectionEnum.horizontal.index;
-                              AppSettingsService.instance
-                                  .setScreenDirection(
-                                      ScreenDirectionEnum.horizontal.index);
+                              AppSettingsService.instance.setScreenDirection(
+                                  ScreenDirectionEnum.horizontal.index);
                             },
                             style: ButtonStyle(
                               side: MaterialStatePropertyAll(

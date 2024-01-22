@@ -51,8 +51,14 @@ class ComicDetailController extends BaseController {
   @override
   void onInit() {
     initDetail();
-    EventBus.instance
-        .subscribe(AppEvent.kUploadComicHistoryTopic, ComicHistoryListener());
+    EventBus.instance.subscribe(
+      AppEvent.kUploadComicHistoryTopic,
+      ComicHistoryListener(
+        (chapterId) {
+          browseChapterId.value = chapterId;
+        },
+      ),
+    );
     super.onInit();
   }
 
