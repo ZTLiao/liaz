@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:liaz/app/utils/convert_util.dart';
-import 'package:liaz/app/utils/str_util.dart';
 
 class RecommendItemModel {
   int recommendItemId;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/models/dto/title_model.dart';
 
 class TitleWidget extends StatelessWidget {

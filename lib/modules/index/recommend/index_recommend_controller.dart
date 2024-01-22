@@ -1,8 +1,6 @@
-import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_page_controller.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/recommend_position_enum.dart';
-import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/requests/recommend_request.dart';
