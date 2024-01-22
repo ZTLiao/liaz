@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/error/app_error.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';

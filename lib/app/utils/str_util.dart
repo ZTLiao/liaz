@@ -11,6 +11,7 @@ class StrUtil {
   static const question = '?';
   static const underline = '_';
   static const semicolon = ':';
+  static const emptyList = '[]';
 
   static String listToStr(List<String> list, String separator) {
     String str = empty;

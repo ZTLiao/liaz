@@ -10,10 +10,29 @@ import 'package:liaz/services/recommend_service.dart';
 class IndexRecommendController extends BasePageController<RecommendModel> {
   var recommendRequest = RecommendRequest();
 
+  var isFirst = true;
+
   @override
   Future<List<RecommendModel>> getData(int currentPage, int pageSize) async {
-    return await recommendRequest
+    List<RecommendModel> data = [];
+    if (isFirst) {
+      isFirst = false;
+      data.addAll(await RecommendService.instance.get());
+      if (data.isEmpty) {
+        data = await recommendRequest
+            .recommendByPosition(RecommendPositionEnum.home.index);
+        RecommendService.instance.put(data);
+      } else {
+        recommendRequest
+            .recommendByPosition(RecommendPositionEnum.home.index)
+            .then((value) => RecommendService.instance.put(value));
+      }
+      return data;
+    }
+    data = await recommendRequest
         .recommendByPosition(RecommendPositionEnum.home.index);
+    RecommendService.instance.put(data);
+    return data;
   }
 
   void onDetail(ItemModel item) {

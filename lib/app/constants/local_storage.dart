@@ -73,4 +73,7 @@ class LocalStorage {
 
   /// 屏幕方向
   static const String kScreenDirection = "ScreenDirection";
+
+  /// 首页推荐缓存
+  static const String kIndexRecommend = 'IndexRecommend';
 }

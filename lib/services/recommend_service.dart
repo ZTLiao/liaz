@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/local_storage.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
+import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/comic_service.dart';
+import 'package:liaz/services/local_storage_service.dart';
 import 'package:liaz/services/novel_service.dart';
 
 class RecommendService extends GetxService {
@@ -43,5 +49,26 @@ class RecommendService extends GetxService {
         }
       }
     }
+  }
+
+  void put(List<RecommendModel> list) {
+    if (list.isEmpty) {
+      return;
+    }
+    LocalStorageService.instance
+        .setValue(LocalStorage.kIndexRecommend, json.encode(list));
+  }
+
+  Future<List<RecommendModel>> get() async {
+    await LocalStorageService.instance.init();
+    var list = LocalStorageService.instance
+        .getValue<String>(LocalStorage.kIndexRecommend, StrUtil.emptyList);
+    List<RecommendModel> data = [];
+    if (list.isNotEmpty) {
+      for (var model in json.decode(list)) {
+        data.add(RecommendModel.fromJson(model));
+      }
+    }
+    return data;
   }
 }

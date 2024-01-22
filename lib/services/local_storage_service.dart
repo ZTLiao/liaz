@@ -12,29 +12,31 @@ class LocalStorageService extends GetxService {
     return Get.put(LocalStorageService());
   }
 
-  late Box box;
+  Box<dynamic>? box;
 
-  Future init() async {
-    var dir = await getApplicationSupportDirectory();
-    box = await Hive.openBox(
-      Db.localStorage,
-      path: dir.path,
-    );
+  Future<void> init() async {
+    if (box == null) {
+      var dir = await getApplicationSupportDirectory();
+      box = await Hive.openBox(
+        Db.localStorage,
+        path: dir.path,
+      );
+    }
   }
 
   T getValue<T>(dynamic key, T defaultValue) {
-    var value = box.get(key, defaultValue: defaultValue) as T;
+    var value = box!.get(key, defaultValue: defaultValue) as T;
     Log.d("Get LocalStorage：$key\r\n$value");
     return value;
   }
 
-  Future setValue<T>(dynamic key, T value) async {
+  Future<dynamic> setValue<T>(dynamic key, T value) async {
     Log.d("Set LocalStorage：$key\r\n$value");
-    return await box.put(key, value);
+    return await box!.put(key, value);
   }
 
-  Future removeValue<T>(dynamic key) async {
+  Future<void> removeValue<T>(dynamic key) async {
     Log.d("Remove LocalStorage：$key");
-    return await box.delete(key);
+    return await box!.delete(key);
   }
 }
