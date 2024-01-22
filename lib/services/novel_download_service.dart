@@ -10,8 +10,8 @@ import 'package:liaz/models/db/novel.dart';
 import 'package:liaz/models/db/novel_chapter.dart';
 import 'package:liaz/models/db/task.dart';
 import 'package:liaz/models/dto/download_task.dart';
-import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/download_service.dart';
+import 'package:liaz/services/file_service.dart';
 import 'package:liaz/services/novel_chapter_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/task_service.dart';
@@ -92,7 +92,7 @@ class NovelDownloadService extends DownloadService {
       novelId: novelId,
     ));
     for (int i = 0; i < urls.length; i++) {
-      urls[i] = await AppConfigService.instance.getObject(urls[i]);
+      urls[i] = await FileService.instance.getObject(urls[i]);
     }
     var task = Task(
       taskId: taskId,

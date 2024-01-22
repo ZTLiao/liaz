@@ -15,7 +15,7 @@ import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/requests/browse_request.dart';
 import 'package:liaz/requests/novel_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
-import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/file_service.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:path/path.dart' as path;
@@ -124,7 +124,7 @@ class NovelService {
       return content;
     }
     content = await Request.instance
-        .getResource(await AppConfigService.instance.getObject(uniqueId));
+        .getResource(await FileService.instance.getObject(uniqueId));
     if (content.isNotEmpty) {
       saveNovelContent(uniqueId: uniqueId, content: content);
     }

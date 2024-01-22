@@ -10,7 +10,7 @@ import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/requests/file_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
-import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/file_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class UserDetailController extends GetxController {
@@ -230,8 +230,7 @@ class UserDetailController extends GetxController {
     if (pickedFile != null) {
       originAvatar.value = await fileRequest.upload(
           BucketConstant.avatar, File(pickedFile.path));
-      avatar.value =
-          await AppConfigService.instance.getObject(originAvatar.value);
+      avatar.value = await FileService.instance.getObject(originAvatar.value);
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/category/category_item_model.dart';
-import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/file_service.dart';
 
 class BookshelfRequest {
   Future<List<CategoryItemModel>> getComic(
@@ -15,7 +15,7 @@ class BookshelfRequest {
     if (result != null && result is List) {
       for (var json in result) {
         var model = CategoryItemModel.fromJson(json);
-        model.cover = await AppConfigService.instance.getObject(model.cover);
+        model.cover = await FileService.instance.getObject(model.cover);
         list.add(model);
       }
     }
@@ -34,7 +34,7 @@ class BookshelfRequest {
     if (result != null && result is List) {
       for (var json in result) {
         var model = CategoryItemModel.fromJson(json);
-        model.cover = await AppConfigService.instance.getObject(model.cover);
+        model.cover = await FileService.instance.getObject(model.cover);
         list.add(model);
       }
     }

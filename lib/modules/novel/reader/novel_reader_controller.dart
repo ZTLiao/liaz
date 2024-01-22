@@ -21,8 +21,8 @@ import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_item_model.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/routes/app_route.dart';
-import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/app_settings_service.dart';
+import 'package:liaz/services/file_service.dart';
 import 'package:liaz/services/novel_download_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/widgets/toolbar/number_controller_widget.dart';
@@ -258,7 +258,7 @@ class NovelReaderController extends BaseController {
         if (type == FileType.textPlain) {
           sb.write(await NovelService.instance.getContent(paths[i]));
         } else if (type == FileType.imageJpeg) {
-          paths[i] = await AppConfigService.instance.getObject(paths[i]);
+          paths[i] = await FileService.instance.getObject(paths[i]);
           pictures.add(paths[i]);
           hasPicture.value = true;
         }

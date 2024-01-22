@@ -18,7 +18,7 @@ import 'package:liaz/requests/novel_subscribe_request.dart';
 import 'package:liaz/requests/oauth2_token_request.dart';
 import 'package:liaz/requests/user_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
-import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/file_service.dart';
 import 'package:liaz/services/oauth2_token_service.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -72,7 +72,7 @@ class UserService extends GetxService {
     await init();
     var value = box!.values.firstOrNull;
     if (value != null) {
-      value.avatar = await AppConfigService.instance.getObject(value.avatar);
+      value.avatar = await FileService.instance.getObject(value.avatar);
     }
     return value;
   }

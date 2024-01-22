@@ -18,10 +18,10 @@ import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/models/comic/comic_chapter_item_model.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/routes/app_route.dart';
-import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/app_settings_service.dart';
 import 'package:liaz/services/comic_download_service.dart';
 import 'package:liaz/services/comic_service.dart';
+import 'package:liaz/services/file_service.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -282,7 +282,7 @@ class ComicReaderController extends BaseController {
             ComicDownloadService.instance.savePath, comicChapter.paths[i]);
       } else {
         comicChapter.paths[i] =
-            await AppConfigService.instance.getObject(comicChapter.paths[i]);
+            await FileService.instance.getObject(comicChapter.paths[i]);
       }
     }
     detail.value = ComicChapterItemModel(

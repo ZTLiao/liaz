@@ -21,8 +21,6 @@ class AppConfigService extends GetxService {
 
   late Box<AppConfig> box;
 
-  final _fileRequest = FileRequest();
-
   final _appRequest = AppRequest();
 
   Future<void> init() async {
@@ -66,7 +64,4 @@ class AppConfigService extends GetxService {
     Global.publicKey = DecryptUtil.decryptKey(appConfig.publicKey);
   }
 
-  Future<String> getObject(String path) async {
-    return await _fileRequest.getObject(path);
-  }
 }

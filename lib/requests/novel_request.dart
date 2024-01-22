@@ -3,7 +3,7 @@ import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_item_model.dart';
 import 'package:liaz/models/novel/novel_model.dart';
-import 'package:liaz/services/app_config_service.dart';
+import 'package:liaz/services/file_service.dart';
 
 class NovelRequest {
   Future<List<NovelItemModel>> novelUpgrade(int pageNum, int pageSize) async {
@@ -16,7 +16,7 @@ class NovelRequest {
     if (result is List) {
       for (var json in result) {
         var model = NovelItemModel.fromJson(json);
-        model.cover = await AppConfigService.instance.getObject(model.cover);
+        model.cover = await FileService.instance.getObject(model.cover);
         list.add(model);
       }
     }
@@ -28,7 +28,7 @@ class NovelRequest {
     dynamic result = await Request.instance.get('/api/novel/$novelId');
     if (result is Map) {
       model = NovelDetailModel.fromJson(result as Map<String, dynamic>);
-      model.cover = await AppConfigService.instance.getObject(model.cover);
+      model.cover = await FileService.instance.getObject(model.cover);
     }
     return model;
   }
@@ -60,7 +60,7 @@ class NovelRequest {
     });
     if (result is Map) {
       model = NovelModel.fromJson(result as Map<String, dynamic>);
-      model.cover = await AppConfigService.instance.getObject(model.cover);
+      model.cover = await FileService.instance.getObject(model.cover);
     }
     return model;
   }

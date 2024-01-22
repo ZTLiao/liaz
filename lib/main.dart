@@ -115,7 +115,6 @@ Future<void> initServices() async {
     Get.put(ComicDownloadService()).init();
     Get.put(NovelDownloadService()).init();
   });
-  Get.put(RecommendService());
 }
 
 class AppScrollBehavior extends MaterialScrollBehavior {
