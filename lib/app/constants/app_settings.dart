@@ -62,5 +62,5 @@ class AppSettings {
   static final RxDouble screenBrightness = RxDouble(0.5);
 
   /// 屏幕方向
-  static final RxInt comicScreenDirection = RxInt(0);
+  static final RxInt screenDirection = RxInt(0);
 }

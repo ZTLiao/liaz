@@ -71,6 +71,6 @@ class LocalStorage {
   /// 屏幕亮度
   static const String kScreenBrightness = "ScreenBrightness";
 
-  /// 漫画屏幕方向
-  static const String kComicScreenDirection = "ComicScreenDirection";
+  /// 屏幕方向
+  static const String kScreenDirection = "ScreenDirection";
 }

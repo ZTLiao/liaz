@@ -66,8 +66,9 @@ class AppSettingsService extends GetxService {
         .getValue(LocalStorage.kScreenBrightness, 0.5);
     setScreenBrightness(AppSettings.screenBrightness.value);
     //屏幕方向
-    AppSettings.comicScreenDirection.value = LocalStorageService.instance
-        .getValue(LocalStorage.kComicScreenDirection, 0);
+    AppSettings.screenDirection.value = LocalStorageService.instance
+        .getValue(LocalStorage.kScreenDirection, 0);
+    setScreenDirection(AppSettings.screenDirection.value);
   }
 
   void changeTheme() {
@@ -239,10 +240,10 @@ class AppSettingsService extends GetxService {
     }
   }
 
-  void setComicScreenDirection(int value) {
-    AppSettings.comicScreenDirection.value = value;
+  void setScreenDirection(int value) {
+    AppSettings.screenDirection.value = value;
     LocalStorageService.instance
-        .setValue(LocalStorage.kComicScreenDirection, value);
+        .setValue(LocalStorage.kScreenDirection, value);
     if (value == ScreenDirectionEnum.vertical.index) {
       SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

@@ -20,6 +20,7 @@ class IndexRankView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: TabAppBar(
           isScrollable: true,
           tabs: controller.tabs

@@ -12,28 +12,30 @@ class AppEmptyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onTap: () {
-          onRefresh?.call();
-        },
-        child: Padding(
-          padding: AppStyle.edgeInsetsA12,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              LottieBuilder.asset(
-                AppAsset.lottiesEmpty,
-                width: 200,
-                height: 200,
-                repeat: false,
-              ),
-              const Text(
-                AppString.empty,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12, color: AppColor.black33),
-              )
-            ],
+    return SingleChildScrollView(
+      child: Center(
+        child: GestureDetector(
+          onTap: () {
+            onRefresh?.call();
+          },
+          child: Padding(
+            padding: AppStyle.edgeInsetsA12,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LottieBuilder.asset(
+                  AppAsset.lottiesEmpty,
+                  width: 200,
+                  height: 200,
+                  repeat: false,
+                ),
+                const Text(
+                  AppString.empty,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 12, color: AppColor.black33),
+                )
+              ],
+            ),
           ),
         ),
       ),

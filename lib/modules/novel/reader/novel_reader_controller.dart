@@ -15,6 +15,7 @@ import 'package:liaz/app/constants/file_type.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
+import 'package:liaz/app/enums/screen_direction_enum.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/novel/novel_chapter_item_model.dart';
@@ -101,6 +102,9 @@ class NovelReaderController extends BaseController {
   ///屏幕亮度
   var screenBrightness = RxDouble(0);
 
+  /// 屏幕方向
+  RxInt screenDirection = RxInt(0);
+
   /// 是否为本地
   var isLocal = RxBool(false);
 
@@ -116,6 +120,7 @@ class NovelReaderController extends BaseController {
     initBattery();
     readDirection.value = AppSettings.novelReaderDirection.value;
     screenBrightness.value = AppSettings.screenBrightness.value;
+    screenDirection.value = AppSettings.screenDirection.value;
     scrollController.addListener(listenVertical);
     setFull();
     loadContent();
@@ -444,7 +449,7 @@ class NovelReaderController extends BaseController {
         ),
       ),
       constraints: const BoxConstraints(
-        maxHeight: 300,
+        maxHeight: 350,
       ),
       backgroundColor: Colors.black.withOpacity(0.7),
       builder: (context) => Theme(
@@ -641,6 +646,76 @@ class NovelReaderController extends BaseController {
                                 value,
                               );
                             },
+                          ),
+                        ],
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Text(
+                        AppString.screenDirection,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              screenDirection.value =
+                                  ScreenDirectionEnum.vertical.index;
+                              AppSettingsService.instance
+                                  .setScreenDirection(
+                                  ScreenDirectionEnum.vertical.index);
+                            },
+                            style: ButtonStyle(
+                              side: MaterialStatePropertyAll(
+                                BorderSide(
+                                  color: screenDirection.value ==
+                                      ScreenDirectionEnum.vertical.index
+                                      ? Colors.cyan
+                                      : Colors.white,
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              AppString.verticalScreenRead,
+                              style: TextStyle(
+                                color: screenDirection.value ==
+                                    ScreenDirectionEnum.vertical.index
+                                    ? Colors.cyan
+                                    : Colors.white,
+                              ),
+                            ),
+                          ),
+                          AppStyle.hGap4,
+                          TextButton(
+                            onPressed: () {
+                              screenDirection.value =
+                                  ScreenDirectionEnum.horizontal.index;
+                              AppSettingsService.instance
+                                  .setScreenDirection(
+                                  ScreenDirectionEnum.horizontal.index);
+                            },
+                            style: ButtonStyle(
+                              side: MaterialStatePropertyAll(
+                                BorderSide(
+                                  color: screenDirection.value ==
+                                      ScreenDirectionEnum.horizontal.index
+                                      ? Colors.cyan
+                                      : Colors.white,
+                                ),
+                              ),
+                            ),
+                            child: Text(
+                              AppString.horizontalScreenRead,
+                              style: TextStyle(
+                                color: screenDirection.value ==
+                                    ScreenDirectionEnum.horizontal.index
+                                    ? Colors.cyan
+                                    : Colors.white,
+                              ),
+                            ),
                           ),
                         ],
                       ),

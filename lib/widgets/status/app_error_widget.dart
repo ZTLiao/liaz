@@ -18,45 +18,47 @@ class AppErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: GestureDetector(
-        onTap: () {
-          onRefresh?.call();
-        },
-        child: Padding(
-          padding: AppStyle.edgeInsetsA12,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              LottieBuilder.asset(
-                AppAsset.lottiesError,
-                width: 260,
-                repeat: false,
-              ),
-              Text(
-                "$errorMsg\r\n${AppString.refresh}",
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12, color: Colors.grey),
-              ),
-              Visibility(
-                visible: error != null,
-                child: Padding(
-                  padding: AppStyle.edgeInsetsT12,
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      textStyle: Get.textTheme.bodySmall,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    return SingleChildScrollView(
+      child: Center(
+        child: GestureDetector(
+          onTap: () {
+            onRefresh?.call();
+          },
+          child: Padding(
+            padding: AppStyle.edgeInsetsA12,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                LottieBuilder.asset(
+                  AppAsset.lottiesError,
+                  width: 260,
+                  repeat: false,
+                ),
+                Text(
+                  "$errorMsg\r\n${AppString.refresh}",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+                Visibility(
+                  visible: error != null,
+                  child: Padding(
+                    padding: AppStyle.edgeInsetsT12,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        textStyle: Get.textTheme.bodySmall,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      onPressed: () {
+                        ToolUtil.copyText(
+                            "$errorMsg\n${error?.stackTrace?.toString()}");
+                        SmartDialog.showToast(AppString.copeid);
+                      },
+                      child: const Text(AppString.copy),
                     ),
-                    onPressed: () {
-                      ToolUtil.copyText(
-                          "$errorMsg\n${error?.stackTrace?.toString()}");
-                      SmartDialog.showToast(AppString.copeid);
-                    },
-                    child: const Text(AppString.copy),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

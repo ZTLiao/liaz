@@ -22,45 +22,47 @@ class ShareUtil {
       ),
       useSafeArea: true,
       backgroundColor: Get.theme.cardColor,
-      builder: (context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: const Icon(Icons.copy),
-            title: const Text(AppString.copyLink),
-            onTap: () {
-              Get.back();
-              ToolUtil.copyText(url);
-            },
-          ),
-          Visibility(
-            visible: content.isNotEmpty,
-            child: ListTile(
+      builder: (context) => SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
               leading: const Icon(Icons.copy),
-              title: const Text(AppString.copyTitleAndLink),
+              title: const Text(AppString.copyLink),
               onTap: () {
                 Get.back();
-                ToolUtil.copyText("$content\n$url");
+                ToolUtil.copyText(url);
               },
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.public),
-            title: const Text(AppString.openBrower),
-            onTap: () {
-              Get.back();
-              launchUrlString(url, mode: LaunchMode.externalApplication);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.share),
-            title: const Text(AppString.shareSystem),
-            onTap: () {
-              Get.back();
-              Share.share(content.isEmpty ? url : "$content\n$url");
-            },
-          ),
-        ],
+            Visibility(
+              visible: content.isNotEmpty,
+              child: ListTile(
+                leading: const Icon(Icons.copy),
+                title: const Text(AppString.copyTitleAndLink),
+                onTap: () {
+                  Get.back();
+                  ToolUtil.copyText("$content\n$url");
+                },
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.public),
+              title: const Text(AppString.openBrower),
+              onTap: () {
+                Get.back();
+                launchUrlString(url, mode: LaunchMode.externalApplication);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.share),
+              title: const Text(AppString.shareSystem),
+              onTap: () {
+                Get.back();
+                Share.share(content.isEmpty ? url : "$content\n$url");
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

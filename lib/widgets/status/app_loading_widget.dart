@@ -8,12 +8,14 @@ class AppLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: AppStyle.edgeInsetsA12,
-        child: LottieBuilder.asset(
-          AppAsset.lottiesLoading,
-          width: 200,
+    return SingleChildScrollView(
+      child: Center(
+        child: Padding(
+          padding: AppStyle.edgeInsetsA12,
+          child: LottieBuilder.asset(
+            AppAsset.lottiesLoading,
+            width: 200,
+          ),
         ),
       ),
     );

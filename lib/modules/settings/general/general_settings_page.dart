@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/enums/screen_direction_enum.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/modules/settings/general/general_settings_controller.dart';
 import 'package:liaz/services/app_settings_service.dart';
@@ -47,6 +48,67 @@ class GeneralSettingsPage extends StatelessWidget {
                     },
                   ),
                   const Icon(Icons.wb_sunny_outlined),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Text(
+                AppString.screenDirection,
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      AppSettingsService.instance.setScreenDirection(
+                          ScreenDirectionEnum.vertical.index);
+                    },
+                    style: ButtonStyle(
+                      side: MaterialStatePropertyAll(
+                        BorderSide(
+                          color: AppSettings.screenDirection.value ==
+                                  ScreenDirectionEnum.vertical.index
+                              ? Colors.cyan
+                              : Colors.grey,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      AppString.verticalScreenRead,
+                      style: TextStyle(
+                        color: AppSettings.screenDirection.value ==
+                                ScreenDirectionEnum.vertical.index
+                            ? Colors.cyan
+                            : Colors.grey,
+                      ),
+                    ),
+                  ),
+                  AppStyle.hGap4,
+                  TextButton(
+                    onPressed: () {
+                      AppSettingsService.instance.setScreenDirection(
+                          ScreenDirectionEnum.horizontal.index);
+                    },
+                    style: ButtonStyle(
+                      side: MaterialStatePropertyAll(
+                        BorderSide(
+                          color: AppSettings.screenDirection.value ==
+                                  ScreenDirectionEnum.horizontal.index
+                              ? Colors.cyan
+                              : Colors.grey,
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      AppString.horizontalScreenRead,
+                      style: TextStyle(
+                        color: AppSettings.screenDirection.value ==
+                                ScreenDirectionEnum.horizontal.index
+                            ? Colors.cyan
+                            : Colors.grey,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

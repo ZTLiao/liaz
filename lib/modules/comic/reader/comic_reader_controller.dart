@@ -116,7 +116,7 @@ class ComicReaderController extends BaseController {
     if (detail.value.isLong) {
       readDirection.value = ReaderDirectionEnum.upToDown.index;
     }
-    screenDirection.value = AppSettings.comicScreenDirection.value;
+    screenDirection.value = AppSettings.screenDirection.value;
     if (AppSettings.comicReaderFullScreen.value) {
       setFull();
     }
@@ -532,7 +532,7 @@ class ComicReaderController extends BaseController {
                               screenDirection.value =
                                   ScreenDirectionEnum.vertical.index;
                               AppSettingsService.instance
-                                  .setComicScreenDirection(
+                                  .setScreenDirection(
                                       ScreenDirectionEnum.vertical.index);
                             },
                             style: ButtonStyle(
@@ -561,7 +561,7 @@ class ComicReaderController extends BaseController {
                               screenDirection.value =
                                   ScreenDirectionEnum.horizontal.index;
                               AppSettingsService.instance
-                                  .setComicScreenDirection(
+                                  .setScreenDirection(
                                       ScreenDirectionEnum.horizontal.index);
                             },
                             style: ButtonStyle(
