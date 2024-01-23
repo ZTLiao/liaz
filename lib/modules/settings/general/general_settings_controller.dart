@@ -8,6 +8,7 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/services/app_settings_service.dart';
 import 'package:liaz/services/file_item_service.dart';
 import 'package:liaz/services/novel_service.dart';
+import 'package:liaz/services/recommend_service.dart';
 
 class GeneralSettingsController extends GetxController {
   var cacheSize = RxString(AppString.calculateCache);
@@ -37,6 +38,7 @@ class GeneralSettingsController extends GetxController {
       SmartDialog.showToast(AppString.clearFail);
     }
     FileItemService.instance.clear();
+    RecommendService.instance.clear();
     calcCacheSize();
   }
 

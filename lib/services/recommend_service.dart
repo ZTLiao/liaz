@@ -59,6 +59,10 @@ class RecommendService extends GetxService {
         .setValue(LocalStorage.kIndexRecommend, json.encode(list));
   }
 
+  void clear() {
+    LocalStorageService.instance.removeValue(LocalStorage.kIndexRecommend);
+  }
+
   Future<List<RecommendModel>> get() async {
     await LocalStorageService.instance.init();
     var list = LocalStorageService.instance
