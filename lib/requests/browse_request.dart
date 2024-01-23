@@ -1,6 +1,6 @@
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/browse/browse_history_model.dart';
-import 'package:liaz/services/file_service.dart';
+import 'package:liaz/services/file_item_service.dart';
 
 class BrowseRequest {
   void uploadHistory(int objId, int assetType, String title, String cover,
@@ -28,7 +28,7 @@ class BrowseRequest {
     if (result is List) {
       for (var json in result) {
         var model = BrowseHistoryModel.fromJson(json);
-        model.cover = await FileService.instance.getObject(model.cover);
+        model.cover = await FileItemService.instance.getObject(model.cover);
         list.add(model);
       }
     }

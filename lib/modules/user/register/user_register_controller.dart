@@ -8,7 +8,7 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/bucket_constant.dart';
 import 'package:liaz/app/enums/gender_enum.dart';
 import 'package:liaz/app/utils/str_util.dart';
-import 'package:liaz/requests/file_request.dart';
+import 'package:liaz/requests/file_item_request.dart';
 import 'package:liaz/requests/user_request.dart';
 import 'package:liaz/services/user_service.dart';
 
@@ -34,7 +34,7 @@ class UserRegisterController extends GetxController {
   /// 是否显示明文
   RxBool isShowPassword = RxBool(true);
 
-  var fileRequest = FileRequest();
+  var fileRequest = FileItemRequest();
 
   var userRequest = UserRequest();
 

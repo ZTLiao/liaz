@@ -10,4 +10,5 @@ class Db {
   static const comicChapter = 'ComicChapter';
   static const novelChapter = 'NovelChapter';
   static const task = 'Task';
+  static const fileItem = 'FileItem';
 }

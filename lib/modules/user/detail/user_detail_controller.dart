@@ -8,9 +8,9 @@ import 'package:liaz/app/constants/bucket_constant.dart';
 import 'package:liaz/app/enums/gender_enum.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/user.dart';
-import 'package:liaz/requests/file_request.dart';
+import 'package:liaz/requests/file_item_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
-import 'package:liaz/services/file_service.dart';
+import 'package:liaz/services/file_item_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class UserDetailController extends GetxController {
@@ -38,7 +38,7 @@ class UserDetailController extends GetxController {
 
   TextEditingController descriptionController = TextEditingController();
 
-  var fileRequest = FileRequest();
+  var fileRequest = FileItemRequest();
 
   UserDetailController() {
     UserService.instance.get().then((value) {
@@ -230,7 +230,7 @@ class UserDetailController extends GetxController {
     if (pickedFile != null) {
       originAvatar.value = await fileRequest.upload(
           BucketConstant.avatar, File(pickedFile.path));
-      avatar.value = await FileService.instance.getObject(originAvatar.value);
+      avatar.value = await FileItemService.instance.getObject(originAvatar.value);
     }
   }
 }

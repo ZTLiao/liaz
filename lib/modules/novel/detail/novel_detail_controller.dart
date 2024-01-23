@@ -17,9 +17,10 @@ import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_volume_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/novel/detail/novel_history_listener.dart';
-import 'package:liaz/requests/file_request.dart';
+import 'package:liaz/requests/file_item_request.dart';
 import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/file_item_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/user_service.dart';
 
@@ -140,7 +141,7 @@ class NovelDetailController extends BaseController {
     content.value = StrUtil.empty;
     chapterIndex.value = i;
     var path = volume.chapters[i].paths[0];
-    path = await FileRequest().getObject(path);
+    path = await FileItemService.instance.getObject(path);
     content.value = await Request.instance.getResource(path);
   }
 

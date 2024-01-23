@@ -16,6 +16,7 @@ import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/models/db/comic.dart';
 import 'package:liaz/models/db/comic_chapter.dart';
 import 'package:liaz/models/db/device_info.dart';
+import 'package:liaz/models/db/file_item.dart';
 import 'package:liaz/models/db/novel.dart';
 import 'package:liaz/models/db/novel_chapter.dart';
 import 'package:liaz/models/db/oauth2_token.dart';
@@ -94,6 +95,7 @@ Future<void> initHive() async {
   Hive.registerAdapter(ComicChapterAdapter());
   Hive.registerAdapter(NovelChapterAdapter());
   Hive.registerAdapter(TaskAdapter());
+  Hive.registerAdapter(FileItemAdapter());
 }
 
 Future<void> initServices() async {

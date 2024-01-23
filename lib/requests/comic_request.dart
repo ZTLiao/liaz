@@ -3,7 +3,7 @@ import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/comic/comic_item_model.dart';
 import 'package:liaz/models/comic/comic_model.dart';
-import 'package:liaz/services/file_service.dart';
+import 'package:liaz/services/file_item_service.dart';
 
 class ComicRequest {
   Future<List<ComicItemModel>> comicUpgrade(int pageNum, int pageSize) async {
@@ -16,7 +16,7 @@ class ComicRequest {
     if (result is List) {
       for (var json in result) {
         var model = ComicItemModel.fromJson(json);
-        model.cover = await FileService.instance.getObject(model.cover);
+        model.cover = await FileItemService.instance.getObject(model.cover);
         list.add(model);
       }
     }
@@ -28,7 +28,7 @@ class ComicRequest {
     dynamic result = await Request.instance.get('/api/comic/$comicId');
     if (result is Map) {
       model = ComicDetailModel.fromJson(result as Map<String, dynamic>);
-      model.cover = await FileService.instance.getObject(model.cover);
+      model.cover = await FileItemService.instance.getObject(model.cover);
     }
     return model;
   }
@@ -60,7 +60,7 @@ class ComicRequest {
     });
     if (result is Map) {
       model = ComicModel.fromJson(result as Map<String, dynamic>);
-      model.cover = await FileService.instance.getObject(model.cover);
+      model.cover = await FileItemService.instance.getObject(model.cover);
     }
     return model;
   }

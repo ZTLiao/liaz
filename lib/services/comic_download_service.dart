@@ -14,7 +14,7 @@ import 'package:liaz/models/dto/download_task.dart';
 import 'package:liaz/services/comic_chapter_service.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/download_service.dart';
-import 'package:liaz/services/file_service.dart';
+import 'package:liaz/services/file_item_service.dart';
 import 'package:liaz/services/task_service.dart';
 
 import 'package:path/path.dart' as path;
@@ -90,7 +90,7 @@ class ComicDownloadService extends DownloadService {
       comicId: comicId,
     ));
     for (int i = 0; i < urls.length; i++) {
-      urls[i] = await FileService.instance.getObject(urls[i]);
+      urls[i] = await FileItemService.instance.getObject(urls[i]);
     }
     var task = Task(
       taskId: taskId,

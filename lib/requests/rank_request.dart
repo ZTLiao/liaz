@@ -1,6 +1,6 @@
 import 'package:liaz/app/http/request.dart';
 import 'package:liaz/models/rank/rank_item_model.dart';
-import 'package:liaz/services/file_service.dart';
+import 'package:liaz/services/file_item_service.dart';
 
 class RankRequest {
   Future<List<RankItemModel>> getRank(int rankType, int timeType, int assetType,
@@ -16,7 +16,7 @@ class RankRequest {
     if (result is List) {
       for (var json in result) {
         var model = RankItemModel.fromJson(json);
-        model.cover = await FileService.instance.getObject(model.cover);
+        model.cover = await FileItemService.instance.getObject(model.cover);
         list.add(model);
       }
     }
