@@ -82,14 +82,14 @@ class FileItemService extends GetxService {
         put(fileItem);
         if (fileItem.requestUri.isNotEmpty) {
           requestUri = fileItem.requestUri;
-          if (requestUri.startsWith(AppConstant.https) ||
-              requestUri.startsWith(AppConstant.http)) {
-            return requestUri;
-          }
         }
       }
     } else {
       requestUri = path;
+    }
+    if (requestUri.startsWith(AppConstant.https) ||
+        requestUri.startsWith(AppConstant.http)) {
+      return requestUri;
     }
     var bucketTemplate = '{bucketName}';
     var objectTemplate = '{objectName}';
