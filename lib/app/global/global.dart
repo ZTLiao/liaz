@@ -3,7 +3,7 @@ import 'package:liaz/models/db/app_config.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Global {
-  static const String baseUrl = 'http://8.134.215.58:80';
+  static const String baseUrl = 'http://106.53.194.238:80';
 
   static late PackageInfo packageInfo;
 
