@@ -47,16 +47,22 @@ class RecommendModel {
     );
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'recommendId': recommendId,
-        'recommendType': recommendType,
-        'title': title,
-        'showType': showType,
-        'isShowTitle': isShowTitle,
-        'optType': optType,
-        'optValue': optValue,
-        'items': items,
-      };
+  Map<String, dynamic> toJson() {
+    List<Map<String, dynamic>> list = [];
+    for (final RecommendItemModel item in items) {
+      list.add(item.toJson());
+    }
+    return <String, dynamic>{
+      'recommendId': recommendId,
+      'recommendType': recommendType,
+      'title': title,
+      'showType': showType,
+      'isShowTitle': isShowTitle,
+      'optType': optType,
+      'optValue': optValue,
+      'items': list,
+    };
+  }
 
   @override
   String toString() {
