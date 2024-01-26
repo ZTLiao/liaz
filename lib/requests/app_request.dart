@@ -12,7 +12,7 @@ class AppRequest {
     var model = ClientInitModel();
     try {
       dynamic result = await Request.instance.get('/api/client/init');
-      if (result is Map) {
+      if (result != null && result is Map) {
         Map<String, dynamic> json = result as Map<String, dynamic>;
         var keyJson = json['key'] as Map<String, dynamic>;
         if (keyJson.isNotEmpty) {

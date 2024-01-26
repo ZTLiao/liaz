@@ -9,7 +9,7 @@ class ComicChapterRequest {
         await Request.instance.get('/api/comic/chapter', queryParameters: {
       'comicChapterId': comicChapterId,
     });
-    if (result is Map) {
+    if (result != null && result is Map) {
       model = ComicChapterModel.fromJson(result as Map<String, dynamic>);
       for (int i = 0; i < model.paths.length; i++) {
         model.paths[i] = await FileItemService.instance.getObject(model.paths[i]);

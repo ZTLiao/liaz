@@ -6,7 +6,7 @@ class RecommendRequest {
   Future<List<RecommendModel>> recommendByPosition(int position) async {
     List<RecommendModel> list = [];
     dynamic result = await Request.instance.get('/api/recommend/$position');
-    if (result is List) {
+    if (result != null && result is List) {
       for (var json in result) {
         var model = RecommendModel.fromJson(json);
         for (int i = 0; i < model.items.length; i++) {
@@ -25,7 +25,7 @@ class RecommendRequest {
         await Request.instance.get('/api/recommend/comic', queryParameters: {
       'comicId': comicId,
     });
-    if (result is List) {
+    if (result != null && result is List) {
       for (var json in result) {
         var model = RecommendModel.fromJson(json);
         for (int i = 0; i < model.items.length; i++) {
@@ -44,7 +44,7 @@ class RecommendRequest {
         await Request.instance.get('/api/recommend/novel', queryParameters: {
       'novelId': novelId,
     });
-    if (result is List) {
+    if (result != null && result is List) {
       for (var json in result) {
         var model = RecommendModel.fromJson(json);
         for (int i = 0; i < model.items.length; i++) {

@@ -15,7 +15,7 @@ class VerifyCodeRequest {
       'username': username,
       'verifyCode': verifyCode,
     });
-    if (result is bool) {
+    if (result != null && result is bool) {
       return result;
     }
     return false;

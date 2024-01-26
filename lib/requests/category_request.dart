@@ -5,7 +5,7 @@ class CategoryRequest {
   Future<List<CategoryModel>> getCategory() async {
     List<CategoryModel> list = [];
     dynamic result = await Request.instance.get('/api/category');
-    if (result is List) {
+    if (result != null && result is List) {
       for (var json in result) {
         list.add(CategoryModel.fromJson(json));
       }

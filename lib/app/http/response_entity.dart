@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:liaz/app/utils/convert_util.dart';
+import 'package:liaz/app/utils/str_util.dart';
 
 class ResponseEntity {
   int code;
@@ -9,8 +11,8 @@ class ResponseEntity {
   int timestamp;
 
   ResponseEntity({
-    required this.code,
-    required this.message,
+    this.code = HttpStatus.ok,
+    this.message = StrUtil.empty,
     this.data,
     required this.timestamp,
   });

@@ -18,7 +18,7 @@ class UserRequest {
       'password': password,
       'grantType': grantType,
     });
-    if (result is Map) {
+    if (result != null && result is Map) {
       model = OAuth2Token.fromJson(result as Map<String, dynamic>);
       var accessToken = model.accessToken;
       if (accessToken.isNotEmpty) {
@@ -45,7 +45,7 @@ class UserRequest {
       'gender': gender,
       'grantType': grantType,
     });
-    if (result is Map) {
+    if (result != null && result is Map) {
       model = OAuth2Token.fromJson(result as Map<String, dynamic>);
     }
     return model;
@@ -56,7 +56,7 @@ class UserRequest {
         await Request.instance.get('/api/user/get', queryParameters: {
       'userId': userId,
     });
-    if (result is Map) {
+    if (result != null && result is Map) {
       return User.fromJson(result as Map<String, dynamic>);
     }
     return null;
@@ -83,7 +83,7 @@ class UserRequest {
       'gender': gender,
       'description': description,
     });
-    if (result is Map) {
+    if (result != null && result is Map) {
       user = User.fromJson(result as Map<String, dynamic>);
     }
     return user;

@@ -13,7 +13,7 @@ class ComicRequest {
       'pageNum': pageNum,
       'pageSize': pageSize,
     });
-    if (result is List) {
+    if (result != null && result is List) {
       for (var json in result) {
         var model = ComicItemModel.fromJson(json);
         model.cover = await FileItemService.instance.getObject(model.cover);
@@ -26,7 +26,7 @@ class ComicRequest {
   Future<ComicDetailModel> comicDetail(int comicId) async {
     ComicDetailModel model = ComicDetailModel.empty();
     dynamic result = await Request.instance.get('/api/comic/$comicId');
-    if (result is Map) {
+    if (result != null && result is Map) {
       model = ComicDetailModel.fromJson(result as Map<String, dynamic>);
       model.cover = await FileItemService.instance.getObject(model.cover);
     }
@@ -39,7 +39,7 @@ class ComicRequest {
         await Request.instance.get('/api/comic/catalogue', queryParameters: {
       'comicChapterId': comicChapterId,
     });
-    if (result is List) {
+    if (result != null && result is List) {
       for (int i = result.length - 1; i >= 0; i--) {
         var model = ComicChapterModel.fromJson(result[i]);
         list.add(model);
@@ -58,7 +58,7 @@ class ComicRequest {
         await Request.instance.get('/api/comic/get', queryParameters: {
       'comicId': comicId,
     });
-    if (result is Map) {
+    if (result != null && result is Map) {
       model = ComicModel.fromJson(result as Map<String, dynamic>);
       model.cover = await FileItemService.instance.getObject(model.cover);
     }

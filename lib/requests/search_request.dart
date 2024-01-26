@@ -12,7 +12,7 @@ class SearchRequest {
       'pageNum': pageNum,
       'pageSize': pageSize,
     });
-    if (result is List) {
+    if (result != null && result is List) {
       for (var json in result) {
         var model = SearchItemModel.fromJson(json);
         model.cover = await FileItemService.instance.getObject(model.cover);
@@ -25,7 +25,7 @@ class SearchRequest {
   Future<List<SearchItemModel>> hotRank() async {
     List<SearchItemModel> list = [];
     dynamic result = await Request.instance.get('/api/search/hot/rank');
-    if (result is List) {
+    if (result != null && result is List) {
       for (var json in result) {
         list.add(SearchItemModel.fromJson(json));
       }

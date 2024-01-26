@@ -23,7 +23,7 @@ class FileItemRequest {
   Future<FileItem> getTemporaryObject(String path) async {
     var model = FileItem();
     var result = await Request.instance.get('/api/file/temporary$path');
-    if (result is Map) {
+    if (result != null && result is Map) {
       model = FileItem.fromJson(result as Map<String, dynamic>);
     }
     return model;

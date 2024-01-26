@@ -25,7 +25,7 @@ class BrowseRequest {
       'pageNum': pageNum,
       'pageSize': pageSize,
     });
-    if (result is List) {
+    if (result != null && result is List) {
       for (var json in result) {
         var model = BrowseHistoryModel.fromJson(json);
         model.cover = await FileItemService.instance.getObject(model.cover);

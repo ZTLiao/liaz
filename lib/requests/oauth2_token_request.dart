@@ -7,7 +7,7 @@ class OAuth2TokenRequest {
     dynamic result = await Request.instance.post('/oauth/refresh/token', data: {
       'token': refreshToken,
     });
-    if (result is Map) {
+    if (result != null && result is Map) {
       var model = OAuth2Token.fromJson(result as Map<String, dynamic>);
       var accessToken = model.accessToken;
       if (accessToken.isNotEmpty) {
