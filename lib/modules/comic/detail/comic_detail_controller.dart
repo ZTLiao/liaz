@@ -80,6 +80,7 @@ class ComicDetailController extends BaseController {
             authorRecommend.recommendId = relateRecommend.recommendId;
             authorRecommend.title =
                 authorRecommend.title + StrUtil.space + AppString.works;
+            authorRecommend.optType = relateRecommend.optType;
             recommends.add(authorRecommend);
           }
         } else if (recommendType == RecommendTypeEnum.category.index) {
