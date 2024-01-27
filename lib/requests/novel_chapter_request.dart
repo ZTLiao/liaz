@@ -1,4 +1,4 @@
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/services/file_item_service.dart';
 
@@ -6,7 +6,7 @@ class NovelChapterRequest {
   Future<NovelChapterModel> getNovelChapter(int novelChapterId) async {
     NovelChapterModel model = NovelChapterModel.empty();
     dynamic result =
-        await Request.instance.get('/api/novel/chapter', queryParameters: {
+        await DioRequest.instance.get('/api/novel/chapter', queryParameters: {
       'novelChapterId': novelChapterId,
     });
     if (result != null && result is Map) {

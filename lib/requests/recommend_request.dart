@@ -1,11 +1,11 @@
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/services/file_item_service.dart';
 
 class RecommendRequest {
   Future<List<RecommendModel>> recommendByPosition(int position) async {
     List<RecommendModel> list = [];
-    dynamic result = await Request.instance.get('/api/recommend/$position');
+    dynamic result = await DioRequest.instance.get('/api/recommend/$position');
     if (result != null && result is List) {
       for (var json in result) {
         var model = RecommendModel.fromJson(json);
@@ -22,7 +22,7 @@ class RecommendRequest {
   Future<List<RecommendModel>> recommendComic(int comicId) async {
     List<RecommendModel> list = [];
     dynamic result =
-        await Request.instance.get('/api/recommend/comic', queryParameters: {
+        await DioRequest.instance.get('/api/recommend/comic', queryParameters: {
       'comicId': comicId,
     });
     if (result != null && result is List) {
@@ -41,7 +41,7 @@ class RecommendRequest {
   Future<List<RecommendModel>> recommendNovel(int novelId) async {
     List<RecommendModel> list = [];
     dynamic result =
-        await Request.instance.get('/api/recommend/novel', queryParameters: {
+        await DioRequest.instance.get('/api/recommend/novel', queryParameters: {
       'novelId': novelId,
     });
     if (result != null && result is List) {

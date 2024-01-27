@@ -1,4 +1,4 @@
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/models/category/category_item_model.dart';
 import 'package:liaz/services/file_item_service.dart';
 
@@ -7,7 +7,7 @@ class BookshelfRequest {
       int sortType, int pageNum, int pageSize) async {
     List<CategoryItemModel> list = <CategoryItemModel>[];
     dynamic result =
-        await Request.instance.get('/api/bookshelf/comic', queryParameters: {
+        await DioRequest.instance.get('/api/bookshelf/comic', queryParameters: {
       'sortType': sortType,
       'pageNum': pageNum,
       'pageSize': pageSize,
@@ -26,7 +26,7 @@ class BookshelfRequest {
       int sortType, int pageNum, int pageSize) async {
     List<CategoryItemModel> list = <CategoryItemModel>[];
     dynamic result =
-        await Request.instance.get('/api/bookshelf/novel', queryParameters: {
+        await DioRequest.instance.get('/api/bookshelf/novel', queryParameters: {
       'sortType': sortType,
       'pageNum': pageNum,
       'pageSize': pageSize,

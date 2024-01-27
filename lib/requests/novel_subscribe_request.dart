@@ -1,8 +1,8 @@
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 
 class NovelSubscribeRequest {
   Future<void> subscribe(int novelId, int isSubscribe) async {
-    return await Request.instance.post('/api/novel/subscribe', data: {
+    return await DioRequest.instance.post('/api/novel/subscribe', data: {
       'novelId': novelId,
       'isSubscribe': isSubscribe,
     });

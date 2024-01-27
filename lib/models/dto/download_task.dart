@@ -7,7 +7,7 @@ import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/enums/download_status_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/dialog_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -104,7 +104,7 @@ class DownloadTask {
         bytes = await loadlFile.readAsBytes();
       } else {
         cancelToken = CancelToken();
-        bytes = await Request.instance.getResource(
+        bytes = await DioRequest.instance.getResource(
           url,
           responseType: ResponseType.bytes,
           cancel: cancelToken,

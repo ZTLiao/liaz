@@ -1,5 +1,5 @@
 import 'package:liaz/app/global/global.dart';
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/models/db/oauth2_token.dart';
 import 'package:liaz/models/db/user.dart';
 
@@ -13,7 +13,7 @@ class UserRequest {
       expiry: 0,
       userId: 0,
     );
-    dynamic result = await Request.instance.post('/oauth/sign/in', data: {
+    dynamic result = await DioRequest.instance.post('/oauth/sign/in', data: {
       'username': username,
       'password': password,
       'grantType': grantType,
@@ -37,7 +37,7 @@ class UserRequest {
       expiry: 0,
       userId: 0,
     );
-    dynamic result = await Request.instance.post('/oauth/sign/up', data: {
+    dynamic result = await DioRequest.instance.post('/oauth/sign/up', data: {
       'username': username,
       'password': password,
       'avatar': avatar,
@@ -53,7 +53,7 @@ class UserRequest {
 
   Future<User?> getUser(int userId) async {
     dynamic result =
-        await Request.instance.get('/api/user/get', queryParameters: {
+        await DioRequest.instance.get('/api/user/get', queryParameters: {
       'userId': userId,
     });
     if (result != null && result is Map) {
@@ -64,7 +64,7 @@ class UserRequest {
 
   Future<void> resetPassword(
       String username, String verifyCode, String newPassword) async {
-    return await Request.instance.post('/api/account/reset/password', data: {
+    return await DioRequest.instance.post('/api/account/reset/password', data: {
       'username': username,
       'verifyCode': verifyCode,
       'newPassword': newPassword,
@@ -74,7 +74,7 @@ class UserRequest {
   Future<User> updateUser(int userId, String avatar, String nickname,
       String phone, String email, int gender, String description) async {
     var user = User.empty();
-    var result = await Request.instance.post('/api/user/update', data: {
+    var result = await DioRequest.instance.post('/api/user/update', data: {
       'userId': userId,
       'avatar': avatar,
       'nickname': nickname,
@@ -90,11 +90,11 @@ class UserRequest {
   }
 
   Future<void> signOut() async {
-    return await Request.instance.post("/oauth/sign/out");
+    return await DioRequest.instance.post("/oauth/sign/out");
   }
 
   Future<void> setPassword(String password) async {
-    return await Request.instance.post("/api/account/set/password", data: {
+    return await DioRequest.instance.post("/api/account/set/password", data: {
       'password': password,
     });
   }

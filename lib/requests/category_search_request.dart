@@ -1,4 +1,4 @@
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/models/category/category_item_model.dart';
 import 'package:liaz/services/file_item_service.dart';
 
@@ -7,7 +7,7 @@ class CategorySearchRequest {
       int assetType, int categoryId, int pageNum, int pageSize) async {
     List<CategoryItemModel> list = [];
     dynamic result =
-        await Request.instance.get('/api/category/search', queryParameters: {
+        await DioRequest.instance.get('/api/category/search', queryParameters: {
       'assetType': assetType,
       'categoryId': categoryId,
       'pageNum': pageNum,

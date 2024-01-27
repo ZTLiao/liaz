@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/decrypt_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
@@ -11,7 +11,7 @@ class AppRequest {
   Future<ClientInitModel> clientInit() async {
     var model = ClientInitModel();
     try {
-      dynamic result = await Request.instance.get('/api/client/init');
+      dynamic result = await DioRequest.instance.get('/api/client/init');
       if (result != null && result is Map) {
         Map<String, dynamic> json = result as Map<String, dynamic>;
         var keyJson = json['key'] as Map<String, dynamic>;

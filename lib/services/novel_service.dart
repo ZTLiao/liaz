@@ -7,7 +7,7 @@ import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/db.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/global/global.dart';
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/db/novel.dart';
@@ -123,7 +123,7 @@ class NovelService {
     if (content.isNotEmpty) {
       return content;
     }
-    content = await Request.instance
+    content = await DioRequest.instance
         .getResource(await FileItemService.instance.getObject(uniqueId));
     if (content.isNotEmpty) {
       saveNovelContent(uniqueId: uniqueId, content: content);

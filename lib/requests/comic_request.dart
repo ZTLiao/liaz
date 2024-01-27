@@ -1,4 +1,4 @@
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/comic/comic_item_model.dart';
@@ -9,7 +9,7 @@ class ComicRequest {
   Future<List<ComicItemModel>> comicUpgrade(int pageNum, int pageSize) async {
     List<ComicItemModel> list = [];
     dynamic result =
-        await Request.instance.get('/api/comic/upgrade', queryParameters: {
+        await DioRequest.instance.get('/api/comic/upgrade', queryParameters: {
       'pageNum': pageNum,
       'pageSize': pageSize,
     });
@@ -25,7 +25,7 @@ class ComicRequest {
 
   Future<ComicDetailModel> comicDetail(int comicId) async {
     ComicDetailModel model = ComicDetailModel.empty();
-    dynamic result = await Request.instance.get('/api/comic/$comicId');
+    dynamic result = await DioRequest.instance.get('/api/comic/$comicId');
     if (result != null && result is Map) {
       model = ComicDetailModel.fromJson(result as Map<String, dynamic>);
       model.cover = await FileItemService.instance.getObject(model.cover);
@@ -36,7 +36,7 @@ class ComicRequest {
   Future<List<ComicChapterModel>> getComicCatalogue(int comicChapterId) async {
     List<ComicChapterModel> list = [];
     dynamic result =
-        await Request.instance.get('/api/comic/catalogue', queryParameters: {
+        await DioRequest.instance.get('/api/comic/catalogue', queryParameters: {
       'comicChapterId': comicChapterId,
     });
     if (result != null && result is List) {
@@ -55,7 +55,7 @@ class ComicRequest {
       cover: '',
     );
     dynamic result =
-        await Request.instance.get('/api/comic/get', queryParameters: {
+        await DioRequest.instance.get('/api/comic/get', queryParameters: {
       'comicId': comicId,
     });
     if (result != null && result is Map) {

@@ -1,4 +1,4 @@
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/models/search/search_item_model.dart';
 import 'package:liaz/services/file_item_service.dart';
 
@@ -7,7 +7,7 @@ class SearchRequest {
       String key, int pageNum, int pageSize) async {
     List<SearchItemModel> list = [];
     dynamic result =
-        await Request.instance.get('/api/search', queryParameters: {
+        await DioRequest.instance.get('/api/search', queryParameters: {
       'key': key,
       'pageNum': pageNum,
       'pageSize': pageSize,
@@ -24,7 +24,7 @@ class SearchRequest {
 
   Future<List<SearchItemModel>> hotRank() async {
     List<SearchItemModel> list = [];
-    dynamic result = await Request.instance.get('/api/search/hot/rank');
+    dynamic result = await DioRequest.instance.get('/api/search/hot/rank');
     if (result != null && result is List) {
       for (var json in result) {
         list.add(SearchItemModel.fromJson(json));

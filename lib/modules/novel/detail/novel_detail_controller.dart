@@ -8,7 +8,7 @@ import 'package:liaz/app/enums/recommend_position_enum.dart';
 import 'package:liaz/app/enums/recommend_type_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/global/global.dart';
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
@@ -142,7 +142,7 @@ class NovelDetailController extends BaseController {
     chapterIndex.value = i;
     var path = volume.chapters[i].paths[0];
     path = await FileItemService.instance.getObject(path);
-    content.value = await Request.instance.getResource(path);
+    content.value = await DioRequest.instance.getResource(path);
   }
 
   void share() {

@@ -7,7 +7,7 @@ import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/error/app_error.dart';
 import 'package:liaz/app/global/global.dart';
-import 'package:liaz/app/http/response_entity.dart';
+import 'package:liaz/app/http/dio_response.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/http/interceptor/public_interceptor.dart';
 import 'package:liaz/app/utils/sign_util.dart';
@@ -15,21 +15,21 @@ import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/oauth2_token_service.dart';
 
-class Request {
+class DioRequest {
   static const int _connectTimeout = 60;
   static const int _receiveTimeout = 60;
   static const int _sendTimeout = 60;
 
-  static Request? _request;
+  static DioRequest? _request;
 
-  static Request get instance {
-    _request ??= Request();
+  static DioRequest get instance {
+    _request ??= DioRequest();
     return _request!;
   }
 
   late Dio dio;
 
-  Request() {
+  DioRequest() {
     dio = Dio(
       BaseOptions(
         connectTimeout: const Duration(
@@ -47,10 +47,10 @@ class Request {
   }
 
   dynamic responseBody(Response<dynamic> response) {
-    ResponseEntity? result;
+    DioResponse? result;
     if (response.statusCode == HttpStatus.ok) {
       try {
-        result = ResponseEntity.fromJson(response.data);
+        result = DioResponse.fromJson(response.data);
       } catch (error, stackTrace) {
         Log.e(error.toString(), stackTrace);
         SmartDialog.showToast(AppString.serverError);
@@ -75,14 +75,14 @@ class Request {
       }
     } else {
       var data = response.data;
-      result = ResponseEntity(
+      result = DioResponse(
         code: HttpStatus.internalServerError,
         message: AppString.serverError,
         timestamp: DateTime.now().millisecondsSinceEpoch,
       );
       if (data is Map) {
         try {
-          result = ResponseEntity.fromJson(response.data);
+          result = DioResponse.fromJson(response.data);
         } catch (error, stackTrace) {
           Log.e(error.toString(), stackTrace);
           SmartDialog.showToast(AppString.serverError);

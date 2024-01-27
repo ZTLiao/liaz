@@ -1,4 +1,4 @@
-import 'package:liaz/app/http/request.dart';
+import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/models/rank/rank_item_model.dart';
 import 'package:liaz/services/file_item_service.dart';
 
@@ -6,7 +6,7 @@ class RankRequest {
   Future<List<RankItemModel>> getRank(int rankType, int timeType, int assetType,
       int pageNum, int pageSize) async {
     List<RankItemModel> list = [];
-    var result = await Request.instance.get("/api/rank", queryParameters: {
+    var result = await DioRequest.instance.get("/api/rank", queryParameters: {
       'rankType': rankType,
       'timeType': timeType,
       'assetType': assetType,
