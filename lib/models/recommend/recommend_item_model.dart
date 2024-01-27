@@ -25,10 +25,12 @@ class RecommendItemModel {
   factory RecommendItemModel.fromJson(Map<String, dynamic> json) {
     int objId = 0;
     var objIdStr = json['objId'];
-    if (objIdStr is String && (objIdStr).isNotEmpty) {
-      objId = int.parse(objIdStr);
-    } else {
-      objId = objIdStr;
+    if (objIdStr != null) {
+      if (objIdStr is String && objIdStr.isNotEmpty) {
+        objId = int.parse(objIdStr);
+      } else if (objIdStr is int) {
+        objId = objIdStr;
+      }
     }
     return RecommendItemModel(
       recommendItemId: ConvertUtil.asT<int>(json['recommendItemId'])!,
