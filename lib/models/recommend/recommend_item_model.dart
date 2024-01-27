@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/convert_util.dart';
 
 class RecommendItemModel {
@@ -26,6 +27,8 @@ class RecommendItemModel {
     var objIdStr = json['objId'];
     if (objIdStr is String && (objIdStr).isNotEmpty) {
       objId = int.parse(objIdStr);
+    } else {
+      objId = objIdStr;
     }
     return RecommendItemModel(
       recommendItemId: ConvertUtil.asT<int>(json['recommendItemId'])!,
@@ -38,15 +41,17 @@ class RecommendItemModel {
     );
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'recommendItemId': recommendItemId,
-        'title': title,
-        'subTitle': subTitle,
-        'showValue': showValue,
-        'skipType': skipType,
-        'skipValue': skipValue,
-        'objId': objId,
-      };
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'recommendItemId': recommendItemId,
+      'title': title,
+      'subTitle': subTitle,
+      'showValue': showValue,
+      'skipType': skipType,
+      'skipValue': skipValue,
+      'objId': objId,
+    };
+  }
 
   @override
   String toString() {

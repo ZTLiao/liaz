@@ -298,9 +298,11 @@ class ComicReaderController extends BaseController {
     currentIndex.value = comicChapter.currentIndex;
     comicChapterId = comicChapter.comicChapterId;
     isLocal.value = comicChapter.isLocal;
-    Future.delayed(const Duration(milliseconds: 100), () {
-      jumpToPage(currentIndex.value);
-    });
+    if (currentIndex.value != 0) {
+      Future.delayed(const Duration(milliseconds: 400), () {
+        jumpToPage(currentIndex.value);
+      });
+    }
   }
 
   void jumpToPage(int page, {bool anime = false}) {

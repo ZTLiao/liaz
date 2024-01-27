@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/local_storage.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/enums/skip_type_enum.dart';
+import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
@@ -24,28 +25,31 @@ class RecommendService extends GetxService {
     var skipType = item.skipType;
     var skipValue = item.skipValue;
     var objId = item.objId;
+    Log.d("skipType : $skipType, skipValue : $skipValue, objId : $objId");
     //H5
     if (SkipTypeEnum.h5.index == skipType) {
       AppNavigator.toWebView(skipValue!);
     } else {
-      var isUpgrade = item.isUpgrade;
-      if (isUpgrade != null && isUpgrade == YesOrNo.yes) {
-        //漫画
-        if (SkipTypeEnum.comic.index == skipType) {
-          ComicService.instance.toReadChapter(int.parse(skipValue!));
-          //小说
-        } else if (SkipTypeEnum.novel.index == skipType) {
-          NovelService.instance.toReadChapter(int.parse(skipValue!));
-        }
-      } else {
-        if (objId != null) {
+      if (skipValue != null && int.parse(skipValue) != 0) {
+        var isUpgrade = item.isUpgrade;
+        if (isUpgrade != null && isUpgrade == YesOrNo.yes) {
           //漫画
           if (SkipTypeEnum.comic.index == skipType) {
-            ComicService.instance.toComicDetail(objId);
+            ComicService.instance.toReadChapter(int.parse(skipValue));
             //小说
           } else if (SkipTypeEnum.novel.index == skipType) {
-            NovelService.instance.toNovelDetail(objId);
+            NovelService.instance.toReadChapter(int.parse(skipValue));
           }
+          return;
+        }
+      }
+      if (objId != null && objId != 0) {
+        //漫画
+        if (SkipTypeEnum.comic.index == skipType) {
+          ComicService.instance.toComicDetail(objId);
+          //小说
+        } else if (SkipTypeEnum.novel.index == skipType) {
+          NovelService.instance.toNovelDetail(objId);
         }
       }
     }
@@ -56,7 +60,7 @@ class RecommendService extends GetxService {
       return;
     }
     LocalStorageService.instance
-        .setValue(LocalStorage.kIndexRecommend, json.encode(list));
+        .setValue(LocalStorage.kIndexRecommend, list.toString());
   }
 
   void clear() {

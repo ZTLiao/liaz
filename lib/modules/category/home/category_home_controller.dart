@@ -86,10 +86,10 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
 
   void onReadChapter(ItemModel item) async {
     var skipType = item.skipType;
-    if (item.objId == null) {
+    if (item.skipValue == null) {
       return;
     }
-    var objId = item.objId!;
+    var objId = int.parse(item.skipValue!);
     if (SkipTypeEnum.comic.index == skipType) {
       var chapters = await comicRequest.getComicCatalogue(objId);
       AppNavigator.toComicReader(
