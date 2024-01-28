@@ -192,4 +192,5 @@ class AppString {
   static const levelUp = '升级';
   static const alreadyLatestVersion = '已是最新版本!';
   static const close = 'close';
+  static const loadingMore = '加载更多';
 }

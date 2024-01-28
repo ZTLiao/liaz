@@ -37,7 +37,9 @@ class ComicVolumeModel {
       volumeName: ConvertUtil.asT<String>(json['volumeName']),
       flag: flag,
       seqNo: ConvertUtil.asT<int>(json['seqNo']),
-      sortType: RxInt((flag & ComicFlag.hide) >> 3),
+      sortType: RxInt((flag & ComicFlag.sort) != 0
+          ? SortTypeEnum.desc.index
+          : SortTypeEnum.asc.index),
       chapters: RxList(chapters),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:liaz/app/constants/comic_flag.dart';
 import 'package:liaz/app/constants/novel_flag.dart';
+import 'package:liaz/app/enums/sort_type_enum.dart';
 import 'package:liaz/app/utils/convert_util.dart';
 import 'package:liaz/models/novel/novel_volume_model.dart';
 
@@ -120,7 +121,9 @@ class NovelDetailModel {
       direction: ConvertUtil.asT<int>(json['direction'])!,
       isSerializated: (flag & NovelFlag.serializated) != 0,
       isHide: (flag & NovelFlag.hide) != 0,
-      sortType: (flag & ComicFlag.sort) >> 3,
+      sortType: (flag & NovelFlag.sort) != 0
+          ? SortTypeEnum.desc.index
+          : SortTypeEnum.asc.index,
       volumes: volumes,
       isSubscribe: ConvertUtil.asT<bool>(json['isSubscribe'])!,
       browseChapterId: ConvertUtil.asT<int>(json['browseChapterId'])!,

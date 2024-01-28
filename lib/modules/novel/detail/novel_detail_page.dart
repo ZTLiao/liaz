@@ -367,9 +367,33 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: volume.chapters.length,
+                          itemCount: (!volume.isLoadingMore.value)
+                              ? (volume.pageSize.value > volume.chapters.length)
+                                  ? volume.chapters.length
+                                  : volume.pageSize.value
+                              : volume.chapters.length,
                           itemBuilder: (context, i) {
                             var item = volume.chapters[i];
+                            if (!volume.isLoadingMore.value &&
+                                i == (volume.pageSize.value - 1)) {
+                              return ListTile(
+                                title: const Column(
+                                  children: [
+                                    Center(
+                                      child: Text(AppString.loadingMore),
+                                    ),
+                                    AppStyle.vGap60
+                                  ],
+                                ),
+                                contentPadding: AppStyle.edgeInsetsA4,
+                                visualDensity: const VisualDensity(
+                                  vertical: VisualDensity.minimumDensity,
+                                ),
+                                onTap: () {
+                                  volume.pageSize.value += 15;
+                                },
+                              );
+                            }
                             return ListTile(
                               title: Column(
                                 children: [
@@ -456,7 +480,8 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                               ),
                               contentPadding: AppStyle.edgeInsetsA4,
                               visualDensity: const VisualDensity(
-                                  vertical: VisualDensity.minimumDensity),
+                                vertical: VisualDensity.minimumDensity,
+                              ),
                               onTap: () {
                                 controller.chapterIndex.value = i;
                                 controller.onReadChapter(volume);

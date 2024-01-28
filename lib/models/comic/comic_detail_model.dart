@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:liaz/app/constants/comic_flag.dart';
+import 'package:liaz/app/enums/sort_type_enum.dart';
 import 'package:liaz/app/utils/convert_util.dart';
 import 'package:liaz/models/comic/comic_volume_model.dart';
 
@@ -125,7 +126,9 @@ class ComicDetailModel {
       isSerializated: (flag & ComicFlag.serializated) != 0,
       isLong: (flag & ComicFlag.long) != 0,
       isHide: (flag & ComicFlag.hide) != 0,
-      sortType: (flag & ComicFlag.sort) >> 3,
+      sortType: (flag & ComicFlag.sort) != 0
+          ? SortTypeEnum.desc.index
+          : SortTypeEnum.asc.index,
       volumes: volumes,
       isSubscribe: ConvertUtil.asT<bool>(json['isSubscribe'])!,
       browseChapterId: ConvertUtil.asT<int>(json['browseChapterId'])!,
