@@ -11,7 +11,7 @@ import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/constants/file_type.dart';
+import 'package:liaz/app/constants/bucket_constant.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
@@ -78,8 +78,8 @@ class NovelReaderController extends BaseController {
   /// 图片
   var pictures = RxList<String>([]);
 
-  /// 是否包含图片
-  var hasPicture = RxBool(false);
+  /// 是否全是图片
+  var isAllPicture = RxBool(false);
 
   /// 是否显示控制器
   var showControls = RxBool(false);
@@ -244,26 +244,24 @@ class NovelReaderController extends BaseController {
     var types = chapter.types;
     var sb = StringBuffer();
     for (int i = 0; i < paths.length; i++) {
-      var type = types[i];
       if (isLocal.value) {
-        if (type == FileType.textPlain) {
+        if (paths[i].contains(BucketConstant.novel)) {
           sb.write(await File(
                   path.join(NovelDownloadService.instance.savePath, paths[i]))
               .readAsString());
-        } else if (type == FileType.imageJpeg) {
+        } else if (paths[i].contains(BucketConstant.inset)) {
           pictures.add(paths[i]);
-          hasPicture.value = true;
         }
       } else {
-        if (type == FileType.textPlain) {
+        if (paths[i].contains(BucketConstant.novel)) {
           sb.write(await NovelService.instance.getContent(paths[i]));
-        } else if (type == FileType.imageJpeg) {
+        } else if (paths[i].contains(BucketConstant.inset)) {
           paths[i] = await FileItemService.instance.getObject(paths[i]);
           pictures.add(paths[i]);
-          hasPicture.value = true;
         }
       }
     }
+    isAllPicture.value = pictures.isNotEmpty && content.value.isEmpty;
     content.value = sb.toString();
     detail.value = NovelChapterItemModel(
       novelChapterId: chapter.novelChapterId,
@@ -490,7 +488,7 @@ class NovelReaderController extends BaseController {
                             onChanged: (value) {
                               readDirection.value = value!;
                               AppSettingsService.instance
-                                  .setComicReaderDirection(value);
+                                  .setNovelReaderDirection(value);
                             },
                           ),
                           Text(
@@ -508,7 +506,7 @@ class NovelReaderController extends BaseController {
                             onChanged: (value) {
                               readDirection.value = value!;
                               AppSettingsService.instance
-                                  .setComicReaderDirection(value);
+                                  .setNovelReaderDirection(value);
                             },
                           ),
                           Text(
@@ -526,7 +524,7 @@ class NovelReaderController extends BaseController {
                             onChanged: (value) {
                               readDirection.value = value!;
                               AppSettingsService.instance
-                                  .setComicReaderDirection(value);
+                                  .setNovelReaderDirection(value);
                             },
                           ),
                           Text(

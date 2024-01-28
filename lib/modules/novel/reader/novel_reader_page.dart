@@ -40,19 +40,19 @@ class NovelReaderPage extends GetView<NovelReaderController> {
         data: AppStyle.darkTheme,
         child: Obx(
           () => Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             backgroundColor:
                 AppColor.novelThemes[AppSettings.novelReaderTheme.value]!.first,
             body: Stack(
               children: [
                 Obx(
                   () => Offstage(
-                    offstage: false,
+                    offstage: controller.content.value.isEmpty,
                     child: GestureDetector(
                       onTap: () {
                         controller.setShowControls();
                       },
-                      child: controller.hasPicture.value
+                      child: controller.isAllPicture.value
                           ? buildPicture()
                           : (controller.readDirection.value ==
                                   ReaderDirectionEnum.upToDown.index
@@ -197,7 +197,8 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                           children: [
                             buildSilderBar(),
                             Material(
-                              color: AppStyle.darkTheme.cardColor.withOpacity(0),
+                              color:
+                                  AppStyle.darkTheme.cardColor.withOpacity(0),
                               child: Row(
                                 children: [
                                   Expanded(
@@ -259,7 +260,10 @@ class NovelReaderPage extends GetView<NovelReaderController> {
           ),
           padding: AppStyle.edgeInsetsA12,
           child: const Text(
-            StrUtil.empty,
+            '${AppString.loading}...',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -271,7 +275,10 @@ class NovelReaderPage extends GetView<NovelReaderController> {
           ),
           padding: AppStyle.edgeInsetsA12,
           child: const Text(
-            StrUtil.empty,
+            '${AppString.loading}...',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -282,24 +289,42 @@ class NovelReaderPage extends GetView<NovelReaderController> {
       onLoad: () async {
         controller.nextChapter();
       },
-      child: NovelHorizontalReader(
-        controller.content.value,
-        controller: controller.pageController,
-        reverse: controller.readDirection.value ==
-            ReaderDirectionEnum.rightToLeft.index,
-        style: TextStyle(
-          fontSize: AppSettings.novelReaderFontSize.value.toDouble(),
-          height: AppSettings.novelReaderLineSpacing.value,
-          color: AppColor.novelThemes[AppSettings.novelReaderTheme.value]!.last,
-        ),
-        padding: AppStyle.edgeInsetsA12.copyWith(
-          top: AppStyle.statusBarHeight + 12,
-          bottom: (AppSettings.novelReaderShowStatus.value ? 24 : 12),
-        ),
-        onPageChanged: (i, m) {
-          controller.currentIndex.value = i;
-          controller.maxPage.value = m;
-        },
+      child: PageView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          ...controller.pictures.map(
+            (url) => controller.detail.value.isLocal
+                ? LocalImage(
+                    url,
+                    fit: BoxFit.contain,
+                  )
+                : NetImage(
+                    url,
+                    fit: BoxFit.fitWidth,
+                    progress: true,
+                  ),
+          ),
+          NovelHorizontalReader(
+            controller.content.value,
+            controller: controller.pageController,
+            reverse: controller.readDirection.value ==
+                ReaderDirectionEnum.rightToLeft.index,
+            style: TextStyle(
+              fontSize: AppSettings.novelReaderFontSize.value.toDouble(),
+              height: AppSettings.novelReaderLineSpacing.value,
+              color: AppColor
+                  .novelThemes[AppSettings.novelReaderTheme.value]!.last,
+            ),
+            padding: AppStyle.edgeInsetsA12.copyWith(
+              top: AppStyle.statusBarHeight + 12,
+              bottom: (AppSettings.novelReaderShowStatus.value ? 24 : 12),
+            ),
+            onPageChanged: (i, m) {
+              controller.currentIndex.value = i;
+              controller.maxPage.value = m;
+            },
+          ),
+        ],
       ),
     );
   }
@@ -324,7 +349,10 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                 ),
                 padding: AppStyle.edgeInsetsA12,
                 child: const Text(
-                  StrUtil.empty,
+                  '${AppString.loading}...',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -336,7 +364,10 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                 ),
                 padding: AppStyle.edgeInsetsA12,
                 child: const Text(
-                  StrUtil.empty,
+                  '${AppString.loading}...',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -349,15 +380,33 @@ class NovelReaderPage extends GetView<NovelReaderController> {
             },
             child: SingleChildScrollView(
               controller: controller.scrollController,
-              child: Text(
-                controller.content.value,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontSize: AppSettings.novelReaderFontSize.value.toDouble(),
-                  height: AppSettings.novelReaderLineSpacing.value,
-                  color: AppColor
-                      .novelThemes[AppSettings.novelReaderTheme.value]!.last,
-                ),
+              child: Column(
+                children: [
+                  ...controller.pictures.map(
+                    (url) => controller.detail.value.isLocal
+                        ? LocalImage(
+                            url,
+                            fit: BoxFit.contain,
+                          )
+                        : NetImage(
+                            url,
+                            fit: BoxFit.fitWidth,
+                            progress: true,
+                          ),
+                  ),
+                  Text(
+                    controller.content.value,
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize:
+                          AppSettings.novelReaderFontSize.value.toDouble(),
+                      height: AppSettings.novelReaderLineSpacing.value,
+                      color: AppColor
+                          .novelThemes[AppSettings.novelReaderTheme.value]!
+                          .last,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
