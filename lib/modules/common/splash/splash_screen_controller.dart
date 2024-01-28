@@ -13,6 +13,7 @@ class SplashScreenController extends GetxController
   late AnimationController _animationController;
   late Animation<double> animation;
   RxString cover = RxString(StrUtil.empty);
+  RxBool isSkip = RxBool(false);
 
   SplashScreenController() {
     _animationController = AnimationController(
@@ -30,9 +31,11 @@ class SplashScreenController extends GetxController
     cover.value = await FileItemService.instance.getObject(splash.cover);
     animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        AppNavigator.toIndex(
-          replace: true,
-        );
+        if (!isSkip.value) {
+          AppNavigator.toIndex(
+            replace: true,
+          );
+        }
       }
     });
     _animationController.forward();
@@ -45,23 +48,24 @@ class SplashScreenController extends GetxController
     _animationController.dispose();
   }
 
-  void skipPage() {
+  void skipPage() async {
     var splash = Global.appConfig.splash;
     var skipType = splash.skipType;
     var skipValue = splash.skipValue;
     if (skipValue.isEmpty) {
       return;
     }
+    isSkip.value = true;
     if (SkipTypeEnum.h5.index == skipType) {
-      AppNavigator.toWebView(skipValue);
+      await AppNavigator.toWebView(skipValue);
     } else if (SkipTypeEnum.comic.index == skipType ||
         SkipTypeEnum.novel.index == skipType) {
       if (int.parse(skipValue) != 0) {
         var objId = int.parse(skipValue);
         if (SkipTypeEnum.comic.index == skipType) {
-          ComicService.instance.toComicDetail(objId);
+          await ComicService.instance.toComicDetail(objId);
         } else if (SkipTypeEnum.novel.index == skipType) {
-          NovelService.instance.toNovelDetail(objId);
+          await NovelService.instance.toNovelDetail(objId);
         }
         return;
       }
@@ -76,10 +80,13 @@ class SplashScreenController extends GetxController
           argments.putIfAbsent(array[0], () => array[1]);
         }
       }
-      AppNavigator.toContentPage(
+      await AppNavigator.toContentPage(
         skipValue,
         arg: argments,
       );
     }
+    AppNavigator.toIndex(
+      replace: true,
+    );
   }
 }

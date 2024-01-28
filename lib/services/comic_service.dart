@@ -35,13 +35,12 @@ class ComicService {
 
   final _browseRequest = BrowseRequest();
 
-  void toComicDetail(int comicId, {replace = false}) {
-    _comicRequest.comicDetail(comicId).then((value) => {
-          AppNavigator.toComicDetail(
-            value.toJson(),
-            replace: replace,
-          )
-        });
+  Future<void> toComicDetail(int comicId, {replace = false}) async {
+    var result = await _comicRequest.comicDetail(comicId);
+    return await AppNavigator.toComicDetail(
+      result.toJson(),
+      replace: replace,
+    );
   }
 
   Future<ComicDetailModel> getComicDetail(int comicId) async {

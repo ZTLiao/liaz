@@ -25,17 +25,17 @@ class AppNavigator {
   }
 
   /// 跳转子路由页面
-  static Future<T?>? toContentPage<T>(String name,
-      {dynamic arg, bool replace = false}) {
+  static Future<dynamic> toContentPage(String name,
+      {dynamic arg, bool replace = false}) async {
     if (currentRouteName == name || replace) {
-      return Get.offAndToNamed(name, arguments: arg, id: kNavigatorID);
+      return await Get.offAndToNamed(name, arguments: arg, id: kNavigatorID);
     } else {
-      return Get.toNamed(name, arguments: arg, id: kNavigatorID);
+      return await Get.toNamed(name, arguments: arg, id: kNavigatorID);
     }
   }
 
-  static void toIndex({bool replace = false}) {
-    toContentPage(AppRoute.kIndex, replace: replace);
+  static Future<dynamic> toIndex({bool replace = false}) async {
+    return toContentPage(AppRoute.kIndex, replace: replace);
   }
 
   /// 打开搜索
@@ -43,8 +43,9 @@ class AppNavigator {
     toContentPage(AppRoute.kSearch);
   }
 
-  static void toComicDetail(Map<String, dynamic> json, {bool replace = false}) {
-    toContentPage(
+  static Future<void> toComicDetail(Map<String, dynamic> json,
+      {bool replace = false}) async {
+    return await toContentPage(
       AppRoute.kComicDetail,
       arg: {
         'detail': json,
@@ -63,8 +64,9 @@ class AppNavigator {
     });
   }
 
-  static void toNovelDetail(Map<String, dynamic> json, {bool replace = false}) {
-    toContentPage(
+  static Future<void> toNovelDetail(Map<String, dynamic> json,
+      {bool replace = false}) async {
+    return await toContentPage(
       AppRoute.kNovelDetail,
       arg: {
         'detail': json,
@@ -83,14 +85,14 @@ class AppNavigator {
     });
   }
 
-  static void toWebView(String url) {
+  static Future<dynamic> toWebView(String url) async {
     url = url.trimRight().trimLeft();
     if (Platform.isAndroid || Platform.isIOS) {
-      toContentPage(AppRoute.kWebView, arg: {
+      return await toContentPage(AppRoute.kWebView, arg: {
         'url': url,
       });
     } else {
-      launchUrlString(url);
+      return await launchUrlString(url);
     }
   }
 

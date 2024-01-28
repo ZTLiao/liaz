@@ -42,13 +42,12 @@ class NovelService {
 
   final _browseRequest = BrowseRequest();
 
-  void toNovelDetail(int novelId, {replace = false}) {
-    _novelRequest.novelDetail(novelId).then((value) => {
-          AppNavigator.toNovelDetail(
-            value.toJson(),
-            replace: replace,
-          )
-        });
+  Future<void> toNovelDetail(int novelId, {replace = false}) async {
+    var result = await _novelRequest.novelDetail(novelId);
+    return await AppNavigator.toNovelDetail(
+      result.toJson(),
+      replace: replace,
+    );
   }
 
   Future<NovelDetailModel> getNovelDetail(int novelId) async {
