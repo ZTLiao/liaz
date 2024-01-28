@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:liaz/app/constants/app_constant.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
+import 'package:liaz/app/utils/sim_info_util.dart';
+import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/services/device_info_service.dart';
 
 class PublicInterceptor extends Interceptor {
@@ -18,6 +20,7 @@ class PublicInterceptor extends Interceptor {
       options.extra['ts'] = DateTime.now().millisecondsSinceEpoch;
       var packageInfo = Global.packageInfo;
       var deviceInfo = DeviceInfoService.instance.get();
+      var simInfo = await SimInfoUtil.getSimInfo();
       options.headers[AppConstant.app] = packageInfo.appName;
       options.headers[AppConstant.appVersion] = packageInfo.version;
       options.headers[AppConstant.deviceId] = deviceInfo.deviceId;
@@ -28,6 +31,26 @@ class PublicInterceptor extends Interceptor {
       options.headers[AppConstant.imei] = deviceInfo.imei;
       options.headers[AppConstant.client] = deviceInfo.os;
       options.headers[AppConstant.channel] = AppConstant.channelName;
+      if (simInfo.isNotEmpty) {
+        options.headers[AppConstant.ispType] = simInfo
+            .map(
+              (e) =>
+                  e.carrierName +
+                  StrUtil.underline +
+                  e.displayName +
+                  StrUtil.underline +
+                  e.slotIndex +
+                  StrUtil.underline +
+                  e.number +
+                  StrUtil.underline +
+                  e.countryIso +
+                  StrUtil.underline +
+                  e.countryPhonePrefix,
+            )
+            .map((e) => Uri.encodeComponent(e))
+            .toList()
+            .join(StrUtil.pipe);
+      }
     } catch (e) {
       Log.logPrint(e);
     }
