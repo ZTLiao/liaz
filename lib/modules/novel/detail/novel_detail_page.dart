@@ -22,7 +22,7 @@ import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
 import 'package:liaz/widgets/toolbar/title_widget.dart';
 import 'package:liaz/widgets/toolbar/two_box_grid_widget.dart';
 
-class NovelDetailPage extends GetView<NovelDetailController> {
+class NovelDetailPage extends StatelessWidget {
   final NovelDetailModel novelDetail;
   final NovelDetailController controller;
 
@@ -367,14 +367,14 @@ class NovelDetailPage extends GetView<NovelDetailController> {
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: (!volume.isLoadingMore.value)
+                          itemCount: (!volume.isShowAll.value)
                               ? (volume.pageSize.value > volume.chapters.length)
                                   ? volume.chapters.length
                                   : volume.pageSize.value
                               : volume.chapters.length,
                           itemBuilder: (context, i) {
                             var item = volume.chapters[i];
-                            if (!volume.isLoadingMore.value &&
+                            if (!volume.isShowAll.value &&
                                 i == (volume.pageSize.value - 1)) {
                               return ListTile(
                                 title: const Column(

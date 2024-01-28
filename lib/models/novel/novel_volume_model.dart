@@ -13,7 +13,7 @@ class NovelVolumeModel {
   int? seqNo;
   RxInt sortType;
   RxList<NovelChapterModel> chapters;
-  var isLoadingMore = RxBool(false);
+  var isShowAll = RxBool(false);
 
   RxInt pageSize = RxInt(25);
 
