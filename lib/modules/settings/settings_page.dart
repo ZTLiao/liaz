@@ -5,6 +5,7 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/modules/settings/settings_controller.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/app_version_service.dart';
 import 'package:liaz/services/user_service.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -64,7 +65,7 @@ class SettingsPage extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            onTap: controller.checkUpdate,
+            onTap: AppVersionService.instance.checkUpdate,
           ),
           AppStyle.vGap32,
           Visibility(

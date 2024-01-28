@@ -49,6 +49,7 @@ dependencies:
   image_gallery_saver: ^2.0.3
   screen_brightness: ^0.2.2+1
   flutter_slidable: ^3.0.1
+  flutter_app_update: ^3.0.4
 
 dev_dependencies:
   flutter_test:

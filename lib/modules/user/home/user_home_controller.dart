@@ -49,7 +49,7 @@ class UserHomeController extends GetxController {
   void shareApp() {
     var downloadApp = Global.appConfig.downloadApp;
     if (downloadApp.isEmpty) {
-      SmartDialog.showToast(AppString.notYetOpen);
+      SmartDialog.showToast(AppString.detourRoadUnderConstruction);
       return;
     }
     AppNavigator.toWebView(downloadApp);

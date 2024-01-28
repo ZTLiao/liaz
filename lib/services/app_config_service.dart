@@ -8,7 +8,6 @@ import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/utils/decrypt_util.dart';
 import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/requests/app_request.dart';
-import 'package:liaz/requests/file_item_request.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AppConfigService extends GetxService {

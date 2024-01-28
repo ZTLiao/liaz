@@ -1,3 +1,4 @@
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/app_string.dart';
@@ -131,6 +132,10 @@ class ComicDetailController extends BaseController {
       return;
     }
     var shareUrl = Global.appConfig.shareUrl;
+    if (shareUrl.isEmpty) {
+      SmartDialog.showToast(AppString.detourRoadUnderConstruction);
+      return;
+    }
     ShareUtil.share(
       '$shareUrl?objId=${detail.value.comicId}&assetType=${AssetTypeEnum.comic.index}',
       content: detail.value.title,

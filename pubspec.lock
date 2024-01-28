@@ -254,6 +254,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_app_update:
+    dependency: "direct main"
+    description:
+      name: flutter_app_update
+      sha256: "2202e6e6d49eacc571304e5a6a5404f893382b492029d01d33b3bfb9af1c2f25"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.4"
   flutter_lints:
     dependency: "direct dev"
     description:

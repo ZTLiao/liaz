@@ -70,5 +70,4 @@ class SettingsController extends GetxController {
     );
   }
 
-  void checkUpdate() {}
 }

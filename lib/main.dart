@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_update/flutter_app_update.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,6 @@ import 'package:liaz/services/novel_chapter_service.dart';
 import 'package:liaz/services/novel_download_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/oauth2_token_service.dart';
-import 'package:liaz/services/recommend_service.dart';
 import 'package:liaz/services/search_service.dart';
 import 'package:liaz/services/task_service.dart';
 import 'package:liaz/services/user_service.dart';

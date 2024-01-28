@@ -25,7 +25,19 @@ class IndexRecommendController extends BasePageController<RecommendModel> {
       } else {
         recommendRequest
             .recommendByPosition(RecommendPositionEnum.home.index)
-            .then((value) => RecommendService.instance.put(value));
+            .then((value) {
+          RecommendService.instance.put(value);
+          if (list.isNotEmpty) {
+            for (int i = 0; i < list.length; i++) {
+              var recommend = list[i];
+              var where = value.where(
+                  (element) => element.recommendId == recommend.recommendId);
+              if (where.isNotEmpty) {
+                list[i] = where.first;
+              }
+            }
+          }
+        });
       }
       return data;
     }

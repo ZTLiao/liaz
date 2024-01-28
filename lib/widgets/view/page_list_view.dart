@@ -30,62 +30,64 @@ class PageListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Stack(
-          children: [
-            EasyRefresh(
-              header: const MaterialHeader(),
-              footer: isLoadMore
-                  ? const MaterialFooter(
-                      clamping: false, infiniteOffset: 70, triggerOffset: 70)
-                  : null,
-              controller: pageController.easyRefreshController,
-              onLoad: isLoadMore ? pageController.onLoading : null,
-              onRefresh: pageController.onRefresh,
-              child: ListView.separated(
-                padding: padding ?? EdgeInsets.zero,
-                controller: pageController.scrollController,
-                itemCount: header == null
-                    ? pageController.list.length
-                    : pageController.list.length + 1,
-                itemBuilder: header == null
-                    ? itemBuilder
-                    : (context, index) {
-                        if (index == 0) {
-                          return header;
-                        }
-                        return itemBuilder.call(context, index - 1);
-                      },
-                separatorBuilder: header == null
-                    ? (separatorBuilder ?? (context, index) => const SizedBox())
-                    : (context, index) {
-                        if (index == 0) {
-                          return const SizedBox();
-                        }
-                        return separatorBuilder?.call(context, index - 1) ??
-                            const SizedBox();
-                      },
-              ),
+    return Obx(
+      () => Stack(
+        children: [
+          EasyRefresh(
+            header: const MaterialHeader(),
+            footer: isLoadMore
+                ? const MaterialFooter(
+                    clamping: false, infiniteOffset: 70, triggerOffset: 70)
+                : null,
+            controller: pageController.easyRefreshController,
+            onLoad: isLoadMore ? pageController.onLoading : null,
+            onRefresh: pageController.onRefresh,
+            child: ListView.separated(
+              padding: padding ?? EdgeInsets.zero,
+              controller: pageController.scrollController,
+              itemCount: header == null
+                  ? pageController.list.length
+                  : pageController.list.length + 1,
+              itemBuilder: header == null
+                  ? itemBuilder
+                  : (context, index) {
+                      if (index == 0) {
+                        return header;
+                      }
+                      return itemBuilder.call(context, index - 1);
+                    },
+              separatorBuilder: header == null
+                  ? (separatorBuilder ?? (context, index) => const SizedBox())
+                  : (context, index) {
+                      if (index == 0) {
+                        return const SizedBox();
+                      }
+                      return separatorBuilder?.call(context, index - 1) ??
+                          const SizedBox();
+                    },
             ),
-            Offstage(
-              offstage: !pageController.isPageEmpty.value,
-              child: AppEmptyWidget(
-                onRefresh: () => pageController.onRefresh(),
-              ),
+          ),
+          Offstage(
+            offstage: !pageController.isPageEmpty.value,
+            child: AppEmptyWidget(
+              onRefresh: () => pageController.onRefresh(),
             ),
-            Offstage(
-              offstage:
-                  !(isShowPageLoading && pageController.isPageLoading.value),
-              child: const AppLoadingWidget(),
+          ),
+          Offstage(
+            offstage:
+                !(isShowPageLoading && pageController.isPageLoading.value),
+            child: const AppLoadingWidget(),
+          ),
+          Offstage(
+            offstage: !pageController.isPageError.value,
+            child: AppErrorWidget(
+              errorMsg: pageController.errorMsg.value,
+              error: pageController.error,
+              onRefresh: () => pageController.onRefresh(),
             ),
-            Offstage(
-              offstage: !pageController.isPageError.value,
-              child: AppErrorWidget(
-                errorMsg: pageController.errorMsg.value,
-                error: pageController.error,
-                onRefresh: () => pageController.onRefresh(),
-              ),
-            )
-          ],
-        ));
+          )
+        ],
+      ),
+    );
   }
 }
