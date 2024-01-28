@@ -21,14 +21,12 @@ class AppVersionService extends GetxService {
 
   final _appVersionRequest = AppVersionRequest();
 
-  showUpdateDialog() {
-    Future.delayed(const Duration(milliseconds: 4000), () async {
-      var appVersion = await _appVersionRequest.checkUpdate();
-      if (appVersion == null) {
-        return;
-      }
-      _showUpdateDialog(appVersion);
-    });
+  showUpdateDialog() async {
+    var appVersion = await _appVersionRequest.checkUpdate();
+    if (appVersion == null) {
+      return;
+    }
+    _showUpdateDialog(appVersion);
   }
 
   _showUpdateDialog(AppVersionModel appVersion) async {

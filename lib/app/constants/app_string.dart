@@ -191,4 +191,5 @@ class AppString {
   static const discoveryNewVersion = '发现新版本';
   static const levelUp = '升级';
   static const alreadyLatestVersion = '已是最新版本!';
+  static const close = 'close';
 }

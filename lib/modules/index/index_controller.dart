@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/services/app_version_service.dart';
+import 'package:liaz/services/notification_service.dart';
 
 class IndexController extends GetxController {
   final index = RxInt(0);
@@ -10,8 +11,9 @@ class IndexController extends GetxController {
   final GlobalKey subRouterKey = GlobalKey();
 
   @override
-  void onInit() {
-    AppVersionService.instance.showUpdateDialog();
+  void onInit() async {
+    await AppVersionService.instance.showUpdateDialog();
+    await NotificationService.instance.showNotificationDialog();
     super.onInit();
   }
 
