@@ -261,7 +261,7 @@ class NovelReaderController extends BaseController {
         }
       }
     }
-    isAllPicture.value = pictures.isNotEmpty && content.value.isEmpty;
+    isAllPicture.value = pictures.isNotEmpty && sb.isEmpty;
     content.value = sb.toString();
     detail.value = NovelChapterItemModel(
       novelChapterId: chapter.novelChapterId,
