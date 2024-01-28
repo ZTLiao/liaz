@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/db/splash_config.dart';
 
 part 'app_config.g.dart';
 
@@ -19,6 +20,8 @@ class AppConfig {
   String publicKey;
   @HiveField(5)
   String downloadApp;
+  @HiveField(6)
+  SplashConfig splash;
 
   AppConfig({
     this.fileUrl = StrUtil.empty,
@@ -27,6 +30,7 @@ class AppConfig {
     this.signKey = StrUtil.empty,
     this.publicKey = StrUtil.empty,
     this.downloadApp = StrUtil.empty,
+    required this.splash,
   });
 
   factory AppConfig.fromJson(Map<String, dynamic> json) {
@@ -36,6 +40,10 @@ class AppConfig {
     var signKey = json['signKey'] ?? StrUtil.empty;
     var publicKey = json['publicKey'] ?? StrUtil.empty;
     var downloadApp = json['downloadApp'] ?? StrUtil.empty;
+    var splash = SplashConfig();
+    if (json['splash'] != null && json['splash'] is Map) {
+      splash = SplashConfig.fromJson(json['splash'] as Map<String, dynamic>);
+    }
     return AppConfig(
       fileUrl: fileUrl,
       resourceAuthority: resourceAuthority,
@@ -43,17 +51,22 @@ class AppConfig {
       signKey: signKey,
       publicKey: publicKey,
       downloadApp: downloadApp,
+      splash: splash,
     );
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'fileUrl': fileUrl,
-        'resourceAuthority': resourceAuthority,
-        'shareUrl': shareUrl,
-        'signKey': signKey,
-        'publicKey': publicKey,
-        'downloadApp': downloadApp,
-      };
+  Map<String, dynamic> toJson() {
+    var splashMap = splash.toJson();
+    return <String, dynamic>{
+      'fileUrl': fileUrl,
+      'resourceAuthority': resourceAuthority,
+      'shareUrl': shareUrl,
+      'signKey': signKey,
+      'publicKey': publicKey,
+      'downloadApp': downloadApp,
+      'splash': splashMap,
+    };
+  }
 
   @override
   String toString() {

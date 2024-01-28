@@ -6,5 +6,8 @@ enum SkipTypeEnum {
   comic,
 
   /// 小说
-  novel;
+  novel,
+
+  /// 路由
+  route;
 }

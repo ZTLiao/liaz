@@ -29,7 +29,8 @@ class RecommendService extends GetxService {
     //H5
     if (SkipTypeEnum.h5.index == skipType) {
       AppNavigator.toWebView(skipValue!);
-    } else {
+    } else if (SkipTypeEnum.comic.index == skipType ||
+        SkipTypeEnum.novel.index == skipType) {
       if (skipValue != null && int.parse(skipValue) != 0) {
         var isUpgrade = item.isUpgrade;
         if (isUpgrade != null && isUpgrade == YesOrNo.yes) {
@@ -52,6 +53,8 @@ class RecommendService extends GetxService {
           NovelService.instance.toNovelDetail(objId);
         }
       }
+    } else {
+      AppNavigator.toContentPage(skipValue!);
     }
   }
 

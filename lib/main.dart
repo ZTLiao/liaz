@@ -21,6 +21,7 @@ import 'package:liaz/models/db/novel.dart';
 import 'package:liaz/models/db/novel_chapter.dart';
 import 'package:liaz/models/db/oauth2_token.dart';
 import 'package:liaz/models/db/search.dart';
+import 'package:liaz/models/db/splash_config.dart';
 import 'package:liaz/models/db/task.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/modules/common/empty_page.dart';
@@ -95,6 +96,7 @@ Future<void> initHive() async {
   Hive.registerAdapter(NovelChapterAdapter());
   Hive.registerAdapter(TaskAdapter());
   Hive.registerAdapter(FileItemAdapter());
+  Hive.registerAdapter(SplashConfigAdapter());
 }
 
 Future<void> initServices() async {
@@ -128,7 +130,7 @@ class LiazApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool hasSplash = false;
+    bool hasSplash = Global.appConfig.splash.enabled;
     return GetMaterialApp(
       title: AppString.appName,
       scrollBehavior: AppScrollBehavior(),

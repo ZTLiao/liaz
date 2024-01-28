@@ -17,13 +17,14 @@ class AppConfigAdapter extends TypeAdapter<AppConfig> {
       signKey: fields[3] as String,
       publicKey: fields[4] as String,
       downloadApp: fields[5] as String,
+      splash: fields[6] as SplashConfig,
     );
   }
 
   @override
   void write(BinaryWriter writer, AppConfig obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.fileUrl)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class AppConfigAdapter extends TypeAdapter<AppConfig> {
       ..writeByte(4)
       ..write(obj.publicKey)
       ..writeByte(5)
-      ..write(obj.downloadApp);
+      ..write(obj.downloadApp)
+      ..writeByte(6)
+      ..write(obj.splash);
   }
 
   @override

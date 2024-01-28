@@ -13,6 +13,7 @@ class StrUtil {
   static const semicolon = ':';
   static const emptyList = '[]';
   static const pipe = '|';
+  static const and = '&';
 
   static String listToStr(List<String> list, String separator) {
     String str = empty;
