@@ -137,69 +137,71 @@ class NovelDownloadPage extends StatelessWidget {
     var volumes = controller.novelDetail.volumes;
     return Column(
       children: volumes
-          .map((volume) => Column(
-                children: [
-                  ExpansionTile(
-                    initiallyExpanded: true,
-                    title: Text(
-                      '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
-                    ),
-                    tilePadding: AppStyle.edgeInsetsH4,
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: volume.chapters.length,
-                        itemBuilder: (context, i) {
-                          var item = volume.chapters[i];
-                          return ListTile(
-                            title: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Obx(
-                                  () => Text(
-                                    item.chapterName,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Get.textTheme.bodyMedium!.copyWith(
-                                      color: controller.chapterIds
-                                              .contains(item.novelChapterId)
-                                          ? Colors.cyan
-                                          : null,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  '${AppString.at} ${DateUtil.formatDateTimeMinute(item.updatedAt)} ${AppString.publish}',
+          .map(
+            (volume) => Column(
+              children: [
+                ExpansionTile(
+                  initiallyExpanded: true,
+                  title: Text(
+                    '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
+                  ),
+                  tilePadding: AppStyle.edgeInsetsH4,
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: volume.chapters.length,
+                      itemBuilder: (context, i) {
+                        var item = volume.chapters[i];
+                        return ListTile(
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Obx(
+                                () => Text(
+                                  item.chapterName,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: AppColor.grey99,
+                                  style: Get.textTheme.bodyMedium!.copyWith(
+                                    color: controller.chapterIds
+                                            .contains(item.novelChapterId)
+                                        ? Colors.cyan
+                                        : null,
                                   ),
                                 ),
-                              ],
-                            ),
-                            contentPadding: AppStyle.edgeInsetsA4,
-                            visualDensity: const VisualDensity(
-                              vertical: VisualDensity.minimumDensity,
-                            ),
-                            onTap: () {
-                              controller.onSelect(item.novelChapterId);
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    color: Colors.grey.withOpacity(.2),
-                    height: 1.0,
-                  ),
-                ],
-              ))
+                              ),
+                              Text(
+                                '${AppString.at} ${DateUtil.formatDateTimeMinute(item.updatedAt)} ${AppString.publish}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: AppColor.grey99,
+                                ),
+                              ),
+                            ],
+                          ),
+                          contentPadding: AppStyle.edgeInsetsA4,
+                          visualDensity: const VisualDensity(
+                            vertical: VisualDensity.minimumDensity,
+                          ),
+                          onTap: () {
+                            controller.onSelect(item.novelChapterId);
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: Colors.grey.withOpacity(.2),
+                  height: 1.0,
+                ),
+              ],
+            ),
+          )
           .toList(),
     );
   }

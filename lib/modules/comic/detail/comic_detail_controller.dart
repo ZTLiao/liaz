@@ -13,6 +13,7 @@ import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
+import 'package:liaz/models/comic/comic_volume_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/comic/detail/comic_history_listener.dart';
@@ -31,7 +32,7 @@ class ComicDetailController extends BaseController {
   var isExpandDescription = RxBool(false);
   var isRelateRecommend = RxBool(false);
   var isSubscribe = RxBool(false);
-
+  var chapterIndex = RxInt(0);
   var browseChapterId = RxInt(0);
 
   var recommendRequest = RecommendRequest();
@@ -99,16 +100,13 @@ class ComicDetailController extends BaseController {
     }
   }
 
-  void onReadChapter(ComicChapterModel chapter) {
-    browseChapterId.value = chapter.comicChapterId;
-    var chapterTypes = detail.value.chapterTypes;
-    var chapterType = chapterTypes
-        .firstWhere((element) => element.chapterType == chapter.chapterType);
+  void onReadChapter(ComicVolumeModel volume) {
+    var chapters = volume.chapters;
+    browseChapterId.value = chapters[chapterIndex.value].comicChapterId;
     var comicChapters = <ComicChapterModel>[];
-    var chapters = chapterType.chapters;
     if (chapters.isNotEmpty) {
       for (var chapter in chapters) {
-        if (chapter.comicChapterId == detail.value.browseChapterId) {
+        if (chapter.comicChapterId == browseChapterId.value) {
           chapter.currentIndex = detail.value.currentIndex;
         }
         comicChapters.add(ComicChapterModel.fromJson(chapter.toJson()));
@@ -116,7 +114,7 @@ class ComicDetailController extends BaseController {
     }
     comicChapters.sort((a, b) => a.seqNo.compareTo(b.seqNo));
     AppNavigator.toComicReader(
-      comicChapterId: chapter.comicChapterId,
+      comicChapterId: chapters[chapterIndex.value].comicChapterId,
       chapters: comicChapters,
     );
   }
@@ -145,10 +143,10 @@ class ComicDetailController extends BaseController {
   void startReading() {
     isRelateRecommend.value = false;
     if (browseChapterId.value != 0) {
-      for (var chapterType in detail.value.chapterTypes) {
-        for (var chapter in chapterType.chapters) {
+      for (var valume in detail.value.volumes) {
+        for (var chapter in valume.chapters) {
           if (chapter.comicChapterId == browseChapterId.value) {
-            onReadChapter(chapter);
+            onReadChapter(valume);
             break;
           }
         }

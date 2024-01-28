@@ -159,10 +159,10 @@ class NovelDetailController extends BaseController {
   void startReading() {
     isRelateRecommend.value = false;
     if (browseChapterId.value != 0) {
-      for (var valume in detail.value.volumes) {
-        for (var chapter in valume.chapters) {
+      for (var volume in detail.value.volumes) {
+        for (var chapter in volume.chapters) {
           if (chapter.novelChapterId == browseChapterId.value) {
-            onReadChapter(valume);
+            onReadChapter(volume);
             break;
           }
         }

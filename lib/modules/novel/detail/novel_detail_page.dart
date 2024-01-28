@@ -353,125 +353,126 @@ class NovelDetailPage extends GetView<NovelDetailController> {
         visible: !controller.isRelateRecommend.value,
         child: Column(
           children: volumes
-              .map((volume) => Column(
-                    children: [
-                      ExpansionTile(
-                        initiallyExpanded: volumes.length == 1,
-                        title: Text(
-                          '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
-                        ),
-                        tilePadding: AppStyle.edgeInsetsH4,
-                        children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            padding: EdgeInsets.zero,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: volume.chapters.length,
-                            itemBuilder: (context, i) {
-                              var item = volume.chapters[i];
-                              return ListTile(
-                                title: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Column(
+              .map(
+                (volume) => Column(
+                  children: [
+                    ExpansionTile(
+                      initiallyExpanded: volumes.length == 1,
+                      title: Text(
+                        '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
+                      ),
+                      tilePadding: AppStyle.edgeInsetsH4,
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: volume.chapters.length,
+                          itemBuilder: (context, i) {
+                            var item = volume.chapters[i];
+                            return ListTile(
+                              title: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          Obx(
+                                            () => Text(
+                                              item.chapterName,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Get.textTheme.bodyMedium!
+                                                  .copyWith(
+                                                color: item.novelChapterId ==
+                                                        controller
+                                                            .browseChapterId
+                                                            .value
+                                                    ? Colors.cyan
+                                                    : null,
+                                              ),
+                                            ),
+                                          ),
+                                          Text(
+                                            '${AppString.at} ${DateUtil.formatDateTimeMinute(item.updatedAt)} ${AppString.publish}',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: AppColor.grey99,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Expanded(
+                                        child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                              CrossAxisAlignment.end,
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: [
-                                            Obx(
-                                              () => Text(
-                                                item.chapterName,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: Get.textTheme.bodyMedium!
-                                                    .copyWith(
-                                                  color: item.novelChapterId ==
-                                                          controller
-                                                              .browseChapterId
-                                                              .value
-                                                      ? Colors.cyan
-                                                      : null,
-                                                ),
-                                              ),
-                                            ),
-                                            Text(
-                                              '${AppString.at} ${DateUtil.formatDateTimeMinute(item.updatedAt)} ${AppString.publish}',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                fontSize: 14,
+                                            IconButton(
+                                              onPressed: () {
+                                                controller.onPreview(i, volume);
+                                              },
+                                              icon: const Icon(
+                                                Icons.info_outline,
                                                 color: AppColor.grey99,
                                               ),
                                             ),
                                           ],
                                         ),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              IconButton(
-                                                onPressed: () {
-                                                  controller.onPreview(
-                                                      i, volume);
-                                                },
-                                                icon: const Icon(
-                                                  Icons.info_outline,
-                                                  color: AppColor.grey99,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                      ),
+                                    ],
+                                  ),
+                                  Obx(
+                                    () => Visibility(
+                                      visible: (controller
+                                              .isExpandPreview.value &&
+                                          controller.chapterIndex.value == i),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColor
+                                              .novelThemes[AppSettings
+                                                  .novelReaderTheme.value]!
+                                              .first,
                                         ),
-                                      ],
-                                    ),
-                                    Obx(
-                                      () => Visibility(
-                                        visible: (controller
-                                                .isExpandPreview.value &&
-                                            controller.chapterIndex.value == i),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: AppColor
-                                                .novelThemes[AppSettings
-                                                    .novelReaderTheme.value]!
-                                                .first,
-                                          ),
-                                          child: Text(
-                                            controller.content.value,
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              color: AppColor.grey99,
-                                            ),
+                                        child: Text(
+                                          controller.content.value,
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            color: AppColor.grey99,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                                contentPadding: AppStyle.edgeInsetsA4,
-                                visualDensity: const VisualDensity(
-                                    vertical: VisualDensity.minimumDensity),
-                                onTap: () {
-                                  controller.chapterIndex.value = i;
-                                  controller.onReadChapter(volume);
-                                },
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: Colors.grey.withOpacity(.2),
-                        height: 1.0,
-                      ),
-                    ],
-                  ))
+                                  ),
+                                ],
+                              ),
+                              contentPadding: AppStyle.edgeInsetsA4,
+                              visualDensity: const VisualDensity(
+                                  vertical: VisualDensity.minimumDensity),
+                              onTap: () {
+                                controller.chapterIndex.value = i;
+                                controller.onReadChapter(volume);
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: Colors.grey.withOpacity(.2),
+                      height: 1.0,
+                    ),
+                  ],
+                ),
+              )
               .toList(),
         ),
       ),

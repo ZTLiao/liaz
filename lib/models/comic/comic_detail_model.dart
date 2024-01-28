@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:liaz/app/constants/comic_flag.dart';
 import 'package:liaz/app/utils/convert_util.dart';
-import 'package:liaz/models/comic/comic_chapter_type_model.dart';
+import 'package:liaz/models/comic/comic_volume_model.dart';
 
 class ComicDetailModel {
   int comicId;
@@ -22,7 +22,7 @@ class ComicDetailModel {
   bool isLong;
   bool isHide;
   int sortType;
-  List<ComicChapterTypeModel> chapterTypes;
+  List<ComicVolumeModel> volumes;
   bool isSubscribe;
   int browseChapterId;
   int currentIndex;
@@ -45,7 +45,7 @@ class ComicDetailModel {
         isLong: false,
         isHide: false,
         sortType: 0,
-        chapterTypes: [],
+        volumes: [],
         isSubscribe: false,
         browseChapterId: 0,
         currentIndex: 0,
@@ -69,7 +69,7 @@ class ComicDetailModel {
     required this.isLong,
     required this.isHide,
     required this.sortType,
-    required this.chapterTypes,
+    required this.volumes,
     required this.isSubscribe,
     required this.browseChapterId,
     required this.currentIndex,
@@ -101,10 +101,10 @@ class ComicDetailModel {
         categories.add(ConvertUtil.asT<String>(category)!);
       }
     }
-    final List<ComicChapterTypeModel> chapterTypes = <ComicChapterTypeModel>[];
-    if (json['chapterTypes'] != null) {
-      for (final dynamic chapterType in json['chapterTypes']!) {
-        chapterTypes.add(ComicChapterTypeModel.fromJson(chapterType));
+    final List<ComicVolumeModel> volumes = <ComicVolumeModel>[];
+    if (json['volumes'] != null) {
+      for (final dynamic volume in json['volumes']!) {
+        volumes.add(ComicVolumeModel.fromJson(volume));
       }
     }
     int flag = ConvertUtil.asT<int>(json['flag'])!;
@@ -126,7 +126,7 @@ class ComicDetailModel {
       isLong: (flag & ComicFlag.long) != 0,
       isHide: (flag & ComicFlag.hide) != 0,
       sortType: (flag & ComicFlag.sort) >> 3,
-      chapterTypes: chapterTypes,
+      volumes: volumes,
       isSubscribe: ConvertUtil.asT<bool>(json['isSubscribe'])!,
       browseChapterId: ConvertUtil.asT<int>(json['browseChapterId'])!,
       currentIndex: ConvertUtil.asT<int>(json['currentIndex'])!,
@@ -135,8 +135,8 @@ class ComicDetailModel {
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> list = [];
-    for (final ComicChapterTypeModel chapterType in chapterTypes) {
-      list.add(chapterType.toJson());
+    for (final ComicVolumeModel volume in volumes) {
+      list.add(volume.toJson());
     }
     return <String, dynamic>{
       'comicId': comicId,
@@ -156,7 +156,7 @@ class ComicDetailModel {
       'isLong': isLong,
       'isHide': isHide,
       'sortType': sortType,
-      'chapterTypes': list,
+      'volumes': list,
       'isSubscribe': isSubscribe,
       'browseChapterId': browseChapterId,
       'currentIndex': currentIndex,

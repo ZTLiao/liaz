@@ -6,7 +6,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/enums/chapter_type_enum.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/sort_type_enum.dart';
@@ -350,147 +349,137 @@ class ComicDetailPage extends StatelessWidget {
   }
 
   Widget _buildChapter() {
+    var volumes = controller.detail.value.volumes;
     return Obx(
       () => Visibility(
         visible: !controller.isRelateRecommend.value,
         child: Column(
-          children: (controller.detail.value.chapterTypes.isNotEmpty)
-              ? controller.detail.value.chapterTypes.map((item) {
-                  var chapterType = item.chapterType;
-                  var sortType = item.sortType;
-                  var chapters = item.chapters;
-                  String title = StrUtil.empty;
-                  if (ChapterTypeEnum.serialize.index == chapterType) {
-                    title = AppString.serialize;
-                  } else if (ChapterTypeEnum.extra.index == chapterType) {
-                    title = AppString.extra;
-                  }
-                  title +=
-                      '${StrUtil.space} ${AppString.total}${chapters.length}${AppString.chapter}）';
-                  return Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              title,
-                              style: Get.textTheme.titleSmall,
-                            ),
+          children: volumes
+              .map(
+                (volume) => Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
+                            style: Get.textTheme.titleSmall,
                           ),
-                          TextButton.icon(
-                            style: TextButton.styleFrom(
-                              textStyle: const TextStyle(fontSize: 14),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            ),
-                            onPressed: () {
-                              sortType.value =
-                                  sortType.value == SortTypeEnum.desc.index
-                                      ? SortTypeEnum.asc.index
-                                      : SortTypeEnum.desc.index;
-                              item.sort();
-                            },
-                            icon: const Icon(
-                              Icons.swap_vert,
-                              size: 20,
-                            ),
-                            label: Text(
-                                sortType.value == SortTypeEnum.desc.index
-                                    ? AppString.desc
-                                    : AppString.asc),
+                        ),
+                        TextButton.icon(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 14),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                        ],
-                      ),
-                      LayoutBuilder(
-                        builder: (ctx, constraints) {
-                          var count = constraints.maxWidth ~/ 160;
-                          if (count < 3) count = 3;
-                          return Obx(
-                            () => MasonryGridView.count(
-                              crossAxisCount: count,
-                              crossAxisSpacing: 8,
-                              mainAxisSpacing: 8,
-                              shrinkWrap: true,
-                              padding: EdgeInsets.zero,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: (item.isShowMoreButton &&
-                                      !item.isShowAll.value)
-                                  ? 15
-                                  : item.chapters.length,
-                              itemBuilder: (context, i) {
-                                if (item.isShowMoreButton &&
-                                    !item.isShowAll.value &&
-                                    i == 14) {
-                                  return OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      foregroundColor: item
+                          onPressed: () {
+                            volume.sortType.value =
+                                volume.sortType.value == SortTypeEnum.desc.index
+                                    ? SortTypeEnum.asc.index
+                                    : SortTypeEnum.desc.index;
+                            volume.sort();
+                          },
+                          icon: const Icon(
+                            Icons.swap_vert,
+                            size: 20,
+                          ),
+                          label: Text(
+                              volume.sortType.value == SortTypeEnum.desc.index
+                                  ? AppString.desc
+                                  : AppString.asc),
+                        ),
+                      ],
+                    ),
+                    LayoutBuilder(
+                      builder: (ctx, constraints) {
+                        var count = constraints.maxWidth ~/ 160;
+                        if (count < 3) count = 3;
+                        return Obx(
+                          () => MasonryGridView.count(
+                            crossAxisCount: count,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: (volume.isShowMoreButton &&
+                                    !volume.isShowAll.value)
+                                ? 15
+                                : volume.chapters.length,
+                            itemBuilder: (context, i) {
+                              if (volume.isShowMoreButton &&
+                                  !volume.isShowAll.value &&
+                                  i == 14) {
+                                return OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor:
+                                        volume.chapters[i].comicChapterId ==
+                                                controller.browseChapterId.value
+                                            ? Colors.cyan
+                                            : Colors.grey,
+                                    backgroundColor: Colors.white,
+                                    textStyle: const TextStyle(fontSize: 14),
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    minimumSize: const Size.fromHeight(40),
+                                    side: BorderSide(
+                                      color: volume
                                                   .chapters[i].comicChapterId ==
                                               controller.browseChapterId.value
                                           ? Colors.cyan
-                                          : Colors.grey,
-                                      backgroundColor: Colors.white,
-                                      textStyle: const TextStyle(fontSize: 14),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      minimumSize: const Size.fromHeight(40),
-                                      side: BorderSide(
-                                        color: item.chapters[i]
-                                                    .comicChapterId ==
-                                                controller.browseChapterId.value
-                                            ? Colors.cyan
-                                            : Get.isDarkMode
-                                                ? Colors.white
-                                                : Colors.grey,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      item.isShowAll.value = true;
-                                    },
-                                    child: const Icon(Icons.arrow_drop_down),
-                                  );
-                                }
-                                return Obx(
-                                  () => OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      foregroundColor: item
-                                                  .chapters[i].comicChapterId ==
-                                              controller.browseChapterId.value
-                                          ? Colors.cyan
-                                          : Colors.grey,
-                                      backgroundColor: Colors.white,
-                                      textStyle: const TextStyle(fontSize: 14),
-                                      tapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      minimumSize: const Size.fromHeight(40),
-                                      side: BorderSide(
-                                        color: item.chapters[i]
-                                                    .comicChapterId ==
-                                                controller.browseChapterId.value
-                                            ? Colors.cyan
-                                            : Get.isDarkMode
-                                                ? Colors.white
-                                                : Colors.grey,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      controller
-                                          .onReadChapter(item.chapters[i]);
-                                    },
-                                    child: Text(
-                                      item.chapters[i].chapterName,
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.ellipsis,
+                                          : Get.isDarkMode
+                                              ? Colors.white
+                                              : Colors.grey,
                                     ),
                                   ),
+                                  onPressed: () {
+                                    volume.isShowAll.value = true;
+                                  },
+                                  child: const Icon(Icons.arrow_drop_down),
                                 );
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                }).toList()
-              : [],
+                              }
+                              return Obx(
+                                () => OutlinedButton(
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor:
+                                        volume.chapters[i].comicChapterId ==
+                                                controller.browseChapterId.value
+                                            ? Colors.cyan
+                                            : Colors.grey,
+                                    backgroundColor: Colors.white,
+                                    textStyle: const TextStyle(fontSize: 14),
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    minimumSize: const Size.fromHeight(40),
+                                    side: BorderSide(
+                                      color: volume
+                                                  .chapters[i].comicChapterId ==
+                                              controller.browseChapterId.value
+                                          ? Colors.cyan
+                                          : Get.isDarkMode
+                                              ? Colors.white
+                                              : Colors.grey,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    controller.chapterIndex.value = i;
+                                    controller.onReadChapter(volume);
+                                  },
+                                  child: Text(
+                                    volume.chapters[i].chapterName,
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              )
+              .toList(),
         ),
       ),
     );

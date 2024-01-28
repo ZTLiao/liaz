@@ -19,17 +19,18 @@ class ComicDownloadController extends BaseController {
 
   @override
   void onInit() {
-    chapterIds.addAll(ComicChapterService.instance.getChapterIds(comicDetail.comicId));
+    chapterIds.addAll(
+        ComicChapterService.instance.getChapterIds(comicDetail.comicId));
     super.onInit();
   }
 
   void selectAll() {
-    var chapterTypes = comicDetail.chapterTypes;
-    if (chapterTypes.isEmpty) {
+    var volumes = comicDetail.volumes;
+    if (volumes.isEmpty) {
       return;
     }
-    for (var chapterType in chapterTypes) {
-      for (var chapter in chapterType.chapters) {
+    for (var volume in volumes) {
+      for (var chapter in volume.chapters) {
         chapterIds.add(chapter.comicChapterId);
       }
     }
@@ -49,8 +50,8 @@ class ComicDownloadController extends BaseController {
 
   void onDownload() async {
     Map<int, ComicChapterModel> comicChapterMap = {};
-    for (var chapterType in comicDetail.chapterTypes) {
-      for (var chapter in chapterType.chapters) {
+    for (var volume in comicDetail.volumes) {
+      for (var chapter in volume.chapters) {
         comicChapterMap[chapter.comicChapterId] = chapter;
       }
     }

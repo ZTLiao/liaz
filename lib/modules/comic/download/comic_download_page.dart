@@ -4,9 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/enums/chapter_type_enum.dart';
 import 'package:liaz/app/enums/sort_type_enum.dart';
-import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/modules/comic/download/comic_download_controller.dart';
 import 'package:liaz/widgets/status/app_error_widget.dart';
@@ -137,112 +135,128 @@ class ComicDownloadPage extends StatelessWidget {
   }
 
   Widget _buildChapter() {
+    var volumes = controller.comicDetail.volumes;
     return Column(
-      children: (controller.comicDetail.chapterTypes.isNotEmpty)
-          ? controller.comicDetail.chapterTypes.map((item) {
-              var chapterType = item.chapterType;
-              var sortType = item.sortType;
-              var chapters = item.chapters;
-              String title = StrUtil.empty;
-              if (ChapterTypeEnum.serialize.index == chapterType) {
-                title = AppString.serialize;
-              } else if (ChapterTypeEnum.extra.index == chapterType) {
-                title = AppString.extra;
-              }
-              title +=
-                  '${StrUtil.space}（${AppString.total}${chapters.length}${AppString.chapter}）';
-              return Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          title,
-                          style: Get.textTheme.titleSmall,
-                        ),
+      children: volumes
+          .map(
+            (volume) => Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
+                        style: Get.textTheme.titleSmall,
                       ),
-                      TextButton.icon(
-                        style: TextButton.styleFrom(
-                          textStyle: const TextStyle(fontSize: 14),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onPressed: () {
-                          sortType.value =
-                              sortType.value == SortTypeEnum.desc.index
-                                  ? SortTypeEnum.asc.index
-                                  : SortTypeEnum.desc.index;
-                          item.sort();
-                        },
-                        icon: const Icon(
-                          Icons.swap_vert,
-                          size: 20,
-                        ),
-                        label: Text(sortType.value == SortTypeEnum.desc.index
-                            ? AppString.desc
-                            : AppString.asc),
+                    ),
+                    TextButton.icon(
+                      style: TextButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 14),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                    ],
-                  ),
-                  LayoutBuilder(
-                    builder: (ctx, constraints) {
-                      var count = constraints.maxWidth ~/ 160;
-                      if (count < 3) count = 3;
-                      return Obx(
-                        () => MasonryGridView.count(
-                          crossAxisCount: count,
-                          crossAxisSpacing: 8,
-                          mainAxisSpacing: 8,
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: item.chapters.length,
-                          itemBuilder: (context, i) {
-                            return Tooltip(
-                              message: item.chapters[i].chapterName,
-                              child: Obx(
-                                () => OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    foregroundColor: controller.chapterIds
-                                            .contains(
-                                                item.chapters[i].comicChapterId)
-                                        ? Colors.cyan
-                                        : Colors.grey,
-                                    backgroundColor: Colors.white,
-                                    textStyle: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                    tapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    minimumSize: const Size.fromHeight(40),
-                                    side: BorderSide(
-                                      color: controller.chapterIds.contains(
-                                              item.chapters[i].comicChapterId)
-                                          ? Colors.cyan
-                                          : Get.isDarkMode
-                                              ? Colors.white
-                                              : Colors.grey,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    controller.onSelect(item.chapters[i].comicChapterId);
-                                  },
-                                  child: Text(
-                                    item.chapters[i].chapterName,
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                      onPressed: () {
+                        volume.sortType.value =
+                            volume.sortType.value == SortTypeEnum.desc.index
+                                ? SortTypeEnum.asc.index
+                                : SortTypeEnum.desc.index;
+                        volume.sort();
+                      },
+                      icon: const Icon(
+                        Icons.swap_vert,
+                        size: 20,
+                      ),
+                      label: Text(
+                          volume.sortType.value == SortTypeEnum.desc.index
+                              ? AppString.desc
+                              : AppString.asc),
+                    ),
+                  ],
+                ),
+                LayoutBuilder(
+                  builder: (ctx, constraints) {
+                    var count = constraints.maxWidth ~/ 160;
+                    if (count < 3) count = 3;
+                    return Obx(
+                      () => MasonryGridView.count(
+                        crossAxisCount: count,
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 8,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount:
+                            (volume.isShowMoreButton && !volume.isShowAll.value)
+                                ? 15
+                                : volume.chapters.length,
+                        itemBuilder: (context, i) {
+                          if (volume.isShowMoreButton &&
+                              !volume.isShowAll.value &&
+                              i == 14) {
+                            return OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: controller.chapterIds.contains(
+                                        volume.chapters[i].comicChapterId)
+                                    ? Colors.cyan
+                                    : Colors.grey,
+                                backgroundColor: Colors.white,
+                                textStyle: const TextStyle(fontSize: 14),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                minimumSize: const Size.fromHeight(40),
+                                side: BorderSide(
+                                  color: controller.chapterIds.contains(
+                                          volume.chapters[i].comicChapterId)
+                                      ? Colors.cyan
+                                      : Get.isDarkMode
+                                          ? Colors.white
+                                          : Colors.grey,
                                 ),
                               ),
+                              onPressed: () {
+                                volume.isShowAll.value = true;
+                              },
+                              child: const Icon(Icons.arrow_drop_down),
                             );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              );
-            }).toList()
-          : [],
+                          }
+                          return Obx(
+                            () => OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: controller.chapterIds.contains(
+                                        volume.chapters[i].comicChapterId)
+                                    ? Colors.cyan
+                                    : Colors.grey,
+                                backgroundColor: Colors.white,
+                                textStyle: const TextStyle(fontSize: 14),
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                minimumSize: const Size.fromHeight(40),
+                                side: BorderSide(
+                                  color: controller.chapterIds.contains(
+                                          volume.chapters[i].comicChapterId)
+                                      ? Colors.cyan
+                                      : Get.isDarkMode
+                                          ? Colors.white
+                                          : Colors.grey,
+                                ),
+                              ),
+                              onPressed: () {
+                                controller.onSelect(
+                                    volume.chapters[i].comicChapterId);
+                              },
+                              child: Text(
+                                volume.chapters[i].chapterName,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          )
+          .toList(),
     );
   }
 }
