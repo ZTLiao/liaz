@@ -20,6 +20,9 @@ class NotificationService {
     }
     var title = notification.title;
     var content = notification.content;
+    if (content.isNotEmpty) {
+      content = content.replaceAll('\\n', '\n');
+    }
     showDialog(
       context: Get.context!,
       barrierDismissible: true,

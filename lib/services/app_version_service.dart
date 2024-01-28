@@ -39,6 +39,10 @@ class AppVersionService extends GetxService {
     var appName = packageInfo.appName;
     var version = appVersion.appVersion;
     var fileMd5 = appVersion.fileMd5;
+    var description = appVersion.description;
+    if (description.isNotEmpty) {
+      description = description.replaceAll('\\n', '\n');
+    }
     var downloadLink =
         await FileItemService.instance.getObject(appVersion.downloadLink);
     bool forcedUpgrade = status == VersionStatusEnum.force.index;
