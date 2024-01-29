@@ -3,6 +3,8 @@ import 'package:liaz/app/constants/app_asset.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/global/global.dart';
+import 'package:liaz/routes/app_navigator.dart';
 import 'package:lottie/lottie.dart';
 
 class AppEmptyWidget extends StatelessWidget {
@@ -12,11 +14,16 @@ class AppEmptyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var emptyPage = Global.appConfig.emptyPage;
     return SingleChildScrollView(
       child: Center(
         child: GestureDetector(
           onTap: () {
-            onRefresh?.call();
+            if (emptyPage.isNotEmpty) {
+              AppNavigator.toWebView(emptyPage);
+            } else {
+              onRefresh?.call();
+            }
           },
           child: Padding(
             padding: AppStyle.edgeInsetsA12,

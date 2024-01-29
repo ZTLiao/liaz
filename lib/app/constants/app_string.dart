@@ -9,7 +9,7 @@ class AppString {
   static const recommend = '推荐';
   static const upgrade = '更新';
   static const rank = '排行';
-  static const empty = 'EMPTY';
+  static const empty = '点我一下试试？';
   static const refresh = '刷新';
   static const more = '更多';
   static const copy = '复制详细信息';

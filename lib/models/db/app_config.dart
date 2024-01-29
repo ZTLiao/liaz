@@ -22,6 +22,8 @@ class AppConfig {
   String downloadApp;
   @HiveField(6)
   SplashConfig splash;
+  @HiveField(7)
+  String emptyPage;
 
   AppConfig({
     this.fileUrl = StrUtil.empty,
@@ -31,6 +33,7 @@ class AppConfig {
     this.publicKey = StrUtil.empty,
     this.downloadApp = StrUtil.empty,
     required this.splash,
+    this.emptyPage = StrUtil.empty,
   });
 
   factory AppConfig.fromJson(Map<String, dynamic> json) {
@@ -44,6 +47,7 @@ class AppConfig {
     if (json['splash'] != null && json['splash'] is Map) {
       splash = SplashConfig.fromJson(json['splash'] as Map<String, dynamic>);
     }
+    var emptyPage = json['emptyPage'] ?? StrUtil.empty;
     return AppConfig(
       fileUrl: fileUrl,
       resourceAuthority: resourceAuthority,
@@ -52,6 +56,7 @@ class AppConfig {
       publicKey: publicKey,
       downloadApp: downloadApp,
       splash: splash,
+      emptyPage: emptyPage,
     );
   }
 
@@ -65,6 +70,7 @@ class AppConfig {
       'publicKey': publicKey,
       'downloadApp': downloadApp,
       'splash': splashMap,
+      'emptyPage': emptyPage,
     };
   }
 
