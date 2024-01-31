@@ -406,18 +406,26 @@ class NovelDetailPage extends StatelessWidget {
                                             MainAxisAlignment.end,
                                         children: [
                                           Obx(
-                                            () => Text(
-                                              item.chapterName,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: Get.textTheme.bodyMedium!
-                                                  .copyWith(
-                                                color: item.novelChapterId ==
-                                                        controller
-                                                            .browseChapterId
-                                                            .value
-                                                    ? Colors.cyan
-                                                    : null,
+                                            () => Container(
+                                              constraints: BoxConstraints(
+                                                maxWidth: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    2,
+                                              ),
+                                              child: Text(
+                                                item.chapterName,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Get.textTheme.bodyMedium!
+                                                    .copyWith(
+                                                  color: item.novelChapterId ==
+                                                          controller
+                                                              .browseChapterId
+                                                              .value
+                                                      ? Colors.cyan
+                                                      : null,
+                                                ),
                                               ),
                                             ),
                                           ),
