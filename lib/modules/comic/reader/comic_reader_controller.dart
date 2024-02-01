@@ -43,6 +43,7 @@ class ComicReaderController extends BaseController {
       }
     }
     chapterIndex.value = i;
+    currentIndex.value = chapters[i].currentIndex;
     isLocal.value = chapters[i].isLocal;
     loadDetail();
   }
@@ -170,6 +171,16 @@ class ComicReaderController extends BaseController {
 
   @override
   void onClose() {
+    uploadHistory();
+    focusNode.dispose();
+    connectivitySubscription?.cancel();
+    batterySubscription?.cancel();
+    exitFull();
+    itemPositionsListener.itemPositions.removeListener(updateItemPosition);
+    super.onClose();
+  }
+
+  void uploadHistory() {
     if (!isLocal.value) {
       ComicService.instance.uploadHistory(
         detail.value.comicId,
@@ -180,12 +191,6 @@ class ComicReaderController extends BaseController {
         currentIndex.value,
       );
     }
-    focusNode.dispose();
-    connectivitySubscription?.cancel();
-    batterySubscription?.cancel();
-    exitFull();
-    itemPositionsListener.itemPositions.removeListener(updateItemPosition);
-    super.onClose();
   }
 
   void updateItemPosition() {
@@ -245,7 +250,6 @@ class ComicReaderController extends BaseController {
       return;
     }
     chapterIndex.value -= 1;
-    currentIndex.value = 0;
     loadDetail();
   }
 
@@ -268,40 +272,56 @@ class ComicReaderController extends BaseController {
       return;
     }
     chapterIndex.value += 1;
-    currentIndex.value = 0;
     loadDetail();
   }
 
   void loadDetail() async {
-    if (chapters.isEmpty) {
-      return;
-    }
-    var comicChapter = chapters[chapterIndex.value];
-    for (int i = 0; i < comicChapter.paths.length; i++) {
-      if (isLocal.value) {
-        comicChapter.paths[i] = path.join(
-            ComicDownloadService.instance.savePath, comicChapter.paths[i]);
-      } else {
-        comicChapter.paths[i] =
-            await FileItemService.instance.getObject(comicChapter.paths[i]);
+    try {
+      isPageLoading.value = true;
+      isPageError.value = false;
+      currentIndex.value = 0;
+      detail.value = ComicChapterItemModel.empty();
+      if (chapters.isEmpty) {
+        return;
       }
+      var comicChapter = chapters[chapterIndex.value];
+      for (int i = 0; i < comicChapter.paths.length; i++) {
+        if (isLocal.value) {
+          comicChapter.paths[i] = path.join(
+              ComicDownloadService.instance.savePath, comicChapter.paths[i]);
+        } else {
+          comicChapter.paths[i] =
+              await FileItemService.instance.getObject(comicChapter.paths[i]);
+        }
+      }
+      if (comicChapter.comicChapterId == comicChapterId) {
+        currentIndex.value = comicChapter.currentIndex;
+      } else {
+        currentIndex.value = 0;
+      }
+      comicChapterId = comicChapter.comicChapterId;
+      isLocal.value = comicChapter.isLocal;
+      detail.value = ComicChapterItemModel(
+        comicChapterId: comicChapter.comicChapterId,
+        comicId: comicChapter.comicId,
+        flag: comicChapter.flag,
+        chapterName: comicChapter.chapterName,
+        seqNo: comicChapter.seqNo,
+        paths: comicChapter.paths,
+        direction: comicChapter.direction,
+        isLocal: comicChapter.isLocal,
+      );
+      Future.delayed(const Duration(milliseconds: 100), () {
+        jumpToPage(currentIndex.value);
+      });
+      uploadHistory();
+    } catch (e) {
+      isPageError.value = true;
+      errorMsg.value = e.toString();
+      setShowControls();
+    } finally {
+      isPageLoading.value = false;
     }
-    currentIndex.value = comicChapter.currentIndex;
-    comicChapterId = comicChapter.comicChapterId;
-    isLocal.value = comicChapter.isLocal;
-    detail.value = ComicChapterItemModel(
-      comicChapterId: comicChapter.comicChapterId,
-      comicId: comicChapter.comicId,
-      flag: comicChapter.flag,
-      chapterName: comicChapter.chapterName,
-      seqNo: comicChapter.seqNo,
-      paths: comicChapter.paths,
-      direction: comicChapter.direction,
-      isLocal: comicChapter.isLocal,
-    );
-    Future.delayed(const Duration(milliseconds: 100), () {
-      jumpToPage(currentIndex.value);
-    });
   }
 
   void jumpToPage(int page, {bool anime = false}) {

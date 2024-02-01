@@ -470,7 +470,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
     return Obx(
       () {
         var value = controller.currentIndex.value + 1.0;
-        var max = controller.maxPage.value;
+        var max = controller.maxPage.value.toDouble();
         if (value > max) {
           return const SizedBox(
             height: 48,
@@ -482,8 +482,8 @@ class NovelReaderPage extends GetView<NovelReaderController> {
             children: [
               Expanded(
                 child: Slider(
-                  value: value,
-                  max: max.toDouble(),
+                  value: controller.currentIndex.value + 1.0,
+                  max: controller.maxPage.value.toDouble(),
                   onChanged: (e) {
                     controller.jumpToPage((e - 2).toInt());
                   },

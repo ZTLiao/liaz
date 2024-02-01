@@ -238,46 +238,64 @@ class NovelReaderController extends BaseController {
   }
 
   void loadContent() async {
-    content.value = StrUtil.empty;
-    var chapter = chapters[chapterIndex.value];
-    var paths = chapter.paths;
-    var types = chapter.types;
-    var sb = StringBuffer();
-    for (int i = 0; i < paths.length; i++) {
-      if (isLocal.value) {
-        if (paths[i].contains(BucketConstant.novel)) {
-          sb.write(await File(
-                  path.join(NovelDownloadService.instance.savePath, paths[i]))
-              .readAsString());
-        } else if (paths[i].contains(BucketConstant.inset)) {
-          pictures.add(paths[i]);
-        }
-      } else {
-        if (paths[i].contains(BucketConstant.novel)) {
-          sb.write(await NovelService.instance.getContent(paths[i]));
-        } else if (paths[i].contains(BucketConstant.inset)) {
-          paths[i] = await FileItemService.instance.getObject(paths[i]);
-          pictures.add(paths[i]);
+    try {
+      isPageLoading.value = true;
+      isPageError.value = false;
+      currentIndex.value = 0;
+      detail.value = NovelChapterItemModel.empty();
+      content.value = StrUtil.empty;
+      var chapter = chapters[chapterIndex.value];
+      var paths = chapter.paths;
+      var types = chapter.types;
+      var sb = StringBuffer();
+      for (int i = 0; i < paths.length; i++) {
+        if (isLocal.value) {
+          if (paths[i].contains(BucketConstant.novel)) {
+            sb.write(await File(
+                    path.join(NovelDownloadService.instance.savePath, paths[i]))
+                .readAsString());
+          } else if (paths[i].contains(BucketConstant.inset)) {
+            pictures.add(paths[i]);
+          }
+        } else {
+          if (paths[i].contains(BucketConstant.novel)) {
+            sb.write(await NovelService.instance.getContent(paths[i]));
+          } else if (paths[i].contains(BucketConstant.inset)) {
+            paths[i] = await FileItemService.instance.getObject(paths[i]);
+            pictures.add(paths[i]);
+          }
         }
       }
-    }
-    isAllPicture.value = pictures.isNotEmpty && sb.isEmpty;
-    content.value = sb.toString();
-    detail.value = NovelChapterItemModel(
-      novelChapterId: chapter.novelChapterId,
-      novelId: chapter.novelId,
-      flag: chapter.flag,
-      chapterName: chapter.chapterName,
-      seqNo: chapter.seqNo,
-      paths: paths,
-      types: types,
-      direction: chapter.direction,
-      isLocal: chapter.isLocal,
-    );
-    isLocal.value = chapter.isLocal;
-    novelChapterId = chapter.novelChapterId;
-    if (chapter.currentIndex != 0) {
-      currentIndex.value = chapter.currentIndex;
+      if (chapter.novelChapterId == novelChapterId) {
+        currentIndex.value = chapter.currentIndex;
+      } else {
+        currentIndex.value = 0;
+      }
+      isAllPicture.value = pictures.isNotEmpty && sb.isEmpty;
+      isLocal.value = chapter.isLocal;
+      novelChapterId = chapter.novelChapterId;
+      content.value = sb.toString();
+      detail.value = NovelChapterItemModel(
+        novelChapterId: chapter.novelChapterId,
+        novelId: chapter.novelId,
+        flag: chapter.flag,
+        chapterName: chapter.chapterName,
+        seqNo: chapter.seqNo,
+        paths: paths,
+        types: types,
+        direction: chapter.direction,
+        isLocal: chapter.isLocal,
+      );
+      Future.delayed(const Duration(milliseconds: 100), () {
+        jumpToPage(currentIndex.value);
+      });
+      uploadHistory();
+    } catch (e) {
+      isPageError.value = true;
+      errorMsg.value = e.toString();
+      setShowControls();
+    } finally {
+      isPageLoading.value = false;
     }
   }
 
@@ -402,8 +420,7 @@ class NovelReaderController extends BaseController {
     );
   }
 
-  @override
-  void onClose() {
+  void uploadHistory() {
     var path = StrUtil.empty;
     var paths = detail.value.paths;
     if (paths.isNotEmpty) {
@@ -419,6 +436,11 @@ class NovelReaderController extends BaseController {
         currentIndex.value,
       );
     }
+  }
+
+  @override
+  void onClose() {
+    uploadHistory();
     scrollController.removeListener(listenVertical);
     connectivitySubscription?.cancel();
     batterySubscription?.cancel();
