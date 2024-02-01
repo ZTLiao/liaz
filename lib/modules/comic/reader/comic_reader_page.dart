@@ -13,7 +13,6 @@ import 'package:liaz/widgets/status/app_error_widget.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 import 'package:liaz/widgets/toolbar/local_image.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
-import 'package:liaz/widgets/view/custom_material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -283,36 +282,8 @@ class ComicReaderPage extends GetView<ComicReaderController> {
 
   Widget buildHorizontal() {
     return EasyRefresh(
-      header: CustomMaterialHeader(
-        triggerOffset: 80,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: AppStyle.radius24,
-          ),
-          padding: AppStyle.edgeInsetsA12,
-          child: const Text(
-            '${AppString.loading}...',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-      footer: CustomMaterialFooter(
-        triggerOffset: 80,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: AppStyle.radius24,
-          ),
-          padding: AppStyle.edgeInsetsA12,
-          child: const Text(
-            '${AppString.loading}...',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
+      header: const MaterialHeader(),
+      footer: const MaterialFooter(),
       refreshOnStart: false,
       onRefresh: () async {
         controller.forwardChapter();
@@ -334,9 +305,6 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         preloadPagesCount: 4,
         itemBuilder: (_, i) {
           var url = controller.detail.value.paths[i];
-          if (i == controller.detail.value.paths.length - 1 && url == "TC") {
-            return const SizedBox();
-          }
           return PhotoView.customChild(
             wantKeepAlive: true,
             initialScale: 1.0,
@@ -361,36 +329,8 @@ class ComicReaderPage extends GetView<ComicReaderController> {
 
   Widget buildVertical() {
     return EasyRefresh(
-      header: CustomMaterialHeader(
-        triggerOffset: 80,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: AppStyle.radius24,
-          ),
-          padding: AppStyle.edgeInsetsA12,
-          child: const Text(
-            '${AppString.loading}...',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-      footer: CustomMaterialFooter(
-        triggerOffset: 80,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: AppStyle.radius24,
-          ),
-          padding: AppStyle.edgeInsetsA12,
-          child: const Text(
-            '${AppString.loading}...',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
+      header: const MaterialHeader(),
+      footer: const MaterialFooter(),
       refreshOnStart: false,
       onRefresh: () async {
         controller.forwardChapter();
@@ -404,9 +344,6 @@ class ComicReaderPage extends GetView<ComicReaderController> {
           itemCount: controller.detail.value.paths.length,
           itemPositionsListener: controller.itemPositionsListener,
           itemBuilder: (_, i) {
-            if (i == controller.detail.value.paths.length - 1) {
-              return const SizedBox();
-            }
             var url = controller.detail.value.paths[i];
             return Container(
               constraints: const BoxConstraints(
@@ -448,7 +385,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                   value: value,
                   max: max,
                   onChanged: (e) {
-                    controller.jumpToPage((e - 1).toInt());
+                    controller.jumpToPage((e - 2).toInt());
                   },
                 ),
               ),

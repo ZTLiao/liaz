@@ -11,6 +11,8 @@ import 'package:liaz/requests/category_search_request.dart';
 import 'package:liaz/requests/comic_request.dart';
 import 'package:liaz/requests/novel_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
+import 'package:liaz/services/comic_service.dart';
+import 'package:liaz/services/novel_service.dart';
 
 class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
     with GetTickerProviderStateMixin {
@@ -89,19 +91,29 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
     if (item.skipValue == null) {
       return;
     }
-    var objId = int.parse(item.skipValue!);
-    if (SkipTypeEnum.comic.index == skipType) {
-      var chapters = await comicRequest.getComicCatalogue(objId);
-      AppNavigator.toComicReader(
-        comicChapterId: objId,
-        chapters: chapters,
-      );
-    } else if (SkipTypeEnum.novel.index == skipType) {
-      var chapters = await novelRequest.getNovelCatalogue(objId);
-      AppNavigator.toNovelReader(
-        novelChapterId: objId,
-        chapters: chapters,
-      );
+    var skipValue = item.skipValue;
+    if (skipValue == null || int.parse(skipValue) == 0) {
+      var objId = item.objId!;
+      if (SkipTypeEnum.comic.index == skipType) {
+        ComicService.instance.toComicDetail(objId);
+      } else if (SkipTypeEnum.novel.index == skipType) {
+        NovelService.instance.toNovelDetail(objId);
+      }
+    } else {
+      var objId = int.parse(skipValue);
+      if (SkipTypeEnum.comic.index == skipType) {
+        var chapters = await comicRequest.getComicCatalogue(objId);
+        AppNavigator.toComicReader(
+          comicChapterId: objId,
+          chapters: chapters,
+        );
+      } else if (SkipTypeEnum.novel.index == skipType) {
+        var chapters = await novelRequest.getNovelCatalogue(objId);
+        AppNavigator.toNovelReader(
+          novelChapterId: objId,
+          chapters: chapters,
+        );
+      }
     }
   }
 }

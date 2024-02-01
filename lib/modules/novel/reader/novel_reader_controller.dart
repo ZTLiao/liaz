@@ -283,6 +283,9 @@ class NovelReaderController extends BaseController {
 
   /// 跳转页数
   void jumpToPage(int page, {bool anime = false}) {
+    if (page < 0) {
+      page = 0;
+    }
     //竖向
     if (readDirection.value == ReaderDirectionEnum.upToDown.index) {
       final viewportHeight = scrollController.position.viewportDimension;

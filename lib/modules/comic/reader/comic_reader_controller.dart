@@ -245,6 +245,7 @@ class ComicReaderController extends BaseController {
       return;
     }
     chapterIndex.value -= 1;
+    currentIndex.value = 0;
     loadDetail();
   }
 
@@ -267,6 +268,7 @@ class ComicReaderController extends BaseController {
       return;
     }
     chapterIndex.value += 1;
+    currentIndex.value = 0;
     loadDetail();
   }
 
@@ -275,7 +277,6 @@ class ComicReaderController extends BaseController {
       return;
     }
     var comicChapter = chapters[chapterIndex.value];
-
     for (int i = 0; i < comicChapter.paths.length; i++) {
       if (isLocal.value) {
         comicChapter.paths[i] = path.join(
@@ -285,6 +286,9 @@ class ComicReaderController extends BaseController {
             await FileItemService.instance.getObject(comicChapter.paths[i]);
       }
     }
+    currentIndex.value = comicChapter.currentIndex;
+    comicChapterId = comicChapter.comicChapterId;
+    isLocal.value = comicChapter.isLocal;
     detail.value = ComicChapterItemModel(
       comicChapterId: comicChapter.comicChapterId,
       comicId: comicChapter.comicId,
@@ -295,17 +299,15 @@ class ComicReaderController extends BaseController {
       direction: comicChapter.direction,
       isLocal: comicChapter.isLocal,
     );
-    currentIndex.value = comicChapter.currentIndex;
-    comicChapterId = comicChapter.comicChapterId;
-    isLocal.value = comicChapter.isLocal;
-    if (currentIndex.value != 0) {
-      Future.delayed(const Duration(milliseconds: 400), () {
-        jumpToPage(currentIndex.value);
-      });
-    }
+    Future.delayed(const Duration(milliseconds: 100), () {
+      jumpToPage(currentIndex.value);
+    });
   }
 
   void jumpToPage(int page, {bool anime = false}) {
+    if (page < 0) {
+      page = 0;
+    }
     //竖向
     if (readDirection.value == ReaderDirectionEnum.upToDown.index) {
       if (itemScrollController.isAttached) {

@@ -9,7 +9,6 @@ import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
 import 'package:liaz/app/logger/log.dart';
-import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/modules/novel/reader/novel_horizontal_reader.dart';
 import 'package:liaz/modules/novel/reader/novel_reader_controller.dart';
@@ -17,7 +16,6 @@ import 'package:liaz/widgets/status/app_error_widget.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 import 'package:liaz/widgets/toolbar/local_image.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
-import 'package:liaz/widgets/view/custom_material.dart';
 
 class NovelReaderPage extends GetView<NovelReaderController> {
   const NovelReaderPage({super.key});
@@ -252,36 +250,8 @@ class NovelReaderPage extends GetView<NovelReaderController> {
 
   Widget buildHorizontal() {
     return EasyRefresh(
-      header: CustomMaterialHeader(
-        triggerOffset: 80,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: AppStyle.radius24,
-          ),
-          padding: AppStyle.edgeInsetsA12,
-          child: const Text(
-            '${AppString.loading}...',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
-      footer: CustomMaterialFooter(
-        triggerOffset: 80,
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: AppStyle.radius24,
-          ),
-          padding: AppStyle.edgeInsetsA12,
-          child: const Text(
-            '${AppString.loading}...',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ),
+      header: const MaterialHeader(),
+      footer: const MaterialFooter(),
       refreshOnStart: false,
       onRefresh: () async {
         controller.forwardChapter();
@@ -341,36 +311,8 @@ class NovelReaderPage extends GetView<NovelReaderController> {
             bottom: (AppSettings.novelReaderShowStatus.value ? 32 : 12),
           ),
           child: EasyRefresh(
-            header: CustomMaterialHeader(
-              triggerOffset: 80,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: AppStyle.radius24,
-                ),
-                padding: AppStyle.edgeInsetsA12,
-                child: const Text(
-                  '${AppString.loading}...',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            footer: CustomMaterialFooter(
-              triggerOffset: 80,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: AppStyle.radius24,
-                ),
-                padding: AppStyle.edgeInsetsA12,
-                child: const Text(
-                  '${AppString.loading}...',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
+            header: const MaterialHeader(),
+            footer: const MaterialFooter(),
             refreshOnStart: false,
             onRefresh: () async {
               controller.forwardChapter();
@@ -421,30 +363,8 @@ class NovelReaderPage extends GetView<NovelReaderController> {
         top: AppStyle.statusBarHeight,
       ),
       child: EasyRefresh(
-        header: CustomMaterialHeader(
-          triggerOffset: 80,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: AppStyle.radius24,
-            ),
-            padding: AppStyle.edgeInsetsA12,
-            child: const Text(
-              StrUtil.empty,
-            ),
-          ),
-        ),
-        footer: CustomMaterialFooter(
-          triggerOffset: 80,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: AppStyle.radius24,
-            ),
-            padding: AppStyle.edgeInsetsA12,
-            child: const Text(
-              StrUtil.empty,
-            ),
-          ),
-        ),
+        header: const MaterialHeader(),
+        footer: const MaterialFooter(),
         refreshOnStart: false,
         onRefresh: () async {
           controller.forwardChapter();
@@ -565,7 +485,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                   value: value,
                   max: max.toDouble(),
                   onChanged: (e) {
-                    controller.jumpToPage((e - 1).toInt());
+                    controller.jumpToPage((e - 2).toInt());
                   },
                 ),
               ),
