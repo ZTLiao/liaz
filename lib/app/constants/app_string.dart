@@ -193,4 +193,5 @@ class AppString {
   static const alreadyLatestVersion = '已是最新版本!';
   static const close = 'close';
   static const loadingMore = '加载更多';
+  static const resourceError = '资源异常...';
 }

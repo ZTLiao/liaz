@@ -103,6 +103,10 @@ class ComicDetailController extends BaseController {
   void onReadChapter(ComicVolumeModel volume) {
     var chapters = volume.chapters;
     browseChapterId.value = chapters[chapterIndex.value].comicChapterId;
+    if (chapters[chapterIndex.value].paths.isEmpty) {
+      SmartDialog.showToast(AppString.resourceError);
+      return;
+    }
     var comicChapters = <ComicChapterModel>[];
     if (chapters.isNotEmpty) {
       for (var chapter in chapters) {

@@ -1,3 +1,4 @@
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/app_string.dart';
@@ -115,6 +116,10 @@ class NovelDetailController extends BaseController {
   void onReadChapter(NovelVolumeModel volume) {
     var chapters = volume.chapters;
     browseChapterId.value = chapters[chapterIndex.value].novelChapterId;
+    if (chapters[chapterIndex.value].paths.isEmpty) {
+      SmartDialog.showToast(AppString.resourceError);
+      return;
+    }
     var novelChapters = <NovelChapterModel>[];
     if (chapters.isNotEmpty) {
       for (var chapter in chapters) {
