@@ -7,18 +7,18 @@ import 'package:pointycastle/asymmetric/pkcs1.dart';
 import 'package:pointycastle/asymmetric/rsa.dart';
 
 class DecryptUtil {
-  static String decryptKey(String encryptPlain) {
-    var word = 8;
-    var encryptArray = utf8.encode(encryptPlain);
-    var length = encryptArray.length / word;
-    var keyArray = <int>[];
+  static String decryptKey(String encryptText) {
+    var step = 8;
+    var encryptArray = utf8.encode(encryptText);
+    var length = encryptArray.length / step;
+    var decryptArray = <int>[];
     for (int i = 0; i < length; i++) {
-      keyArray.add(0);
-      for (int j = 0; j < word; j++) {
-        keyArray[i] |= encryptArray[i * word + j] & (128 >> j);
+      decryptArray.add(0);
+      for (int j = 0; j < step; j++) {
+        decryptArray[i] |= encryptArray[i * step + j] & (128 >> j);
       }
     }
-    return String.fromCharCodes(keyArray);
+    return String.fromCharCodes(decryptArray);
   }
 
   //公钥分段解密
@@ -28,7 +28,8 @@ class DecryptUtil {
     AsymmetricBlockCipher cipher = PKCS1Encoding(RSAEngine());
     cipher.init(false, PublicKeyParameter<RSAPublicKey>(publicKey));
     //原始数据
-    List<int> sourceBytes = base64Decode(String.fromCharCodes(decodeHexString(encryptText)));
+    List<int> sourceBytes =
+        base64Decode(String.fromCharCodes(decodeHexString(encryptText)));
     //数据长度
     int inputLength = sourceBytes.length;
     int maxDecryptBlock = 256;
