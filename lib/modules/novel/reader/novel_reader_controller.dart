@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:battery_plus/battery_plus.dart';
@@ -266,6 +267,7 @@ class NovelReaderController extends BaseController {
           }
         }
       }
+      isAllPicture.value = pictures.isNotEmpty && sb.length == 0;
       if (chapter.novelChapterId == novelChapterId) {
         currentIndex.value = chapter.currentIndex;
       } else {

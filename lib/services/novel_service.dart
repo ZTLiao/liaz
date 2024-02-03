@@ -60,15 +60,13 @@ class NovelService {
       _novelRequest.getNovel(objId).then((value) {
         var cover = value.cover;
         if (cover.contains(StrUtil.question)) {
-          cover = cover
-              .split(StrUtil.question)[0]
-              .replaceAll(Global.appConfig.fileUrl, StrUtil.empty);
+          cover = cover.split(StrUtil.question)[0];
         }
+        cover = cover.replaceAll(Global.appConfig.fileUrl, StrUtil.empty);
         if (path.contains(StrUtil.question)) {
-          path = path
-              .split(StrUtil.question)[0]
-              .replaceAll(Global.appConfig.fileUrl, StrUtil.empty);
+          path = path.split(StrUtil.question)[0];
         }
+        path = path.replaceAll(Global.appConfig.fileUrl, StrUtil.empty);
         _browseRequest.uploadHistory(
           objId,
           assetType,
@@ -124,6 +122,7 @@ class NovelService {
     }
     content = await DioRequest.instance
         .getResource(await FileItemService.instance.getObject(uniqueId));
+    content = content.replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), '');
     if (content.isNotEmpty) {
       saveNovelContent(uniqueId: uniqueId, content: content);
     }

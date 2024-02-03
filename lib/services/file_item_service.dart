@@ -43,11 +43,13 @@ class FileItemService extends GetxService {
     return box!.get(key);
   }
 
-  void delete(String key) {
+  void delete(String key) async {
+    await init();
     box!.delete(key);
   }
 
-  void clear() {
+  void clear() async {
+    await init();
     var keys = box!.values.toList().map((e) => e.path).toList();
     if (keys.isNotEmpty) {
       box!.deleteAll(keys);

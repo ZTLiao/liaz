@@ -45,7 +45,8 @@ class NovelReaderPage extends GetView<NovelReaderController> {
               children: [
                 Obx(
                   () => Offstage(
-                    offstage: controller.content.value.isEmpty,
+                    offstage: controller.content.value.isEmpty &&
+                        !controller.isAllPicture.value,
                     child: GestureDetector(
                       onTap: () {
                         controller.setShowControls();
@@ -381,7 +382,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                     ReaderDirectionEnum.rightToLeft.index,
                 onPageChanged: (e) {
                   controller.currentIndex.value = e;
-                  controller.maxPage.value = 10;
+                  controller.maxPage.value = controller.pictures.length;
                 },
                 itemBuilder: (_, i) {
                   return Padding(
@@ -409,7 +410,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                 })
             : ListView.separated(
                 controller: controller.scrollController,
-                itemCount: 10,
+                itemCount: controller.pictures.length,
                 padding: EdgeInsets.zero,
                 separatorBuilder: (_, i) => AppStyle.vGap4,
                 itemBuilder: (_, i) {

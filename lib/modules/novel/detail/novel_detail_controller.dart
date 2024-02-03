@@ -120,16 +120,20 @@ class NovelDetailController extends BaseController {
       SmartDialog.showToast(AppString.resourceError);
       return;
     }
+    var volumes = detail.value.volumes;
+    if (volumes.isEmpty) {
+      return;
+    }
     var novelChapters = <NovelChapterModel>[];
-    if (chapters.isNotEmpty) {
-      for (var chapter in chapters) {
+    for (int i = volumes.length - 1; i >= 0; i--) {
+      var value = volumes[i];
+      for (var chapter in value.chapters) {
         if (chapter.novelChapterId == browseChapterId.value) {
           chapter.currentIndex = detail.value.currentIndex;
         }
         novelChapters.add(NovelChapterModel.fromJson(chapter.toJson()));
       }
     }
-    novelChapters.sort((a, b) => a.seqNo.compareTo(b.seqNo));
     AppNavigator.toNovelReader(
       novelChapterId: chapters[chapterIndex.value].novelChapterId,
       chapters: novelChapters,

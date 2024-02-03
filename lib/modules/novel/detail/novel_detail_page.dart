@@ -352,138 +352,37 @@ class NovelDetailPage extends StatelessWidget {
       () => Visibility(
         visible: !controller.isRelateRecommend.value,
         child: Column(
-          children: volumes
-              .map(
-                (volume) => Column(
-                  children: [
-                    ExpansionTile(
-                      initiallyExpanded: volumes.length == 1,
-                      title: Text(
-                        '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
-                      ),
-                      tilePadding: AppStyle.edgeInsetsH4,
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: (!volume.isShowAll.value)
-                              ? (volume.pageSize.value > volume.chapters.length)
-                                  ? volume.chapters.length
-                                  : volume.pageSize.value
-                              : volume.chapters.length,
-                          itemBuilder: (context, i) {
-                            var item = volume.chapters[i];
-                            if (!volume.isShowAll.value &&
-                                i == (volume.pageSize.value - 1)) {
-                              return ListTile(
-                                title: const Column(
-                                  children: [
-                                    Center(
-                                      child: Text(AppString.loadingMore),
-                                    ),
-                                    AppStyle.vGap60
-                                  ],
-                                ),
-                                contentPadding: AppStyle.edgeInsetsA4,
-                                visualDensity: const VisualDensity(
-                                  vertical: VisualDensity.minimumDensity,
-                                ),
-                                onTap: () {
-                                  volume.pageSize.value += 15;
-                                },
-                              );
-                            }
+          children: [
+            ...volumes.map(
+              (volume) => Column(
+                children: [
+                  ExpansionTile(
+                    initiallyExpanded: volumes.length == 1,
+                    title: Text(
+                      '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
+                    ),
+                    tilePadding: AppStyle.edgeInsetsH4,
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: (!volume.isShowAll.value)
+                            ? (volume.pageSize.value > volume.chapters.length)
+                                ? volume.chapters.length
+                                : volume.pageSize.value
+                            : volume.chapters.length,
+                        itemBuilder: (context, i) {
+                          var item = volume.chapters[i];
+                          if (!volume.isShowAll.value &&
+                              i == (volume.pageSize.value - 1)) {
                             return ListTile(
-                              title: Column(
+                              title: const Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Obx(
-                                            () => Container(
-                                              constraints: BoxConstraints(
-                                                maxWidth: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    2,
-                                              ),
-                                              child: Text(
-                                                item.chapterName,
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: Get.textTheme.bodyMedium!
-                                                    .copyWith(
-                                                  color: item.novelChapterId ==
-                                                          controller
-                                                              .browseChapterId
-                                                              .value
-                                                      ? Colors.cyan
-                                                      : null,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Text(
-                                            '${AppString.at} ${DateUtil.formatDateTimeMinute(item.updatedAt)} ${AppString.publish}',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                              fontSize: 14,
-                                              color: AppColor.grey99,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            IconButton(
-                                              onPressed: () {
-                                                controller.onPreview(i, volume);
-                                              },
-                                              icon: const Icon(
-                                                Icons.info_outline,
-                                                color: AppColor.grey99,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                  Center(
+                                    child: Text(AppString.loadingMore),
                                   ),
-                                  Obx(
-                                    () => Visibility(
-                                      visible: (controller
-                                              .isExpandPreview.value &&
-                                          controller.chapterIndex.value == i),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: AppColor
-                                              .novelThemes[AppSettings
-                                                  .novelReaderTheme.value]!
-                                              .first,
-                                        ),
-                                        child: Text(
-                                          controller.content.value,
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            color: AppColor.grey99,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  AppStyle.vGap60
                                 ],
                               ),
                               contentPadding: AppStyle.edgeInsetsA4,
@@ -491,22 +390,123 @@ class NovelDetailPage extends StatelessWidget {
                                 vertical: VisualDensity.minimumDensity,
                               ),
                               onTap: () {
-                                controller.chapterIndex.value = i;
-                                controller.onReadChapter(volume);
+                                volume.pageSize.value += 15;
                               },
                             );
-                          },
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      color: Colors.grey.withOpacity(.2),
-                      height: 1.0,
-                    ),
-                  ],
-                ),
-              )
-              .toList(),
+                          }
+                          return ListTile(
+                            title: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Obx(
+                                          () => Container(
+                                            constraints: BoxConstraints(
+                                              maxWidth: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2,
+                                            ),
+                                            child: Text(
+                                              item.chapterName,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Get.textTheme.bodyMedium!
+                                                  .copyWith(
+                                                color: item.novelChapterId ==
+                                                        controller
+                                                            .browseChapterId
+                                                            .value
+                                                    ? Colors.cyan
+                                                    : null,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Text(
+                                          '${AppString.at} ${DateUtil.formatDateTimeMinute(item.updatedAt)} ${AppString.publish}',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: AppColor.grey99,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              controller.onPreview(i, volume);
+                                            },
+                                            icon: const Icon(
+                                              Icons.info_outline,
+                                              color: AppColor.grey99,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Obx(
+                                  () => Visibility(
+                                    visible:
+                                        (controller.isExpandPreview.value &&
+                                            controller.chapterIndex.value == i),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColor
+                                            .novelThemes[AppSettings
+                                                .novelReaderTheme.value]!
+                                            .first,
+                                      ),
+                                      child: Text(
+                                        controller.content.value,
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: AppColor.grey99,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            contentPadding: AppStyle.edgeInsetsA4,
+                            visualDensity: const VisualDensity(
+                              vertical: VisualDensity.minimumDensity,
+                            ),
+                            onTap: () {
+                              controller.chapterIndex.value = i;
+                              controller.onReadChapter(volume);
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey.withOpacity(.2),
+                    height: 1.0,
+                  ),
+                ],
+              ),
+            ),
+            AppStyle.vGap60,
+          ],
         ),
       ),
     );
