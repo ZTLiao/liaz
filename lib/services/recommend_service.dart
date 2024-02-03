@@ -28,7 +28,9 @@ class RecommendService extends GetxService {
     Log.d("skipType : $skipType, skipValue : $skipValue, objId : $objId");
     //H5
     if (SkipTypeEnum.h5.index == skipType) {
-      AppNavigator.toWebView(skipValue!);
+      if (skipValue != null && skipValue.isNotEmpty) {
+        AppNavigator.toWebView(skipValue);
+      }
     } else if (SkipTypeEnum.comic.index == skipType ||
         SkipTypeEnum.novel.index == skipType) {
       if (skipValue != null && int.parse(skipValue) != 0) {
@@ -54,7 +56,9 @@ class RecommendService extends GetxService {
         }
       }
     } else {
-      AppNavigator.toContentPage(skipValue!);
+      if (skipValue != null && skipValue.isNotEmpty) {
+        AppNavigator.toContentPage(skipValue);
+      }
     }
   }
 

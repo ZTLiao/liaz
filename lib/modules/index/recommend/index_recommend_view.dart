@@ -71,7 +71,6 @@ class IndexRecommendView extends StatelessWidget {
             controller.onOperate(
                 recommend.recommendType, recommend.optType, recommend.optValue);
           }
-
           if (showType == ShowTypeEnum.banner.index) {
             return TitleWidget(
               icon: icon,
