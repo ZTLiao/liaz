@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/liaozetao/AndroidStudioProjects/liaz/android/app/.cxx/Debug/4p441420/x86",
+  "command": "/Users/liaozetao/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=i686-none-linux-android21 --sysroot=/Users/liaozetao/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dliaz_EXPORTS -I../../../../src/main/cpp/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mstackrealign -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -fno-limit-debug-info  -fPIC -o CMakeFiles/liaz.dir/src/main/cpp/decrypt.c.o -c /Users/liaozetao/AndroidStudioProjects/liaz/android/app/src/main/cpp/decrypt.c",
+  "file": "/Users/liaozetao/AndroidStudioProjects/liaz/android/app/src/main/cpp/decrypt.c"
+}
+]

@@ -382,7 +382,6 @@ class NovelDetailPage extends StatelessWidget {
                                   Center(
                                     child: Text(AppString.loadingMore),
                                   ),
-                                  AppStyle.vGap60
                                 ],
                               ),
                               contentPadding: AppStyle.edgeInsetsA4,
