@@ -1,24 +1,34 @@
+import 'dart:ffi';
+import 'dart:io';
+
 import 'dart:convert';
 import 'package:encrypt/encrypt.dart';
+import 'package:ffi/ffi.dart';
 import 'package:flutter/services.dart';
 import 'package:pointycastle/api.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 import 'package:pointycastle/asymmetric/pkcs1.dart';
 import 'package:pointycastle/asymmetric/rsa.dart';
 
+typedef DecryptKeyFuncForC = Void Function(Pointer<Utf8>, Pointer<Utf8>, Int32);
+typedef DecryptKeyFuncForDart = void Function(
+    Pointer<Utf8>, Pointer<Utf8>, int);
+
 class DecryptUtil {
   static String decryptKey(String encryptText) {
-    var step = 8;
-    var encryptArray = utf8.encode(encryptText);
-    var length = encryptArray.length / step;
-    var decryptArray = <int>[];
-    for (int i = 0; i < length; i++) {
-      decryptArray.add(0);
-      for (int j = 0; j < step; j++) {
-        decryptArray[i] |= encryptArray[i * step + j] & (128 >> j);
-      }
-    }
-    return String.fromCharCodes(decryptArray);
+    final DynamicLibrary dylib = Platform.isAndroid
+        ? DynamicLibrary.open("libliaz.so")
+        : DynamicLibrary.process();
+    final decryptKeyFunc =
+        dylib.lookupFunction<DecryptKeyFuncForC, DecryptKeyFuncForDart>(
+            "decrypt_key");
+    final Pointer<Utf8> nativeEncryptText = encryptText.toNativeUtf8();
+    var length = encryptText.length;
+    Pointer<Utf8> nativeDecryptText = malloc.allocate<Utf8>(length + 1);
+    decryptKeyFunc(nativeEncryptText, nativeDecryptText, encryptText.length);
+    String decryptText = nativeDecryptText.toDartString();
+    calloc.free(nativeEncryptText);
+    return decryptText;
   }
 
   //公钥分段解密
