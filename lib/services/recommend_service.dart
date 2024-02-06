@@ -33,7 +33,7 @@ class RecommendService extends GetxService {
       }
     } else if (SkipTypeEnum.comic.index == skipType ||
         SkipTypeEnum.novel.index == skipType) {
-      if (skipValue != null && int.parse(skipValue) != 0) {
+      if (skipValue != null && skipValue.isNotEmpty && int.parse(skipValue) != 0) {
         var isUpgrade = item.isUpgrade;
         if (isUpgrade != null && isUpgrade == YesOrNo.yes) {
           //漫画

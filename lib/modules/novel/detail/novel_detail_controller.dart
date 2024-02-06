@@ -7,6 +7,7 @@ import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/recommend_position_enum.dart';
 import 'package:liaz/app/enums/recommend_type_enum.dart';
+import 'package:liaz/app/enums/skip_type_enum.dart';
 import 'package:liaz/app/events/event_bus.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/dio_request.dart';
@@ -175,6 +176,11 @@ class NovelDetailController extends BaseController {
             break;
           }
         }
+      }
+    } else {
+      var volumes = detail.value.volumes;
+      if (volumes.isNotEmpty) {
+        onReadChapter(volumes[0]);
       }
     }
   }

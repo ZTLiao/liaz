@@ -15,6 +15,7 @@ import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_controller.dart';
+import 'package:liaz/services/recommend_service.dart';
 import 'package:liaz/widgets/toolbar/cross_list_widget.dart';
 import 'package:liaz/widgets/toolbar/icon_item_widget.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
@@ -534,7 +535,7 @@ class ComicDetailPage extends StatelessWidget {
                 item: title,
                 child: TwoBoxGridWidget(
                   items: items,
-                  onTap: controller.onDetail,
+                  onTap: RecommendService.instance.onDetail,
                 ),
               );
             } else if (showType == ShowTypeEnum.threeGrid.index) {
@@ -544,7 +545,7 @@ class ComicDetailPage extends StatelessWidget {
                 item: title,
                 child: ThreeBoxGridWidget(
                   items: items,
-                  onTap: controller.onDetail,
+                  onTap: RecommendService.instance.onDetail,
                 ),
               );
             } else {
@@ -554,7 +555,7 @@ class ComicDetailPage extends StatelessWidget {
                 item: title,
                 child: CrossListWidget(
                   items: items,
-                  onTap: controller.onDetail,
+                  onTap: RecommendService.instance.onDetail,
                 ),
               );
             }
