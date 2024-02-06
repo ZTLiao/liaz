@@ -67,8 +67,8 @@ class IndexRankView extends StatelessWidget {
             ],
           ),
         ),
-        body: TabBarView(
-          controller: controller.tabController,
+        body: IndexedStack(
+          index: controller.tabController.index,
           children: [
             buildListView(),
             buildListView(),
@@ -95,10 +95,7 @@ class IndexRankView extends StatelessWidget {
             return RankItemWidget(
               index: (i + 1),
               child: Expanded(
-                child: CardItemWidget(
-                  card: card,
-                  onTap: controller.onDetail
-                ),
+                child: CardItemWidget(card: card, onTap: controller.onDetail),
               ),
             );
           }),
