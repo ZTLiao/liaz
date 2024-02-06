@@ -12,6 +12,7 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/db/ads_config.dart';
 import 'package:liaz/models/db/app_config.dart';
 import 'package:liaz/models/db/comic.dart';
 import 'package:liaz/models/db/comic_chapter.dart';
@@ -97,6 +98,7 @@ Future<void> initHive() async {
   Hive.registerAdapter(TaskAdapter());
   Hive.registerAdapter(FileItemAdapter());
   Hive.registerAdapter(SplashConfigAdapter());
+  Hive.registerAdapter(AdsConfigAdapter());
 }
 
 Future<void> initServices() async {

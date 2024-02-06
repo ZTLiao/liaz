@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/db/ads_config.dart';
 import 'package:liaz/models/db/splash_config.dart';
 
 part 'app_config.g.dart';
@@ -24,6 +25,8 @@ class AppConfig {
   SplashConfig splash;
   @HiveField(7)
   String emptyPage;
+  @HiveField(8)
+  AdsConfig advert;
 
   AppConfig({
     this.fileUrl = StrUtil.empty,
@@ -34,6 +37,7 @@ class AppConfig {
     this.downloadApp = StrUtil.empty,
     required this.splash,
     this.emptyPage = StrUtil.empty,
+    required this.advert,
   });
 
   factory AppConfig.fromJson(Map<String, dynamic> json) {
@@ -48,6 +52,10 @@ class AppConfig {
       splash = SplashConfig.fromJson(json['splash'] as Map<String, dynamic>);
     }
     var emptyPage = json['emptyPage'] ?? StrUtil.empty;
+    var advert = AdsConfig();
+    if (json['advert'] != null && json['advert'] is Map) {
+      advert = AdsConfig.fromJson(json['advert'] as Map<String, dynamic>);
+    }
     return AppConfig(
       fileUrl: fileUrl,
       resourceAuthority: resourceAuthority,
@@ -57,11 +65,13 @@ class AppConfig {
       downloadApp: downloadApp,
       splash: splash,
       emptyPage: emptyPage,
+      advert: advert,
     );
   }
 
   Map<String, dynamic> toJson() {
     var splashMap = splash.toJson();
+    var advertMap = advert.toJson();
     return <String, dynamic>{
       'fileUrl': fileUrl,
       'resourceAuthority': resourceAuthority,
@@ -71,6 +81,7 @@ class AppConfig {
       'downloadApp': downloadApp,
       'splash': splashMap,
       'emptyPage': emptyPage,
+      'advert': advertMap,
     };
   }
 
