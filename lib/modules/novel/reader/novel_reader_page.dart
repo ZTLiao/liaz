@@ -63,7 +63,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                           : (controller.readDirection.value ==
                                   ReaderDirectionEnum.upToDown.index
                               ? buildVertical(context)
-                              : buildHorizontal(context)),
+                              : buildHorizontal()),
                     ),
                   ),
                 ),
