@@ -27,10 +27,10 @@ import 'package:liaz/models/db/task.dart';
 import 'package:liaz/models/db/user.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/common/splash/splash_screen_page.dart';
-import 'package:liaz/requests/crash_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/routes/app_route.dart';
 import 'package:liaz/routes/app_router.dart';
+import 'package:liaz/services/advert_service.dart';
 import 'package:liaz/services/app_config_service.dart';
 import 'package:liaz/services/app_settings_service.dart';
 import 'package:liaz/services/comic_chapter_service.dart';
@@ -54,7 +54,6 @@ void main() {
     Zone.current
         .handleUncaughtError(details.exception, (details.stack as StackTrace));
   };
-  var crashRequest = CrashRequest();
   runZonedGuarded(() async {
     //初始化
     await init();
@@ -63,8 +62,6 @@ void main() {
     Log.e(error.toString(), stackTrace);
     //全局异常捕获
     Log.logPrint(stackTrace);
-    //上报崩溃日志
-    crashRequest.report(error.toString(), stackTrace);
   });
 }
 
@@ -120,6 +117,7 @@ Future<void> initServices() async {
     Get.put(ComicDownloadService()).init();
     Get.put(NovelDownloadService()).init();
   });
+  Get.put(AdvertService()).init();
 }
 
 class AppScrollBehavior extends MaterialScrollBehavior {

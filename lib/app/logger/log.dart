@@ -1,7 +1,10 @@
 import 'package:flutter/foundation.dart';
+import 'package:liaz/requests/crash_request.dart';
 import 'package:logger/logger.dart';
 
 class Log {
+  static final _crashRequest = CrashRequest();
+
   static Logger logger = Logger(
     printer: PrettyPrinter(
       methodCount: 0,
@@ -24,6 +27,8 @@ class Log {
   static e(String message, StackTrace stackTrace) {
     logger.e("${DateTime.now().toString()}\n$message",
         time: DateTime.now(), error: null, stackTrace: stackTrace);
+    //上报崩溃日志
+    _crashRequest.report(message, stackTrace);
   }
 
   static w(String message) {
