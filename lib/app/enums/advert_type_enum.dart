@@ -28,5 +28,17 @@ enum AdvertTypeEnum {
 
   /// 开屏广告超时
   splashScreenTimeOut,
+
+  /// banner广告加载完成
+  bannerShow,
+
+  /// banner不感兴趣
+  bannerDislike,
+
+  /// banner广告加载失败
+  bannerFail,
+
+  /// banner广告点击
+  bannerClick,
   ;
 }

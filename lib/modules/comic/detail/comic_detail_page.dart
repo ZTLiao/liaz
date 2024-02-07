@@ -3,18 +3,25 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_unionad/flutter_unionad.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/ads_flag.dart';
+import 'package:liaz/app/constants/ads_type.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/enums/advert_type_enum.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/enums/sort_type_enum.dart';
+import 'package:liaz/app/global/global.dart';
+import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_controller.dart';
+import 'package:liaz/services/advert_service.dart';
 import 'package:liaz/services/recommend_service.dart';
 import 'package:liaz/widgets/toolbar/cross_list_widget.dart';
 import 'package:liaz/widgets/toolbar/icon_item_widget.dart';
@@ -168,6 +175,7 @@ class ComicDetailPage extends StatelessWidget {
           color: Colors.grey.withOpacity(.2),
           height: 1.0,
         ),
+        buildAdvert(context),
         AppStyle.vGap12,
         Obx(
           () => Visibility(
@@ -356,9 +364,8 @@ class ComicDetailPage extends StatelessWidget {
         visible: !controller.isRelateRecommend.value,
         child: Column(
           children: [
-            ...volumes
-                .map(
-                  (volume) => Column(
+            ...volumes.map(
+              (volume) => Column(
                 children: [
                   Row(
                     children: [
@@ -375,9 +382,9 @@ class ComicDetailPage extends StatelessWidget {
                         ),
                         onPressed: () {
                           volume.sortType.value =
-                          volume.sortType.value == SortTypeEnum.desc.index
-                              ? SortTypeEnum.asc.index
-                              : SortTypeEnum.desc.index;
+                              volume.sortType.value == SortTypeEnum.desc.index
+                                  ? SortTypeEnum.asc.index
+                                  : SortTypeEnum.desc.index;
                           volume.sort();
                         },
                         icon: const Icon(
@@ -396,7 +403,7 @@ class ComicDetailPage extends StatelessWidget {
                       var count = constraints.maxWidth ~/ 160;
                       if (count < 3) count = 3;
                       return Obx(
-                            () => MasonryGridView.count(
+                        () => MasonryGridView.count(
                           crossAxisCount: count,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 8,
@@ -404,7 +411,7 @@ class ComicDetailPage extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: (volume.isShowMoreButton &&
-                              !volume.isShowAll.value)
+                                  !volume.isShowAll.value)
                               ? 15
                               : volume.chapters.length,
                           itemBuilder: (context, i) {
@@ -414,23 +421,22 @@ class ComicDetailPage extends StatelessWidget {
                               return OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor:
-                                  volume.chapters[i].comicChapterId ==
-                                      controller.browseChapterId.value
-                                      ? Colors.cyan
-                                      : Colors.grey,
+                                      volume.chapters[i].comicChapterId ==
+                                              controller.browseChapterId.value
+                                          ? Colors.cyan
+                                          : Colors.grey,
                                   backgroundColor: Colors.white,
                                   textStyle: const TextStyle(fontSize: 14),
                                   tapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
+                                      MaterialTapTargetSize.shrinkWrap,
                                   minimumSize: const Size.fromHeight(40),
                                   side: BorderSide(
-                                    color: volume
-                                        .chapters[i].comicChapterId ==
-                                        controller.browseChapterId.value
+                                    color: volume.chapters[i].comicChapterId ==
+                                            controller.browseChapterId.value
                                         ? Colors.cyan
                                         : Get.isDarkMode
-                                        ? Colors.white
-                                        : Colors.grey,
+                                            ? Colors.white
+                                            : Colors.grey,
                                   ),
                                 ),
                                 onPressed: () {
@@ -440,26 +446,25 @@ class ComicDetailPage extends StatelessWidget {
                               );
                             }
                             return Obx(
-                                  () => OutlinedButton(
+                              () => OutlinedButton(
                                 style: OutlinedButton.styleFrom(
                                   foregroundColor:
-                                  volume.chapters[i].comicChapterId ==
-                                      controller.browseChapterId.value
-                                      ? Colors.cyan
-                                      : Colors.grey,
+                                      volume.chapters[i].comicChapterId ==
+                                              controller.browseChapterId.value
+                                          ? Colors.cyan
+                                          : Colors.grey,
                                   backgroundColor: Colors.white,
                                   textStyle: const TextStyle(fontSize: 14),
                                   tapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
+                                      MaterialTapTargetSize.shrinkWrap,
                                   minimumSize: const Size.fromHeight(40),
                                   side: BorderSide(
-                                    color: volume
-                                        .chapters[i].comicChapterId ==
-                                        controller.browseChapterId.value
+                                    color: volume.chapters[i].comicChapterId ==
+                                            controller.browseChapterId.value
                                         ? Colors.cyan
                                         : Get.isDarkMode
-                                        ? Colors.white
-                                        : Colors.grey,
+                                            ? Colors.white
+                                            : Colors.grey,
                                   ),
                                 ),
                                 onPressed: () {
@@ -564,5 +569,58 @@ class ComicDetailPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget buildAdvert(BuildContext context) {
+    Widget advertWidget = const SizedBox();
+    try {
+      var advert = Global.appConfig.advert;
+      if (advert.enabled) {
+        if ((advert.adsType & AdsType.csj) != 0 &&
+            (advert.adsFlag & AdsFlag.detailBanner) != 0) {
+          advertWidget = FlutterUnionad.bannerAdView(
+            //andrrid banner广告id 必填
+            androidCodeId: advert.bannerCodeId,
+            //ios banner广告id 必填
+            iosCodeId: advert.bannerCodeId,
+            //是否使用个性化模版
+            mIsExpress: true,
+            //是否支持 DeepLink 选填
+            supportDeepLink: true,
+            //一次请求广告数量 大于1小于3 必填
+            expressAdNum: 3,
+            //轮播间隔事件 30-120秒  选填
+            expressTime: 30,
+            // 期望view 宽度 dp 必填
+            expressViewWidth: MediaQuery.of(context).size.width,
+            //期望view高度 dp 必填
+            expressViewHeight: MediaQuery.of(context).size.height / 10,
+            //控制下载APP前是否弹出二次确认弹窗
+            downloadType: FlutterUnionadDownLoadType.DOWNLOAD_TYPE_POPUP,
+            //用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，
+            adLoadType: FlutterUnionadLoadType.LOAD,
+            //是否启用点击 仅ios生效 默认启用
+            isUserInteractionEnabled: true,
+            //广告事件回调 选填
+            callBack: FlutterUnionadBannerCallBack(onShow: () {
+              AdvertService.instance.record(
+                  AdvertTypeEnum.bannerShow, AdvertTypeEnum.bannerShow.name);
+            }, onDislike: (message) {
+              AdvertService.instance
+                  .record(AdvertTypeEnum.bannerDislike, message);
+            }, onFail: (error) {
+              AdvertService.instance
+                  .record(AdvertTypeEnum.bannerFail, error.toString());
+            }, onClick: () {
+              AdvertService.instance.record(
+                  AdvertTypeEnum.bannerClick, AdvertTypeEnum.bannerClick.name);
+            }),
+          );
+        }
+      }
+    } catch (error, strace) {
+      Log.e(error.toString(), strace);
+    }
+    return advertWidget;
   }
 }
