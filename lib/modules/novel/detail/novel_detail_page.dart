@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/ads_flag.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
@@ -312,7 +313,8 @@ class NovelDetailPage extends StatelessWidget {
           color: Colors.grey.withOpacity(.2),
           height: 1.0,
         ),
-        AdvertService.instance.buildDetailAdvert(context, 8, 10),
+        AdvertService.instance
+            .buildBannerAdvert(context, AdsFlag.detailBanner, 8, 10),
         AppStyle.vGap12,
         Obx(
           () => Visibility(

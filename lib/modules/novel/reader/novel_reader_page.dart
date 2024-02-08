@@ -3,6 +3,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/ads_flag.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
@@ -248,7 +249,8 @@ class NovelReaderPage extends GetView<NovelReaderController> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                AdvertService.instance.buildBottomAdvert(context, 0, 12),
+                AdvertService.instance
+                    .buildBannerAdvert(context, AdsFlag.bottomBanner, 0, 12),
               ],
             ),
           ),
@@ -357,7 +359,8 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                           .last,
                     ),
                   ),
-                  AdvertService.instance.buildBottomAdvert(context, 24, 5),
+                  AdvertService.instance
+                      .buildBannerAdvert(context, AdsFlag.bottomBanner, 24, 5),
                 ],
               ),
             ),

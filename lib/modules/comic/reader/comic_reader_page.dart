@@ -3,6 +3,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/ads_flag.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
@@ -281,7 +282,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              AdvertService.instance.buildBottomAdvert(context, 0, 12),
+              AdvertService.instance.buildBannerAdvert(context, AdsFlag.bottomBanner, 0, 12),
             ],
           ),
         ),

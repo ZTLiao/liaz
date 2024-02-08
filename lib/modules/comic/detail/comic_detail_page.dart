@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:liaz/app/constants/ads_flag.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
@@ -169,7 +170,8 @@ class ComicDetailPage extends StatelessWidget {
           color: Colors.grey.withOpacity(.2),
           height: 1.0,
         ),
-        AdvertService.instance.buildDetailAdvert(context, 8, 10),
+        AdvertService.instance
+            .buildBannerAdvert(context, AdsFlag.detailBanner, 8, 10),
         AppStyle.vGap12,
         Obx(
           () => Visibility(
