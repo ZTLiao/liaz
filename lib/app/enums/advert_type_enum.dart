@@ -40,5 +40,17 @@ enum AdvertTypeEnum {
 
   /// banner广告点击
   bannerClick,
+
+  /// 信息流广告显示
+  nativeShow,
+
+  /// 信息流广告失败
+  nativeFail,
+
+  /// 信息流广告不感兴趣
+  nativeDislike,
+
+  /// 信息流广告点击
+  nativeClick,
   ;
 }

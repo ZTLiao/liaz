@@ -22,13 +22,16 @@ class AdsConfigAdapter extends TypeAdapter<AdsConfig> {
       rewardCodeId: fields[8] as String,
       drawCodeId: fields[9] as String,
       screenCodeId: fields[10] as String,
+      detailBannerCodeId: fields[11] as String,
+      readBannerCodeId: fields[12] as String,
+      bottomBannerCodeId: fields[13] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, AdsConfig obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.enabled)
       ..writeByte(1)
@@ -50,7 +53,13 @@ class AdsConfigAdapter extends TypeAdapter<AdsConfig> {
       ..writeByte(9)
       ..write(obj.drawCodeId)
       ..writeByte(10)
-      ..write(obj.screenCodeId);
+      ..write(obj.screenCodeId)
+      ..writeByte(11)
+      ..write(obj.detailBannerCodeId)
+      ..writeByte(12)
+      ..write(obj.readBannerCodeId)
+      ..writeByte(13)
+      ..write(obj.bottomBannerCodeId);
   }
 
   @override

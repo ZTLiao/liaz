@@ -7,8 +7,10 @@ import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
+import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/modules/comic/reader/comic_reader_controller.dart';
+import 'package:liaz/services/advert_service.dart';
 import 'package:liaz/widgets/status/app_error_widget.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 import 'package:liaz/widgets/toolbar/local_image.dart';
@@ -140,7 +142,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                             ),
                             AppStyle.hGap8,
                             Text(
-                              "${controller.detail.value.paths.isEmpty ? 0 : controller.currentIndex.value + 1} / ${controller.detail.value.paths.length}",
+                              "${controller.detail.value.paths.isEmpty ? 0 : controller.currentIndex.value + 1} / ${Global.appConfig.advert.enabled ? controller.detail.value.paths.length + 1 : controller.detail.value.paths.length}",
                               style: const TextStyle(fontSize: 12, height: 1.0),
                             ),
                           ],
@@ -275,6 +277,13 @@ class ComicReaderPage extends GetView<ComicReaderController> {
               ),
             ],
           ),
+          bottomNavigationBar: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              AdvertService.instance.buildBottomAdvert(context, 0, 12),
+            ],
+          ),
         ),
       ),
     );
@@ -301,9 +310,14 @@ class ComicReaderPage extends GetView<ComicReaderController> {
         physics: controller.lockSwipe.value
             ? const NeverScrollableScrollPhysics()
             : null,
-        itemCount: controller.detail.value.paths.length,
+        itemCount: Global.appConfig.advert.enabled
+            ? controller.detail.value.paths.length + 1
+            : controller.detail.value.paths.length,
         preloadPagesCount: 4,
-        itemBuilder: (_, i) {
+        itemBuilder: (context, i) {
+          if (controller.detail.value.paths.length == i) {
+            return AdvertService.instance.buildNativeAdvert(context, 0, 1);
+          }
           var url = controller.detail.value.paths[i];
           return PhotoView.customChild(
             wantKeepAlive: true,
@@ -341,9 +355,15 @@ class ComicReaderPage extends GetView<ComicReaderController> {
       child: Obx(
         () => ScrollablePositionedList.builder(
           itemScrollController: controller.itemScrollController,
-          itemCount: controller.detail.value.paths.length,
+          itemCount: Global.appConfig.advert.enabled
+              ? controller.detail.value.paths.length + 1
+              : controller.detail.value.paths.length,
           itemPositionsListener: controller.itemPositionsListener,
-          itemBuilder: (_, i) {
+          itemBuilder: (context, i) {
+            if (Global.appConfig.advert.enabled &&
+                controller.detail.value.paths.length == i) {
+              return AdvertService.instance.buildNativeAdvert(context, 0, 1);
+            }
             var url = controller.detail.value.paths[i];
             return Container(
               constraints: const BoxConstraints(

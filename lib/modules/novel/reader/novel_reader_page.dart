@@ -2,17 +2,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_unionad/flutter_unionad.dart';
 import 'package:get/get.dart';
-import 'package:liaz/app/constants/ads_flag.dart';
-import 'package:liaz/app/constants/ads_type.dart';
 import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
-import 'package:liaz/app/enums/advert_type_enum.dart';
 import 'package:liaz/app/enums/reader_direction_enum.dart';
-import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/modules/novel/reader/novel_horizontal_reader.dart';
@@ -22,7 +17,6 @@ import 'package:liaz/widgets/status/app_error_widget.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 import 'package:liaz/widgets/toolbar/local_image.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
-import 'package:path/path.dart';
 
 class NovelReaderPage extends GetView<NovelReaderController> {
   const NovelReaderPage({super.key});
@@ -63,7 +57,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                           : (controller.readDirection.value ==
                                   ReaderDirectionEnum.upToDown.index
                               ? buildVertical(context)
-                              : buildHorizontal()),
+                              : buildHorizontal(context)),
                     ),
                   ),
                 ),
@@ -250,13 +244,20 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                 ),
               ],
             ),
+            bottomNavigationBar: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                AdvertService.instance.buildBottomAdvert(context, 0, 12),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget buildHorizontal() {
+  Widget buildHorizontal(BuildContext context) {
     return EasyRefresh(
       header: const MaterialHeader(),
       footer: const MaterialFooter(),
@@ -356,7 +357,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                           .last,
                     ),
                   ),
-                  buildAdvert(context),
+                  AdvertService.instance.buildBottomAdvert(context, 24, 5),
                 ],
               ),
             ),
@@ -617,58 +618,5 @@ class NovelReaderPage extends GetView<NovelReaderController> {
         ],
       ),
     );
-  }
-
-  Widget buildAdvert(BuildContext context) {
-    Widget advertWidget = const SizedBox();
-    try {
-      var advert = Global.appConfig.advert;
-      if (advert.enabled) {
-        if ((advert.adsType & AdsType.csj) != 0 &&
-            (advert.adsFlag & AdsFlag.readBanner) != 0) {
-          advertWidget = FlutterUnionad.bannerAdView(
-            //andrrid banner广告id 必填
-            androidCodeId: advert.bannerCodeId,
-            //ios banner广告id 必填
-            iosCodeId: advert.bannerCodeId,
-            //是否使用个性化模版
-            mIsExpress: true,
-            //是否支持 DeepLink 选填
-            supportDeepLink: true,
-            //一次请求广告数量 大于1小于3 必填
-            expressAdNum: 3,
-            //轮播间隔事件 30-120秒  选填
-            expressTime: 30,
-            // 期望view 宽度 dp 必填
-            expressViewWidth: MediaQuery.of(context).size.width,
-            //期望view高度 dp 必填
-            expressViewHeight: MediaQuery.of(context).size.height / 5,
-            //控制下载APP前是否弹出二次确认弹窗
-            downloadType: FlutterUnionadDownLoadType.DOWNLOAD_TYPE_POPUP,
-            //用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，
-            adLoadType: FlutterUnionadLoadType.LOAD,
-            //是否启用点击 仅ios生效 默认启用
-            isUserInteractionEnabled: true,
-            //广告事件回调 选填
-            callBack: FlutterUnionadBannerCallBack(onShow: () {
-              AdvertService.instance.record(
-                  AdvertTypeEnum.bannerShow, AdvertTypeEnum.bannerShow.name);
-            }, onDislike: (message) {
-              AdvertService.instance
-                  .record(AdvertTypeEnum.bannerDislike, message);
-            }, onFail: (error) {
-              AdvertService.instance
-                  .record(AdvertTypeEnum.bannerFail, error.toString());
-            }, onClick: () {
-              AdvertService.instance.record(
-                  AdvertTypeEnum.bannerClick, AdvertTypeEnum.bannerClick.name);
-            }),
-          );
-        }
-      }
-    } catch (error, strace) {
-      Log.e(error.toString(), strace);
-    }
-    return advertWidget;
   }
 }

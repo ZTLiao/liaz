@@ -29,6 +29,12 @@ class AdsConfig {
   String drawCodeId;
   @HiveField(10)
   String screenCodeId;
+  @HiveField(11)
+  String detailBannerCodeId;
+  @HiveField(12)
+  String readBannerCodeId;
+  @HiveField(13)
+  String bottomBannerCodeId;
 
   AdsConfig({
     this.enabled = false,
@@ -42,6 +48,9 @@ class AdsConfig {
     this.rewardCodeId = StrUtil.empty,
     this.drawCodeId = StrUtil.empty,
     this.screenCodeId = StrUtil.empty,
+    this.detailBannerCodeId = StrUtil.empty,
+    this.readBannerCodeId = StrUtil.empty,
+    this.bottomBannerCodeId = StrUtil.empty,
   });
 
   factory AdsConfig.fromJson(Map<String, dynamic> json) {
@@ -56,6 +65,9 @@ class AdsConfig {
     var rewardCodeId = json['rewardCodeId'] ?? StrUtil.empty;
     var drawCodeId = json['drawCodeId'] ?? StrUtil.empty;
     var screenCodeId = json['screenCodeId'] ?? StrUtil.empty;
+    var detailBannerCodeId = json['detailBannerCodeId'] ?? StrUtil.empty;
+    var readBannerCodeId = json['readBannerCodeId'] ?? StrUtil.empty;
+    var bottomBannerCodeId = json['bottomBannerCodeId'] ?? StrUtil.empty;
     return AdsConfig(
       enabled: enabled,
       adsType: adsType,
@@ -68,6 +80,9 @@ class AdsConfig {
       rewardCodeId: rewardCodeId,
       drawCodeId: drawCodeId,
       screenCodeId: screenCodeId,
+      detailBannerCodeId: detailBannerCodeId,
+      readBannerCodeId: readBannerCodeId,
+      bottomBannerCodeId: bottomBannerCodeId,
     );
   }
 
@@ -83,6 +98,9 @@ class AdsConfig {
         'rewardCodeId': rewardCodeId,
         'drawCodeId': drawCodeId,
         'screenCodeId': screenCodeId,
+        'detailBannerCodeId': detailBannerCodeId,
+        'readBannerCodeId': readBannerCodeId,
+        'bottomBannerCodeId': bottomBannerCodeId,
       };
 
   @override
