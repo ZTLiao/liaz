@@ -52,5 +52,29 @@ enum AdvertTypeEnum {
 
   /// 信息流广告点击
   nativeClick,
+
+  /// 新模板渲染插屏广告显示
+  screenVideoShow,
+
+  /// 新模板渲染插屏广告跳过
+  screenVideoSkip,
+
+  /// 新模板渲染插屏广告点击
+  screenVideoClick,
+
+  /// 新模板渲染插屏广告结束
+  screenVideoFinish,
+
+  /// 新模板渲染插屏广告错误
+  screenVideoFail,
+
+  /// 新模板渲染插屏广告关闭
+  screenVideoClose,
+
+  /// 新模板渲染插屏广告预加载准备就绪
+  screenVideoReady,
+
+  /// 新模板渲染插屏广告预加载未准备就绪
+  screenVideoUnReady,
   ;
 }

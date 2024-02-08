@@ -20,23 +20,26 @@ class SplashScreenPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var splash = Global.appConfig.splash;
     var advert = Global.appConfig.advert;
-    Widget child = const SizedBox();
+    Widget splashWidget = const SizedBox();
     if (splash.cover.isNotEmpty) {
-      child = Obx(
-        () => InkWell(
-          onTap: controller.skipPage,
-          child: ExtendedImage.network(
-            controller.cover.value,
-            fit: BoxFit.cover,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+      splashWidget = FadeTransition(
+        opacity: controller.animation,
+        child: Obx(
+          () => InkWell(
+            onTap: controller.skipPage,
+            child: ExtendedImage.network(
+              controller.cover.value,
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+            ),
           ),
         ),
       );
     } else if (advert.enabled) {
       if ((advert.adsType & AdsType.csj) != 0 &&
           (advert.adsFlag & AdsFlag.splash) != 0) {
-        child = FlutterUnionad.splashAdView(
+        splashWidget = FlutterUnionad.splashAdView(
           //是否使用个性化模版  设定widget宽高
           mIsExpress: true,
           //android 开屏广告广告id 必填
@@ -87,9 +90,6 @@ class SplashScreenPage extends StatelessWidget {
         );
       }
     }
-    return FadeTransition(
-      opacity: controller.animation,
-      child: child,
-    );
+    return splashWidget;
   }
 }

@@ -29,8 +29,6 @@ class AdvertService {
         return;
       }
       if ((advert.adsType & AdsType.csj) != 0) {
-        await initRegister();
-        await FlutterUnionad.getSDKVersion();
         FlutterUnionad.requestPermissionIfNecessary(
           callBack: FlutterUnionadPermissionCallBack(
             notDetermined: () {
@@ -48,6 +46,8 @@ class AdvertService {
             },
           ),
         );
+        await initRegister();
+        await FlutterUnionad.getSDKVersion();
       }
     } catch (error, stackTrace) {
       Log.e(error.toString(), stackTrace);
@@ -125,16 +125,13 @@ class AdvertService {
             isUserInteractionEnabled: true,
             //广告事件回调 选填
             callBack: FlutterUnionadBannerCallBack(onShow: () {
-              AdvertService.instance.record(
-                  AdvertTypeEnum.bannerShow, AdvertTypeEnum.bannerShow.name);
+              record(AdvertTypeEnum.bannerShow, AdvertTypeEnum.bannerShow.name);
             }, onDislike: (message) {
-              AdvertService.instance
-                  .record(AdvertTypeEnum.bannerDislike, message);
+              record(AdvertTypeEnum.bannerDislike, message);
             }, onFail: (error) {
-              AdvertService.instance
-                  .record(AdvertTypeEnum.bannerFail, error.toString());
+              record(AdvertTypeEnum.bannerFail, error.toString());
             }, onClick: () {
-              AdvertService.instance.record(
+              record(
                   AdvertTypeEnum.bannerClick, AdvertTypeEnum.bannerClick.name);
             }),
           );
@@ -176,19 +173,17 @@ class AdvertService {
               adLoadType: FlutterUnionadLoadType.LOAD,
               callBack: FlutterUnionadNativeCallBack(
                 onShow: () {
-                  AdvertService.instance.record(AdvertTypeEnum.nativeShow,
+                  record(AdvertTypeEnum.nativeShow,
                       AdvertTypeEnum.nativeShow.name);
                 },
                 onFail: (error) {
-                  AdvertService.instance
-                      .record(AdvertTypeEnum.nativeFail, error.toString());
+                  record(AdvertTypeEnum.nativeFail, error.toString());
                 },
                 onDislike: (message) {
-                  AdvertService.instance
-                      .record(AdvertTypeEnum.nativeDislike, message);
+                  record(AdvertTypeEnum.nativeDislike, message);
                 },
                 onClick: () {
-                  AdvertService.instance.record(AdvertTypeEnum.nativeClick,
+                  record(AdvertTypeEnum.nativeClick,
                       AdvertTypeEnum.nativeClick.name);
                 },
               ),
@@ -200,5 +195,72 @@ class AdvertService {
       Log.e(error.toString(), strace);
     }
     return advertWidget;
+  }
+
+  Future<void> buildScreenAdvert() async {
+    try {
+      var advert = Global.appConfig.advert;
+      if (advert.enabled) {
+        if ((advert.adsType & AdsType.csj) != 0 &&
+            (advert.adsFlag & AdsFlag.screenBanner) != 0) {
+          FlutterUnionad.loadFullScreenVideoAdInteraction(
+            androidCodeId: advert.screenCodeId,
+            //android 全屏广告id 必填
+            iosCodeId: advert.screenCodeId,
+            //ios 全屏广告id 必填
+            supportDeepLink: true,
+            //是否支持 DeepLink 选填
+            orientation: FlutterUnionadOrientation.VERTICAL,
+            //视屏方向 选填
+            //控制下载APP前是否弹出二次确认弹窗
+            downloadType: FlutterUnionadDownLoadType.DOWNLOAD_TYPE_POPUP,
+            //用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，
+            adLoadType: FlutterUnionadLoadType.PRELOAD,
+          );
+          await FlutterUnionad.showFullScreenVideoAdInteraction();
+          FlutterUnionadStream.initAdStream(
+            // 新模板渲染插屏广告回调
+            flutterUnionadNewInteractionCallBack:
+                FlutterUnionadNewInteractionCallBack(
+              onShow: () {
+                record(AdvertTypeEnum.screenVideoShow,
+                    AdvertTypeEnum.screenVideoShow.name);
+              },
+              onSkip: () {
+                record(AdvertTypeEnum.screenVideoSkip,
+                    AdvertTypeEnum.screenVideoSkip.name);
+              },
+              onClick: () {
+                record(AdvertTypeEnum.screenVideoClick,
+                    AdvertTypeEnum.screenVideoClick.name);
+              },
+              onFinish: () {
+                record(AdvertTypeEnum.screenVideoFinish,
+                    AdvertTypeEnum.screenVideoFinish.name);
+              },
+              onFail: (error) {
+                record(AdvertTypeEnum.screenVideoFail, error.toString());
+              },
+              onClose: () {
+                record(AdvertTypeEnum.screenVideoClose,
+                    AdvertTypeEnum.screenVideoClose.name);
+              },
+              onReady: () async {
+                record(AdvertTypeEnum.screenVideoReady,
+                    AdvertTypeEnum.screenVideoReady.name);
+                //显示新模板渲染插屏
+                await FlutterUnionad.showFullScreenVideoAdInteraction();
+              },
+              onUnReady: () {
+                record(AdvertTypeEnum.screenVideoUnReady,
+                    AdvertTypeEnum.screenVideoUnReady.name);
+              },
+            ),
+          );
+        }
+      }
+    } catch (error, strace) {
+      Log.e(error.toString(), strace);
+    }
   }
 }
