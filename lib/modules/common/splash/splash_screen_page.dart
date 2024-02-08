@@ -56,7 +56,7 @@ class SplashScreenPage extends StatelessWidget {
           downloadType: FlutterUnionadDownLoadType.DOWNLOAD_TYPE_POPUP,
           //用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，
           adLoadType: FlutterUnionadLoadType.LOAD,
-          //是否影藏跳过按钮(当影藏的时候显示自定义跳过按钮) 默认显示
+          //是否隐藏跳过按钮(当隐藏的时候显示自定义跳过按钮) 默认显示
           hideSkip: false,
           callBack: FlutterUnionadSplashCallBack(
             onShow: () {
