@@ -1,0 +1,3 @@
+/Users/liaozetao/AndroidStudioProjects/liaz/android/app/.cxx/RelWithDebInfo/3a5p3rz5/x86_64/CMakeFiles/rebuild_cache.dir
+/Users/liaozetao/AndroidStudioProjects/liaz/android/app/.cxx/RelWithDebInfo/3a5p3rz5/x86_64/CMakeFiles/edit_cache.dir
+/Users/liaozetao/AndroidStudioProjects/liaz/android/app/.cxx/RelWithDebInfo/3a5p3rz5/x86_64/CMakeFiles/liaz.dir

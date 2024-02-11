@@ -1,0 +1,38 @@
+{
+  "buildFiles": [
+    "/Users/liaozetao/AndroidStudioProjects/liaz/android/app/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/liaozetao/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+      "-C",
+      "/Users/liaozetao/AndroidStudioProjects/liaz/android/app/.cxx/RelWithDebInfo/3a5p3rz5/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/liaozetao/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+    "-C",
+    "/Users/liaozetao/AndroidStudioProjects/liaz/android/app/.cxx/RelWithDebInfo/3a5p3rz5/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "liaz::@6890427a1f51a3e7e1df": {
+      "toolchain": "toolchain",
+      "abi": "armeabi-v7a",
+      "artifactName": "liaz",
+      "output": "/Users/liaozetao/AndroidStudioProjects/liaz/android/app/libs/armeabi-v7a/libliaz.so",
+      "runtimeFiles": []
+    }
+  },
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/liaozetao/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/liaozetao/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [
+    "c"
+  ],
+  "cppFileExtensions": []
+}
