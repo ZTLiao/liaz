@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-//faith 2020年04月20日11:05:57
 class NumberControllerWidget extends StatefulWidget {
   //高度
   final double height;
