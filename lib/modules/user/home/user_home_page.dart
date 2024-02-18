@@ -8,8 +8,10 @@ import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/widgets/toolbar/user_photo.dart';
 
-class UserHomePage extends GetView<UserHomeController> {
-  const UserHomePage({super.key});
+class UserHomePage extends StatelessWidget {
+  final UserHomeController controller;
+
+  UserHomePage({super.key}) : controller = Get.put(UserHomeController());
 
   @override
   Widget build(BuildContext context) {

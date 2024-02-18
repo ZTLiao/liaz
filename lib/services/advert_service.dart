@@ -7,6 +7,7 @@ import 'package:liaz/app/enums/advert_type_enum.dart';
 import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/requests/advert_request.dart';
+import 'package:liaz/routes/app_navigator.dart';
 
 class AdvertService {
   static AdvertService get instance {
@@ -262,5 +263,70 @@ class AdvertService {
     } catch (error, strace) {
       Log.e(error.toString(), strace);
     }
+  }
+
+  Widget buildSplashAdvert(BuildContext context) {
+    Widget advertWidget = const SizedBox();
+    var advert = Global.appConfig.advert;
+    try {
+      if (advert.enabled) {
+        if ((advert.adsType & AdsType.csj) != 0 &&
+            (advert.adsFlag & AdsFlag.splash) != 0) {
+          advertWidget = FlutterUnionad.splashAdView(
+            //是否使用个性化模版  设定widget宽高
+            mIsExpress: true,
+            //android 开屏广告广告id 必填
+            androidCodeId: advert.splashCodeId,
+            //ios 开屏广告广告id 必填
+            iosCodeId: advert.splashCodeId,
+            //是否支持 DeepLink 选填
+            supportDeepLink: true,
+            // 期望view 宽度 dp 选填 mIsExpress=true必填
+            expressViewWidth: MediaQuery.of(context).size.width,
+            //期望view高度 dp 选填 mIsExpress=true必填
+            expressViewHeight: MediaQuery.of(context).size.height,
+            //控制下载APP前是否弹出二次确认弹窗
+            downloadType: FlutterUnionadDownLoadType.DOWNLOAD_TYPE_POPUP,
+            //用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，
+            adLoadType: FlutterUnionadLoadType.LOAD,
+            //是否隐藏跳过按钮(当隐藏的时候显示自定义跳过按钮) 默认显示
+            hideSkip: false,
+            callBack: FlutterUnionadSplashCallBack(
+              onShow: () {
+                AdvertService.instance.record(AdvertTypeEnum.splashScreenShow,
+                    AdvertTypeEnum.splashScreenShow.name);
+              },
+              onClick: () {
+                AdvertService.instance.record(AdvertTypeEnum.splashScreenClick,
+                    AdvertTypeEnum.splashScreenClick.name);
+                AppNavigator.closePage();
+              },
+              onFail: (error) {
+                AdvertService.instance
+                    .record(AdvertTypeEnum.splashScreenFail, error.toString());
+              },
+              onFinish: () {
+                AdvertService.instance.record(AdvertTypeEnum.splashScreenFinish,
+                    AdvertTypeEnum.splashScreenFinish.name);
+                AppNavigator.toIndex(replace: true);
+              },
+              onSkip: () {
+                AdvertService.instance.record(AdvertTypeEnum.splashScreenSkip,
+                    AdvertTypeEnum.splashScreenSkip.name);
+                AppNavigator.toIndex(replace: true);
+              },
+              onTimeOut: () {
+                AdvertService.instance.record(
+                    AdvertTypeEnum.splashScreenTimeOut,
+                    AdvertTypeEnum.splashScreenTimeOut.name);
+              },
+            ),
+          );
+        }
+      }
+    } catch (error, strace) {
+      Log.e(error.toString(), strace);
+    }
+    return advertWidget;
   }
 }

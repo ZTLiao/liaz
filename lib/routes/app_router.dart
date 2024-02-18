@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
-import 'package:liaz/modules/bookshelf/home/bookshelf_home_controller.dart';
 import 'package:liaz/modules/browse/browse_history_controller.dart';
 import 'package:liaz/modules/browse/browse_history_page.dart';
-import 'package:liaz/modules/category/home/category_home_controller.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_page.dart';
 import 'package:liaz/modules/comic/download/comic_download_page.dart';
 import 'package:liaz/modules/comic/reader/comic_reader_controller.dart';
@@ -14,8 +12,6 @@ import 'package:liaz/modules/common/h5/h5_web_view_page.dart';
 import 'package:liaz/modules/download/detail/download_detail_controller.dart';
 import 'package:liaz/modules/download/detail/download_detail_page.dart';
 import 'package:liaz/modules/download/local_download_page.dart';
-import 'package:liaz/modules/index/home/index_home_controller.dart';
-import 'package:liaz/modules/index/index_controller.dart';
 import 'package:liaz/modules/index/index_page.dart';
 import 'package:liaz/modules/message/message_board_controller.dart';
 import 'package:liaz/modules/message/message_board_page.dart';
@@ -29,7 +25,6 @@ import 'package:liaz/modules/settings/general/general_settings_page.dart';
 import 'package:liaz/modules/settings/novel/novel_settings_page.dart';
 import 'package:liaz/modules/settings/settings_page.dart';
 import 'package:liaz/modules/user/detail/user_detail_page.dart';
-import 'package:liaz/modules/user/home/user_home_controller.dart';
 import 'package:liaz/modules/user/login/user_login_page.dart';
 import 'package:liaz/modules/user/register/user_register_page.dart';
 import 'package:liaz/modules/user/forget/forget_password_page.dart';
@@ -46,14 +41,7 @@ class AppRouter {
     ),
     GetPage(
       name: AppRoute.kIndex,
-      page: () => const IndexPage(),
-      bindings: [
-        BindingsBuilder.put(() => IndexController()),
-        BindingsBuilder.put(() => IndexHomeController()),
-        BindingsBuilder.put(() => CategoryHomeController()),
-        BindingsBuilder.put(() => BookshelfHomeController()),
-        BindingsBuilder.put(() => UserHomeController()),
-      ],
+      page: () => IndexPage(),
     ),
     GetPage(
       name: AppRoute.kSearch,

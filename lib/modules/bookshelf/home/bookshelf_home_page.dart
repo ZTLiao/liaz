@@ -11,10 +11,11 @@ import 'package:liaz/widgets/keep_alive_wrapper.dart';
 import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
 import 'package:liaz/widgets/view/page_list_view.dart';
 
-class BookshelfHomePage extends GetView<BookshelfHomeController> {
-  final int index;
+class BookshelfHomePage extends StatelessWidget {
+  final BookshelfHomeController controller;
 
-  const BookshelfHomePage(this.index, {super.key});
+  BookshelfHomePage({super.key})
+      : controller = Get.put(BookshelfHomeController());
 
   @override
   Widget build(BuildContext context) {

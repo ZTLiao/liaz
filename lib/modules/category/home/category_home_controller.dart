@@ -35,6 +35,8 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
   var novelRequest = NovelRequest();
 
   CategoryHomeController() {
+    tabController =
+        TabController(length: AssetTypeEnum.values.length, vsync: this);
     if (categories.value.isEmpty) {
       categoryRequest.getCategory().then((value) {
         categories.value.addAll(value);
@@ -42,13 +44,6 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
         onRefresh();
       });
     }
-  }
-
-  @override
-  void onInit() {
-    tabController =
-        TabController(length: AssetTypeEnum.values.length, vsync: this);
-    super.onInit();
   }
 
   void setIndex(i) {

@@ -7,8 +7,10 @@ import 'package:liaz/modules/index/rank/index_rank_view.dart';
 import 'package:liaz/modules/index/recommend/index_recommend_view.dart';
 import 'package:liaz/modules/index/upgrade/index_upgrade_view.dart';
 
-class IndexHomePage extends GetView<IndexHomeController> {
-  const IndexHomePage({super.key});
+class IndexHomePage extends StatelessWidget {
+  final IndexHomeController controller;
+
+  IndexHomePage({super.key}) : controller = Get.put(IndexHomeController());
 
   @override
   Widget build(BuildContext context) {

@@ -13,10 +13,11 @@ import 'package:liaz/widgets/toolbar/tab_app_bar.dart';
 import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
 import 'package:liaz/widgets/view/page_list_view.dart';
 
-class CategoryHomePage extends GetView<CategoryHomeController> {
-  final int index;
+class CategoryHomePage extends StatelessWidget {
+  final CategoryHomeController controller;
 
-  const CategoryHomePage(this.index, {super.key});
+  CategoryHomePage({super.key})
+      : controller = Get.put(CategoryHomeController());
 
   @override
   Widget build(BuildContext context) {

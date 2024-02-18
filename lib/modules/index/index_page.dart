@@ -8,8 +8,10 @@ import 'package:liaz/modules/user/home/user_home_page.dart';
 
 import 'index_controller.dart';
 
-class IndexPage extends GetView<IndexController> {
-  const IndexPage({super.key});
+class IndexPage extends StatelessWidget {
+  final IndexController controller;
+
+  IndexPage({super.key}) : controller = Get.put(IndexController());
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,10 @@ class IndexPage extends GetView<IndexController> {
               key: controller.indexKey,
               index: controller.index.value,
               children: [
-                const IndexHomePage(),
-                CategoryHomePage(controller.index.value),
-                BookshelfHomePage(controller.index.value),
-                const UserHomePage(),
+                IndexHomePage(),
+                CategoryHomePage(),
+                BookshelfHomePage(),
+                UserHomePage(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(

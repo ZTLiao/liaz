@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/routes/app_route.dart';
+import 'package:liaz/services/oauth2_token_service.dart';
+import 'package:liaz/services/user_service.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AppNavigator {
@@ -97,6 +99,8 @@ class AppNavigator {
   }
 
   static void toUserLogin({bool replace = false}) {
+    OAuth2TokenService.instance.clear();
+    UserService.instance.clear();
     toContentPage(
       AppRoute.kUserLogin,
       replace: replace,
