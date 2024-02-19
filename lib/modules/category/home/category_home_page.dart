@@ -60,7 +60,6 @@ class CategoryHomePage extends StatelessWidget {
                   itemBuilder: (context, i) {
                     var item = controller.categories.value[i];
                     return Container(
-                      height: 40,
                       decoration: BoxDecoration(
                         color:
                             Get.isDarkMode ? Colors.white12 : AppColor.greyf0,
@@ -85,7 +84,10 @@ class CategoryHomePage extends StatelessWidget {
                           child: Obx(
                             () => Text(
                               item.categoryName,
-                              maxLines: 1,
+                              maxLines:
+                                  controller.categoryId.value == item.categoryId
+                                      ? null
+                                      : 1,
                               style: TextStyle(
                                 color: controller.categoryId.value ==
                                         item.categoryId
@@ -93,7 +95,10 @@ class CategoryHomePage extends StatelessWidget {
                                     : Get.isDarkMode
                                         ? Colors.white70
                                         : Colors.black54,
-                                overflow: TextOverflow.ellipsis,
+                                overflow: controller.categoryId.value ==
+                                        item.categoryId
+                                    ? null
+                                    : TextOverflow.ellipsis,
                               ),
                             ),
                           ),
