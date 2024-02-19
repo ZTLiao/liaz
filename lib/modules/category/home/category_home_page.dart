@@ -45,7 +45,7 @@ class CategoryHomePage extends StatelessWidget {
         body: Row(
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width / 5,
+              width: MediaQuery.of(context).size.width / 4,
               child: Obx(
                 () => ListView.separated(
                   separatorBuilder: (context, i) {
