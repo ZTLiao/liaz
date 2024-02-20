@@ -110,7 +110,6 @@ class DioRequest {
   Future<dynamic> get(
     String path, {
     Map<String, dynamic>? queryParameters,
-    String baseUrl = Global.baseUrl,
     CancelToken? cancel,
     ResponseType responseType = ResponseType.json,
   }) async {
@@ -144,7 +143,7 @@ class DioRequest {
     }
     try {
       var response = await dio.get(
-        baseUrl + path,
+        Global.baseUrl + path,
         queryParameters: queryParameters,
         options: Options(
           responseType: responseType,
@@ -170,7 +169,6 @@ class DioRequest {
     String path, {
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? data,
-    String baseUrl = Global.baseUrl,
     CancelToken? cancel,
   }) async {
     queryParameters ??= {};
@@ -214,7 +212,7 @@ class DioRequest {
     }
     try {
       var response = await dio.post(
-        baseUrl + path,
+        Global.baseUrl + path,
         queryParameters: queryParameters,
         data: data,
         options: Options(
@@ -242,7 +240,6 @@ class DioRequest {
     String path,
     File file, {
     Map<String, dynamic>? data,
-    String baseUrl = Global.baseUrl,
     CancelToken? cancel,
   }) async {
     data ??= {};
@@ -277,7 +274,7 @@ class DioRequest {
     }
     try {
       var response = await dio.post(
-        baseUrl + path,
+        Global.baseUrl + path,
         data: FormData.fromMap(data),
         options: Options(
           responseType: ResponseType.json,

@@ -1,13 +1,27 @@
 import 'dart:convert';
 
+import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/decrypt_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/client/client_init_model.dart';
 import 'package:liaz/models/db/app_config.dart';
+import 'package:liaz/models/dto/git_remote_config_model.dart';
 
 class AppRequest {
+  Future<GitRemoteConfigModel> gitRemoteConfig() async {
+    var model = GitRemoteConfigModel(
+      domain: StrUtil.empty,
+    );
+    dynamic result = await DioRequest.instance.getResource(Global.configUrl);
+    if (result != null) {
+      model = GitRemoteConfigModel.fromJson(jsonDecode(result as String));
+      Global.baseUrl = model.domain;
+    }
+    return model;
+  }
+
   Future<ClientInitModel> clientInit() async {
     var model = ClientInitModel();
     try {

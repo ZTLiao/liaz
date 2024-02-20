@@ -3,7 +3,10 @@ import 'package:liaz/models/db/app_config.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Global {
-  static const String baseUrl = 'http://106.53.194.238:80';
+  static const String configUrl =
+      'https://gitee.com/liaz-app/liaz-android/raw/master/config.json';
+
+  static late String baseUrl;
 
   static late PackageInfo packageInfo;
 

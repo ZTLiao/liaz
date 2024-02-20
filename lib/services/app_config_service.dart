@@ -28,6 +28,7 @@ class AppConfigService extends GetxService {
       Db.appConfig,
       path: appDir.path,
     );
+    await _appRequest.gitRemoteConfig();
     //初始化APP配置
     if (isExist()) {
       _appRequest.clientInit().then((value) {
@@ -62,5 +63,4 @@ class AppConfigService extends GetxService {
     Global.signKey = DecryptUtil.decryptKey(appConfig.signKey);
     Global.publicKey = DecryptUtil.decryptKey(appConfig.publicKey);
   }
-
 }
