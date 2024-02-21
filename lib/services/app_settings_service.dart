@@ -66,8 +66,8 @@ class AppSettingsService extends GetxService {
         .getValue(LocalStorage.kScreenBrightness, 0.5);
     setScreenBrightness(AppSettings.screenBrightness.value);
     //屏幕方向
-    AppSettings.screenDirection.value = LocalStorageService.instance
-        .getValue(LocalStorage.kScreenDirection, 0);
+    AppSettings.screenDirection.value =
+        LocalStorageService.instance.getValue(LocalStorage.kScreenDirection, 0);
     setScreenDirection(AppSettings.screenDirection.value);
   }
 
@@ -229,11 +229,17 @@ class AppSettingsService extends GetxService {
   }
 
   void setScreenBrightness(double value) async {
+    var screenBrightness = ScreenBrightness();
+    //获取系统当前亮度
+    var currentBrightness = await screenBrightness.current;
+    if (value > currentBrightness) {
+      value = currentBrightness;
+    }
     AppSettings.screenBrightness.value = value;
     LocalStorageService.instance
         .setValue(LocalStorage.kScreenBrightness, value);
     try {
-      await ScreenBrightness().setScreenBrightness(value);
+      await screenBrightness.setScreenBrightness(value);
     } catch (error, stackTrace) {
       Log.e(error.toString(), stackTrace);
       rethrow;
@@ -242,8 +248,7 @@ class AppSettingsService extends GetxService {
 
   void setScreenDirection(int value) {
     AppSettings.screenDirection.value = value;
-    LocalStorageService.instance
-        .setValue(LocalStorage.kScreenDirection, value);
+    LocalStorageService.instance.setValue(LocalStorage.kScreenDirection, value);
     if (value == ScreenDirectionEnum.vertical.index) {
       SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

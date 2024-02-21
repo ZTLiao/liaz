@@ -364,7 +364,7 @@ class NovelDetailPage extends StatelessWidget {
                   ExpansionTile(
                     initiallyExpanded: volumes.length == 1,
                     title: Text(
-                      '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
+                      '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.novelVolume}）',
                     ),
                     tilePadding: AppStyle.edgeInsetsH4,
                     children: [

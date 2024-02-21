@@ -79,7 +79,8 @@ class AppString {
   static const extra = '番外';
   static const total = '共';
   static const chapter = '话';
-  static const volume = '卷';
+  static const comicVolume = '话';
+  static const novelVolume = '卷';
   static const asc = '升序';
   static const desc = '降序';
   static const expandAll = '展开全部章节';

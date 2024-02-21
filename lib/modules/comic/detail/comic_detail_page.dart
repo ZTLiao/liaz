@@ -367,7 +367,7 @@ class ComicDetailPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.volume}）',
+                          '${(volume.volumeName != null && volume.volumeName!.isNotEmpty) ? volume.volumeName : AppString.serialize} （${AppString.total}${volume.chapters.length}${AppString.comicVolume}）',
                           style: Get.textTheme.titleSmall,
                         ),
                       ),
