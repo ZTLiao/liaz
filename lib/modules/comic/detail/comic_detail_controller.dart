@@ -100,9 +100,11 @@ class ComicDetailController extends BaseController {
     }
   }
 
-  void onReadChapter(ComicVolumeModel volume) {
+  void onReadChapter(ComicVolumeModel volume, {isReplace = true}) {
     var chapters = volume.chapters;
-    browseChapterId.value = chapters[chapterIndex.value].comicChapterId;
+    if (isReplace) {
+      browseChapterId.value = chapters[chapterIndex.value].comicChapterId;
+    }
     if (chapters[chapterIndex.value].paths.isEmpty) {
       SmartDialog.showToast(AppString.resourceError);
       return;
@@ -150,7 +152,10 @@ class ComicDetailController extends BaseController {
       for (var valume in detail.value.volumes) {
         for (var chapter in valume.chapters) {
           if (chapter.comicChapterId == browseChapterId.value) {
-            onReadChapter(valume);
+            onReadChapter(
+              valume,
+              isReplace: false,
+            );
             break;
           }
         }

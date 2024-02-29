@@ -112,9 +112,11 @@ class NovelDetailController extends BaseController {
     EventBus.instance.publish(AppEvent.kSubscribeComicTopic);
   }
 
-  void onReadChapter(NovelVolumeModel volume) {
+  void onReadChapter(NovelVolumeModel volume, {isReplace = true}) {
     var chapters = volume.chapters;
-    browseChapterId.value = chapters[chapterIndex.value].novelChapterId;
+    if (isReplace) {
+      browseChapterId.value = chapters[chapterIndex.value].novelChapterId;
+    }
     if (chapters[chapterIndex.value].paths.isEmpty) {
       SmartDialog.showToast(AppString.resourceError);
       return;
@@ -170,7 +172,10 @@ class NovelDetailController extends BaseController {
       for (var volume in detail.value.volumes) {
         for (var chapter in volume.chapters) {
           if (chapter.novelChapterId == browseChapterId.value) {
-            onReadChapter(volume);
+            onReadChapter(
+              volume,
+              isReplace: false,
+            );
             break;
           }
         }
