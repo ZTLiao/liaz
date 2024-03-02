@@ -262,7 +262,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
   Widget buildHorizontal(BuildContext context) {
     return EasyRefresh(
       header: const MaterialHeader(),
-      footer: const DeliveryFooter(),
+      footer: const MaterialFooter(),
       refreshOnStart: false,
       onRefresh: () async {
         controller.forwardChapter();
@@ -377,7 +377,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
       ),
       child: EasyRefresh(
         header: const MaterialHeader(),
-        footer: const DeliveryFooter(),
+        footer: const MaterialFooter(),
         refreshOnStart: false,
         onRefresh: () async {
           controller.forwardChapter();
