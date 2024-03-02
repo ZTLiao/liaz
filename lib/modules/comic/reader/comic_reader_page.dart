@@ -294,7 +294,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
   Widget buildHorizontal() {
     return EasyRefresh(
       header: const MaterialHeader(),
-      footer: const DeliveryFooter(),
+      footer: const MaterialFooter(),
       refreshOnStart: false,
       onRefresh: () async {
         controller.forwardChapter();
