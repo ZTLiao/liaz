@@ -294,11 +294,6 @@ class ComicReaderController extends BaseController {
               await FileItemService.instance.getObject(comicChapter.paths[i]);
         }
       }
-      if (comicChapter.comicChapterId == comicChapterId) {
-        currentIndex.value = comicChapter.currentIndex;
-      } else {
-        currentIndex.value = 0;
-      }
       comicChapterId = comicChapter.comicChapterId;
       isLocal.value = comicChapter.isLocal;
       detail.value = ComicChapterItemModel(
@@ -311,6 +306,11 @@ class ComicReaderController extends BaseController {
         direction: comicChapter.direction,
         isLocal: comicChapter.isLocal,
       );
+      if (comicChapter.comicChapterId == comicChapterId) {
+        currentIndex.value = comicChapter.currentIndex;
+      } else {
+        currentIndex.value = 0;
+      }
       Future.delayed(const Duration(milliseconds: 100), () {
         jumpToPage(currentIndex.value);
       });

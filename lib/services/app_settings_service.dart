@@ -63,9 +63,7 @@ class AppSettingsService extends GetxService {
         .getValue(LocalStorage.kDownloadTaskCount, 5);
     //屏幕亮度
     var currentBrightness = await getCurrentBrightness();
-    AppSettings.screenBrightness.value = LocalStorageService.instance
-        .getValue(LocalStorage.kScreenBrightness, currentBrightness);
-    setScreenBrightness(AppSettings.screenBrightness.value);
+    setScreenBrightness(currentBrightness);
     //屏幕方向
     AppSettings.screenDirection.value =
         LocalStorageService.instance.getValue(LocalStorage.kScreenDirection, 0);

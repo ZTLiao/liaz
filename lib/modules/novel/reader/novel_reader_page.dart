@@ -497,9 +497,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
                 child: Slider(
                   value: controller.currentIndex.value + 1.0,
                   max: controller.maxPage.value.toDouble(),
-                  onChanged: (e) {
-                    controller.jumpToPage((e - 2).toInt());
-                  },
+                  onChanged: (e) {},
                 ),
               ),
             ],

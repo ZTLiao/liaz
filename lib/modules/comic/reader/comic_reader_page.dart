@@ -282,7 +282,8 @@ class ComicReaderPage extends GetView<ComicReaderController> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              AdvertService.instance.buildBannerAdvert(context, AdsFlag.bottomBanner, 0, 12),
+              AdvertService.instance
+                  .buildBannerAdvert(context, AdsFlag.bottomBanner, 0, 12),
             ],
           ),
         ),
@@ -403,11 +404,9 @@ class ComicReaderPage extends GetView<ComicReaderController> {
             children: [
               Expanded(
                 child: Slider(
-                  value: controller.currentIndex.value + 1.0,
-                  max: controller.detail.value.paths.length.toDouble(),
-                  onChanged: (e) {
-                    controller.jumpToPage((e - 2).toInt());
-                  },
+                  value: value,
+                  max: max,
+                  onChanged: (e) {},
                 ),
               ),
             ],
