@@ -108,6 +108,8 @@ class ComicReaderController extends BaseController {
   /// 屏幕方向
   RxInt screenDirection = RxInt(0);
 
+  bool isNextChapter = false;
+
   @override
   void onInit() {
     initConnectivity();
@@ -312,7 +314,7 @@ class ComicReaderController extends BaseController {
         currentIndex.value = 0;
       }
       Future.delayed(const Duration(milliseconds: 100), () {
-        jumpToPage(currentIndex.value);
+        jumpToPage(0);
       });
       uploadHistory();
     } catch (e) {

@@ -294,7 +294,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
   Widget buildHorizontal() {
     return EasyRefresh(
       header: const MaterialHeader(),
-      footer: const MaterialFooter(),
+      footer: const DeliveryFooter(),
       refreshOnStart: false,
       onRefresh: () async {
         controller.forwardChapter();
@@ -346,7 +346,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
   Widget buildVertical() {
     return EasyRefresh(
       header: const MaterialHeader(),
-      footer: const MaterialFooter(),
+      footer: const DeliveryFooter(),
       refreshOnStart: false,
       onRefresh: () async {
         controller.forwardChapter();
@@ -391,25 +391,25 @@ class ComicReaderPage extends GetView<ComicReaderController> {
   Widget buildSilderBar() {
     return Obx(
       () {
-        var value = controller.currentIndex.value + 1.0;
+        var value = controller.currentIndex.value + 0.0;
         var max = controller.detail.value.paths.length.toDouble();
-        if (value > max) {
-          return const SizedBox(
+        return Offstage(
+          offstage: value > max,
+          child: SizedBox(
             height: 48,
-          );
-        }
-        return SizedBox(
-          height: 48,
-          child: Row(
-            children: [
-              Expanded(
-                child: Slider(
-                  value: value,
-                  max: max,
-                  onChanged: (e) {},
+            child: Row(
+              children: [
+                Expanded(
+                  child: Slider(
+                    value: value,
+                    max: max,
+                    onChanged: (e) {
+                      controller.jumpToPage((e - 2).toInt());
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

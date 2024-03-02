@@ -262,7 +262,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
   Widget buildHorizontal(BuildContext context) {
     return EasyRefresh(
       header: const MaterialHeader(),
-      footer: const MaterialFooter(),
+      footer: const DeliveryFooter(),
       refreshOnStart: false,
       onRefresh: () async {
         controller.forwardChapter();
@@ -323,7 +323,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
           ),
           child: EasyRefresh(
             header: const MaterialHeader(),
-            footer: const MaterialFooter(),
+            footer: const DeliveryFooter(),
             refreshOnStart: false,
             onRefresh: () async {
               controller.forwardChapter();
@@ -377,7 +377,7 @@ class NovelReaderPage extends GetView<NovelReaderController> {
       ),
       child: EasyRefresh(
         header: const MaterialHeader(),
-        footer: const MaterialFooter(),
+        footer: const DeliveryFooter(),
         refreshOnStart: false,
         onRefresh: () async {
           controller.forwardChapter();
@@ -495,9 +495,11 @@ class NovelReaderPage extends GetView<NovelReaderController> {
             children: [
               Expanded(
                 child: Slider(
-                  value: controller.currentIndex.value + 1.0,
-                  max: controller.maxPage.value.toDouble(),
-                  onChanged: (e) {},
+                  value: value,
+                  max: max,
+                  onChanged: (e) {
+                    controller.jumpToPage((e - 2).toInt());
+                  },
                 ),
               ),
             ],
