@@ -288,7 +288,7 @@ class NovelReaderController extends BaseController {
         currentIndex.value = 0;
       }
       Future.delayed(const Duration(milliseconds: 100), () {
-        jumpToPage(currentIndex.value);
+        jumpToPage(0);
       });
       uploadHistory();
     } catch (e) {
