@@ -7,6 +7,7 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/modules/novel/download/novel_download_controller.dart';
+import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/widgets/status/app_error_widget.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 
@@ -28,10 +29,10 @@ class NovelDownloadPage extends StatelessWidget {
         title: const Text(
           AppString.chooseChapter,
         ),
-        actions: [
+        actions: const [
           TextButton(
-            onPressed: () {},
-            child: const Text(
+            onPressed: AppNavigator.toLocalDownloadPage,
+            child: Text(
               AppString.downloadManage,
             ),
           )

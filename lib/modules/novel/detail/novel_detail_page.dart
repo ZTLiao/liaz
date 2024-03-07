@@ -18,6 +18,7 @@ import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_controller.dart';
 import 'package:liaz/services/advert_service.dart';
 import 'package:liaz/services/recommend_service.dart';
+import 'package:liaz/widgets/toolbar/comment_navigation_bar.dart';
 import 'package:liaz/widgets/toolbar/cross_list_widget.dart';
 import 'package:liaz/widgets/toolbar/icon_item_widget.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
@@ -58,6 +59,13 @@ class NovelDetailPage extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+        ),
+        bottomNavigationBar: const BottomAppBar(
+          height: 55,
+          child: CommentNavigationBar(
+            readOnly: true,
+            hintText: AppString.comments,
           ),
         ),
         floatingActionButton: SpeedDial(

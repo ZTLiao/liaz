@@ -35,7 +35,7 @@ class AppString {
   static const notLogin = '未登录';
   static const toLogin = '点击前往登录';
   static const browse = '浏览记录';
-  static const comment = '我的评论';
+  static const myComment = '我的评论';
   static const localComic = '本地漫画';
   static const localDownload = '本机下载';
   static const download = '下载';
@@ -195,4 +195,5 @@ class AppString {
   static const close = 'close';
   static const loadingMore = '加载更多';
   static const resourceError = '资源异常...';
+  static const comments = '吐槽来一发...';
 }

@@ -7,6 +7,7 @@ import 'package:liaz/app/constants/app_style.dart';
 import 'package:liaz/app/enums/sort_type_enum.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/modules/comic/download/comic_download_controller.dart';
+import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/widgets/status/app_error_widget.dart';
 import 'package:liaz/widgets/status/app_loading_widget.dart';
 
@@ -30,10 +31,10 @@ class ComicDownloadPage extends StatelessWidget {
         title: const Text(
           AppString.chooseChapter,
         ),
-        actions: [
+        actions: const [
           TextButton(
-            onPressed: () {},
-            child: const Text(
+            onPressed: AppNavigator.toLocalDownloadPage,
+            child: Text(
               AppString.downloadManage,
             ),
           )
