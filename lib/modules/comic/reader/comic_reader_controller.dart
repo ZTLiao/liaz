@@ -308,13 +308,12 @@ class ComicReaderController extends BaseController {
         direction: comicChapter.direction,
         isLocal: comicChapter.isLocal,
       );
+      var initIndex = 0;
       if (comicChapter.comicChapterId == comicChapterId) {
-        currentIndex.value = comicChapter.currentIndex;
-      } else {
-        currentIndex.value = 0;
+        initIndex = comicChapter.currentIndex;
       }
       Future.delayed(const Duration(milliseconds: 100), () {
-        jumpToPage(0);
+        jumpToPage(initIndex);
       });
       uploadHistory();
     } catch (e) {

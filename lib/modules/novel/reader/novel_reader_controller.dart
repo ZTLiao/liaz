@@ -282,13 +282,12 @@ class NovelReaderController extends BaseController {
         direction: chapter.direction,
         isLocal: chapter.isLocal,
       );
+      var initIndex = 0;
       if (chapter.novelChapterId == novelChapterId) {
-        currentIndex.value = chapter.currentIndex;
-      } else {
-        currentIndex.value = 0;
+        initIndex = chapter.currentIndex;
       }
       Future.delayed(const Duration(milliseconds: 100), () {
-        jumpToPage(0);
+        jumpToPage(initIndex);
       });
       uploadHistory();
     } catch (e) {
