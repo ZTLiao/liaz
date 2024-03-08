@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/models/comment/comment_item_model.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
 import 'package:liaz/widgets/toolbar/user_photo.dart';
@@ -10,10 +12,19 @@ import 'dart:ui' as ui;
 // ignore: must_be_immutable
 class CommentItemWidget extends StatelessWidget {
   final CommentItemModel item;
+  final Function(int)? onDetail;
+  final Function(int)? onThumb;
+  final Function(int)? onComment;
 
   var isExpand = RxBool(false);
 
-  CommentItemWidget(this.item, {super.key});
+  CommentItemWidget(
+    this.item, {
+    this.onDetail,
+    this.onThumb,
+    this.onComment,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +35,11 @@ class CommentItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             InkWell(
-              onTap: () {},
+              onTap: () {
+                if (onDetail != null) {
+                  onDetail!(item.userId);
+                }
+              },
               child: UserPhoto(
                 url: item.avatar,
               ),
@@ -66,7 +81,10 @@ class CommentItemWidget extends StatelessWidget {
                           runSpacing: 4,
                           children: item.paths.map<Widget>((path) {
                             return InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                ToolUtil.showImageViewer(
+                                    item.paths.indexOf(path), item.paths);
+                              },
                               child: NetImage(
                                 path,
                                 width: 100,
@@ -85,12 +103,18 @@ class CommentItemWidget extends StatelessWidget {
                     Expanded(
                       child: Text(
                         item.content,
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 12),
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        if (onThumb != null) {
+                          onThumb!(item.discussId);
+                        }
+                      },
                       child: Row(
                         children: [
                           Icon(
@@ -111,6 +135,17 @@ class CommentItemWidget extends StatelessWidget {
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        if (onComment != null) {
+                          onComment!(item.discussId);
+                        }
+                      },
+                      child: Row(
+                        children: [
                           Icon(
                             Icons.comment_outlined,
                             size: 16,
@@ -195,7 +230,11 @@ class CommentItemWidget extends StatelessWidget {
     return Padding(
       padding: AppStyle.edgeInsetsB8,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          if (onComment != null) {
+            onComment!(item.discussId);
+          }
+        },
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
@@ -218,7 +257,7 @@ class CommentItemWidget extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: ": ${item.content}",
+                    text: "${StrUtil.semicolon} ${item.content}",
                     style: Get.theme.textTheme.bodyMedium,
                   )
                 ]),
@@ -231,7 +270,10 @@ class CommentItemWidget extends StatelessWidget {
                         runSpacing: 4,
                         children: item.paths.map<Widget>((path) {
                           return InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              ToolUtil.showImageViewer(
+                                  item.paths.indexOf(path), item.paths);
+                            },
                             child: NetImage(
                               path,
                               width: 100,
