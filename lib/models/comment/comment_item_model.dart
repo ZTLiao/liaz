@@ -10,6 +10,8 @@ class CommentItemModel {
   String avatar;
   int gender;
   String content;
+  int thumbNum;
+  int discussNum;
   int createdAt;
   List<String> paths;
   List<CommentItemModel> parents;
@@ -21,6 +23,8 @@ class CommentItemModel {
     required this.avatar,
     required this.gender,
     required this.content,
+    required this.thumbNum,
+    required this.discussNum,
     required this.createdAt,
     required this.paths,
     required this.parents,
@@ -44,6 +48,8 @@ class CommentItemModel {
       avatar: avatar,
       gender: ConvertUtil.asT<int>(json['gender'])!,
       content: content,
+      thumbNum: ConvertUtil.asT<int>(json['thumbNum'])!,
+      discussNum: ConvertUtil.asT<int>(json['discussNum'])!,
       createdAt: ConvertUtil.asT<int>(json['createdAt'])!,
       paths: paths,
       parents: parents,
@@ -62,6 +68,8 @@ class CommentItemModel {
       'avatar': avatar,
       'gender': gender,
       'content': content,
+      'thumbNum': thumbNum,
+      'discussNum': discussNum,
       'createdAt': createdAt,
       'paths': paths,
       'parents': list,

@@ -5,6 +5,7 @@ import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/controller/base_page_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/recommend_position_enum.dart';
 import 'package:liaz/app/enums/recommend_type_enum.dart';
@@ -15,6 +16,7 @@ import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_chapter_model.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/comic/comic_volume_model.dart';
+import 'package:liaz/models/comment/comment_item_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/comic/detail/comic_history_listener.dart';
@@ -23,7 +25,7 @@ import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/comic_service.dart';
 import 'package:liaz/services/user_service.dart';
 
-class ComicDetailController extends BaseController {
+class ComicDetailController extends BasePageController<CommentItemModel> {
   final ComicDetailModel comicDetail;
 
   final detail = Rx<ComicDetailModel>(ComicDetailModel.empty());
@@ -40,6 +42,24 @@ class ComicDetailController extends BaseController {
 
   ComicDetailController({required this.comicDetail}) {
     detail.value = comicDetail;
+  }
+
+  @override
+  Future<List<CommentItemModel>> getData(int currentPage, int pageSize) {
+    list.add(CommentItemModel(
+      discussId: 1,
+      userId: 1,
+      nickname: 'test',
+      avatar: '',
+      gender: 1,
+      content: 'test',
+      thumbNum: 1,
+      discussNum: 1,
+      createdAt: 1,
+      paths: [],
+      parents: [],
+    ));
+    return Future(() => []);
   }
 
   void initDetail() {

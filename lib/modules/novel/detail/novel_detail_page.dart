@@ -65,7 +65,7 @@ class NovelDetailPage extends StatelessWidget {
           height: 55,
           child: CommentNavigationBar(
             readOnly: true,
-            hintText: AppString.comments,
+            hintText: AppString.commentHint,
           ),
         ),
         floatingActionButton: SpeedDial(

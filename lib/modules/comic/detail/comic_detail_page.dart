@@ -13,11 +13,14 @@ import 'package:liaz/app/enums/sort_type_enum.dart';
 import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
+import 'package:liaz/models/comment/comment_item_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/modules/comic/detail/comic_detail_controller.dart';
 import 'package:liaz/services/advert_service.dart';
 import 'package:liaz/services/recommend_service.dart';
+import 'package:liaz/widgets/keep_alive_wrapper.dart';
+import 'package:liaz/widgets/toolbar/comment_item_widget.dart';
 import 'package:liaz/widgets/toolbar/comment_navigation_bar.dart';
 import 'package:liaz/widgets/toolbar/cross_list_widget.dart';
 import 'package:liaz/widgets/toolbar/icon_item_widget.dart';
@@ -25,6 +28,7 @@ import 'package:liaz/widgets/toolbar/net_image.dart';
 import 'package:liaz/widgets/toolbar/three_box_grid_widget.dart';
 import 'package:liaz/widgets/toolbar/title_widget.dart';
 import 'package:liaz/widgets/toolbar/two_box_grid_widget.dart';
+import 'package:liaz/widgets/view/page_list_view.dart';
 
 class ComicDetailPage extends StatelessWidget {
   final ComicDetailModel comicDetail;
@@ -65,7 +69,7 @@ class ComicDetailPage extends StatelessWidget {
           height: 55,
           child: CommentNavigationBar(
             readOnly: true,
-            hintText: AppString.comments,
+            hintText: AppString.commentHint,
           ),
         ),
         floatingActionButton: SpeedDial(
@@ -577,6 +581,20 @@ class ComicDetailPage extends StatelessWidget {
   }
 
   Widget _buildComment() {
-    return const SizedBox();
+    var list = controller.list;
+    if (list.isEmpty) {
+      return const SizedBox();
+    }
+    return Column(
+      children: [
+        CommentItemWidget(list[0]),
+        CommentItemWidget(list[0]),
+        CommentItemWidget(list[0]),
+        CommentItemWidget(list[0]),
+        CommentItemWidget(list[0]),
+        CommentItemWidget(list[0]),
+        CommentItemWidget(list[0]),
+      ],
+    );
   }
 }

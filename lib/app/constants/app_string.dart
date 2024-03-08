@@ -195,5 +195,8 @@ class AppString {
   static const close = 'close';
   static const loadingMore = '加载更多';
   static const resourceError = '资源异常...';
-  static const comments = '吐槽来一发...';
+  static const commentHint = '吐槽来一发...';
+  static const clickExpand = '点击展开';
+  static const twig = '条';
+  static const comment = '评论';
 }
