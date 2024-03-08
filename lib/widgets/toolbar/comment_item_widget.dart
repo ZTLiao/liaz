@@ -99,11 +99,29 @@ class CommentItemWidget extends StatelessWidget {
                             color: Theme.of(context).colorScheme.secondary,
                           ),
                           Visibility(
-                            visible: false,
+                            visible: item.thumbNum > 0,
                             child: Padding(
                               padding: AppStyle.edgeInsetsL4,
                               child: Text(
                                 '${item.thumbNum}',
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Icon(
+                            Icons.comment_outlined,
+                            size: 16,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          Visibility(
+                            visible: item.discussNum > 0,
+                            child: Padding(
+                              padding: AppStyle.edgeInsetsL4,
+                              child: Text(
+                                '${item.discussNum}',
                                 style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 12,
