@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/utils/date_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/app/utils/tool_util.dart';
 import 'package:liaz/models/comment/comment_item_model.dart';
+import 'package:liaz/requests/comment_request.dart';
 import 'package:liaz/widgets/toolbar/net_image.dart';
 import 'package:liaz/widgets/toolbar/user_photo.dart';
 import 'dart:ui' as ui;
@@ -13,18 +15,20 @@ import 'dart:ui' as ui;
 class CommentItemWidget extends StatelessWidget {
   final CommentItemModel item;
   final Function(int)? onDetail;
-  final Function(int)? onThumb;
-  final Function(int)? onComment;
+  final Function(CommentItemModel)? onComment;
+  final commentRequest = CommentRequest();
 
   var isExpand = RxBool(false);
+  var thumbNum = RxInt(0);
 
   CommentItemWidget(
     this.item, {
     this.onDetail,
-    this.onThumb,
     this.onComment,
     super.key,
-  });
+  }) {
+    thumbNum.value = item.thumbNum;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +106,7 @@ class CommentItemWidget extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        item.content,
+                        DateUtil.formatDateTimeMinute(item.createdAt),
                         style: const TextStyle(
                           color: Colors.grey,
                           fontSize: 12,
@@ -111,9 +115,8 @@ class CommentItemWidget extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        if (onThumb != null) {
-                          onThumb!(item.discussId);
-                        }
+                        commentRequest.thumb(item.discussId);
+                        thumbNum.value++;
                       },
                       child: Row(
                         children: [
@@ -122,15 +125,17 @@ class CommentItemWidget extends StatelessWidget {
                             size: 16,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
-                          Visibility(
-                            visible: item.thumbNum > 0,
-                            child: Padding(
-                              padding: AppStyle.edgeInsetsL4,
-                              child: Text(
-                                '${item.thumbNum}',
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 12,
+                          Obx(
+                            () => Visibility(
+                              visible: thumbNum.value > 0,
+                              child: Padding(
+                                padding: AppStyle.edgeInsetsL4,
+                                child: Text(
+                                  '${thumbNum.value}',
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ),
                             ),
@@ -138,10 +143,11 @@ class CommentItemWidget extends StatelessWidget {
                         ],
                       ),
                     ),
+                    AppStyle.hGap24,
                     GestureDetector(
                       onTap: () {
                         if (onComment != null) {
-                          onComment!(item.discussId);
+                          onComment!(item);
                         }
                       },
                       child: Row(
@@ -232,7 +238,7 @@ class CommentItemWidget extends StatelessWidget {
       child: InkWell(
         onTap: () {
           if (onComment != null) {
-            onComment!(item.discussId);
+            onComment!(item);
           }
         },
         child: Container(

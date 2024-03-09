@@ -192,4 +192,25 @@ class AppNavigator {
   static void toMessageBoard() {
     toContentPage(AppRoute.kMessageBoard);
   }
+
+  static void toPublishComment(int objId, int objType, {replyItem}) {
+    toContentPage(
+      AppRoute.kPublishComment,
+      arg: {
+        'objId': objId,
+        'objType': objType,
+        'replyItem': replyItem,
+      },
+    );
+  }
+
+  static void toCommentList(int objId, int objType) {
+    toContentPage(
+      AppRoute.kCommentList,
+      arg: {
+        'objId': objId,
+        'objType': objType,
+      },
+    );
+  }
 }

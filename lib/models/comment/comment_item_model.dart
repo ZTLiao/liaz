@@ -34,12 +34,16 @@ class CommentItemModel {
     var avatar = json['avatar'] ?? StrUtil.empty;
     var content = json['content'] ?? StrUtil.empty;
     final List<String> paths = json['paths'] is List ? <String>[] : [];
-    for (final dynamic path in json['paths']!) {
-      paths.add(ConvertUtil.asT<String>(path)!);
+    if (json['paths'] != null) {
+      for (final dynamic path in json['paths']!) {
+        paths.add(ConvertUtil.asT<String>(path)!);
+      }
     }
     final List<CommentItemModel> parents = [];
-    for (final dynamic parent in json['parents']!) {
-      parents.add(CommentItemModel.fromJson(parent));
+    if (json['parents'] != null) {
+      for (final dynamic parent in json['parents']!) {
+        parents.add(CommentItemModel.fromJson(parent));
+      }
     }
     return CommentItemModel(
       discussId: ConvertUtil.asT<int>(json['discussId'])!,

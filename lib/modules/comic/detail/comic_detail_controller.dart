@@ -20,6 +20,7 @@ import 'package:liaz/models/comment/comment_item_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/comic/detail/comic_history_listener.dart';
+import 'package:liaz/requests/comment_request.dart';
 import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/comic_service.dart';
@@ -40,26 +41,16 @@ class ComicDetailController extends BasePageController<CommentItemModel> {
 
   var recommendRequest = RecommendRequest();
 
+  var commentRequest = CommentRequest();
+
   ComicDetailController({required this.comicDetail}) {
     detail.value = comicDetail;
   }
 
   @override
-  Future<List<CommentItemModel>> getData(int currentPage, int pageSize) {
-    list.add(CommentItemModel(
-      discussId: 1,
-      userId: 1,
-      nickname: 'test',
-      avatar: '',
-      gender: 1,
-      content: 'test',
-      thumbNum: 1,
-      discussNum: 1,
-      createdAt: 1,
-      paths: [],
-      parents: [],
-    ));
-    return Future(() => []);
+  Future<List<CommentItemModel>> getData(int currentPage, int pageSize) async {
+    return await commentRequest.getDiscussPage(
+        detail.value.comicId, AssetTypeEnum.comic.index, currentPage, pageSize);
   }
 
   void initDetail() {

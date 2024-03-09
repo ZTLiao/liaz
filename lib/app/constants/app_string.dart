@@ -199,4 +199,8 @@ class AppString {
   static const clickExpand = '点击展开';
   static const twig = '条';
   static const comment = '评论';
+  static const lastComments = '最新评论';
+  static const addComment = '添加评论';
+  static const contentError = '内容不能为空';
+  static const publishSuccess = '发布成功';
 }

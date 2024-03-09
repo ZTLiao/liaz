@@ -7,6 +7,8 @@ import 'package:liaz/modules/comic/detail/comic_detail_page.dart';
 import 'package:liaz/modules/comic/download/comic_download_page.dart';
 import 'package:liaz/modules/comic/reader/comic_reader_controller.dart';
 import 'package:liaz/modules/comic/reader/comic_reader_page.dart';
+import 'package:liaz/modules/comment/comment_list_page.dart';
+import 'package:liaz/modules/comment/publish_comment_page.dart';
 import 'package:liaz/modules/common/empty_page.dart';
 import 'package:liaz/modules/common/h5/h5_web_view_page.dart';
 import 'package:liaz/modules/download/detail/download_detail_controller.dart';
@@ -167,6 +169,21 @@ class AppRouter {
       page: () => const MessageBoardPage(),
       binding: BindingsBuilder.put(
         () => MessageBoardController(),
+      ),
+    ),
+    GetPage(
+      name: AppRoute.kPublishComment,
+      page: () => PublishCommentPage(
+        Get.arguments['objId'],
+        Get.arguments['objType'],
+        replyItem: Get.arguments['replyItem'],
+      ),
+    ),
+    GetPage(
+      name: AppRoute.kCommentList,
+      page: () => CommentListPage(
+        Get.arguments['objId'],
+        Get.arguments['objType'],
       ),
     ),
   ];

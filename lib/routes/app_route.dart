@@ -70,4 +70,10 @@ class AppRoute {
 
   /// 留言板块
   static const kMessageBoard = '/message/board';
+
+  /// 发布评论
+  static const kPublishComment = '/comment/publish';
+
+  /// 评论列表
+  static const kCommentList = '/comment/list';
 }

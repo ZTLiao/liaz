@@ -44,4 +44,10 @@ class CommentRequest {
     }
     return list;
   }
+
+  Future<void> thumb(int discussId) async {
+    await DioRequest.instance.post("/api/discuss/thumb", data: {
+      'discussId': discussId,
+    });
+  }
 }
