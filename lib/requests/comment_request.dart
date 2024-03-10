@@ -39,6 +39,15 @@ class CommentRequest {
           model.paths[i] =
               await FileItemService.instance.getObject(model.paths[i]);
         }
+        var parents = model.parents;
+        for (var parent in parents) {
+          parent.avatar =
+              await FileItemService.instance.getObject(parent.avatar);
+          for (int i = 0; i < parent.paths.length; i++) {
+            parent.paths[i] =
+                await FileItemService.instance.getObject(parent.paths[i]);
+          }
+        }
         list.add(model);
       }
     }

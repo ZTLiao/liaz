@@ -69,12 +69,13 @@ class ComicDetailPage extends StatelessWidget {
           child: CommentNavigationBar(
             readOnly: true,
             hintText: AppString.commentHint,
-            onTap: () {
+            onTap: () async {
               var detail = controller.detail.value;
-              AppNavigator.toPublishComment(
+              await AppNavigator.toPublishComment(
                 detail.comicId,
                 AssetTypeEnum.comic.index,
               );
+              controller.onRefresh();
             },
           ),
         ),
@@ -619,12 +620,13 @@ class ComicDetailPage extends StatelessWidget {
           ...controller.list.map(
             (element) => CommentItemWidget(
               element,
-              onComment: (item) {
-                AppNavigator.toPublishComment(
+              onComment: (item) async {
+                await AppNavigator.toPublishComment(
                   detail.comicId,
                   AssetTypeEnum.comic.index,
                   replyItem: item,
                 );
+                controller.onRefresh();
               },
             ),
           ),
@@ -642,11 +644,12 @@ class ComicDetailPage extends StatelessWidget {
             visualDensity: const VisualDensity(
               vertical: VisualDensity.minimumDensity,
             ),
-            onTap: () {
-              AppNavigator.toCommentList(
+            onTap: () async {
+              await AppNavigator.toCommentList(
                 detail.comicId,
                 AssetTypeEnum.comic.index,
               );
+              controller.onRefresh();
             },
           )
         ],

@@ -8,6 +8,7 @@ import 'package:liaz/app/constants/app_color.dart';
 import 'package:liaz/app/constants/app_settings.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/app_style.dart';
+import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/opt_type_enum.dart';
 import 'package:liaz/app/enums/show_type_enum.dart';
 import 'package:liaz/app/utils/date_util.dart';
@@ -16,8 +17,10 @@ import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/dto/title_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/modules/novel/detail/novel_detail_controller.dart';
+import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/advert_service.dart';
 import 'package:liaz/services/recommend_service.dart';
+import 'package:liaz/widgets/toolbar/comment_item_widget.dart';
 import 'package:liaz/widgets/toolbar/comment_navigation_bar.dart';
 import 'package:liaz/widgets/toolbar/cross_list_widget.dart';
 import 'package:liaz/widgets/toolbar/icon_item_widget.dart';
@@ -61,11 +64,19 @@ class NovelDetailPage extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: const BottomAppBar(
+        bottomNavigationBar: BottomAppBar(
           height: 55,
           child: CommentNavigationBar(
             readOnly: true,
             hintText: AppString.commentHint,
+            onTap: () async {
+              var detail = controller.detail.value;
+              await AppNavigator.toPublishComment(
+                detail.novelId,
+                AssetTypeEnum.novel.index,
+              );
+              controller.onRefresh();
+            },
           ),
         ),
         floatingActionButton: SpeedDial(
@@ -517,7 +528,7 @@ class NovelDetailPage extends StatelessWidget {
                 ],
               ),
             ),
-            AppStyle.vGap60,
+            _buildComment(),
           ],
         ),
       ),
@@ -529,75 +540,146 @@ class NovelDetailPage extends StatelessWidget {
       () => Visibility(
         visible: controller.isRelateRecommend.value,
         child: Column(
-          children: controller.recommends.map((element) {
-            var showType = element.showType;
-            var title = TitleModel(
-              titleId: element.recommendId,
-              title: element.title,
-              showType: element.showType,
-              isShowTitle: element.isShowTitle,
-              optType: element.optType,
-              optValue: element.optValue,
-            );
-            var items = <ItemModel>[];
-            for (var i = 0; i < element.items.length; i++) {
-              var item = element.items[i];
-              items.add(ItemModel(
-                itemId: item.recommendItemId,
-                title: item.title,
-                subTitle: item.subTitle,
-                showValue: item.showValue,
-                skipType: item.skipType,
-                skipValue: item.skipValue,
-                objId: item.objId,
-              ));
-            }
-            if (items.isEmpty) {
-              return const SizedBox();
-            }
-            IconData? icon;
-            if (element.optType == OptTypeEnum.refresh.index) {
-              icon = Icons.refresh;
-            } else if (element.optType == OptTypeEnum.more.index) {
-              icon = Icons.read_more;
-            } else if (element.optType == OptTypeEnum.jump.index) {
-              icon = Icons.chevron_right;
-            }
-            Widget widget;
-            if (showType == ShowTypeEnum.twoGrid.index) {
-              widget = TitleWidget(
-                icon: icon,
-                color: Colors.grey,
-                item: title,
-                child: TwoBoxGridWidget(
-                  items: items,
-                  onTap: RecommendService.instance.onDetail,
-                ),
-              );
-            } else if (showType == ShowTypeEnum.threeGrid.index) {
-              widget = TitleWidget(
-                icon: icon,
-                color: Colors.grey,
-                item: title,
-                child: ThreeBoxGridWidget(
-                  items: items,
-                  onTap: RecommendService.instance.onDetail,
-                ),
-              );
-            } else {
-              widget = TitleWidget(
-                icon: icon,
-                color: Colors.grey,
-                item: title,
-                child: CrossListWidget(
-                  items: items,
-                  onTap: RecommendService.instance.onDetail,
-                ),
-              );
-            }
-            return widget;
-          }).toList(),
+          children: [
+            ...controller.recommends.map(
+              (element) {
+                var showType = element.showType;
+                var title = TitleModel(
+                  titleId: element.recommendId,
+                  title: element.title,
+                  showType: element.showType,
+                  isShowTitle: element.isShowTitle,
+                  optType: element.optType,
+                  optValue: element.optValue,
+                );
+                var items = <ItemModel>[];
+                for (var i = 0; i < element.items.length; i++) {
+                  var item = element.items[i];
+                  items.add(ItemModel(
+                    itemId: item.recommendItemId,
+                    title: item.title,
+                    subTitle: item.subTitle,
+                    showValue: item.showValue,
+                    skipType: item.skipType,
+                    skipValue: item.skipValue,
+                    objId: item.objId,
+                  ));
+                }
+                if (items.isEmpty) {
+                  return const SizedBox();
+                }
+                IconData? icon;
+                if (element.optType == OptTypeEnum.refresh.index) {
+                  icon = Icons.refresh;
+                } else if (element.optType == OptTypeEnum.more.index) {
+                  icon = Icons.read_more;
+                } else if (element.optType == OptTypeEnum.jump.index) {
+                  icon = Icons.chevron_right;
+                }
+                Widget widget;
+                if (showType == ShowTypeEnum.twoGrid.index) {
+                  widget = TitleWidget(
+                    icon: icon,
+                    color: Colors.grey,
+                    item: title,
+                    child: TwoBoxGridWidget(
+                      items: items,
+                      onTap: RecommendService.instance.onDetail,
+                    ),
+                  );
+                } else if (showType == ShowTypeEnum.threeGrid.index) {
+                  widget = TitleWidget(
+                    icon: icon,
+                    color: Colors.grey,
+                    item: title,
+                    child: ThreeBoxGridWidget(
+                      items: items,
+                      onTap: RecommendService.instance.onDetail,
+                    ),
+                  );
+                } else {
+                  widget = TitleWidget(
+                    icon: icon,
+                    color: Colors.grey,
+                    item: title,
+                    child: CrossListWidget(
+                      items: items,
+                      onTap: RecommendService.instance.onDetail,
+                    ),
+                  );
+                }
+                return widget;
+              },
+            ),
+            _buildComment(),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildComment() {
+    var list = controller.list;
+    if (list.isEmpty) {
+      return const SizedBox();
+    }
+    var detail = controller.detail.value;
+    return Padding(
+      padding: AppStyle.edgeInsetsH8,
+      child: Column(
+        children: [
+          AppStyle.vGap12,
+          Divider(
+            color: Colors.grey.withOpacity(.2),
+            height: 1.0,
+          ),
+          AppStyle.vGap12,
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  AppString.lastComments,
+                  style: Get.textTheme.titleSmall,
+                ),
+              ),
+            ],
+          ),
+          ...controller.list.map(
+            (element) => CommentItemWidget(
+              element,
+              onComment: (item) async {
+                await AppNavigator.toPublishComment(
+                  detail.novelId,
+                  AssetTypeEnum.novel.index,
+                  replyItem: item,
+                );
+                controller.onRefresh();
+              },
+            ),
+          ),
+          ListTile(
+            title: const Column(
+              children: [
+                Center(
+                  child: Text(
+                    AppString.loadingMore,
+                  ),
+                ),
+              ],
+            ),
+            contentPadding: AppStyle.edgeInsetsA4,
+            visualDensity: const VisualDensity(
+              vertical: VisualDensity.minimumDensity,
+            ),
+            onTap: () async {
+              await AppNavigator.toCommentList(
+                detail.novelId,
+                AssetTypeEnum.novel.index,
+              );
+              controller.onRefresh();
+            },
+          )
+        ],
       ),
     );
   }

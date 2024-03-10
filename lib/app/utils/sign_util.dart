@@ -17,6 +17,10 @@ class SignUtil {
         var map = SplayTreeMap<String, List<String>>.from(params);
         int index = 0, length = params.length;
         map.forEach((key, value) {
+          if (value.isEmpty) {
+            index++;
+            return;
+          }
           value.sort();
           sb
             ..write(key)

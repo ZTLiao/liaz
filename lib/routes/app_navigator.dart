@@ -193,8 +193,9 @@ class AppNavigator {
     toContentPage(AppRoute.kMessageBoard);
   }
 
-  static void toPublishComment(int objId, int objType, {replyItem}) {
-    toContentPage(
+  static Future<void> toPublishComment(int objId, int objType,
+      {replyItem}) async {
+    await toContentPage(
       AppRoute.kPublishComment,
       arg: {
         'objId': objId,
@@ -204,8 +205,8 @@ class AppNavigator {
     );
   }
 
-  static void toCommentList(int objId, int objType) {
-    toContentPage(
+  static Future<void> toCommentList(int objId, int objType) async {
+    await toContentPage(
       AppRoute.kCommentList,
       arg: {
         'objId': objId,

@@ -4,6 +4,7 @@ import 'package:liaz/app/constants/app_event.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/constants/yes_or_no.dart';
 import 'package:liaz/app/controller/base_controller.dart';
+import 'package:liaz/app/controller/base_page_controller.dart';
 import 'package:liaz/app/enums/asset_type_enum.dart';
 import 'package:liaz/app/enums/recommend_position_enum.dart';
 import 'package:liaz/app/enums/recommend_type_enum.dart';
@@ -12,19 +13,21 @@ import 'package:liaz/app/global/global.dart';
 import 'package:liaz/app/http/dio_request.dart';
 import 'package:liaz/app/utils/share_util.dart';
 import 'package:liaz/app/utils/str_util.dart';
+import 'package:liaz/models/comment/comment_item_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/novel/novel_chapter_model.dart';
 import 'package:liaz/models/novel/novel_detail_model.dart';
 import 'package:liaz/models/novel/novel_volume_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
 import 'package:liaz/modules/novel/detail/novel_history_listener.dart';
+import 'package:liaz/requests/comment_request.dart';
 import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/file_item_service.dart';
 import 'package:liaz/services/novel_service.dart';
 import 'package:liaz/services/user_service.dart';
 
-class NovelDetailController extends BaseController {
+class NovelDetailController extends BasePageController<CommentItemModel> {
   final NovelDetailModel novelDetail;
 
   final detail = Rx<NovelDetailModel>(NovelDetailModel.empty());
@@ -42,8 +45,16 @@ class NovelDetailController extends BaseController {
 
   var recommendRequest = RecommendRequest();
 
+  var commentRequest = CommentRequest();
+
   NovelDetailController({required this.novelDetail}) {
     detail.value = novelDetail;
+  }
+
+  @override
+  Future<List<CommentItemModel>> getData(int currentPage, int pageSize) async {
+    return await commentRequest.getDiscussPage(
+        detail.value.novelId, AssetTypeEnum.novel.index, currentPage, pageSize);
   }
 
   void initDetail() {

@@ -33,6 +33,11 @@ class CommentItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        if (onComment != null) {
+          onComment!(item);
+        }
+      },
       child: Container(
         padding: AppStyle.edgeInsetsA12,
         child: Row(
@@ -69,9 +74,11 @@ class CommentItemWidget extends StatelessWidget {
                 ),
                 AppStyle.vGap12,
                 item.parents.isNotEmpty
-                    ? (isExpand.value
-                        ? createMasterParentComment(item.parents)
-                        : createMasterComment(item))
+                    ? Obx(
+                        () => (isExpand.value
+                            ? createMasterParentComment(item.parents)
+                            : createMasterComment(item)),
+                      )
                     : Container(),
                 Text(
                   item.content,

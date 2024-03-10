@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:liaz/app/constants/app_string.dart';
 import 'package:liaz/app/controller/base_controller.dart';
 import 'package:liaz/app/enums/res_type_enum.dart';
@@ -41,10 +42,10 @@ class PublishCommentController extends BaseController {
         paths,
         parentId: parentId,
       );
-      DialogUtil.showAlertDialog(AppString.publishSuccess);
+      SmartDialog.showToast(AppString.publishSuccess);
       AppNavigator.closePage();
     } catch (e) {
-      DialogUtil.showAlertDialog(e.toString());
+      SmartDialog.showToast(e.toString());
     }
   }
 }
