@@ -77,6 +77,7 @@ class NovelDetailController extends BasePageController<CommentItemModel> {
       NovelHistoryListener(
         (chapterId) {
           browseChapterId.value = chapterId;
+          EventBus.instance.publish(AppEvent.kSubscribeNovelTopic);
         },
       ),
     );
@@ -120,7 +121,7 @@ class NovelDetailController extends BasePageController<CommentItemModel> {
     UserService.instance.novelSubscribe(
         detail.value.novelId, isSubscribe.value ? YesOrNo.no : YesOrNo.yes);
     isSubscribe.value = !isSubscribe.value;
-    EventBus.instance.publish(AppEvent.kSubscribeComicTopic);
+    EventBus.instance.publish(AppEvent.kSubscribeNovelTopic);
   }
 
   void onReadChapter(NovelVolumeModel volume, {isReplace = true}) {

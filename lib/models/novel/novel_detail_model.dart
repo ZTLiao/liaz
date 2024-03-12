@@ -101,8 +101,10 @@ class NovelDetailModel {
       }
     }
     final List<NovelVolumeModel> volumes = <NovelVolumeModel>[];
-    for (final dynamic volume in json['volumes']!) {
-      volumes.add(NovelVolumeModel.fromJson(volume));
+    if (json['volumes'] != null) {
+      for (final dynamic volume in json['volumes']!) {
+        volumes.add(NovelVolumeModel.fromJson(volume));
+      }
     }
     int flag = ConvertUtil.asT<int>(json['flag'])!;
     return NovelDetailModel(

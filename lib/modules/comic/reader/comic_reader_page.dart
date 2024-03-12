@@ -404,7 +404,7 @@ class ComicReaderPage extends GetView<ComicReaderController> {
                     value: value,
                     max: max,
                     onChanged: (e) {
-                      controller.jumpToPage((e - 2).toInt());
+                      controller.jumpToPage((e - 1).toInt());
                     },
                   ),
                 ),
