@@ -84,12 +84,12 @@ class NovelService {
     }
   }
 
-  void toReadChapter(int novelChapterId) async {
+  Future<void> toReadChapter(int novelChapterId) async {
     var chapters = await _novelRequest.getNovelCatalogue(novelChapterId);
     if (chapters.isEmpty) {
       return;
     }
-    AppNavigator.toNovelReader(
+    return await AppNavigator.toNovelReader(
       novelChapterId: novelChapterId,
       chapters: chapters,
     );

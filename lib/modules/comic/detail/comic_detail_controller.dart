@@ -16,6 +16,7 @@ import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/comic/comic_volume_model.dart';
 import 'package:liaz/models/dto/item_model.dart';
 import 'package:liaz/models/recommend/recommend_model.dart';
+import 'package:liaz/modules/bookshelf/home/bookshelf_subscribe_listener.dart';
 import 'package:liaz/modules/comic/detail/comic_history_listener.dart';
 import 'package:liaz/requests/recommend_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
@@ -58,6 +59,7 @@ class ComicDetailController extends BaseController {
       ComicHistoryListener(
         (chapterId) {
           browseChapterId.value = chapterId;
+          EventBus.instance.publish(AppEvent.kSubscribeComicTopic);
         },
       ),
     );

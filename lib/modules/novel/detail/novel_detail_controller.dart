@@ -66,6 +66,7 @@ class NovelDetailController extends BaseController {
       NovelHistoryListener(
         (chapterId) {
           browseChapterId.value = chapterId;
+          EventBus.instance.publish(AppEvent.kSubscribeNovelTopic);
         },
       ),
     );
@@ -109,7 +110,7 @@ class NovelDetailController extends BaseController {
     UserService.instance.novelSubscribe(
         detail.value.novelId, isSubscribe.value ? YesOrNo.no : YesOrNo.yes);
     isSubscribe.value = !isSubscribe.value;
-    EventBus.instance.publish(AppEvent.kSubscribeComicTopic);
+    EventBus.instance.publish(AppEvent.kSubscribeNovelTopic);
   }
 
   void onReadChapter(NovelVolumeModel volume, {isReplace = true}) {

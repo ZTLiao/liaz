@@ -77,11 +77,11 @@ class AppNavigator {
     );
   }
 
-  static void toNovelReader({
+  static Future<void> toNovelReader({
     required int novelChapterId,
     required List<NovelChapterModel> chapters,
   }) async {
-    toContentPage(AppRoute.kNovelReader, arg: {
+    await toContentPage(AppRoute.kNovelReader, arg: {
       'novelChapterId': novelChapterId,
       'chapters': chapters,
     });
