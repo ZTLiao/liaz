@@ -408,15 +408,15 @@ class NovelDetailPage extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Obx(
-                                          () => Container(
-                                            constraints: BoxConstraints(
-                                              maxWidth: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2,
-                                            ),
-                                            child: Text(
+                                        Container(
+                                          constraints: BoxConstraints(
+                                            maxWidth: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2,
+                                          ),
+                                          child: Obx(
+                                            () => Text(
                                               item.chapterName,
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
