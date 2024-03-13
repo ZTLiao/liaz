@@ -242,6 +242,7 @@ class NovelReaderController extends BaseController {
       isPageLoading.value = true;
       isPageError.value = false;
       currentIndex.value = 0;
+      pictures.clear();
       detail.value = NovelChapterItemModel.empty();
       content.value = StrUtil.empty;
       var chapter = chapters[chapterIndex.value];
