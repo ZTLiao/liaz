@@ -64,8 +64,9 @@ class NovelDetailController extends BaseController {
     EventBus.instance.subscribe(
       AppEvent.kUploadNovelHistoryTopic,
       NovelHistoryListener(
-        (chapterId) {
-          browseChapterId.value = chapterId;
+        (history) {
+          browseChapterId.value = history.chapterId;
+          detail.value.currentIndex = history.currentIndex;
           EventBus.instance.publish(AppEvent.kSubscribeNovelTopic);
         },
       ),

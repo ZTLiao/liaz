@@ -10,7 +10,7 @@ class CrashRequest {
         'stackTrace': stackTrace,
       });
     } catch (error, stack) {
-      Log.e(error.toString(), stack);
+      Log.logPrint(stack);
     }
   }
 }

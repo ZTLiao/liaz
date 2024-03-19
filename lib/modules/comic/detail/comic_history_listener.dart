@@ -1,8 +1,9 @@
 import 'package:liaz/app/events/event.dart';
 import 'package:liaz/app/events/event_listener.dart';
+import 'package:liaz/models/dto/history_model.dart';
 
 class ComicHistoryListener extends EventListener {
-  final void Function(int) onConsume;
+  final void Function(HistoryModel) onConsume;
 
   ComicHistoryListener(this.onConsume);
 
@@ -12,6 +13,6 @@ class ComicHistoryListener extends EventListener {
     if (source == null) {
       return;
     }
-    onConsume(source as int);
+    onConsume(source as HistoryModel);
   }
 }

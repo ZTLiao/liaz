@@ -8,6 +8,7 @@ import 'package:liaz/app/logger/log.dart';
 import 'package:liaz/app/utils/str_util.dart';
 import 'package:liaz/models/comic/comic_detail_model.dart';
 import 'package:liaz/models/db/comic.dart';
+import 'package:liaz/models/dto/history_model.dart';
 import 'package:liaz/requests/browse_request.dart';
 import 'package:liaz/requests/comic_request.dart';
 import 'package:liaz/routes/app_navigator.dart';
@@ -71,7 +72,13 @@ class ComicService {
           stopIndex,
         );
       });
-      EventBus.instance.publish(AppEvent.kUploadComicHistoryTopic, chapterId);
+      EventBus.instance.publish(
+        AppEvent.kUploadComicHistoryTopic,
+        HistoryModel(
+          chapterId: chapterId,
+          currentIndex: stopIndex,
+        ),
+      );
     } catch (error, stackTrace) {
       Log.e(error.toString(), stackTrace);
     }
