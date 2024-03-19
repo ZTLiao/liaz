@@ -52,6 +52,7 @@ class ComicChapterModel {
         paths.add(ConvertUtil.asT<String>(path)!);
       }
     }
+    var currentIndex = json['currentIndex'] ?? 0;
     return ComicChapterModel(
       comicChapterId: ConvertUtil.asT<int>(json['comicChapterId'])!,
       comicId: ConvertUtil.asT<int>(json['comicId'])!,
@@ -63,7 +64,7 @@ class ComicChapterModel {
       direction: ConvertUtil.asT<int>(json['direction'])!,
       updatedAt: ConvertUtil.asT<int>(json['updatedAt'])!,
       paths: paths ?? [],
-      currentIndex: 0,
+      currentIndex: currentIndex,
     );
   }
 

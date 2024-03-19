@@ -267,6 +267,11 @@ class NovelReaderController extends BaseController {
           }
         }
       }
+      int initIndex = 0;
+      if (chapter.novelChapterId == novelChapterId) {
+        initIndex = chapter.currentIndex;
+      }
+      currentIndex.value = initIndex;
       isAllPicture.value = pictures.isNotEmpty && sb.length == 0;
       isAllPicture.value = pictures.isNotEmpty && sb.isEmpty;
       isLocal.value = chapter.isLocal;
@@ -283,10 +288,6 @@ class NovelReaderController extends BaseController {
         direction: chapter.direction,
         isLocal: chapter.isLocal,
       );
-      var initIndex = 0;
-      if (chapter.novelChapterId == novelChapterId) {
-        initIndex = chapter.currentIndex;
-      }
       Future.delayed(const Duration(milliseconds: 100), () {
         jumpToPage(initIndex);
       });

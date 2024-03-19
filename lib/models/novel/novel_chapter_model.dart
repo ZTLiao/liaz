@@ -61,6 +61,7 @@ class NovelChapterModel {
         types.add(ConvertUtil.asT<String>(type)!);
       }
     }
+    var currentIndex = json['currentIndex'] ?? 0;
     return NovelChapterModel(
       novelChapterId: ConvertUtil.asT<int>(json['novelChapterId'])!,
       novelId: ConvertUtil.asT<int>(json['novelId'])!,
@@ -73,7 +74,7 @@ class NovelChapterModel {
       updatedAt: ConvertUtil.asT<int>(json['updatedAt'])!,
       paths: paths ?? [],
       types: types ?? [],
-      currentIndex: 0,
+      currentIndex: currentIndex,
     );
   }
 
