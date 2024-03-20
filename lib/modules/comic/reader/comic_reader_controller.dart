@@ -286,32 +286,35 @@ class ComicReaderController extends BaseController {
       if (chapters.isEmpty) {
         return;
       }
-      var comicChapter = chapters[chapterIndex.value];
-      for (int i = 0; i < comicChapter.paths.length; i++) {
+      var chapter = chapters[chapterIndex.value];
+      for (int i = 0; i < chapter.paths.length; i++) {
         if (isLocal.value) {
-          comicChapter.paths[i] = path.join(
-              ComicDownloadService.instance.savePath, comicChapter.paths[i]);
+          chapter.paths[i] = path.join(
+              ComicDownloadService.instance.savePath, chapter.paths[i]);
         } else {
-          comicChapter.paths[i] =
-              await FileItemService.instance.getObject(comicChapter.paths[i]);
+          chapter.paths[i] =
+              await FileItemService.instance.getObject(chapter.paths[i]);
         }
       }
       int initIndex = 0;
-      if (comicChapter.comicChapterId == comicChapterId) {
-        initIndex = comicChapter.currentIndex;
+      if (chapter.comicChapterId == comicChapterId) {
+        initIndex = chapter.currentIndex;
+      }
+      if (initIndex >= chapter.paths.length) {
+        initIndex = 0;
       }
       currentIndex.value = initIndex;
-      comicChapterId = comicChapter.comicChapterId;
-      isLocal.value = comicChapter.isLocal;
+      comicChapterId = chapter.comicChapterId;
+      isLocal.value = chapter.isLocal;
       detail.value = ComicChapterItemModel(
-        comicChapterId: comicChapter.comicChapterId,
-        comicId: comicChapter.comicId,
-        flag: comicChapter.flag,
-        chapterName: comicChapter.chapterName,
-        seqNo: comicChapter.seqNo,
-        paths: comicChapter.paths,
-        direction: comicChapter.direction,
-        isLocal: comicChapter.isLocal,
+        comicChapterId: chapter.comicChapterId,
+        comicId: chapter.comicId,
+        flag: chapter.flag,
+        chapterName: chapter.chapterName,
+        seqNo: chapter.seqNo,
+        paths: chapter.paths,
+        direction: chapter.direction,
+        isLocal: chapter.isLocal,
       );
       Future.delayed(const Duration(milliseconds: 100), () {
         jumpToPage(initIndex);
