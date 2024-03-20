@@ -117,6 +117,7 @@ class ComicDetailController extends BasePageController<CommentItemModel> {
 
   void onReadChapter(ComicVolumeModel volume, {isReplace = true}) {
     var chapters = volume.chapters;
+    var historyChapterId = detail.value.browseChapterId;
     if (isReplace) {
       browseChapterId.value = chapters[chapterIndex.value].comicChapterId;
     }
@@ -127,7 +128,7 @@ class ComicDetailController extends BasePageController<CommentItemModel> {
     var comicChapters = <ComicChapterModel>[];
     if (chapters.isNotEmpty) {
       for (var chapter in chapters) {
-        if (chapter.comicChapterId == browseChapterId.value) {
+        if (chapter.comicChapterId == historyChapterId) {
           chapter.currentIndex = detail.value.currentIndex;
         } else {
           chapter.currentIndex = 0;
