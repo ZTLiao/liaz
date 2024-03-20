@@ -117,6 +117,8 @@ class ComicDetailController extends BaseController {
       for (var chapter in chapters) {
         if (chapter.comicChapterId == browseChapterId.value) {
           chapter.currentIndex = detail.value.currentIndex;
+        } else {
+          chapter.currentIndex = 0;
         }
         comicChapters.add(ComicChapterModel.fromJson(chapter.toJson()));
       }

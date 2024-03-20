@@ -271,6 +271,9 @@ class NovelReaderController extends BaseController {
       if (chapter.novelChapterId == novelChapterId) {
         initIndex = chapter.currentIndex;
       }
+      if (initIndex >= chapter.paths.length) {
+        initIndex = 0;
+      }
       currentIndex.value = initIndex;
       isAllPicture.value = pictures.isNotEmpty && sb.length == 0;
       isAllPicture.value = pictures.isNotEmpty && sb.isEmpty;

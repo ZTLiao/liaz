@@ -16,9 +16,9 @@ import 'package:liaz/routes/app_navigator.dart';
 import 'package:liaz/services/oauth2_token_service.dart';
 
 class DioRequest {
-  static const int _connectTimeout = 60;
-  static const int _receiveTimeout = 60;
-  static const int _sendTimeout = 60;
+  static const int _connectTimeout = 3 * 60;
+  static const int _receiveTimeout = 3 * 60;
+  static const int _sendTimeout = 3 * 60;
 
   static DioRequest? _request;
 

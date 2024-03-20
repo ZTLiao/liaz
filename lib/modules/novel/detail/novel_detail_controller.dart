@@ -133,6 +133,8 @@ class NovelDetailController extends BaseController {
       for (var chapter in value.chapters) {
         if (chapter.novelChapterId == browseChapterId.value) {
           chapter.currentIndex = detail.value.currentIndex;
+        } else {
+          chapter.currentIndex = 0;
         }
         novelChapters.add(NovelChapterModel.fromJson(chapter.toJson()));
       }
