@@ -116,6 +116,7 @@ class NovelDetailController extends BaseController {
 
   void onReadChapter(NovelVolumeModel volume, {isReplace = true}) {
     var chapters = volume.chapters;
+    var historyChapterId = detail.value.browseChapterId;
     if (isReplace) {
       browseChapterId.value = chapters[chapterIndex.value].novelChapterId;
     }
@@ -131,7 +132,7 @@ class NovelDetailController extends BaseController {
     for (int i = volumes.length - 1; i >= 0; i--) {
       var value = volumes[i];
       for (var chapter in value.chapters) {
-        if (chapter.novelChapterId == browseChapterId.value) {
+        if (chapter.novelChapterId == historyChapterId) {
           chapter.currentIndex = detail.value.currentIndex;
         } else {
           chapter.currentIndex = 0;
