@@ -15,7 +15,7 @@ import 'package:path/path.dart' as path;
 
 abstract class DownloadService extends GetxService {
   /// 连接信息监听
-  StreamSubscription<ConnectivityResult>? connectivitySubscription;
+  StreamSubscription<List<ConnectivityResult>>? connectivitySubscription;
 
   /// 当前连接类型
   ConnectivityResult? connectivityType;
@@ -39,10 +39,15 @@ abstract class DownloadService extends GetxService {
     try {
       var connectivity = Connectivity();
       connectivitySubscription = connectivity.onConnectivityChanged
-          .listen((ConnectivityResult result) {
-        networkChanged(result);
+          .listen((List<ConnectivityResult> results) {
+        if (results.isNotEmpty) {
+          networkChanged(results.first);
+        }
       });
-      connectivityType = await connectivity.checkConnectivity();
+      List<ConnectivityResult> results = await connectivity.checkConnectivity();
+      if (results.isNotEmpty) {
+        connectivityType = results.first;
+      }
       initTask();
     } catch (e) {
       Log.logPrint(e);

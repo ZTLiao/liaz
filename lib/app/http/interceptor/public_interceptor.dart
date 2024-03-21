@@ -15,8 +15,11 @@ class PublicInterceptor extends Interceptor {
   ) async {
     try {
       var connectivity = Connectivity();
-      ConnectivityResult result = await connectivity.checkConnectivity();
-      Global.netType = result.name;
+      List<ConnectivityResult> results = await connectivity.checkConnectivity();
+      if (results.isNotEmpty) {
+        var result = results.first;
+        Global.netType = result.name;
+      }
       options.extra['ts'] = DateTime.now().millisecondsSinceEpoch;
       var packageInfo = Global.packageInfo;
       var deviceInfo = DeviceInfoService.instance.get();
@@ -69,7 +72,7 @@ Request Query：${err.requestOptions.queryParameters}
 Request Data：${err.requestOptions.data}
 Request Headers：${err.requestOptions.headers}
 Response Headers：${err.response?.headers.map}
-Response Data：${err.response?.data}''', err.stackTrace ?? StackTrace.current);
+Response Data：${err.response?.data}''', err.stackTrace);
     super.onError(err, handler);
   }
 

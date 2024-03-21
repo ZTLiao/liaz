@@ -64,7 +64,7 @@ class ComicReaderController extends BaseController {
       Rx<ComicChapterItemModel>(ComicChapterItemModel.empty());
 
   /// 连接信息监听
-  StreamSubscription<ConnectivityResult>? connectivitySubscription;
+  StreamSubscription<List<ConnectivityResult>>? connectivitySubscription;
 
   /// 电量信息监听
   StreamSubscription<BatteryState>? batterySubscription;
@@ -159,16 +159,22 @@ class ComicReaderController extends BaseController {
   /// 初始化连接状态
   void initConnectivity() async {
     var connectivity = Connectivity();
-    connectivitySubscription =
-        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-      //提醒
-      if (connectivityType.value != result &&
-          result == ConnectivityResult.mobile) {
-        SmartDialog.showToast(AppString.warningFlow);
+    connectivitySubscription = connectivity.onConnectivityChanged
+        .listen((List<ConnectivityResult> results) {
+      if (results.isNotEmpty) {
+        var result = results.first;
+        //提醒
+        if (connectivityType.value != result &&
+            result == ConnectivityResult.mobile) {
+          SmartDialog.showToast(AppString.warningFlow);
+        }
+        connectivityType.value = result;
       }
-      connectivityType.value = result;
     });
-    connectivityType.value = await connectivity.checkConnectivity();
+    List<ConnectivityResult> results = await connectivity.checkConnectivity();
+    if (results.isNotEmpty) {
+      connectivityType.value = results.first;
+    }
   }
 
   @override
