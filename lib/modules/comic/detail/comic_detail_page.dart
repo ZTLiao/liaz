@@ -259,10 +259,14 @@ class ComicDetailPage extends StatelessWidget {
           ),
         ),
         AppBar(
-          title: Text(
-            controller.detail.value.title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
+          title: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Text(
+              controller.detail.value.title,
+              maxLines: 1,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           backgroundColor: Colors.transparent,
