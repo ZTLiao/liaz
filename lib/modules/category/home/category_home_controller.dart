@@ -40,7 +40,9 @@ class CategoryHomeController extends BasePageController<List<CategoryItemModel>>
     if (categories.value.isEmpty) {
       categoryRequest.getCategory().then((value) {
         categories.value.addAll(value);
-        categoryId.value = categories.value[0].categoryId;
+        if (categories.value.isNotEmpty) {
+          categoryId.value = categories.value[0].categoryId;
+        }
         onRefresh();
       });
     }

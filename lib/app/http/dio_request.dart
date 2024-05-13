@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:liaz/app/constants/app_constant.dart';
@@ -44,6 +45,16 @@ class DioRequest {
       ),
     );
     dio.interceptors.add(PublicInterceptor());
+  }
+
+  /// 初始化连接状态
+  Future<ConnectivityResult> getConnectivity() async {
+    var connectivity = Connectivity();
+    List<ConnectivityResult> results = await connectivity.checkConnectivity();
+    if (results.isNotEmpty) {
+      return results.first;
+    }
+    return ConnectivityResult.none;
   }
 
   dynamic responseBody(Response<dynamic> response) {
@@ -113,6 +124,10 @@ class DioRequest {
     CancelToken? cancel,
     ResponseType responseType = ResponseType.json,
   }) async {
+    var connectivityType = await getConnectivity();
+    if (connectivityType == ConnectivityResult.none || connectivityType == ConnectivityResult.other) {
+      return;
+    }
     queryParameters ??= {};
     //参数加密
     Map<String, List<String>> params = {};
@@ -171,6 +186,10 @@ class DioRequest {
     Map<String, dynamic>? data,
     CancelToken? cancel,
   }) async {
+    var connectivityType = await getConnectivity();
+    if (connectivityType == ConnectivityResult.none || connectivityType == ConnectivityResult.other) {
+      return;
+    }
     queryParameters ??= {};
     data ??= {};
     //参数加密
@@ -242,6 +261,10 @@ class DioRequest {
     Map<String, dynamic>? data,
     CancelToken? cancel,
   }) async {
+    var connectivityType = await getConnectivity();
+    if (connectivityType == ConnectivityResult.none || connectivityType == ConnectivityResult.other) {
+      return;
+    }
     data ??= {};
     //参数加密
     Map<String, List<String>> params = {};
@@ -302,6 +325,10 @@ class DioRequest {
     ResponseType responseType = ResponseType.plain,
     CancelToken? cancel,
   }) async {
+    var connectivityType = await getConnectivity();
+    if (connectivityType == ConnectivityResult.none || connectivityType == ConnectivityResult.other) {
+      return;
+    }
     try {
       var response = await dio.get(
         url,
